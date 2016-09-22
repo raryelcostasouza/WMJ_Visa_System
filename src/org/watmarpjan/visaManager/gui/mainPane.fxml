@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrGUIMain">
+  
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open…" />
+                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" text="Revert" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <BorderPane fx:id="mainPanel">
+            <center>
+                <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <fx:include fx:id="paneAddRenewPassport" source="paneAddRenewPassport.fxml" />
+                        <fx:include fx:id="paneReEntry" source="paneReEntry.fxml" />
+                        <fx:include fx:id="panePassport" source="panePassport3.fxml" />
+                        <fx:include fx:id="paneMonasticProfile" source="paneMonasticProfile.fxml" />
+                        <fx:include fx:id="pane90DayNotice" source="pane90DayNotice.fxml" />
+                        <fx:include fx:id="paneBysuddhi" source="paneBysuddhi.fxml" />
+                        <fx:include fx:id="paneEditSave" source="paneEditSave.fxml" />
+                        <fx:include fx:id="paneDueTasks" source="paneDueTasks.fxml" />
+                        <fx:include fx:id="paneVisaExt" source="paneVisaExt.fxml" />
+                        <fx:include fx:id="paneMonastery" source="paneMonastery.fxml" />
+                        <fx:include fx:id="paneUpajjhaya" source="paneUpajjhaya.fxml" />
+                        <fx:include fx:id="paneAddChangeVisa" source="paneAddChangeVisa.fxml" />
+                    </children>
+                </StackPane>
+            </center>
+            <left>
+                <VBox BorderPane.alignment="CENTER">
+                    <children>
+                        <TitledPane animated="false" collapsible="false" text="View Data">
+                            <content>
+                                <VBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionDueTasksButton" text="Due Tasks" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionMonasticProfileButton" text="Monastic Profile" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionPassportButton" text="Passport" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBysuddhiButton" text="Bysuddhi" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonMonastery" text="Monastery" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonUpajjhaya" text="Upajjhaya" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Visa Operations">
+                            <content>
+                                <VBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButton90DayNotice" text="90 Day Notice" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Visa Extension" />
+                                        <Button mnemonicParsing="false" onAction="#actionButtonReEntry" text="Register Entry/Re-entry" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="Add/Change Visa" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddRenewPassport" text="Add/Renew Passport" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Others">
+                            <content>
+                                <VBox alignment="CENTER" spacing="10.0">
+                                    <children>
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ChangeLog" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Users" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <VBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
+                            <children>
+                                <TitledPane animated="false" collapsible="false" text="Date Format">
+                                    <content>
+                                        <VBox>
+                                            <children>
+                                                <RadioButton fx:id="rbDateFormatWestern" mnemonicParsing="false" onAction="#actionChangeDateFormat" selected="true" text="Western">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="tgDateFormat" />
+                                                    </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rbDateFormatThai" mnemonicParsing="false" onAction="#actionChangeDateFormat" text="Thai" toggleGroup="$tgDateFormat" />
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </TitledPane>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </left>
+            <top>
+                <fx:include fx:id="paneSelection" source="paneSelection.fxml" />
+            </top>
+        </BorderPane>
+    </children>
+</VBox>

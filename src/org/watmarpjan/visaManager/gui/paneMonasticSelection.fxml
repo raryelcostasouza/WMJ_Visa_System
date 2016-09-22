@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<FlowPane fx:id="fpMonasticProfile" alignment="TOP_CENTER" columnHalignment="CENTER" prefHeight="36.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Selected Monastic: " />
+      <ComboBox fx:id="cbSelectedMonastic" onAction="#listenerCbSelectedMonastic" prefHeight="25.0" prefWidth="209.0" />
+      <CheckBox mnemonicParsing="false" text="Show only active profiles">
+         <FlowPane.margin>
+            <Insets left="10.0" />
+         </FlowPane.margin>
+      </CheckBox>
+   </children>
+</FlowPane>

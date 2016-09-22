@@ -1,0 +1,114 @@
+------------------------------------------------------------------------------
+Questions
+       -When change visa does the number change as well??
+       -Does the limit of extensions reset?
+
+       -If the new scan is of the same page number of an existing passportScan???
+            -Replace passportScanData and replace file
+
+------------------------------------------------------------------------------
+Changes/Fixes
+    -block edition when there is no profile, monastery etc on the list
+    -Optimize loading
+    -When change panel need to re-lock edition
+    -Connection pool not use hibernate native one
+    --Derby DB
+    --Check about Hibernate session use
+        --leave open directly
+        -- or open only when have transaction
+------------------------------------------------------------------------------
+Current Working
+    -Archive for Add/change visa and reentry
+    -Implement scan selection on entry add
+   
+-Receipts 90 day online
+    -Implement table showing saved receipts
+
+    -used for checking pending notifications
+    -check people for who 90 day online works
+    -options
+        -by person
+        -all together
+   
+------------------------------------------------------------------------------
+Validation/errors
+    -test scenario where there is no profile registered
+    -filter invalid characters out from 
+        -nickname
+        -passportnumber
+------------------------------------------------------------------------------
+Essential features
+    
+Generate printable page 
+    -passport/bysuddhi scans
+    -photo
+    -due tasks
+
+Tm30 - store report date - together entry - store pdf file
+
+
+------------------------------------------------------------------------------
+Desirable features
+    -Entry/re-entry travel from and port of entry should be comboboxes with db data for selection
+
+Pending 
+    
+    
+Entry-Reentry
+    -add arrive stamp scan selection
+
+Pending
+    -consistency - when archiving BOTH operations neeed to succeed (archiving file and erasing DB info)
+
+Number of signed copies 90 day notice
+    -show merged possible dates on calendar for multiple monastics
+
+forms - check for thai characters and apply special font automatically
+
+quick update - only view mode
+            
+            
+check if there is undeleted tmp files on start and delete them
+
+90 day
+    -e-mail and phone number for online notice -> get from user profile
+
+
+DB
+    -proper error messages for common SQL error - primary key, unique key etc
+
+
+getSelectedProfileID()
+    -if no profiles available returns -1
+    -need to implement how to handle this situation on the functions that use getSelectedProfileID()
+
+Profile
+    -spinner for number of years certificate
+    -tootip for error message on number fields
+
+Dates on tables need to be formatted
+
+-convertion box of names in months 	
+Directory Structure
+    ->when deleted or change nickname need to update foldername
+    
+Due tasks page
+        -option to print due tasks
+        -if sunday or saturday need to have special mark
+        90day notice flag mark if works online or not
+        Button for related operation (update 90 day notice, etc)
+        NDays for processing should be changeable or stored in a table - yes
+http://docs.oracle.com/javafx/2/ui_controls/table-view.htm
+
+
+Profile panel 
+    -personal contact info (phone, email)
+    -Handle invalid number fields
+    -Thai field need increase font size
+
+Pdf Forms
+    -implement other forms
+
+Dialog
+	-Dialog for saving success and error messages
+	-Confirmation dialog for changing profile or screen when have unsaved changes 

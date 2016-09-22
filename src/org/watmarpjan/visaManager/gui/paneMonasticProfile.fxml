@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneMonasticProfile">
+    <children>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <VBox alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="ivProfilePhoto" fitHeight="150.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../appData/img/default/profile.png" />
+                            </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#actionChooseProfilePhoto" text="Change profile photo" />
+                    </children>
+                </VBox>
+                <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Name/Family" HBox.hgrow="ALWAYS">
+                    <content>
+                        <GridPane>
+                            <children>
+                                <Label text="Nickname: " GridPane.columnIndex="1" />
+                                <Label text="Middle Name: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfNickname" editable="false" GridPane.columnIndex="2" />
+                                <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <Label text="Name: " GridPane.columnIndex="3" />
+                                <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" />
+                                <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                <Label text="Mother: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="tfMother" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                <Label prefHeight="31.0" prefWidth="40.0" text="Father: " GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                <TextField fx:id="tfFather" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                            </children>
+                            <columnConstraints>
+                                <ColumnConstraints />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="88.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="40.0" prefWidth="180.0" />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="68.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="180.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                        </GridPane>
+                    </content>
+                </TitledPane>
+            </children>
+        </HBox>
+        <TitledPane animated="false" collapsible="false" text="Status">
+            <content>
+                <HBox alignment="CENTER">
+                    <children>
+                        <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="tgStatus" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
+                        <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" text="Birth">
+            <content>
+                <VBox>
+                    <children>
+                        <HBox alignment="CENTER" spacing="10.0">
+                            <children>
+                                <Label text="Birth Date: " />
+                                <DatePicker fx:id="dpBirthDate" disable="true" />
+                                <Label text="Age:" />
+                                <TextField fx:id="tfAge" editable="false" prefHeight="25.0" prefWidth="55.0" />
+                                <Label text="Birth Weekday:" />
+                                <TextField fx:id="tfBirthWeekday" editable="false" prefHeight="25.0" prefWidth="74.0" />
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" focusTraversable="true">
+                            <children>
+                                <GridPane HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label text="Birth Country:" />
+                                        <TextField fx:id="tfBirthCountry" editable="false" prefHeight="25.0" prefWidth="106.0" GridPane.columnIndex="1" />
+                                        <Label text="Birth Place:" GridPane.columnIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="10.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <TextField fx:id="tfBirthPlace" editable="false" prefHeight="25.0" prefWidth="106.0" GridPane.columnIndex="3" />
+                                        <Label text="Nationality:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="10.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <TextField fx:id="tfNationality" editable="false" prefHeight="25.0" prefWidth="106.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Label text="Ethnicity: " GridPane.rowIndex="1" />
+                                        <TextField fx:id="tfEthnicity" editable="false" prefHeight="25.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    </children>
+                                    <columnConstraints>
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="155.0" minWidth="10.0" prefWidth="65.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="240.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" text="Occupation/Certificate">
+            <content>
+                <VBox>
+                    <children>
+                        <GridPane>
+                            <children>
+                                <Label text="Occupation:" GridPane.columnIndex="1" />
+                                <ComboBox fx:id="cbOccupation" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" />
+                                <Label text="Occupation (Thai):" GridPane.columnIndex="4" />
+                                <ComboBox fx:id="cbOccupationThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5" />
+                                <Label text="Certificate:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <ComboBox fx:id="cbCertificate" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <Label text="Certificate (Thai):" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                <ComboBox fx:id="cbCertificateThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                            </children>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="6.0" prefWidth="6.0" />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="72.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="240.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="14.0" />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="113.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="240.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="6.0" prefWidth="6.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                        </GridPane>
+                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="693.0" spacing="10.0">
+                            <children>
+                                <Label text="School:" />
+                                <TextField fx:id="tfSchool" editable="false" />
+                                <Label text="Graduation Year:" />
+                                <TextField fx:id="tfGraduationYear" editable="false" prefHeight="25.0" prefWidth="55.0" />
+                                <Label text="Duration (years):" />
+                                <TextField fx:id="tfDuration" editable="false" prefHeight="25.0" prefWidth="55.0" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" text="Residence">
+            <content>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label text="Previous Residence Country:" />
+                        <TextField fx:id="tfPreviousResidenceCountry" editable="false" prefHeight="25.0" prefWidth="200.0" />
+                        <Label text="Residence Wat:" />
+                        <ComboBox fx:id="cbResidingAt" disable="true" prefHeight="25.0" prefWidth="200.0" />
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" text="Adviser to Come">
+            <content>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label text="Adviser's name:" />
+                        <TextField fx:id="tfAdviserToCome" editable="false" prefHeight="25.0" prefWidth="210.0" />
+                        <Label text="Adviser's Wat:" />
+                        <ComboBox fx:id="cbAdvisorWat" disable="true" prefHeight="25.0" prefWidth="210.0" />
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
+        <TitledPane collapsible="false" text="Dhamma Studies">
+            <content>
+                <HBox alignment="CENTER">
+                    <children>
+                        <RadioButton fx:id="rbDhammaStudiesRegular" mnemonicParsing="false" selected="true" text="Regular">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="tgPrawatAnswers" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbDhammaStudiesNaktamTri" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
+                        <RadioButton fx:id="rbDhammaStudiesNaktamToh" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
+                        <RadioButton fx:id="rbDhammaStudiesNaktamEk" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
+                    </children>
+                </HBox>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" text="Contact">
+            <content>
+                <VBox>
+                    <children>
+                        <HBox alignment="CENTER">
+                            <children>
+                                <Label text="Personal e-mail:" />
+                                <TextField fx:id="tfEmail" prefHeight="25.0" prefWidth="232.0" />
+                            </children>
+                        </HBox>
+                        <VBox prefWidth="100.0">
+                            <children>
+                                <Label text="Emergency Contact:" />
+                                <TextArea fx:id="taEmergencyContact" editable="false" prefHeight="67.0" prefWidth="710.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </content>
+        </TitledPane>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <children>
+                <Button fx:id="bNewProfile" mnemonicParsing="false" onAction="#actionNewProfileButton" text="New Profile" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
