@@ -74,7 +74,8 @@ public class CtrProfile
         try
         {
             ctrDatabase.openTransaction();
-            ctrDatabase.getSession().refresh(p);
+            //TODO review location where to open the transaction, maybe on the actionsave function
+            //applies to other entities as well
             ctrDatabase.commitCurrentTransaction();
             return 0;
         } catch (HibernateException he)
