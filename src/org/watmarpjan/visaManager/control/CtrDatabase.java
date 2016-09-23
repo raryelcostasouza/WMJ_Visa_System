@@ -6,6 +6,8 @@
 package org.watmarpjan.visaManager.control;
 
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import javax.persistence.EntityManager;
@@ -26,8 +28,6 @@ import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 public class CtrDatabase
 {
 
-//    private Session session;
-//    private SessionFactory factory;
     private EntityManager entityManager;
     private EntityManagerFactory emFactory;
 
@@ -36,22 +36,15 @@ public class CtrDatabase
         final Configuration configuration;
         final StandardServiceRegistryBuilder builder;
         Instant start, finish;
+        Path pathDB;
 
+        pathDB = Paths.get(System.getProperty("user.dir")).resolve("../Data");
+        System.setProperty("derby.system.home", pathDB.toString());
         try
         {
             start = Instant.now();
             emFactory = Persistence.createEntityManagerFactory("WMJ_Visa_ManagerPU");
             entityManager = emFactory.createEntityManager();
-            //entityManager.getTransaction().begin();
-            //entityManager.persist(new Event("Our very first event!", new Date()));
-            //entityManager.persist(new Event("A follow up event", new Date()));
-            //entityManager.getTransaction().commit();
-            //entityManager.close();
-
-//            configuration = new Configuration().configure();
-//            builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-//
-//            factory = configuration.buildSessionFactory(builder.build());
             finish = Instant.now();
 
             System.out.println("Hibernate load time: " + Duration.between(start, finish));
@@ -74,42 +67,16 @@ public class CtrDatabase
         return entityManager;
     }
 
-//    public Session getSession()
-//    {
-//        if (this.session != null && session.isOpen())
-//        {
-//            return session;
-//
-//        } else
-//        {
-//            session = factory.openSession();
-//        }
-//
-//        return session;
-//    }
-//    public void openTransaction()
-//    {
-//        getSession().beginTransaction();
-//    }
     public void openTransaction()
     {
         getSession().getTransaction().begin();
     }
 
-//    public void commitCurrentTransaction()
-//    {
-//        session.getTransaction().commit();
-//    }
     public void commitCurrentTransaction()
     {
         entityManager.getTransaction().commit();
     }
 
-//    public void rollbackCurrentTransaction()
-//    {
-//        session.getTransaction().rollback();
-//        session.close();
-//    }
     public void rollbackCurrentTransaction()
     {
         entityManager.getTransaction().rollback();
