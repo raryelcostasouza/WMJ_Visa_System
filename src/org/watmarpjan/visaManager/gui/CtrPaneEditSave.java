@@ -50,17 +50,27 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     {
         if (lockStatus)
         {
-            lockStatus = false;
-            bLockUnlock.setGraphic(ivUnlock);
-            ctrGUIMain.getCurrentEditableGUIFormController().actionUnlockEdit();
-            bSave.setDisable(false);
+            actionUnlock();
         } else
         {
-            lockStatus = true;
-            bLockUnlock.setGraphic(ivLock);
-            ctrGUIMain.getCurrentEditableGUIFormController().actionLockEdit();
-            bSave.setDisable(true);
+            actionLock();
         }
+    }
+
+    public void actionLock()
+    {
+        lockStatus = true;
+        bLockUnlock.setGraphic(ivLock);
+        ctrGUIMain.getCurrentEditableGUIFormController().actionLockEdit();
+        bSave.setDisable(true);
+    }
+
+    private void actionUnlock()
+    {
+        lockStatus = false;
+        bLockUnlock.setGraphic(ivUnlock);
+        ctrGUIMain.getCurrentEditableGUIFormController().actionUnlockEdit();
+        bSave.setDisable(false);
     }
 
     @FXML
