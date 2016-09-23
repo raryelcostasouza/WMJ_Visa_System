@@ -138,4 +138,14 @@ public class CtrPaneSelection extends AbstractChildPaneController
         }
     }
 
+    public boolean isSelectionEmpty()
+    {
+        if (cbSelectedMonastic.getValue() == null)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 }

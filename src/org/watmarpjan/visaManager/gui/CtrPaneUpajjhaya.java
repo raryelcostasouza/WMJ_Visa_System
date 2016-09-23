@@ -87,6 +87,18 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
         bNewUpajjhaya.setDisable(false);
     }
 
+    @Override
+    public boolean isSelectionEmpty()
+    {
+        if (cbMonasteryList.getValue() == null)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
     private void fillMonasteryList()
     {
         cbMonasteryList.getItems().clear();

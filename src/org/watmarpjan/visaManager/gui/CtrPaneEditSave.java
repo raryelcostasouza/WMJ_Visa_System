@@ -48,7 +48,7 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     @FXML
     void actionLockUnlockButton(ActionEvent ae)
     {
-        if (lockStatus)
+        if (lockStatus && !ctrGUIMain.getCurrentEditableGUIFormController().isSelectionEmpty())
         {
             actionUnlock();
         } else

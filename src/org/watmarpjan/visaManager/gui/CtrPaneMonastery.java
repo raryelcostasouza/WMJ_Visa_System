@@ -143,6 +143,18 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         }
     }
 
+    @Override
+    public boolean isSelectionEmpty()
+    {
+        if (cbMonasteryList.getValue() == null)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
     @FXML
     void actionButtonNewMonastery(ActionEvent ae)
     {

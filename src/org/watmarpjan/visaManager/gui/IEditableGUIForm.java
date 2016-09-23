@@ -12,6 +12,8 @@ package org.watmarpjan.visaManager.gui;
 public interface IEditableGUIForm
 {
 
+    public boolean isSelectionEmpty();
+
     public void actionLockEdit();
 
     public void actionUnlockEdit();

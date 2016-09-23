@@ -145,6 +145,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         loadContentsCBWat();
     }
 
+    @Override
+    public boolean isSelectionEmpty()
+    {
+        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+    }
+
     private void initChangeListener()
     {
         fields = new ArrayList<>();

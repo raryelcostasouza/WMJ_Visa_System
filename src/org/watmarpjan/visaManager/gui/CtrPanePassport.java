@@ -226,6 +226,12 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
     }
 
+    @Override
+    public boolean isSelectionEmpty()
+    {
+        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+    }
+
     private void fillDataContentScans(Profile p)
     {
         ArrayList<PassportScan> listPassportScans;

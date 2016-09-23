@@ -218,6 +218,12 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
 
     }
 
+    @Override
+    public boolean isSelectionEmpty()
+    {
+        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+    }
+
     private void loadIMGPreviews(String nickName)
     {
         File f1, f2, f3, f4;
