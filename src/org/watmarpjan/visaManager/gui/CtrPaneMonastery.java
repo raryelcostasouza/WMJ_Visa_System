@@ -244,6 +244,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         nameSelectedMonastery = cbMonasteryList.getValue();
         if (nameSelectedMonastery != null)
         {
+            ctrGUIMain.getPaneEditSaveController().actionLock();
             m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(nameSelectedMonastery);
             fillMonasteryData(m);
         }

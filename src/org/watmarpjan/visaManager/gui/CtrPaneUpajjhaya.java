@@ -141,6 +141,7 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
         nameSelectedUpajjhaya = cbUpajjhayaList.getValue();
         if (nameSelectedUpajjhaya != null)
         {
+            ctrGUIMain.getPaneEditSaveController().actionLock();
             u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaByName(nameSelectedUpajjhaya);
             fillUpajjhayaData(u);
         }
