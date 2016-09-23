@@ -54,25 +54,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <BorderPane fx:id="mainPanel">
-            <center>
-                <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <fx:include fx:id="paneAddRenewPassport" source="paneAddRenewPassport.fxml" />
-                        <fx:include fx:id="paneReEntry" source="paneReEntry.fxml" />
-                        <fx:include fx:id="panePassport" source="panePassport3.fxml" />
-                        <fx:include fx:id="paneMonasticProfile" source="paneMonasticProfile.fxml" />
-                        <fx:include fx:id="pane90DayNotice" source="pane90DayNotice.fxml" />
-                        <fx:include fx:id="paneBysuddhi" source="paneBysuddhi.fxml" />
-                        <fx:include fx:id="paneEditSave" source="paneEditSave.fxml" />
-                        <fx:include fx:id="paneDueTasks" source="paneDueTasks.fxml" />
-                        <fx:include fx:id="paneVisaExt" source="paneVisaExt.fxml" />
-                        <fx:include fx:id="paneMonastery" source="paneMonastery.fxml" />
-                        <fx:include fx:id="paneUpajjhaya" source="paneUpajjhaya.fxml" />
-                        <fx:include fx:id="paneAddChangeVisa" source="paneAddChangeVisa.fxml" />
-                    </children>
-                </StackPane>
-            </center>
+        <BorderPane>
             <left>
                 <VBox BorderPane.alignment="CENTER">
                     <children>
@@ -134,9 +116,31 @@
                     </children>
                 </VBox>
             </left>
-            <top>
-                <fx:include fx:id="paneSelection" source="paneSelection.fxml" />
-            </top>
+            <center>
+                <BorderPane fx:id="centerPane" BorderPane.alignment="CENTER">
+                    <top>
+                        <fx:include fx:id="paneSelection" source="paneSelection.fxml" />
+                    </top>
+                    <center>
+                        <StackPane alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <fx:include fx:id="paneAddRenewPassport" source="paneAddRenewPassport.fxml" />
+                                <fx:include fx:id="paneReEntry" source="paneReEntry.fxml" />
+                                <fx:include fx:id="panePassport" source="panePassport3.fxml" />
+                                <fx:include fx:id="paneMonasticProfile" source="paneMonasticProfile.fxml" />
+                                <fx:include fx:id="pane90DayNotice" source="pane90DayNotice.fxml" />
+                                <fx:include fx:id="paneBysuddhi" source="paneBysuddhi.fxml" />
+                                <fx:include fx:id="paneEditSave" source="paneEditSave.fxml" />
+                                <fx:include fx:id="paneDueTasks" source="paneDueTasks.fxml" />
+                                <fx:include fx:id="paneVisaExt" source="paneVisaExt.fxml" />
+                                <fx:include fx:id="paneMonastery" source="paneMonastery.fxml" />
+                                <fx:include fx:id="paneUpajjhaya" source="paneUpajjhaya.fxml" />
+                                <fx:include fx:id="paneAddChangeVisa" source="paneAddChangeVisa.fxml" />
+                            </children>
+                        </StackPane>
+                    </center>
+                </BorderPane>
+            </center>
         </BorderPane>
     </children>
 </VBox>

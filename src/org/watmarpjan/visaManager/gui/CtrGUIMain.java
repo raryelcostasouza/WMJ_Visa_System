@@ -114,7 +114,7 @@ public class CtrGUIMain
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
     @FXML
-    private BorderPane mainPanel;
+    private BorderPane centerPane;
 
     private boolean containsUnsavedChanges = false;
 
@@ -147,7 +147,7 @@ public class CtrGUIMain
             acc.setParent(this);
         }
 
-        mainPanel.setTop(paneSelection);
+        centerPane.setTop(paneSelection);
 
         this.ctrMain = new CtrMain(this);
         this.ctrDatePicker = new CtrDatePicker();
@@ -218,10 +218,10 @@ public class CtrGUIMain
     @FXML
     void actionDueTasksButton(ActionEvent ae)
     {
-        mainPanel.setTop(null);
-        mainPanel.setCenter(paneDueTasks);
+        centerPane.setTop(null);
+        centerPane.setCenter(paneDueTasks);
         currentPaneController = null;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         paneDueTasksController.fillData();
 
@@ -230,10 +230,10 @@ public class CtrGUIMain
     @FXML
     void actionMonasticProfileButton(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneMonasticProfile);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneMonasticProfile);
         currentPaneController = paneMonasticProfileController;
-        mainPanel.setBottom(paneEditSave);
+        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -242,10 +242,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonMonastery(ActionEvent ae)
     {
-        mainPanel.setTop(null);
-        mainPanel.setCenter(paneMonastery);
+        centerPane.setTop(null);
+        centerPane.setCenter(paneMonastery);
         currentPaneController = paneMonasteryController;
-        mainPanel.setBottom(paneEditSave);
+        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         paneMonasteryController.fillMonasteryData(null);
@@ -254,10 +254,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonUpajjhaya(ActionEvent ae)
     {
-        mainPanel.setTop(null);
-        mainPanel.setCenter(paneUpajjhaya);
+        centerPane.setTop(null);
+        centerPane.setCenter(paneUpajjhaya);
         currentPaneController = paneUpajjhayaController;
-        mainPanel.setBottom(paneEditSave);
+        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         paneUpajjhayaController.fillUpajjhayaData(null);
@@ -266,10 +266,10 @@ public class CtrGUIMain
     @FXML
     void actionPassportButton(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(panePassport);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(panePassport);
         currentPaneController = panePassportController;
-        mainPanel.setBottom(paneEditSave);
+        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -278,10 +278,10 @@ public class CtrGUIMain
     @FXML
     void actionBysuddhiButton(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneBysuddhi);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneBysuddhi);
         currentPaneController = paneBysuddhiController;
-        mainPanel.setBottom(paneEditSave);
+        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -290,10 +290,10 @@ public class CtrGUIMain
     @FXML
     void actionButton90DayNotice(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(pane90DayNotice);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(pane90DayNotice);
         currentPaneController = pane90DayNoticeController;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
 
@@ -302,10 +302,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonVisaExt(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneVisaExt);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneVisaExt);
         currentPaneController = paneVisaExtController;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -313,10 +313,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonReEntry(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneReEntry);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneReEntry);
         currentPaneController = paneReEntryController;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -324,10 +324,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonAddRenewPassport(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneAddRenewPassport);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneAddRenewPassport);
         currentPaneController = paneAddRenewPassportController;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -335,10 +335,10 @@ public class CtrGUIMain
     @FXML
     void actionButtonAddChangeVisa(ActionEvent ae)
     {
-        mainPanel.setTop(paneSelection);
-        mainPanel.setCenter(paneAddChangeVisa);
+        centerPane.setTop(paneSelection);
+        centerPane.setCenter(paneAddChangeVisa);
         currentPaneController = paneAddChangeVisaController;
-        mainPanel.setBottom(null);
+        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
