@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.gui.util.CtrFieldChangeListener;
 import org.watmarpjan.visaManager.model.ResultDialogSelectScan.AbstractResultDialogSelectScan;
 
 /**
@@ -121,6 +122,13 @@ public class CtrGUIMain
     private AbstractChildPaneController currentPaneController;
     private ArrayList<AbstractChildPaneController> listPaneControllers;
 
+    private CtrFieldChangeListener ctrFieldChangeListener;
+
+    public CtrFieldChangeListener getCtrFieldChangeListener()
+    {
+        return ctrFieldChangeListener;
+    }
+
     @FXML
     void initialize()
     {
@@ -151,6 +159,7 @@ public class CtrGUIMain
 
         this.ctrMain = new CtrMain(this);
         this.ctrDatePicker = new CtrDatePicker();
+        this.ctrFieldChangeListener = new CtrFieldChangeListener(paneEditSaveController);
 
         Init.MAIN_STAGE.setOnCloseRequest(new EventHandler<WindowEvent>()
         {
@@ -215,12 +224,28 @@ public class CtrGUIMain
         }
     }
 
+    private void checkUnsavedChanges()
+    {
+        boolean actionSaveBefore;
+        if ((currentPaneController instanceof IEditableGUIForm) && (ctrFieldChangeListener.hasUnsavedChanges()))
+        {
+            actionSaveBefore = CtrAlertDialog.confirmationUnsavedChanges();
+            if (actionSaveBefore)
+            {
+                ((IEditableGUIForm) currentPaneController).actionSave();
+            }
+            ctrFieldChangeListener.resetUnsavedChanges();
+        }
+    }
+
     @FXML
     void actionDueTasksButton(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(null);
         centerPane.setCenter(paneDueTasks);
-        currentPaneController = null;
+        currentPaneController = paneDueTasksController;
         centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         paneDueTasksController.fillData();
@@ -230,6 +255,8 @@ public class CtrGUIMain
     @FXML
     void actionMonasticProfileButton(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneMonasticProfile);
         currentPaneController = paneMonasticProfileController;
@@ -242,6 +269,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonMonastery(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(null);
         centerPane.setCenter(paneMonastery);
         currentPaneController = paneMonasteryController;
@@ -254,6 +283,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonUpajjhaya(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(null);
         centerPane.setCenter(paneUpajjhaya);
         currentPaneController = paneUpajjhayaController;
@@ -266,6 +297,8 @@ public class CtrGUIMain
     @FXML
     void actionPassportButton(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(panePassport);
         currentPaneController = panePassportController;
@@ -278,6 +311,8 @@ public class CtrGUIMain
     @FXML
     void actionBysuddhiButton(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneBysuddhi);
         currentPaneController = paneBysuddhiController;
@@ -290,6 +325,8 @@ public class CtrGUIMain
     @FXML
     void actionButton90DayNotice(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(pane90DayNotice);
         currentPaneController = pane90DayNoticeController;
@@ -302,6 +339,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonVisaExt(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneVisaExt);
         currentPaneController = paneVisaExtController;
@@ -313,6 +352,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonReEntry(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneReEntry);
         currentPaneController = paneReEntryController;
@@ -324,6 +365,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonAddRenewPassport(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneAddRenewPassport);
         currentPaneController = paneAddRenewPassportController;
@@ -335,6 +378,8 @@ public class CtrGUIMain
     @FXML
     void actionButtonAddChangeVisa(ActionEvent ae)
     {
+        checkUnsavedChanges();
+
         centerPane.setTop(paneSelection);
         centerPane.setCenter(paneAddChangeVisa);
         currentPaneController = paneAddChangeVisaController;

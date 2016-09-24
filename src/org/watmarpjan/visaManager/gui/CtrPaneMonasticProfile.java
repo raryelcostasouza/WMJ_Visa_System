@@ -134,7 +134,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @FXML
     private ImageView ivProfilePhoto;
 
-    private ArrayList<Node> fields;
+    private ArrayList fields;
 
     @Override
     public void init()
@@ -153,23 +153,54 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
     private void initChangeListener()
     {
-        fields = new ArrayList<>();
+        fields = new ArrayList();
         fields.add(tfNickname);
+        fields.add(tfName);
         fields.add(tfMiddleName);
         fields.add(tfLastName);
+        fields.add(tfMother);
+        fields.add(tfFather);
+        fields.add(tgStatus);
+        fields.add(dpBirthDate);
+        fields.add(tfBirthCountry);
+        fields.add(tfBirthPlace);
+        fields.add(tfEthnicity);
+        fields.add(tfNationality);
+        fields.add(cbOccupation);
+        fields.add(cbOccupationThai);
+        fields.add(cbCertificate);
+        fields.add(cbCertificateThai);
+        fields.add(tfSchool);
+        fields.add(tfGraduationYear);
+        fields.add(tfDuration);
+        fields.add(tfPreviousResidenceCountry);
+        fields.add(cbResidingAt);
+        fields.add(tfAdviserToCome);
+        fields.add(cbAdvisorWat);
+        fields.add(tgDhammaStudies);
+        fields.add(tfEmail);
+        fields.add(taEmergencyContact);
 
-        for (Node field : fields)
+        for (Object field : fields)
         {
             if (field instanceof TextField)
             {
-                ((TextField) field).textProperty().addListener(new ChangeListener<String>()
-                {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-                    {
-                        ctrGUIMain.setContainsUnsavedChanges(true);
-                    }
-                });
+                ((TextField) field).textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
+            } else if (field instanceof ComboBox)
+            {
+                ComboBox<String> cbStr;
+                cbStr = (ComboBox<String>) field;
+                cbStr.valueProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
+                cbStr.getEditor().textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
+            } else if (field instanceof DatePicker)
+            {
+                ((DatePicker) field).valueProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
+            } else if (field instanceof TextArea)
+            {
+                ((TextArea) field).textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
+            } else if (field instanceof ToggleGroup)
+            {
+                ((ToggleGroup) field).selectedToggleProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
             }
         }
     }

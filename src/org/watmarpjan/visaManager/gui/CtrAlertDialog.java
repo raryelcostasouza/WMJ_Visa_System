@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -43,6 +44,29 @@ public class CtrAlertDialog
         a.setContentText(msg);
         op = a.showAndWait();
         if (op.get() == ButtonType.OK)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public static boolean confirmationUnsavedChanges()
+    {
+        Alert a;
+        Optional<ButtonType> op;
+
+        ButtonType saveButtonType = new ButtonType("Save", ButtonData.OK_DONE);
+        ButtonType discardButtonType = new ButtonType("Discard", ButtonData.CANCEL_CLOSE);
+
+        a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Unsaved Changes");
+        a.setContentText("There are unsaved changes on the current form. Would you like to save or discard them?");
+        a.getDialogPane().getButtonTypes().setAll(saveButtonType, discardButtonType);
+
+        op = a.showAndWait();
+        if (op.get() == saveButtonType)
         {
             return true;
         } else
