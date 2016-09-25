@@ -119,8 +119,6 @@ public class CtrGUIMain
     @FXML
     private BorderPane topPane;
 
-    private boolean containsUnsavedChanges = false;
-
     private AbstractChildPaneController currentPaneController;
     private ArrayList<AbstractChildPaneController> listPaneControllers;
 
@@ -439,16 +437,6 @@ public class CtrGUIMain
                 ((IFormMonasticProfile) currentPaneController).fillData(p);
             }
         }
-    }
-
-    public void setContainsUnsavedChanges(boolean newStatus)
-    {
-        containsUnsavedChanges = newStatus;
-    }
-
-    public boolean containsUnsavedChanges()
-    {
-        return containsUnsavedChanges;
     }
 
     public IEditableGUIForm getCurrentEditableGUIFormController()

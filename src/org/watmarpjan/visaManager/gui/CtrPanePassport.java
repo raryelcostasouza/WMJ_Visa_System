@@ -157,6 +157,20 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         fieldsScan1 = new FieldsPaneScanContent(bScan1, bArchive1, tfScan1PageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
         fieldsScan2 = new FieldsPaneScanContent(bScan2, bArchive2, tfScan2PageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
         fieldsScan3 = new FieldsPaneScanContent(bScan3, bArchive3, tfScan3PageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
+
+        initChangeListener();
+    }
+
+    private void initChangeListener()
+    {
+        ArrayList listFields;
+        listFields = new ArrayList();
+
+        listFields.add(dpFirstEntryDate);
+        listFields.add(dpNext90dayNotice);
+        listFields.add(dpFirstEntryDate);
+
+        ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
     }
 
     @Override
@@ -580,5 +594,11 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         p.setArrivalLastEntryDate(Util.convertLocalDateToDate(dpLastEntry.getValue()));
 
         operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+
+        if (operationStatus == 0)
+        {
+            ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+            CtrAlertDialog.infoDialog("Passport update", "The passport information was successfully updated.");
+        }
     }
 }

@@ -134,14 +134,41 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @FXML
     private ImageView ivProfilePhoto;
 
-    private ArrayList fields;
-
     @Override
     public void init()
     {
+        ArrayList listFields;
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpBirthDate);
 
-        initChangeListener();
+        listFields = new ArrayList();
+        listFields.add(tfNickname);
+        listFields.add(tfName);
+        listFields.add(tfMiddleName);
+        listFields.add(tfLastName);
+        listFields.add(tfMother);
+        listFields.add(tfFather);
+        listFields.add(tgStatus);
+        listFields.add(dpBirthDate);
+        listFields.add(tfBirthCountry);
+        listFields.add(tfBirthPlace);
+        listFields.add(tfEthnicity);
+        listFields.add(tfNationality);
+        listFields.add(cbOccupation);
+        listFields.add(cbOccupationThai);
+        listFields.add(cbCertificate);
+        listFields.add(cbCertificateThai);
+        listFields.add(tfSchool);
+        listFields.add(tfGraduationYear);
+        listFields.add(tfDuration);
+        listFields.add(tfPreviousResidenceCountry);
+        listFields.add(cbResidingAt);
+        listFields.add(tfAdviserToCome);
+        listFields.add(cbAdvisorWat);
+        listFields.add(tgDhammaStudies);
+        listFields.add(tfEmail);
+        listFields.add(taEmergencyContact);
+        ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
+
         loadContentsCBWat();
     }
 
@@ -149,60 +176,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     public boolean isSelectionEmpty()
     {
         return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
-    }
-
-    private void initChangeListener()
-    {
-        fields = new ArrayList();
-        fields.add(tfNickname);
-        fields.add(tfName);
-        fields.add(tfMiddleName);
-        fields.add(tfLastName);
-        fields.add(tfMother);
-        fields.add(tfFather);
-        fields.add(tgStatus);
-        fields.add(dpBirthDate);
-        fields.add(tfBirthCountry);
-        fields.add(tfBirthPlace);
-        fields.add(tfEthnicity);
-        fields.add(tfNationality);
-        fields.add(cbOccupation);
-        fields.add(cbOccupationThai);
-        fields.add(cbCertificate);
-        fields.add(cbCertificateThai);
-        fields.add(tfSchool);
-        fields.add(tfGraduationYear);
-        fields.add(tfDuration);
-        fields.add(tfPreviousResidenceCountry);
-        fields.add(cbResidingAt);
-        fields.add(tfAdviserToCome);
-        fields.add(cbAdvisorWat);
-        fields.add(tgDhammaStudies);
-        fields.add(tfEmail);
-        fields.add(taEmergencyContact);
-
-        for (Object field : fields)
-        {
-            if (field instanceof TextField)
-            {
-                ((TextField) field).textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-            } else if (field instanceof ComboBox)
-            {
-                ComboBox<String> cbStr;
-                cbStr = (ComboBox<String>) field;
-                cbStr.valueProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-                cbStr.getEditor().textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-            } else if (field instanceof DatePicker)
-            {
-                ((DatePicker) field).valueProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-            } else if (field instanceof TextArea)
-            {
-                ((TextArea) field).textProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-            } else if (field instanceof ToggleGroup)
-            {
-                ((ToggleGroup) field).selectedToggleProperty().addListener(ctrGUIMain.getCtrFieldChangeListener());
-            }
-        }
     }
 
     @Override
@@ -601,7 +574,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
                 ctrGUIMain.getPaneSelectionController().reloadNicknameList(newNickName);
                 CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
             }
-            ctrGUIMain.setContainsUnsavedChanges(false);
+            ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
             CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
 
         }

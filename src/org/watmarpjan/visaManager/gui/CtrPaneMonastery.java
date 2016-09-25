@@ -66,6 +66,20 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
 
     public void init()
     {
+        ArrayList listFields;
+        listFields = new ArrayList();
+
+        listFields.add(tfName);
+        listFields.add(tfAddrCountry);
+        listFields.add(tfAddrProvince);
+        listFields.add(tfAddrTambol);
+        listFields.add(tfAddrRoad);
+        listFields.add(tfAddrNumber);
+        listFields.add(tfPhoneNumber);
+        listFields.add(tgJaokana);
+
+        ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
+
         fillMonasteryList();
     }
 
@@ -138,6 +152,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
                     cbMonasteryList.setValue(newName);
                 }
 
+                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Monastery update", "The monastery information was successfully updated.");
             }
         }

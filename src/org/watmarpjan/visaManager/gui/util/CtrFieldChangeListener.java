@@ -5,8 +5,14 @@
  */
 package org.watmarpjan.visaManager.gui.util;
 
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import org.watmarpjan.visaManager.gui.CtrPaneEditSave;
 
 /**
@@ -45,6 +51,32 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
             System.out.println("oldValue: " + oldValue + " | newValue: " + newValue);
             unsavedChangesCurrentForm = true;
             ctrEditSave.enableSaveButton();
+        }
+    }
+
+    public void registerChangeListener(ArrayList alFields)
+    {
+        for (Object field : alFields)
+        {
+            if (field instanceof TextField)
+            {
+                ((TextField) field).textProperty().addListener(this);
+            } else if (field instanceof ComboBox)
+            {
+                ComboBox<String> cbStr;
+                cbStr = (ComboBox<String>) field;
+                cbStr.valueProperty().addListener(this);
+                cbStr.getEditor().textProperty().addListener(this);
+            } else if (field instanceof DatePicker)
+            {
+                ((DatePicker) field).valueProperty().addListener(this);
+            } else if (field instanceof TextArea)
+            {
+                ((TextArea) field).textProperty().addListener(this);
+            } else if (field instanceof ToggleGroup)
+            {
+                ((ToggleGroup) field).selectedToggleProperty().addListener(this);
+            }
         }
     }
 

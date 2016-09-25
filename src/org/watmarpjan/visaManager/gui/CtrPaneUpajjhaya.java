@@ -35,6 +35,14 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
     @Override
     public void init()
     {
+        ArrayList listFields;
+        listFields = new ArrayList();
+
+        listFields.add(tfName);
+        listFields.add(cbMonasteryList);
+
+        ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
+
         fillUpajjhayaList();
         fillMonasteryList();
     }
@@ -74,6 +82,7 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
                     cbUpajjhayaList.setValue(newName);
                 }
 
+                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Upajjhaya update", "The upajjhaya information was successfully updated.");
             }
         }
@@ -90,7 +99,7 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
     @Override
     public boolean isSelectionEmpty()
     {
-        if (cbMonasteryList.getValue() == null)
+        if (cbUpajjhayaList.getValue() == null)
         {
             return true;
         } else

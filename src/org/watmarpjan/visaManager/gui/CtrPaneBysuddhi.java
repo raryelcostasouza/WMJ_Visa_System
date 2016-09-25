@@ -76,14 +76,33 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpSamaneraOrd);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpBhikkhuOrd);
 
+        initChangeListener();
         loadContentsCBWat();
         loadContentsCBUpajjhaya();
+    }
+
+    private void initChangeListener()
+    {
+        ArrayList listFields;
+        listFields = new ArrayList();
+
+        listFields.add(dpIssueDate);
+        listFields.add(dpPahkahwOrd);
+        listFields.add(dpSamaneraOrd);
+        listFields.add(dpBhikkhuOrd);
+        listFields.add(tfPaliName);
+        listFields.add(tfPaliNameThai);
+        listFields.add(cbOrdainedAt);
+        listFields.add(cbUpajjhaya);
+
+        ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
     }
 
     @Override
     public void actionLockEdit()
     {
         dpIssueDate.setDisable(true);
+        dpPahkahwOrd.setDisable(true);
         dpSamaneraOrd.setDisable(true);
         dpBhikkhuOrd.setDisable(true);
 
@@ -99,6 +118,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     public void actionUnlockEdit()
     {
         dpIssueDate.setDisable(false);
+        dpPahkahwOrd.setDisable(false);
         dpSamaneraOrd.setDisable(false);
         dpBhikkhuOrd.setDisable(false);
 
@@ -148,6 +168,11 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         }
 
         operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+        if (operationStatus == 0)
+        {
+            ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+            CtrAlertDialog.infoDialog("Bysuddhi update", "The bysuddhi information was successfully updated.");
+        }
     }
 
     @Override
