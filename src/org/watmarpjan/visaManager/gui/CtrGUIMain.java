@@ -116,6 +116,8 @@ public class CtrGUIMain
 
     @FXML
     private BorderPane centerPane;
+    @FXML
+    private BorderPane topPane;
 
     private boolean containsUnsavedChanges = false;
 
@@ -155,7 +157,7 @@ public class CtrGUIMain
             acc.setParent(this);
         }
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
 
         this.ctrMain = new CtrMain(this);
         this.ctrDatePicker = new CtrDatePicker();
@@ -243,10 +245,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(null);
+        topPane.setRight(null);
+        topPane.setLeft(null);
         centerPane.setCenter(paneDueTasks);
         currentPaneController = paneDueTasksController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         paneDueTasksController.fillData();
 
@@ -257,10 +259,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonasticProfile);
         currentPaneController = paneMonasticProfileController;
-        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -271,10 +273,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(null);
+        topPane.setRight(null);
+        topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonastery);
         currentPaneController = paneMonasteryController;
-        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         paneMonasteryController.fillMonasteryData(null);
@@ -285,10 +287,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(null);
+        topPane.setRight(null);
+        topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneUpajjhaya);
         currentPaneController = paneUpajjhayaController;
-        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         paneUpajjhayaController.fillUpajjhayaData(null);
@@ -299,10 +301,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(paneEditSave);
         centerPane.setCenter(panePassport);
         currentPaneController = panePassportController;
-        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -313,10 +315,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneBysuddhi);
         currentPaneController = paneBysuddhiController;
-        centerPane.setBottom(paneEditSave);
         Init.MAIN_STAGE.sizeToScene();
         paneEditSaveController.actionLock();
         fillMonasticProfileData();
@@ -327,10 +329,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(null);
         centerPane.setCenter(pane90DayNotice);
         currentPaneController = pane90DayNoticeController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
 
@@ -341,10 +343,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(null);
         centerPane.setCenter(paneVisaExt);
         currentPaneController = paneVisaExtController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -354,10 +356,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(null);
         centerPane.setCenter(paneReEntry);
         currentPaneController = paneReEntryController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -367,10 +369,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(null);
         centerPane.setCenter(paneAddRenewPassport);
         currentPaneController = paneAddRenewPassportController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -380,10 +382,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        centerPane.setTop(paneSelection);
+        topPane.setRight(paneSelection);
+        topPane.setLeft(null);
         centerPane.setCenter(paneAddChangeVisa);
         currentPaneController = paneAddChangeVisaController;
-        centerPane.setBottom(null);
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
