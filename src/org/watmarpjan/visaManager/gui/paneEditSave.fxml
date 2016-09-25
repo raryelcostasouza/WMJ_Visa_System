@@ -16,7 +16,7 @@
         </Label>
         <Button fx:id="bLockUnlock" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#actionLockUnlockButton" text="Locked" />
         <Separator orientation="VERTICAL" />
-        <Button fx:id="bSave" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#actionSave" text="Save">
+        <Button fx:id="bSave" contentDisplay="TOP" disable="true" mnemonicParsing="false" onAction="#actionSave" text="Save">
             <HBox.margin>
                 <Insets left="10.0" />
             </HBox.margin>

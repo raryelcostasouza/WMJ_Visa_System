@@ -33,15 +33,19 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     @Override
     public void init()
     {
-        Path pIconLock, pIconUnlock;
+        Path pIconLock, pIconUnlock, pIconSave;
+        ImageView ivSaveButton;
 
         pIconLock = AppPaths.getPathToIconSubfolder().resolve("lock.png");
         pIconUnlock = AppPaths.getPathToIconSubfolder().resolve("unlock.png");
+        pIconSave = AppPaths.getPathToIconSubfolder().resolve("save.png");
 
-        ivLock = new ImageView(new File(pIconLock.toString()).toURI().toString());
-        ivUnlock = new ImageView(new File(pIconUnlock.toString()).toURI().toString());
+        ivLock = new ImageView(pIconLock.toFile().toURI().toString());
+        ivUnlock = new ImageView(pIconUnlock.toFile().toURI().toString());
+        ivSaveButton = new ImageView(pIconSave.toFile().toURI().toString());
 
         bLockUnlock.setGraphic(ivLock);
+        bSave.setGraphic(ivSaveButton);
         lockStatus = true;
     }
 
@@ -62,7 +66,6 @@ public class CtrPaneEditSave extends AbstractChildPaneController
         lockStatus = true;
         bLockUnlock.setGraphic(ivLock);
         ctrGUIMain.getCurrentEditableGUIFormController().actionLockEdit();
-        bSave.setDisable(true);
     }
 
     private void actionUnlock()
@@ -70,13 +73,22 @@ public class CtrPaneEditSave extends AbstractChildPaneController
         lockStatus = false;
         bLockUnlock.setGraphic(ivUnlock);
         ctrGUIMain.getCurrentEditableGUIFormController().actionUnlockEdit();
-        bSave.setDisable(false);
     }
 
     @FXML
     void actionSave(ActionEvent ae)
     {
         ctrGUIMain.getCurrentEditableGUIFormController().actionSave();
+    }
+
+    public void enableSaveButton()
+    {
+        bSave.setDisable(false);
+    }
+
+    public void disableSaveButton()
+    {
+        bSave.setDisable(true);
     }
 
     public boolean getLockStatus()

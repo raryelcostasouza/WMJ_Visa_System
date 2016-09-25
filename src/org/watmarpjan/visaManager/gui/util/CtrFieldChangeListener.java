@@ -7,7 +7,6 @@ package org.watmarpjan.visaManager.gui.util;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Toggle;
 import org.watmarpjan.visaManager.gui.CtrPaneEditSave;
 
 /**
@@ -34,6 +33,7 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
     public void resetUnsavedChanges()
     {
         this.unsavedChangesCurrentForm = false;
+        ctrEditSave.disableSaveButton();
     }
 
     @Override
@@ -41,8 +41,10 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
     {
         if (!ctrEditSave.getLockStatus() && !unsavedChangesCurrentForm)
         {
+            //TODO remove this line
             System.out.println("oldValue: " + oldValue + " | newValue: " + newValue);
             unsavedChangesCurrentForm = true;
+            ctrEditSave.enableSaveButton();
         }
     }
 
