@@ -88,7 +88,7 @@ public class CtrDatabase
         try
         {
             openTransaction();
-            getSession().refresh(obj);
+            getSession().flush();
             commitCurrentTransaction();
             return 0;
         } catch (HibernateException he)
