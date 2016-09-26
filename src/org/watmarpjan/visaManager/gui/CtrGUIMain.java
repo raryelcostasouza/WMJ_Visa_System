@@ -46,67 +46,67 @@ public class CtrGUIMain
     private ToggleGroup tgDateFormat;
 
     @FXML
-    private CtrPaneSelection paneSelectionController;
+    private CtrPaneMonasticSelection ctrPaneMonasticSelection;
     @FXML
-    private Pane paneSelection;
+    private Pane paneMonasticSelection;
 
     @FXML
-    private CtrPaneEditSave paneEditSaveController;
+    private CtrPaneEditSave ctrPaneEditSave;
     @FXML
     private HBox paneEditSave;
 
     @FXML
-    private CtrPaneMonasticProfile paneMonasticProfileController;
+    private CtrPaneMonasticProfile ctrPaneMonasticProfile;
     @FXML
     private VBox paneMonasticProfile;
 
     @FXML
-    private CtrPaneMonastery paneMonasteryController;
+    private CtrPaneMonastery ctrPaneMonastery;
     @FXML
     private VBox paneMonastery;
 
     @FXML
-    private CtrPaneUpajjhaya paneUpajjhayaController;
+    private CtrPaneUpajjhaya ctrPaneUpajjhaya;
     @FXML
     private VBox paneUpajjhaya;
 
     @FXML
-    private CtrPanePassport panePassportController;
+    private CtrPanePassport ctrPanePassport;
     @FXML
-    private SplitPane panePassport;
+    private BorderPane panePassport;
 
     @FXML
-    private CtrPaneBysuddhi paneBysuddhiController;
+    private CtrPaneBysuddhi ctrPaneBysuddhi;
     @FXML
     private SplitPane paneBysuddhi;
 
     @FXML
-    private CtrPaneDueTasks paneDueTasksController;
+    private CtrPaneDueTasks ctrPaneDueTasks;
     @FXML
     private TabPane paneDueTasks;
 
     @FXML
-    private CtrPane90DayNotice pane90DayNoticeController;
+    private CtrPane90DayNotice ctrPane90DayNotice;
     @FXML
     private TabPane pane90DayNotice;
 
     @FXML
-    private CtrPaneVisaExt paneVisaExtController;
+    private CtrPaneVisaExt ctrPaneVisaExt;
     @FXML
     private TabPane paneVisaExt;
 
     @FXML
-    private CtrPaneAddEntryReEntry paneReEntryController;
+    private CtrPaneAddEntryReEntry ctrPaneReEntry;
     @FXML
     private TabPane paneReEntry;
 
     @FXML
-    private CtrPaneAddRenewPassport paneAddRenewPassportController;
+    private CtrPaneAddRenewPassport ctrPaneAddRenewPassport;
     @FXML
     private VBox paneAddRenewPassport;
 
     @FXML
-    private CtrPaneAddChangeVisa paneAddChangeVisaController;
+    private CtrPaneAddChangeVisa ctrPaneAddChangeVisa;
     @FXML
     private TabPane paneAddChangeVisa;
 
@@ -132,34 +132,8 @@ public class CtrGUIMain
     @FXML
     void initialize()
     {
-
-        listPaneControllers = new ArrayList<>();
-
-        listPaneControllers.add(paneDueTasksController);
-        listPaneControllers.add(paneMonasticProfileController);
-        listPaneControllers.add(paneMonasteryController);
-        listPaneControllers.add(paneUpajjhayaController);
-        listPaneControllers.add(panePassportController);
-        listPaneControllers.add(paneBysuddhiController);
-        listPaneControllers.add(paneSelectionController);
-        listPaneControllers.add(paneEditSaveController);
-        listPaneControllers.add(pane90DayNoticeController);
-        listPaneControllers.add(paneVisaExtController);
-        listPaneControllers.add(paneReEntryController);
-        listPaneControllers.add(paneAddRenewPassportController);
-        listPaneControllers.add(paneAddChangeVisaController);
-        initDialogSelectExtraScan();
-
-        for (AbstractChildPaneController acc : listPaneControllers)
-        {
-            acc.setParent(this);
-        }
-
-        topPane.setRight(paneSelection);
-
         this.ctrMain = new CtrMain(this);
         this.ctrDatePicker = new CtrDatePicker();
-        this.ctrFieldChangeListener = new CtrFieldChangeListener(paneEditSaveController);
 
         Init.MAIN_STAGE.setOnCloseRequest(new EventHandler<WindowEvent>()
         {
@@ -173,8 +147,27 @@ public class CtrGUIMain
             }
         });
 
-        initChildControllers();
+        listPaneControllers = new ArrayList<>();
+        initPaneDueTasks();
 
+        initPaneMonasticProfile();
+        initPanePassport();
+        initPaneBysuddhi();
+        initPaneMonastery();
+        initPaneUpajjhaya();
+
+        initPane90DayNotice();
+        initPaneAddChangeVisa();
+        initPaneAddRenewPassport();
+        initPaneReEntry();
+        initPaneVisaExt();
+
+        initPaneMonasticSelection();
+        initPaneEditSave();
+        initDialogSelectExtraScan();
+
+        this.ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
+        initChildControllers();
         actionDueTasksButton(null);
     }
 
@@ -200,6 +193,214 @@ public class CtrGUIMain
             CtrAlertDialog.exceptionDialog(e, "Error to load Dialog Panel.");
         }
 
+    }
+
+    private void initPaneMonasticProfile()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneMonasticProfile.fxml"));
+            paneMonasticProfile = loader.load();
+            ctrPaneMonasticProfile = loader.getController();
+            listPaneControllers.add(ctrPaneMonasticProfile);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPanePassport()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("panePassport2.fxml"));
+            panePassport = loader.load();
+            ctrPanePassport = loader.getController();
+            listPaneControllers.add(ctrPanePassport);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneBysuddhi()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneBysuddhi.fxml"));
+            paneBysuddhi = loader.load();
+            ctrPaneBysuddhi = loader.getController();
+            listPaneControllers.add(ctrPaneBysuddhi);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneDueTasks()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneDueTasks.fxml"));
+            paneDueTasks = loader.load();
+            ctrPaneDueTasks = loader.getController();
+            listPaneControllers.add(ctrPaneDueTasks);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneMonastery()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneMonastery.fxml"));
+            paneMonastery = loader.load();
+            ctrPaneMonastery = loader.getController();
+            listPaneControllers.add(ctrPaneMonastery);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneUpajjhaya()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneUpajjhaya.fxml"));
+            paneUpajjhaya = loader.load();
+            ctrPaneUpajjhaya = loader.getController();
+            listPaneControllers.add(ctrPaneUpajjhaya);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneVisaExt()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneVisaExt.fxml"));
+            paneVisaExt = loader.load();
+            ctrPaneVisaExt = loader.getController();
+            listPaneControllers.add(ctrPaneVisaExt);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneReEntry()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneReEntry.fxml"));
+            paneReEntry = loader.load();
+            ctrPaneReEntry = loader.getController();
+            listPaneControllers.add(ctrPaneReEntry);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneAddRenewPassport()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneAddRenewPassport.fxml"));
+            paneAddRenewPassport = loader.load();
+            ctrPaneAddRenewPassport = loader.getController();
+            listPaneControllers.add(ctrPaneAddRenewPassport);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneAddChangeVisa()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneAddChangeVisa.fxml"));
+            paneAddChangeVisa = loader.load();
+            ctrPaneAddChangeVisa = loader.getController();
+            listPaneControllers.add(ctrPaneAddChangeVisa);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPane90DayNotice()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("pane90DayNotice.fxml"));
+            pane90DayNotice = loader.load();
+            ctrPane90DayNotice = loader.getController();
+            listPaneControllers.add(ctrPane90DayNotice);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneEditSave()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneEditSave.fxml"));
+            paneEditSave = loader.load();
+            ctrPaneEditSave = loader.getController();
+            listPaneControllers.add(ctrPaneEditSave);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
+    private void initPaneMonasticSelection()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneMonasticSelection.fxml"));
+            paneMonasticSelection = loader.load();
+            ctrPaneMonasticSelection = loader.getController();
+            listPaneControllers.add(ctrPaneMonasticSelection);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
     }
 
     public CtrMain getCtrMain()
@@ -246,9 +447,9 @@ public class CtrGUIMain
         topPane.setRight(null);
         topPane.setLeft(null);
         centerPane.setCenter(paneDueTasks);
-        currentPaneController = paneDueTasksController;
+        currentPaneController = ctrPaneDueTasks;
         Init.MAIN_STAGE.sizeToScene();
-        paneDueTasksController.fillData();
+        ctrPaneDueTasks.fillData();
 
     }
 
@@ -257,12 +458,12 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonasticProfile);
-        currentPaneController = paneMonasticProfileController;
+        currentPaneController = ctrPaneMonasticProfile;
         Init.MAIN_STAGE.sizeToScene();
-        paneEditSaveController.actionLock();
+        ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
     }
 
@@ -274,10 +475,10 @@ public class CtrGUIMain
         topPane.setRight(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonastery);
-        currentPaneController = paneMonasteryController;
+        currentPaneController = ctrPaneMonastery;
         Init.MAIN_STAGE.sizeToScene();
-        paneEditSaveController.actionLock();
-        paneMonasteryController.fillMonasteryData(null);
+        ctrPaneEditSave.actionLock();
+        ctrPaneMonastery.fillMonasteryData(null);
     }
 
     @FXML
@@ -288,10 +489,10 @@ public class CtrGUIMain
         topPane.setRight(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneUpajjhaya);
-        currentPaneController = paneUpajjhayaController;
+        currentPaneController = ctrPaneUpajjhaya;
         Init.MAIN_STAGE.sizeToScene();
-        paneEditSaveController.actionLock();
-        paneUpajjhayaController.fillUpajjhayaData(null);
+        ctrPaneEditSave.actionLock();
+        ctrPaneUpajjhaya.fillUpajjhayaData(null);
     }
 
     @FXML
@@ -299,12 +500,12 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(panePassport);
-        currentPaneController = panePassportController;
+        currentPaneController = ctrPanePassport;
         Init.MAIN_STAGE.sizeToScene();
-        paneEditSaveController.actionLock();
+        ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
     }
 
@@ -313,12 +514,12 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneBysuddhi);
-        currentPaneController = paneBysuddhiController;
+        currentPaneController = ctrPaneBysuddhi;
         Init.MAIN_STAGE.sizeToScene();
-        paneEditSaveController.actionLock();
+        ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
     }
 
@@ -327,10 +528,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(pane90DayNotice);
-        currentPaneController = pane90DayNoticeController;
+        currentPaneController = ctrPane90DayNotice;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
 
@@ -341,10 +542,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneVisaExt);
-        currentPaneController = paneVisaExtController;
+        currentPaneController = ctrPaneVisaExt;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -354,10 +555,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneReEntry);
-        currentPaneController = paneReEntryController;
+        currentPaneController = ctrPaneReEntry;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -367,10 +568,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneAddRenewPassport);
-        currentPaneController = paneAddRenewPassportController;
+        currentPaneController = ctrPaneAddRenewPassport;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -380,10 +581,10 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneSelection);
+        topPane.setRight(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneAddChangeVisa);
-        currentPaneController = paneAddChangeVisaController;
+        currentPaneController = ctrPaneAddChangeVisa;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
@@ -405,13 +606,14 @@ public class CtrGUIMain
     {
         for (AbstractChildPaneController acc : listPaneControllers)
         {
+            acc.setParent(this);
             acc.init();
         }
     }
 
-    public CtrPaneSelection getPaneSelectionController()
+    public CtrPaneMonasticSelection getPaneSelectionController()
     {
-        return paneSelectionController;
+        return ctrPaneMonasticSelection;
     }
 
     public Dialog getDialogSelectExtraScan()
@@ -421,14 +623,14 @@ public class CtrGUIMain
 
     public CtrPaneMonasticProfile getPaneMonasticProfileController()
     {
-        return paneMonasticProfileController;
+        return ctrPaneMonasticProfile;
     }
 
     public void fillMonasticProfileData()
     {
         Profile p;
 
-        p = paneSelectionController.getSelectedProfile();
+        p = ctrPaneMonasticSelection.getSelectedProfile();
 
         if ((currentPaneController != null) && currentPaneController instanceof IFormMonasticProfile)
         {
@@ -452,7 +654,7 @@ public class CtrGUIMain
 
     public CtrPaneEditSave getPaneEditSaveController()
     {
-        return paneEditSaveController;
+        return ctrPaneEditSave;
     }
 
     public CtrDatePicker getCtrDatePicker()

@@ -30,6 +30,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
 
 /**
  *

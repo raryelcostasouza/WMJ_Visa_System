@@ -18,7 +18,7 @@ import org.watmarpjan.visaManager.model.hibernate.Profile;
  *
  * @author WMJ_user
  */
-public class CtrPaneSelection extends AbstractChildPaneController
+public class CtrPaneMonasticSelection extends AbstractChildPaneController
 {
 
     @FXML
