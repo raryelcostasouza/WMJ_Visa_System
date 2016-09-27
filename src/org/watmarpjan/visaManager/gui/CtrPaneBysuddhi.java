@@ -226,7 +226,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
 
             if (p.getUpajjhaya() != null)
             {
-                cbUpajjhaya.setValue(p.getUpajjhaya().getName());
+                cbUpajjhaya.setValue(p.getUpajjhaya().getUpajjhayaName());
             } else
             {
                 cbUpajjhaya.setValue(null);

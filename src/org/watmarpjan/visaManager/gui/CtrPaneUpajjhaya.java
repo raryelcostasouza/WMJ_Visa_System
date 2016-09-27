@@ -66,10 +66,10 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
 
         if (u != null)
         {
-            previousName = u.getName();
+            previousName = u.getUpajjhayaName();
             newName = tfName.getText();
 
-            u.setName(tfName.getText());
+            u.setUpajjhayaName(tfName.getText());
             u.setMonastery(ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbMonasteryList.getValue()));
 
             opStatus = ctrGUIMain.getCtrMain().getCtrUpajjhaya().update(u);
@@ -142,7 +142,7 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
         //If Upajjhaya u exists on DB
         if (u != null)
         {
-            tfName.setText(u.getName());
+            tfName.setText(u.getUpajjhayaName());
             if (u.getMonastery() != null)
             {
                 cbMonasteryList.setValue(u.getMonastery().getName());
