@@ -14,12 +14,11 @@ import javax.persistence.EntityManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
  *
@@ -48,7 +47,7 @@ public class CtrDatabase
             finish = Instant.now();
 
             System.out.println("Hibernate load time: " + Duration.between(start, finish));
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             CtrAlertDialog.exceptionDialog(he, "Error when connecting to Database: \n" + he.getMessage());
             System.exit(-1);
@@ -88,10 +87,9 @@ public class CtrDatabase
         try
         {
             openTransaction();
-            getSession().flush();
             commitCurrentTransaction();
             return 0;
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             rollbackCurrentTransaction();
 
@@ -115,24 +113,9 @@ public class CtrDatabase
                 entityManager.close();
             }
             emFactory.close();
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             CtrAlertDialog.exceptionDialog(hex, "Error to close DB connection.");
-        }
-    }
-
-    //TODO test this function
-    public void saveOrUpdate(PassportScan ps)
-    {
-        PassportScan resultSearch;
-
-        resultSearch = getSession().find(PassportScan.class, ps.getId());
-        if (resultSearch != null)
-        {
-            getSession().refresh(ps);
-        } else
-        {
-            getSession().persist(ps);
         }
     }
 }
