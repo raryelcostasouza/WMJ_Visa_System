@@ -216,7 +216,7 @@ public class CtrGUIMain
         FXMLLoader loader;
         try
         {
-            loader = new FXMLLoader(getClass().getResource("panePassport2.fxml"));
+            loader = new FXMLLoader(getClass().getResource("panePassport.fxml"));
             panePassport = loader.load();
             ctrPanePassport = loader.getController();
             listPaneControllers.add(ctrPanePassport);
