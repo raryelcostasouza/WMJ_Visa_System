@@ -6,7 +6,7 @@
 package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
@@ -41,13 +41,13 @@ public class CtrUpajjhaya
             ctrDB.getSession().flush();
 
             generatedID = u.getIdupajjhaya();
-            u.setName("New Upajjhaya " + generatedID);
+            u.setUpajjhayaName("New Upajjhaya " + generatedID);
 
             ctrDB.commitCurrentTransaction();
 
-            return u.getName();
+            return u.getUpajjhayaName();
 
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDB.rollbackCurrentTransaction();
 
@@ -72,7 +72,7 @@ public class CtrUpajjhaya
         ArrayList<String> alUpajjhaya;
         String hql;
 
-        hql = "select u.name from Upajjhaya u";
+        hql = "select u.upajjhayaName from Upajjhaya u";
         alUpajjhaya = (ArrayList<String>) ctrDB.getSession().createQuery(hql).getResultList();
 
         return alUpajjhaya;
@@ -83,7 +83,7 @@ public class CtrUpajjhaya
         ArrayList<Upajjhaya> alUpajjhaya;
         String hql;
 
-        hql = "from Upajjhaya u where u.name = " + "'" + name + "'";
+        hql = "from Upajjhaya u where u.upajjhayaName = " + "'" + name + "'";
         alUpajjhaya = (ArrayList<Upajjhaya>) ctrDB.getSession().createQuery(hql).getResultList();
         if (!alUpajjhaya.isEmpty())
         {

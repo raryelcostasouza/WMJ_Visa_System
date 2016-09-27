@@ -8,7 +8,7 @@ package org.watmarpjan.visaManager.control;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryDueTask;
@@ -52,7 +52,7 @@ public class CtrProfile
             ctrDatabase.commitCurrentTransaction();
             return p.getNickname();
 
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDatabase.rollbackCurrentTransaction();
 
@@ -78,7 +78,7 @@ public class CtrProfile
             //applies to other entities as well
             ctrDatabase.commitCurrentTransaction();
             return 0;
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDatabase.rollbackCurrentTransaction();
 
@@ -102,12 +102,14 @@ public class CtrProfile
         try
         {
             ctrDatabase.openTransaction();
-            ctrDatabase.getSession().refresh(p);
+            if (psArriveStamp.getId() == null)
+            {
+                ctrDatabase.getSession().persist(psArriveStamp);
+            }
 
-            ctrDatabase.saveOrUpdate(psArriveStamp);
             ctrDatabase.commitCurrentTransaction();
             return 0;
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDatabase.rollbackCurrentTransaction();
 
@@ -195,7 +197,7 @@ public class CtrProfile
         {
             p = (Profile) ctrDatabase.getSession().getReference(Profile.class, id);
             return p;
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             CtrAlertDialog.exceptionDialog(he, "Error when loading profile.");
             return null;

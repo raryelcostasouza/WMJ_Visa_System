@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.NoResultException;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
@@ -42,7 +42,7 @@ public class CtrPassportScan
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
@@ -76,7 +76,7 @@ public class CtrPassportScan
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
@@ -102,7 +102,7 @@ public class CtrPassportScan
             }
             ctrDB.commitCurrentTransaction();
             return 0;
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             CtrAlertDialog.exceptionDialog(hex, "Error to clear passport scans");

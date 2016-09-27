@@ -6,7 +6,7 @@
 package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
@@ -47,7 +47,7 @@ public class CtrMonastery
 
             return m.getName();
 
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDB.rollbackCurrentTransaction();
 
@@ -67,10 +67,9 @@ public class CtrMonastery
         try
         {
             ctrDB.openTransaction();
-            ctrDB.getSession().refresh(m);
             ctrDB.commitCurrentTransaction();
             return 0;
-        } catch (HibernateException he)
+        } catch (PersistenceException he)
         {
             ctrDB.rollbackCurrentTransaction();
 

@@ -7,7 +7,7 @@ package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
 import javax.persistence.Query;
-import org.hibernate.HibernateException;
+import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
@@ -41,7 +41,7 @@ public class CtrVisa
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
@@ -65,7 +65,7 @@ public class CtrVisa
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
@@ -134,14 +134,15 @@ public class CtrVisa
         {
             ctrDB.openTransaction();
 
-            ctrDB.getSession().refresh(p);
-            //TODO test this
-            //ctrDB.saveOrUpdate(psVisaScan);
+            if (psVisaScan.getId() == null)
+            {
+                ctrDB.getSession().persist(psVisaScan);
+            }
 
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
@@ -173,13 +174,10 @@ public class CtrVisa
         {
             ctrDB.openTransaction();
 
-            ctrDB.getSession().refresh(p);
-
             //if the visa page scan contains the arrive stamp or last visa extension scan
             if (psVisaScan.isContentArriveStamp() || psVisaScan.isContentLastVisaExt())
             {
                 psVisaScan.setContentVisaScan(false);
-                ctrDB.getSession().refresh(psVisaScan);
             }
 
             //deletes all extensions under this visa
@@ -198,7 +196,7 @@ public class CtrVisa
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (HibernateException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
             if (hex instanceof ConstraintViolationException)
