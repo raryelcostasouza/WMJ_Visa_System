@@ -66,21 +66,6 @@
                 </TitledPane>
             </children>
         </HBox>
-        <TitledPane animated="false" collapsible="false" text="Status">
-            <content>
-                <HBox alignment="CENTER">
-                    <children>
-                        <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="tgStatus" />
-                            </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
-                        <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
-                    </children>
-                </HBox>
-            </content>
-        </TitledPane>
         <TitledPane animated="false" collapsible="false" text="Birth">
             <content>
                 <VBox>
@@ -136,6 +121,48 @@
                 </VBox>
             </content>
         </TitledPane>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+              <TitledPane animated="false" collapsible="false" text="Status">
+                  <content>
+                      <HBox alignment="CENTER">
+                          <children>
+                              <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
+                                  <toggleGroup>
+                                      <ToggleGroup fx:id="tgStatus" />
+                                  </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
+                              <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
+                          </children>
+                      </HBox>
+                  </content>
+              </TitledPane>
+              <TitledPane collapsible="false" text="Dhamma Studies" GridPane.columnIndex="1">
+                  <content>
+                      <HBox alignment="CENTER">
+                          <children>
+                              <RadioButton fx:id="rbDhammaStudiesRegular" mnemonicParsing="false" selected="true" text="Regular">
+                                  <toggleGroup>
+                                      <ToggleGroup fx:id="tgPrawatAnswers" />
+                                  </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbDhammaStudiesNaktamTri" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
+                              <RadioButton fx:id="rbDhammaStudiesNaktamToh" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
+                              <RadioButton fx:id="rbDhammaStudiesNaktamEk" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
+                          </children>
+                      </HBox>
+                  </content>
+              </TitledPane>
+         </children>
+      </GridPane>
         <TitledPane animated="false" collapsible="false" text="Occupation/Certificate">
             <content>
                 <VBox>
@@ -199,22 +226,6 @@
                         <TextField fx:id="tfAdviserToCome" editable="false" prefHeight="25.0" prefWidth="210.0" />
                         <Label text="Adviser's Wat:" />
                         <ComboBox fx:id="cbAdvisorWat" disable="true" prefHeight="25.0" prefWidth="210.0" />
-                    </children>
-                </HBox>
-            </content>
-        </TitledPane>
-        <TitledPane collapsible="false" text="Dhamma Studies">
-            <content>
-                <HBox alignment="CENTER">
-                    <children>
-                        <RadioButton fx:id="rbDhammaStudiesRegular" mnemonicParsing="false" selected="true" text="Regular">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="tgPrawatAnswers" />
-                            </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="rbDhammaStudiesNaktamTri" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
-                        <RadioButton fx:id="rbDhammaStudiesNaktamToh" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
-                        <RadioButton fx:id="rbDhammaStudiesNaktamEk" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
                     </children>
                 </HBox>
             </content>
