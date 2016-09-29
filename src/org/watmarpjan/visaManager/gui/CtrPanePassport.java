@@ -31,6 +31,8 @@ import org.watmarpjan.visaManager.control.CtrPassportScan;
 import org.watmarpjan.visaManager.AppConstants;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
 
 /**
  *
@@ -397,33 +399,33 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @FXML
     void actionArchive(ActionEvent ae)
     {
-        Profile p;
-        PassportScan ps;
-
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
-
-        if (ae.getSource().equals(bArchive1))
-        {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 0);
-            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_1);
-
-        } else if (ae.getSource().equals(bArchive2))
-        {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 1);
-            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_2);
-        } else
-        {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 2);
-            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_3);
-        }
-
-        //refresh the profile because the passportScan list was updated
-        ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-        fillDataContentScans(p);
-        loadIMGPreviews(p);
+//        Profile p;
+//        PassportScan ps;
+//
+//        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+//
+//        if (ae.getSource().equals(bArchive1))
+//        {
+//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 0);
+//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_1);
+//
+//        } else if (ae.getSource().equals(bArchive2))
+//        {
+//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 1);
+//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_2);
+//        } else
+//        {
+//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 2);
+//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_3);
+//        }
+//
+//        //refresh the profile because the passportScan list was updated
+//        ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+//        fillDataContentScans(p);
+//        loadIMGPreviews(p);
     }
 
     @FXML
