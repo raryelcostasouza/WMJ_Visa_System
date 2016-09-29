@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneVisaExt">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneVisaExt">
   <tabs>
     <Tab text="Forms">
          <content>
@@ -113,7 +113,12 @@
                                     <Rectangle2D />
                                  </viewport>
                               </ImageView>
-                              <Button fx:id="bSelectScan" mnemonicParsing="false" onAction="#actionSelectScan" text="Select Visa Extension Scan" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <Button fx:id="bArchive" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
+                                    <Button fx:id="bSelectScan" mnemonicParsing="false" onAction="#actionSelectScan" text="Select Visa Extension Scan" />
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER">
                                  <children>
                                     <Label text="Passport page number:" />
