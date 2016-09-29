@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui;
 
+import java.io.File;
 import java.time.LocalDate;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.Profile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -47,6 +49,8 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     private Button bSelectScan;
     @FXML
     private Button bRegister;
+    @FXML
+    private Button bArchive;
 
 //    private AbstractResultDialogSelectScan resultSelectScan;
     @Override
@@ -208,6 +212,62 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         } else
         {
             CtrAlertDialog.errorDialog("Please fill out ALL the visa extension fields before registering");
+        }
+    }
+
+    @FXML
+    void actionArchive()
+    {
+        PassportScan psLastVisaExt;
+        File fScanAfterUpdate, fScanVExt;
+        Profile p;
+        int opStatus1, opStatus2, opStatus3;
+
+        /*
+         * For proper consistency 2 operations need to be successful
+         * 1 - move the scan files to the archive
+         * 2 - update the Database information
+         *
+         * Implementation:
+         * 1) Copy the scan file to the archive
+         * 2) If the copy is successful, then update the DB info
+         * 3) If the db update is successful then deletes the original scan file
+         *
+         */
+        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+
+        psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
+        fScanVExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
+
+        opStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanVExt);
+        // if the file copy was successful
+        if (opStatus1 == 0)
+        {
+            if (psLastVisaExt.isContentArriveStamp() || psLastVisaExt.isContentVisaScan())
+            {
+                psLastVisaExt.setContentLastVisaExt(false);
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().update();
+
+                //if the DB update was successful
+                if (opStatus2 == 0)
+                {
+                    //rename the scan file
+                    fScanAfterUpdate = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
+                    CtrFileOperation.renameFile(fScanVExt, fScanAfterUpdate);
+                }
+
+            } else
+            {
+                //remove the original scan file
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().remove(psLastVisaExt);
+                CtrFileOperation.deleteFile(fScanVExt);
+            }
+
+            if (opStatus2 == 0)
+            {
+                ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                CtrAlertDialog.infoDialog("Archived successfully", "The previous visa extension scan was archived successfully.");
+            }
         }
     }
 
