@@ -56,19 +56,32 @@ public class CtrPassportScan
         }
     }
 
-    //TODO Review and remove this function
-    public int removeByScanNumber(Integer idProfile, int scanNumber)
+    public int update()
     {
-        PassportScan ps;
-        String hql;
+        String errorMessage = "Unable to update Passport Scan data.";
+        try
+        {
+            ctrDB.openTransaction();
+            ctrDB.commitCurrentTransaction();
+            return 0;
 
-        String errorMessage = "Unable to remove passport scan data.";
+        } catch (PersistenceException pe)
+        {
+            ctrDB.rollbackCurrentTransaction();
+            if (pe instanceof ConstraintViolationException)
+            {
+                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
+            } else
+            {
+                CtrAlertDialog.exceptionDialog(pe, errorMessage);
+            }
+            return -1;
+        }
+    }
 
-        hql = "from PassportScan ps"
-                + " where ps.profile.idprofile = " + idProfile
-                + " and ps.scanNumber = '" + scanNumber + "'";
-
-        ps = (PassportScan) ctrDB.getSession().createQuery(hql).getSingleResult();
+    public int remove(PassportScan ps)
+    {
+        String errorMessage = "Unable to remove Passport Scan data.";
         try
         {
             ctrDB.openTransaction();
@@ -76,15 +89,15 @@ public class CtrPassportScan
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        } catch (PersistenceException hex)
+        } catch (PersistenceException pe)
         {
             ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
+            if (pe instanceof ConstraintViolationException)
             {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
+                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
             } else
             {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
+                CtrAlertDialog.exceptionDialog(pe, errorMessage);
             }
             return -1;
         }
@@ -139,7 +152,8 @@ public class CtrPassportScan
 
         try
         {
-            ps = ctrDB.getSession().createQuery(hql, PassportScan.class).getSingleResult();
+            ps = ctrDB.getSession().createQuery(hql, PassportScan.class
+            ).getSingleResult();
 
         } catch (NoResultException nrex)
         {
@@ -160,7 +174,8 @@ public class CtrPassportScan
 
         try
         {
-            ps = ctrDB.getSession().createQuery(hql, PassportScan.class).getSingleResult();
+            ps = ctrDB.getSession().createQuery(hql, PassportScan.class
+            ).getSingleResult();
         } catch (NoResultException nrex)
         {
             ps = null;
@@ -180,7 +195,8 @@ public class CtrPassportScan
 
         try
         {
-            ps = ctrDB.getSession().createQuery(hql, PassportScan.class).getSingleResult();
+            ps = ctrDB.getSession().createQuery(hql, PassportScan.class
+            ).getSingleResult();
         } catch (NoResultException ex)
         {
             ps = null;
