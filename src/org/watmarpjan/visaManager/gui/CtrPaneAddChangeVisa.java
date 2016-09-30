@@ -213,18 +213,12 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
         PassportScan psVisaScan;
 
         psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
+        super.fillData(psVisaScan);
 
         tfVisaNumber.setText(p.getVisaNumber());
         cbVisaType.setValue(p.getVisaType());
         dpVisaExpiryDate.setValue(Util.convertDateToLocalDate(p.getVisaExpiryDate()));
         dpNext90DayNotice.setValue(Util.convertDateToLocalDate(p.getNext90DayNotice()));
-        if (psVisaScan != null)
-        {
-            tfPsptPageNumber.setText(psVisaScan.getPageNumber() + "");
-        } else
-        {
-            tfPsptPageNumber.setText(null);
-        }
 
         loadIMGScan(p.getNickname(), p.getPassportNumber(), psVisaScan);
 
@@ -264,11 +258,11 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
 
     private boolean validateFields()
     {
-        return ((tfVisaNumber.getText() != null)
+        return ((!tfVisaNumber.getText().isEmpty())
                 && (dpVisaExpiryDate.getValue() != null)
                 && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null)
-                && (tfPsptPageNumber.getText() != null));
+                && (!tfPsptPageNumber.getText().isEmpty()));
     }
 
 }

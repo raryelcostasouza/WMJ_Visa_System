@@ -226,7 +226,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     private boolean validateFields()
     {
         return ((dpPassportExpiryDate.getValue() != null)
-                && (tfpassportNumber.getText() != null)
-                && (tfpassportIssuedAt.getText() != null));
+                && (!tfpassportNumber.getText().isEmpty())
+                && (!tfpassportIssuedAt.getText().isEmpty()));
     }
 }

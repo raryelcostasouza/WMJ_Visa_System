@@ -69,6 +69,11 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     @Override
     public void fillData(Profile p)
     {
+        PassportScan psArriveStamp;
+
+        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
+        super.fillData(psArriveStamp);
+
         tfTM6Number.setText(p.getArrivalCardNumber());
         dpLastEntry.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
         tfTravelFrom.setText(p.getArrivalTravelFrom());
@@ -232,10 +237,10 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
 
     private boolean validateFields()
     {
-        return (tfTM6Number.getText() != null)
+        return (!tfTM6Number.getText().isEmpty())
                 && (dpLastEntry.getValue() != null)
-                && (tfPortOfEntry.getText() != null)
-                && (tfTravelFrom.getText() != null)
+                && (!tfPortOfEntry.getText().isEmpty())
+                && (!tfTravelFrom.getText().isEmpty())
                 && (cbTravelBy.getValue() != null);
     }
 
