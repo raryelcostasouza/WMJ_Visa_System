@@ -92,7 +92,11 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         Profile p;
         if (selectedNickname != null)
         {
-            ctrGUIMain.getPaneEditSaveController().actionLock();
+            if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
+            {
+                ctrGUIMain.getPaneEditSaveController().actionLock();
+            }
+
             p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(selectedNickname);
             IDSelectedProfile = p.getIdprofile();
             ctrGUIMain.fillMonasticProfileData();
