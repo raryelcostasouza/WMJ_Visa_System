@@ -36,8 +36,10 @@ public class CtrVisa
         {
             ctrDB.openTransaction();
             ctrDB.getSession().persist(vExt);
-            //TODO - test this line
-            //ctrDB.saveOrUpdate(psExtScan);
+            if (psExtScan.getId() == null)
+            {
+                ctrDB.getSession().persist(psExtScan);
+            }
             ctrDB.commitCurrentTransaction();
             return 0;
 
