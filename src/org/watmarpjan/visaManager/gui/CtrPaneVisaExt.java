@@ -110,8 +110,11 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldVisaExpiry;
+        PassportScan psExt;
 
-        ImgUtil.loadImageView(ivPreview, ImgUtil.IMG_TYPE_PASSPORT, AppFiles.getDefaultIMG(ImgUtil.IMG_TYPE_PASSPORT));
+        psExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
+        super.fillData(psExt);
+
         if (p.getVisaNumber() != null)
         {
             tfParentVisaNumber.setText(p.getVisaNumber());
@@ -134,11 +137,22 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         }
 
         tfExtNumber.setText("");
-        tfPsptPageNumber.setText("");
 
         alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdprofile());
         tvExtensions.getItems().clear();
         tvExtensions.getItems().addAll(alVisaExtensions);
+
+        if (psExt != null)
+        {
+            bArchive.setDisable(false);
+            bSelectScan.setDisable(true);
+            bRegister.setDisable(true);
+        } else
+        {
+            bArchive.setDisable(true);
+            bSelectScan.setDisable(false);
+            bRegister.setDisable(false);
+        }
 
         //pre-set the expiry date for the extension as 1 year after the original visa expiry date
         if (p.getVisaExpiryDate() != null)
@@ -149,7 +163,15 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         {
             dpExpiryDate.setValue(null);
         }
+        loadIMGScan(p, psExt);
+    }
 
+    private void loadIMGScan(Profile p, PassportScan psExt)
+    {
+        File fExtScan;
+
+        fExtScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psExt);
+        ImgUtil.loadImageView(ivPreview, ImgUtil.IMG_TYPE_PASSPORT, fExtScan);
     }
 
     @FXML
@@ -266,6 +288,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
             if (opStatus2 == 0)
             {
                 ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                fillData(p);
                 CtrAlertDialog.infoDialog("Archived successfully", "The previous visa extension scan was archived successfully.");
             }
         }
@@ -300,9 +323,9 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
 
     public boolean validateFields()
     {
-        return ((tfExtNumber.getText() != null)
+        return ((!tfExtNumber.getText().isEmpty())
                 && (dpExpiryDate.getValue() != null)
-                && (tfPsptPageNumber.getText() != null));
+                && (!tfPsptPageNumber.getText().isEmpty()));
     }
 
 }
