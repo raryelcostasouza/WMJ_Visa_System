@@ -139,6 +139,19 @@ public abstract class AbstractFormSelectExtraScan extends AbstractChildPaneContr
         }
     }
 
+    protected void fillData(PassportScan ps)
+    {
+        if (ps != null)
+        {
+            tfPsptPageNumber.setText(ps.getPageNumber() + "");
+            tfPsptPageNumber.setEditable(false);
+        } else
+        {
+            tfPsptPageNumber.setText("");
+            tfPsptPageNumber.setEditable(true);
+        }
+    }
+
     protected PassportScan getPassportScan()
     {
         return psSelected;
