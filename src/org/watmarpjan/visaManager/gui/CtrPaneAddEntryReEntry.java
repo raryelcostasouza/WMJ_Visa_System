@@ -58,7 +58,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     @FXML
     private ImageView ivDepartureCardScan;
 
-    private File fScanDepartureCard;
+    private File fSelectedDepartureCard;
 
     @Override
     public void init()
@@ -115,15 +115,20 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     {
         boolean confirmation;
         Profile p;
-        int operationStatus1, operationStatus2;
+        int operationStatus1, operationStatus2, operationStatus3;
         File fScanDepartureCard;
-        File fArriveStamp;
+        File fScanArriveStamp;
+        File fScanAfterUpdate;
+        PassportScan psArriveStamp;
 
         confirmation = CtrAlertDialog.confirmationDialog("Archive", "The arrival information will be cleared and the scans archived. \nDo you want to continue?");
         if (confirmation)
         {
             p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
+
             fScanDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
+            fScanArriveStamp = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psArriveStamp);
 
             /*
              * For proper consistency 2 operations need to be successful
@@ -133,12 +138,13 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
              * Implementation:
              * 1) Copy the scan file to the archive
              * 2) If the copy is successful, then update the DB info
-             * 3) If the db update is successful then deletes the original scan file
+             * 3) If the db update is successful then deletes the original files
              *
              */
             //first copy the scan file to the archive
             operationStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanDepartureCard);
-            if (operationStatus1 == 0)
+            operationStatus2 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanArriveStamp);
+            if (operationStatus1 == 0 && operationStatus2 == 0)
             {
                 //if successful clear the entry info
                 p.setArrivalCardNumber(null);
@@ -147,12 +153,34 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
                 p.setArrivalTravelBy(null);
                 p.setArrivalPortOfEntry(null);
 
-                operationStatus2 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-                //if the update of the entry info is successful 
-                //deletes the original scan file
-                if (operationStatus2 == 0)
+                //if the scan file is shared with other scans
+                //need to remove the flag for contentArriveStamp
+                if (psArriveStamp.isContentLastVisaExt() || psArriveStamp.isContentVisaScan())
                 {
+                    psArriveStamp.setContentArriveStamp(false);
+                }
+
+                //update DB
+                operationStatus3 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+
+                //if the DB update is successful 
+                if (operationStatus3 == 0)
+                {
+                    //deletes the original departure card scan file
                     CtrFileOperation.deleteFile(fScanDepartureCard);
+
+                    //if the arrive stamp scan does not include the visa or extension scan
+                    if (!psArriveStamp.isContentLastVisaExt() && !psArriveStamp.isContentVisaScan())
+                    {
+                        //it can be deleted as well
+                        CtrFileOperation.deleteFile(fScanArriveStamp);
+                    } else
+                    {
+                        //if it is shared with other scans, need to rename the file
+                        //removing the suffix -ArriveStamp from the file
+                        fScanAfterUpdate = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psArriveStamp);
+                        CtrFileOperation.renameFile(fScanArriveStamp, fScanAfterUpdate);
+                    }
                     CtrAlertDialog.infoDialog("Archived successfully", "The previous departure scan was archived successfully.");
 
                     fillData(p);
@@ -165,10 +193,10 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     @FXML
     void actionSelectFile(ActionEvent ae)
     {
-        fScanDepartureCard = CtrFileOperation.selectFile("Select Departure Card Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
-        if (fScanDepartureCard != null)
+        fSelectedDepartureCard = CtrFileOperation.selectFile("Select Departure Card Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
+        if (fSelectedDepartureCard != null)
         {
-            ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fScanDepartureCard);
+            ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fSelectedDepartureCard);
         }
     }
 
@@ -179,7 +207,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
         PassportScan psArriveStamp;
         int operationStatus1_1, operationStatus1_0, operationStatus2;
 
-        if (validateFields() && fScanDepartureCard != null && resultSelectScan != null)
+        if (validateFields() && fSelectedDepartureCard != null && resultSelectScan != null)
         {
             /*
              * For proper consistency 2 operations need to be successful
@@ -199,7 +227,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
              */
 
             p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
-            operationStatus1_0 = CtrFileOperation.copyOperation(fScanDepartureCard, AppFiles.getScanDepartureCard(p.getNickname()));
+            operationStatus1_0 = CtrFileOperation.copyOperation(fSelectedDepartureCard, AppFiles.getScanDepartureCard(p.getNickname()));
             operationStatus1_1 = super.processSelectedScan(p, SCAN_TYPE_ARRIVE_STAMP);
             psArriveStamp = super.getPassportScan();
 
@@ -218,7 +246,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
                 if (operationStatus2 == 0)
                 {
                     CtrAlertDialog.infoDialog("Entry/Re-entry registered", "The entry/re-entry information was successfully registered.");
-                    fScanDepartureCard = null;
+                    fSelectedDepartureCard = null;
                     resultSelectScan = null;
                     ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
                     fillData(p);
@@ -258,15 +286,15 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
 
     private void loadIMGScan(Profile p)
     {
-        File fPassportScan;
+        File fDepartureCard;
         File fArriveStamp;
         PassportScan psArriveStamp;
 
-        fPassportScan = AppFiles.getScanDepartureCard(p.getNickname());
+        fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
         psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
         fArriveStamp = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psArriveStamp);
 
-        ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
+        ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fDepartureCard);
         ImgUtil.loadImageView(ivPreview, ImgUtil.IMG_TYPE_PASSPORT, fArriveStamp);
     }
 }
