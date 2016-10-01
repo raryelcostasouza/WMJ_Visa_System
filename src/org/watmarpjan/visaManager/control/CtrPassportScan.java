@@ -79,6 +79,34 @@ public class CtrPassportScan
         }
     }
 
+    public int updateAndRemoveScan(PassportScan ps2Remove)
+    {
+        String errorMessage = "Unable to remove Passport Scan data.";
+        try
+        {
+            ctrDB.openTransaction();
+            if (ps2Remove != null)
+            {
+                ctrDB.getSession().remove(ps2Remove);
+            }
+
+            ctrDB.commitCurrentTransaction();
+            return 0;
+
+        } catch (PersistenceException pe)
+        {
+            ctrDB.rollbackCurrentTransaction();
+            if (pe instanceof ConstraintViolationException)
+            {
+                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
+            } else
+            {
+                CtrAlertDialog.exceptionDialog(pe, errorMessage);
+            }
+            return -1;
+        }
+    }
+
     public int remove(PassportScan ps)
     {
         String errorMessage = "Unable to remove Passport Scan data.";
