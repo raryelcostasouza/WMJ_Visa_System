@@ -111,6 +111,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
                     listPassportScanToDelete.add(psVisaPage);
                 }
 
+                //if there is a last visa extension scan
                 if (psLastVisaExt != null)
                 {
                     listPassportScanToDelete.add(psLastVisaExt);
@@ -135,6 +136,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
                         CtrFileOperation.renameFile(fScanVisa, fScanAfterUpdate);
                     }
 
+                    //if there is a last visa extension scan
                     if (fScanLastVisaExt != null)
                     {
                         CtrFileOperation.deleteFile(fScanLastVisaExt);
