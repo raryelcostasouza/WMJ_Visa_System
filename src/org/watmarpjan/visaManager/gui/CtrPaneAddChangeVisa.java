@@ -88,7 +88,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
             opStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanVisa);
 
             //if there is a last visa extension scan file, and if it is not in the same file of the visa page scan
-            if ((fScanLastVisaExt != null) && (!fScanLastVisaExt.equals(fScanVisa)))
+            if ((psLastVisaExt != null) && !psLastVisaExt.isContentVisaScan())
             {
                 //archive the last visa ext scan as well
                 opStatus2 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanLastVisaExt);
