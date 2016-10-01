@@ -71,7 +71,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     {
         PassportScan psArriveStamp;
 
-        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
+        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
         super.fillData(psArriveStamp);
 
         tfTM6Number.setText(p.getArrivalCardNumber());
@@ -158,10 +158,13 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
                 if (psArriveStamp.isContentLastVisaExt() || psArriveStamp.isContentVisaScan())
                 {
                     psArriveStamp.setContentArriveStamp(false);
+                    //DB update
+                    operationStatus3 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(null);
+                } else
+                {
+                    //DB update
+                    operationStatus3 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(psArriveStamp);
                 }
-
-                //update DB
-                operationStatus3 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
 
                 //if the DB update is successful 
                 if (operationStatus3 == 0)
