@@ -261,32 +261,36 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
         fScanVExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
 
+        //copy the file to the archive folder
         opStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanVExt);
+
         // if the file copy was successful
         if (opStatus1 == 0)
         {
+            //if the extension scan is shared with the visa or arrive stamp scan
             if (psLastVisaExt.isContentArriveStamp() || psLastVisaExt.isContentVisaScan())
             {
+                //unmark the flag for VisaExtScan
                 psLastVisaExt.setContentLastVisaExt(false);
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().update();
-
-                //if the DB update was successful
-                if (opStatus2 == 0)
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(null);
+            } else
+            {
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(psLastVisaExt);
+            }
+            //if the DB update was successful
+            if (opStatus2 == 0)
+            {
+                // if the extension scan is shared
+                if (psLastVisaExt.isContentArriveStamp() || psLastVisaExt.isContentVisaScan())
                 {
                     //rename the scan file
                     fScanAfterUpdate = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
                     CtrFileOperation.renameFile(fScanVExt, fScanAfterUpdate);
+                } else //if the file is not shared, it can be deleted
+                {
+                    //remove the original scan file
+                    CtrFileOperation.deleteFile(fScanVExt);
                 }
-
-            } else
-            {
-                //remove the original scan file
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().remove(psLastVisaExt);
-                CtrFileOperation.deleteFile(fScanVExt);
-            }
-
-            if (opStatus2 == 0)
-            {
                 ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
                 fillData(p);
                 CtrAlertDialog.infoDialog("Archived successfully", "The previous visa extension scan was archived successfully.");
