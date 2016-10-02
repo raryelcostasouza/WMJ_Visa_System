@@ -115,9 +115,20 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         boolean confirmation;
         Profile p;
         ArrayList<File> alFilePassportScans;
-        int operationStatus;
+        int operationStatus1, operationStatus2;
         boolean error = false;
 
+        /*
+         * For proper consistency 2 operations need to be successful
+         * 1 - move the scan file to the archive
+         * 2 - update the Database information
+         *
+         * Implementation:
+         * 1) Copy the scan file to the archive
+         * 2) If the copy is successful, then update the DB info
+         * 3) If the db update is successful then deletes the original files
+         *
+         */
         confirmation = CtrAlertDialog.confirmationDialog("Archive", "The passport data (number, issue location, expiry date) will be cleared and all scans related to the current passport will be archived as well. \nDo you want to continue?");
 
         if (confirmation)
@@ -136,8 +147,8 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             //archive all passport scans on a loop
             for (File f2Archive : alFilePassportScans)
             {
-                operationStatus = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, f2Archive);
-                if (operationStatus == -1)
+                operationStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, f2Archive);
+                if (operationStatus1 == -1)
                 {
                     error = true;
                 }
@@ -146,9 +157,25 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             //if all the archiving operation works correctly
             if (!error)
             {
-                clearPassportData(p);
-                ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-                fillData(p);
+                //clear the passport info
+                p.setPassportNumber(null);
+                p.setPassportIssuedAt(null);
+                p.setPassportExpiryDate(null);
+
+                //op1Status = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+                //update DB operation
+                operationStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
+                if (operationStatus2 == 0)
+                {
+                    //if the DB update is successful can delete the scan files
+                    for (File fScan : alFilePassportScans)
+                    {
+                        CtrFileOperation.deleteFile(fScan);
+                    }
+                    ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                    fillData(p);
+                    CtrAlertDialog.infoDialog("Archived successfully", "The previous passport was archived successfully.");
+                }
             }
         }
     }
@@ -204,22 +231,6 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         } else
         {
             CtrAlertDialog.errorDialog("Please fill out the ALL passport information before registering.");
-        }
-    }
-
-    private void clearPassportData(Profile p)
-    {
-        int op1Status, op2Status;
-
-        p.setPassportNumber(null);
-        p.setPassportIssuedAt(null);
-        p.setPassportExpiryDate(null);
-
-        op1Status = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-        op2Status = ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
-        if (op1Status == 0 && op2Status == 0)
-        {
-            CtrAlertDialog.infoDialog("Archived successfully", "The previous passport was archived successfully.");
         }
     }
 
