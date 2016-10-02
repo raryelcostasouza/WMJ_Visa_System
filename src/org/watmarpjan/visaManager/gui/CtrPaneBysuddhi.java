@@ -73,6 +73,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     public void init()
     {
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpIssueDate);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPahkahwOrd);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpSamaneraOrd);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpBhikkhuOrd);
 
@@ -139,7 +140,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         int operationStatus;
         Integer idSelectedProfile;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         p.setPaliNameEnglish(tfPaliName.getText());
         p.setPaliNameThai(tfPaliNameThai.getText());
 
@@ -246,7 +247,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     @Override
     public boolean isSelectionEmpty()
     {
-        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+        return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
 
     private void loadIMGPreviews(String nickName)
@@ -270,7 +271,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         Profile p;
         File fDestination, fSource;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         if (ae.getSource().equals(b1))
         {
@@ -301,7 +302,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         Profile p;
         File fImg;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         if (me.getSource().equals(ivScan1))
         {
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 1);
