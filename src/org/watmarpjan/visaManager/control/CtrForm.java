@@ -23,8 +23,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.printing.PDFPrintable;
+import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
@@ -161,7 +163,7 @@ public class CtrForm
      * } catch (IOException ex) { System.out.println("IO Error: " +
      * ex.getMessage()); } }
      */
-    public static void fillForm90DayNotice(Profile p, int option)
+    public static void fillFormTM47_90DayNotice(Profile p, int option)
     {
         PDDocument pdfDocument;
         PDAcroForm acroForm;
@@ -173,7 +175,7 @@ public class CtrForm
         ReturnLoadFont objRetLoadFont;
 
         sourceFile = AppFiles.getFormTM47Notice90Day();
-        outputFile = AppFiles.getFormTMPOutputPDF("tm47-form90dayNotice");
+        outputFile = AppFiles.getFormTMPOutputPDF(sourceFile.getName());
 
         // load the document
         try
@@ -184,47 +186,51 @@ public class CtrForm
             acroForm = objRetLoadFont.getAcroForm();
             fontName = objRetLoadFont.getFontName();
 
-            // as there might not be an AcroForm entry a null check is necessary
             if (objRetLoadFont != null)
             {
-                // Retrieve an individual field and set its value.
-                acroForm.getField("Name").setValue(p.getName() + " " + p.getMiddleName() + " " + p.getLastName());
-                acroForm.getField("Nationality").setValue(p.getNationality());
+                Monastery mResidingAt;
 
-                ldArrival = org.watmarpjan.visaManager.util.Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
+                alThaiFields = new ArrayList<>();
+                alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("WatResidingAtThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
+                adjustFontThaiField(alThaiFields, fontName);
+
+                acroForm.getField("titleThai").setValue(generateTitle(p));
+                acroForm.getField("fullName").setValue(generateFullName(p));
+                acroForm.getField("nationality").setValue(p.getNationality());
+                acroForm.getField("passportNumber").setValue(p.getPassportNumber());
+                acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
+                acroForm.getField("arrivalTravelBy").setValue(p.getArrivalTravelBy());
+
+                if (p.getVisaType().equals("Tourist"))
+                {
+                    ((PDCheckBox) acroForm.getField("TOURIST")).check();
+                    ((PDCheckBox) acroForm.getField("NONIMM")).unCheck();
+                }
+
+                ldArrival = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
 
                 if (ldArrival != null)
                 {
-                    acroForm.getField("Day").setValue(ldArrival.getDayOfMonth() + "");
-                    acroForm.getField("Month").setValue(ldArrival.getMonthValue() + "");
-                    acroForm.getField("Year").setValue((ldArrival.getYear() + 543) + "");
-
+                    acroForm.getField("arrivalLastEntryDateDay").setValue(ldArrival.getDayOfMonth() + "");
+                    acroForm.getField("arrivalLastEntryDateMonth").setValue(ldArrival.getMonthValue() + "");
+                    acroForm.getField("arrivalLastEntryDateYear").setValue((ldArrival.getYear() + 543) + "");
                 }
 
-                acroForm.getField("ArrivedBy").setValue(p.getArrivalTravelBy());
-                acroForm.getField("PassportNumber").setValue(p.getPassportNumber());
-                acroForm.getField("ArrivalCardNumber").setValue(p.getArrivalCardNumber());
-
-                if (p.getMonasteryResidingAt() != null)
+                mResidingAt = p.getMonasteryResidingAt();
+                if (mResidingAt != null)
                 {
-                    alThaiFields = new ArrayList<>();
-                    alThaiFields.add((PDTextField) acroForm.getField("Addr1"));
-                    alThaiFields.add((PDTextField) acroForm.getField("AddrRoad"));
-                    alThaiFields.add((PDTextField) acroForm.getField("AddrTambol"));
-                    alThaiFields.add((PDTextField) acroForm.getField("AddrAmphur"));
-                    alThaiFields.add((PDTextField) acroForm.getField("AddrProvince"));
 
-                    alThaiFields.add((PDTextField) acroForm.getField("ArrivalCardNumber"));
-
-                    adjustFontThaiField(alThaiFields, fontName);
-
-                    acroForm.getField("Addr1").setValue(p.getMonasteryResidingAt().getName());
-                    acroForm.getField("AddrRoad").setValue(p.getMonasteryResidingAt().getAddrRoad());
-                    acroForm.getField("AddrTambol").setValue(p.getMonasteryResidingAt().getAddrTambon());
-                    acroForm.getField("AddrAmphur").setValue(p.getMonasteryResidingAt().getAddrAmpher());
-                    acroForm.getField("AddrProvince").setValue(p.getMonasteryResidingAt().getAddrJangwat());
-                    acroForm.getField("PhoneNumber").setValue(p.getMonasteryResidingAt().getPhoneNumber());
-
+                    acroForm.getField("WatResidingAtThai").setValue(mResidingAt.getName());
+                    acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
+                    acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
+                    acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
+                    acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
+                    acroForm.getField("addrPhoneWatResidingAtThai").setValue(mResidingAt.getPhoneNumber());
                 }
             }
 

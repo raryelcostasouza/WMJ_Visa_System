@@ -202,7 +202,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         Profile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrForm.fillForm90DayNotice(p, CtrForm.OPTION_PREVIEW_FORM);
+        CtrForm.fillFormTM47_90DayNotice(p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -211,7 +211,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         Profile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrForm.fillForm90DayNotice(p, CtrForm.OPTION_PRINT_FORM);
+        CtrForm.fillFormTM47_90DayNotice(p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
