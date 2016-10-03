@@ -65,7 +65,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
         confirmation = CtrAlertDialog.confirmationDialog("Archive", "The visa information (and its extensions) will be cleared and the scans archived. \nDo you want to continue?");
         if (confirmation)
         {
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
             psVisaPage = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
             psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
@@ -178,7 +178,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
              *
              */
 
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             operationStatus1 = super.processSelectedScan(p, SCAN_TYPE_VISA);
             psVisaScan = super.getPassportScan();
 

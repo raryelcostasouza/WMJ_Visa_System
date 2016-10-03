@@ -49,7 +49,7 @@ public abstract class AbstractFormSelectExtraScan extends AbstractChildPaneContr
         File fNewScan, fExistingScan;
         Profile p;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         if (optionSelected.isPresent())
         {

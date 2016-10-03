@@ -124,7 +124,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
         confirmation = CtrAlertDialog.confirmationDialog("Archive", "The arrival information will be cleared and the scans archived. \nDo you want to continue?");
         if (confirmation)
         {
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
 
             fScanDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
@@ -229,7 +229,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
              *
              */
 
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             operationStatus1_0 = CtrFileOperation.copyOperation(fSelectedDepartureCard, AppFiles.getScanDepartureCard(p.getNickname()));
             operationStatus1_1 = super.processSelectedScan(p, SCAN_TYPE_ARRIVE_STAMP);
             psArriveStamp = super.getPassportScan();
@@ -281,7 +281,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
         Profile p;
         File fImg;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         fImg = AppFiles.getScanDepartureCard(p.getNickname());
         ImgUtil.openClickedIMG(fImg);

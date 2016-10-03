@@ -103,7 +103,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         Profile p;
         File fImg;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         fImg = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
         ImgUtil.openClickedIMG(fImg);
@@ -133,7 +133,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
 
         if (confirmation)
         {
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
             //adds all passport scans to a list
             alFilePassportScans = new ArrayList<>();
@@ -203,7 +203,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
              *
              */
 
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             fDestination = AppFiles.getScanPassportFirstPage(p.getNickname(), tfpassportNumber.getText());
             operationStatus1 = CtrFileOperation.copyOperation(fScanSelected, fDestination);
 

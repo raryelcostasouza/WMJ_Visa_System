@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Locale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
@@ -202,8 +201,8 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     {
         Profile p;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm90DayNotice(p, CtrForm.OPTION_PREVIEW_FORM);
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrForm.fillForm90DayNotice(p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -211,8 +210,8 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     {
         Profile p;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm90DayNotice(p, CtrForm.OPTION_PRINT_FORM);
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrForm.fillForm90DayNotice(p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
@@ -259,7 +258,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
 
         if (validateFieldsReceipt())
         {
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             fReceipt = new File(tfReceiptFilePath.getText());
             if (rbReceiptApproved.isSelected())
             {

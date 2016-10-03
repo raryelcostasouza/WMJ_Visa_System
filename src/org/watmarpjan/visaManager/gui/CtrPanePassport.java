@@ -27,11 +27,7 @@ import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.Profile;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
-import org.watmarpjan.visaManager.control.CtrPassportScan;
 import org.watmarpjan.visaManager.AppConstants;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -246,7 +242,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @Override
     public boolean isSelectionEmpty()
     {
-        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+        return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
 
     private void fillDataContentScans(Profile p)
@@ -402,7 +398,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 //        Profile p;
 //        PassportScan ps;
 //
-//        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 //
 //        if (ae.getSource().equals(bArchive1))
 //        {
@@ -435,7 +431,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         PassportScan ps;
         File fImgScan;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         if (me.getSource().equals(ivPassportScan))
         {
             fImgScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
@@ -467,7 +463,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         int statusCopyOperation;
         File fScanDestination, fSelected;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         //if there is a passport registered allows the user to add other scans
         if (p.getPassportNumber() != null)
         {
@@ -581,7 +577,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         int operationStatus;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         //if the passport number changed need to update the filenames for the scans
         //if (!p.getPassportNumber().equals(tfpassportNumber.getText()))

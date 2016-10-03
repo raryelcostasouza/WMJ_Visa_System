@@ -191,7 +191,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
         PassportScan psVisaScan;
         File fImg;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         if (me.getSource().equals(ivNewScan))
         {
             if (fSelected != null)

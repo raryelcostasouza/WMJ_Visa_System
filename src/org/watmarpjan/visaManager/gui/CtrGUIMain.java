@@ -593,7 +593,7 @@ public class CtrGUIMain
     {
         Profile p;
 
-        p = getPaneSelectionController().getSelectedProfile();
+        p = getCtrPaneSelection().getSelectedProfile();
         if (p != null)
         {
             ctrDialogSelectExtraScan.fillData(p);
@@ -611,7 +611,7 @@ public class CtrGUIMain
         }
     }
 
-    public CtrPaneMonasticSelection getPaneSelectionController()
+    public CtrPaneMonasticSelection getCtrPaneSelection()
     {
         return ctrPaneMonasticSelection;
     }
