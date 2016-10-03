@@ -120,7 +120,7 @@ public class AppFiles
 
     public static File getFormTM47Notice90Day()
     {
-        return AppPaths.getPathToForms().resolve("form90DayNotice.pdf").toFile();
+        return AppPaths.getPathToForms().resolve("tm47-90DayNotice.pdf").toFile();
     }
 
     public static File getExtReqLetterSNP()
