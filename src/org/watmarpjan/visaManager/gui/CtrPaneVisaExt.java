@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.Profile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -202,7 +203,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
              *
              */
 
-            p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             operationStatus1 = super.processSelectedScan(p, AbstractFormSelectExtraScan.SCAN_TYPE_VISA_EXT);
             psExtScan = super.getPassportScan();
 
@@ -256,7 +257,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
          * 3) If the db update is successful then deletes the original scan file
          *
          */
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
         fScanVExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
@@ -330,6 +331,92 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         return ((!tfExtNumber.getText().isEmpty())
                 && (dpExpiryDate.getValue() != null)
                 && (!tfPsptPageNumber.getText().isEmpty()));
+    }
+
+    @FXML
+    void actionPreviewPrawat(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPreviewLetterSamnakput(ActionEvent ae)
+    {
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrForm.fillLetterSamnakPut(p, CtrForm.OPTION_PREVIEW_FORM);
+    }
+
+    @FXML
+    void actionPreviewLetterImmigration(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPreviewTM7ExtRequest(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPreviewTM30NotifResidence(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPreviewAckOverstayPenalties(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPreviewSTM2AckConditions(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintPrawat(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintLetterSamnakput(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintLetterImmigration(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintTM7ExtRequest(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintTM30NotifResidence(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintAckOverstayPenalties(ActionEvent ae)
+    {
+
+    }
+
+    @FXML
+    void actionPrintSTM2AckConditions(ActionEvent ae)
+    {
+
     }
 
 }
