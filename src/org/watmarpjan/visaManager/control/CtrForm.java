@@ -11,7 +11,12 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.util.Pair;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -22,7 +27,9 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -49,7 +56,7 @@ public class CtrForm
      * Paths.get(System.getProperty("user.dir")).resolve("appData/forms/TM7ReqExtension.pdf");
      * pathOutputFile = Paths.get(System.getProperty("user.dir")).resolve("tmp/"
      * + p.getIdprofile() + "TM7ReqExtension.pdf"); pathFontFile =
-     * Paths.get(System.getProperty("user.dir")).resolve("appData/forms/font/angsa.ttf");
+     * Paths.get(System.getProperty("user.dir")).resolve("appData/forms/font/angsa.tthaiTextField");
      * outputFile = new File(pathOutputFile.toUri());
      *
      * try { Files.copy(pathForm90Notice, pathOutputFile,
@@ -135,7 +142,7 @@ public class CtrForm
      * acroForm.getField("AddrAmphur")); alThaiFields.add((PDTextField)
      * acroForm.getField("AddrProvince"));
      *
-     * for (PDTextField tf : alThaiFields) { adjustFontThaiField(tf, fontName);
+     * for (PDTextField thaiTextField : alThaiFields) { adjustFontThaiField(thaiTextField, fontName);
      * }
      *
      * acroForm.getField("Addr1").setValue(p.getWatByIdWatResidingAt().getThaiName());
@@ -154,16 +161,16 @@ public class CtrForm
      * } catch (IOException ex) { System.out.println("IO Error: " +
      * ex.getMessage()); } }
      */
-    public void fillForm90DayNotice(Profile p, int option)
+    public static void fillForm90DayNotice(Profile p, int option)
     {
         PDDocument pdfDocument;
         PDAcroForm acroForm;
-        PDFont font;
         COSName fontName;
         File outputFile;
         File sourceFile;
         LocalDate ldArrival;
         ArrayList<PDTextField> alThaiFields;
+        ReturnLoadFont objRetLoadFont;
 
         sourceFile = AppFiles.getFormTM47Notice90Day();
         outputFile = AppFiles.getFormTMPOutputPDF("tm47-form90dayNotice");
@@ -173,15 +180,12 @@ public class CtrForm
         {
             pdfDocument = PDDocument.load(sourceFile);
 
-            //load the thai font
-            font = PDType0Font.load(pdfDocument, AppFiles.getThaiFont());
-
-            // get the document catalog
-            acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
-            fontName = acroForm.getDefaultResources().add(font);
+            objRetLoadFont = loadThaiFont(pdfDocument);
+            acroForm = objRetLoadFont.getAcroForm();
+            fontName = objRetLoadFont.getFontName();
 
             // as there might not be an AcroForm entry a null check is necessary
-            if (acroForm != null)
+            if (objRetLoadFont != null)
             {
                 // Retrieve an individual field and set its value.
                 acroForm.getField("Name").setValue(p.getName() + " " + p.getMiddleName() + " " + p.getLastName());
@@ -212,10 +216,7 @@ public class CtrForm
 
                     alThaiFields.add((PDTextField) acroForm.getField("ArrivalCardNumber"));
 
-                    for (PDTextField tf : alThaiFields)
-                    {
-                        adjustFontThaiField(tf, fontName);
-                    }
+                    adjustFontThaiField(alThaiFields, fontName);
 
                     acroForm.getField("Addr1").setValue(p.getMonasteryResidingAt().getName());
                     acroForm.getField("AddrRoad").setValue(p.getMonasteryResidingAt().getAddrRoad());
@@ -229,6 +230,7 @@ public class CtrForm
 
             // Save and close the filled out form.
             pdfDocument.save(outputFile);
+            pdfDocument.close();
 
             if (option == OPTION_PRINT_FORM)
             {
@@ -245,7 +247,212 @@ public class CtrForm
         }
     }
 
-    private void openPDFOnDefaultProgram(File f)
+    public static void fillLetterSamnakPut(Profile p, int option)
+    {
+        PDDocument pdfDocument = null;
+        PDAcroForm acroForm;
+        COSName fontName;
+        File outputFile;
+        File sourceFile;
+        ArrayList<PDTextField> alThaiFields;
+        ReturnLoadFont objRetLoadFont;
+
+        sourceFile = AppFiles.getExtReqLetterSNP();
+        outputFile = AppFiles.getFormTMPOutputPDF(sourceFile.getName());
+
+        // load the document
+        try
+        {
+            pdfDocument = PDDocument.load(sourceFile);
+
+            objRetLoadFont = loadThaiFont(pdfDocument);
+            acroForm = objRetLoadFont.getAcroForm();
+            fontName = objRetLoadFont.getFontName();
+
+            //if the font is properly load and the form detected
+            if (objRetLoadFont != null)
+            {
+                String strFullName, strTitle, strMOrdainedAt;
+                Monastery mOrdainedAt, mResidingAt;
+                Date dVisaExpiry, dArrivalLastEntry;
+                LocalDate ldVisaExpiry, ldNewExpiryDate;
+                int extensionsCount;
+
+                alThaiFields = new ArrayList<>();
+                alThaiFields.add((PDTextField) acroForm.getField("titleThai1"));
+                alThaiFields.add((PDTextField) acroForm.getField("titleThai2"));
+                alThaiFields.add((PDTextField) acroForm.getField("titleThai3"));
+                alThaiFields.add((PDTextField) acroForm.getField("ordinationTypeThai"));
+                alThaiFields.add((PDTextField) acroForm.getField("WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry"));
+                alThaiFields.add((PDTextField) acroForm.getField("WatResidingAtThai_addrAmpher_addrJangwat"));
+
+                adjustFontThaiField(alThaiFields, fontName);
+                strTitle = generateTitle(p);
+                strFullName = generateFullName(p);
+                mOrdainedAt = p.getMonasteryOrdainedAt();
+                mResidingAt = p.getMonasteryResidingAt();
+
+                acroForm.getField("currentDate").setValue(Util.toStringThaiDateFormat(LocalDate.now()));
+                acroForm.getField("titleThai1").setValue(strTitle);
+                acroForm.getField("titleThai2").setValue(strTitle);
+                acroForm.getField("titleThai3").setValue(strTitle);
+                acroForm.getField("fullName1").setValue(strFullName);
+                acroForm.getField("fullName2").setValue(strFullName);
+                acroForm.getField("fullName3").setValue(strFullName);
+                acroForm.getField("nationality").setValue(p.getNationality());
+                acroForm.getField("passportNumber").setValue(p.getPassportNumber());
+                acroForm.getField("ordinationTypeThai").setValue(generateOrdinationType(p));
+                acroForm.getField("ordinationDate").setValue(getStrOrdinationDate(p));
+
+                dArrivalLastEntry = p.getArrivalLastEntryDate();
+                if (dArrivalLastEntry != null)
+                {
+                    acroForm.getField("arrivalLastEntryDate").setValue(Util.toStringThaiDateFormat(dArrivalLastEntry));
+                }
+
+                dVisaExpiry = p.getVisaExpiryDate();
+                if (dVisaExpiry != null)
+                {
+                    ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
+                    acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
+
+                    ldNewExpiryDate = ldVisaExpiry.plusYears(1);
+                    acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
+                }
+
+                if (p.getVisaExtensionSet() != null)
+                {
+                    extensionsCount = p.getVisaExtensionSet().size();
+                    acroForm.getField("extensionsCount").setValue(extensionsCount + "");
+                }
+
+                if (mOrdainedAt != null)
+                {
+                    if (mOrdainedAt.getAddrCountry().equals("THAILAND"))
+                    {
+                        strMOrdainedAt = mOrdainedAt.getName() + " อ." + mOrdainedAt.getAddrAmpher() + " จ." + mOrdainedAt.getAddrJangwat();
+
+                    } else
+                    {
+                        strMOrdainedAt = mOrdainedAt.getName() + " " + mOrdainedAt.getAddrAmpher() + " " + mOrdainedAt.getAddrJangwat() + " " + mOrdainedAt.getAddrCountry();
+                    }
+                    acroForm.getField("WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry").setValue(strMOrdainedAt);
+                }
+
+                if (mResidingAt != null)
+                {
+                    if (mResidingAt.getAddrCountry().equals("THAILAND"))
+                    {
+                        strMOrdainedAt = mResidingAt.getName() + " อ." + mResidingAt.getAddrAmpher() + " จ." + mResidingAt.getAddrJangwat();
+
+                    } else
+                    {
+                        strMOrdainedAt = mResidingAt.getName() + " " + mResidingAt.getAddrAmpher() + " " + mResidingAt.getAddrJangwat();
+                    }
+                    acroForm.getField("WatResidingAtThai_addrAmpher_addrJangwat").setValue(strMOrdainedAt);
+                }
+            }
+
+            // Save and close the filled out form.
+            pdfDocument.save(outputFile);
+            pdfDocument.close();
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDocument);
+
+            } else
+            {
+                openPDFOnDefaultProgram(outputFile);
+            }
+
+        } catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error when generating form from template.");
+        }
+    }
+
+    private static String generateFullName(Profile p)
+    {
+        String strFullName;
+
+        strFullName = p.getName();
+        if (p.getMiddleName() != null)
+        {
+            strFullName += " " + p.getMiddleName();
+        }
+
+        strFullName += " " + p.getLastName();
+
+        return strFullName;
+    }
+
+    private static String generateTitle(Profile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "พระภิกษุ";
+        } else if (p.getSamaneraOrdDate() != null)
+        {
+            return "สามเณร";
+        } else
+        {
+            return "นาด";
+        }
+    }
+
+    private static String generateOrdinationType(Profile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "อุปสมบท";
+        } else if (p.getSamaneraOrdDate() != null)
+        {
+            return "บรรพชา";
+        } else
+        {
+            return "";
+        }
+    }
+
+    private static String getStrOrdinationDate(Profile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return Util.toStringThaiDateFormat(p.getBhikkhuOrdDate());
+        } else if (p.getSamaneraOrdDate() != null)
+        {
+            return Util.toStringThaiDateFormat(p.getSamaneraOrdDate());
+        } else
+        {
+            return null;
+        }
+    }
+
+    private static ReturnLoadFont loadThaiFont(PDDocument pdfDocument)
+    {
+        try
+        {
+            PDFont font;
+            COSName fontName;
+            PDAcroForm acroForm;
+
+            //load the thai font
+            font = PDType0Font.load(pdfDocument, AppFiles.getThaiFont());
+
+            // get the document catalog
+            acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
+            fontName = acroForm.getDefaultResources().add(font);
+
+            return new ReturnLoadFont(acroForm, fontName);
+        } catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Unable to load 'Angsana New' font file");
+            return null;
+        }
+    }
+
+    private static void openPDFOnDefaultProgram(File f)
     {
         //show the generated form on the default pdf viewer
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
@@ -264,7 +471,7 @@ public class CtrForm
         }
     }
 
-    private void printPDF(PDDocument p)
+    private static void printPDF(PDDocument p)
     {
         //shows the print dialog
         PrinterJob pj = PrinterJob.getPrinterJob();
@@ -286,33 +493,36 @@ public class CtrForm
      * the font file manually 2) reset the field appearance to use the loaded
      * font
      */
-    private void adjustFontThaiField(PDTextField tf, COSName fontName)
+    private static void adjustFontThaiField(ArrayList<PDTextField> listThaiFields, COSName fontName)
     {
         int indexFirstSpace;
         String subStringAppearance;
         String beforeFieldAppearance;
         String afterFieldAppearance;
 
-        /*
-         * The appearance string has a format similar to the following example
-         * "/Arial 50 Tf 0 g"
-         */
-        beforeFieldAppearance = tf.getDefaultAppearance();
+        for (PDTextField thaiTextField : listThaiFields)
+        {
+            /*
+             * The appearance string has a format similar to the following example
+             * "/Arial 50 Tf 0 g"
+             */
+            beforeFieldAppearance = thaiTextField.getDefaultAppearance();
+            //looks for the position of the first space on the string
+            indexFirstSpace = beforeFieldAppearance.indexOf(" ");
 
-        //looks for the position of the first space on the string
-        indexFirstSpace = beforeFieldAppearance.indexOf(" ");
+            //the substring is everything from the space on...
+            //following with the example, it would be 
+            //" 50 Tf 0 g"
+            subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
 
-        //the substring is everything from the space on...
-        //following with the example, it would be 
-        //" 50 Tf 0 g"
-        subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
+            //the new field appearance needs to use the loaded font name
+            //but keeping the other appearance settings like size etc.
+            //so the final result would be something like "/F1 50 Tf 0 g"
+            afterFieldAppearance = "/" + fontName.getName() + subStringAppearance;
 
-        //the new field appearance needs to use the loaded font name
-        //but keeping the other appearance settings like size etc.
-        //so the final result would be something like "/F1 50 Tf 0 g"
-        afterFieldAppearance = "/" + fontName.getName() + subStringAppearance;
+            thaiTextField.setDefaultAppearance(afterFieldAppearance);
+        }
 
-        tf.setDefaultAppearance(afterFieldAppearance);
     }
 
 }

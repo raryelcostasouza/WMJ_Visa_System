@@ -9,6 +9,7 @@ import java.io.File;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,6 +35,31 @@ public class Util
             return null;
         }
 
+    }
+
+    public static String toStringThaiDateFormat(LocalDate ld)
+    {
+        if (ld != null)
+        {
+            return ThaiBuddhistDate.from(ld).format(DEFAULT_DATE_FORMAT);
+        } else
+        {
+            return null;
+        }
+    }
+
+    public static String toStringThaiDateFormat(Date d)
+    {
+        LocalDate ld;
+
+        ld = convertDateToLocalDate(d);
+        if (ld != null)
+        {
+            return ThaiBuddhistDate.from(ld).format(DEFAULT_DATE_FORMAT);
+        } else
+        {
+            return null;
+        }
     }
 
     public static Date convertLocalDateToDate(LocalDate ld)

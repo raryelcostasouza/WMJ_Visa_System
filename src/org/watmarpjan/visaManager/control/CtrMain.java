@@ -47,11 +47,6 @@ public class CtrMain
         return ctrProfile;
     }
 
-    public CtrForm getCtrForm()
-    {
-        return ctrForm;
-    }
-
     public CtrMonastery getCtrMonastery()
     {
         return ctrWat;

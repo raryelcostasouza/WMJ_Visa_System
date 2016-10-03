@@ -123,6 +123,11 @@ public class AppFiles
         return AppPaths.getPathToForms().resolve("form90DayNotice.pdf").toFile();
     }
 
+    public static File getExtReqLetterSNP()
+    {
+        return AppPaths.getPathToForms().resolve("ExtReqLetterSNP.pdf").toFile();
+    }
+
     public static File getThaiFont()
     {
         return AppPaths.getPathToForms().resolve("font/angsa.ttf").toFile();

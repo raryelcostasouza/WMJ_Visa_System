@@ -31,6 +31,20 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
 
 /**
  *
@@ -176,7 +190,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public boolean isSelectionEmpty()
     {
-        return ctrGUIMain.getPaneSelectionController().isSelectionEmpty();
+        return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
 
     @Override
@@ -294,7 +308,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         File fDestination;
         File fSource;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         fDestination = AppFiles.getProfilePhoto(p.getNickname());
         fSource = CtrFileOperation.selectFile("Select Profile Photo", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
 
@@ -313,8 +327,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         nickNameNewProfile = ctrGUIMain.getCtrMain().getCtrProfile().addProfile();
         if (nickNameNewProfile != null)
         {
-            ctrGUIMain.getPaneSelectionController().reloadNicknameList(nickNameNewProfile);
-            //CtrFileOperation.createProfileFolderStructure(ctrGUIMain.getPaneSelectionController().getIDSelectedProfile());
+            ctrGUIMain.getCtrPaneSelection().reloadNicknameList(nickNameNewProfile);
+            //CtrFileOperation.createProfileFolderStructure(ctrGUIMain.getCtrPaneSelection().getIDSelectedProfile());
         }
     }
 
@@ -477,7 +491,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         Date birthDate;
         String previousNickName, newNickName;
 
-        p = ctrGUIMain.getPaneSelectionController().getSelectedProfile();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         previousNickName = p.getNickname();
         newNickName = tfNickname.getText();
 
@@ -572,7 +586,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             //if the nickname was changed refresh nickname list
             if (!previousNickName.equals(newNickName))
             {
-                ctrGUIMain.getPaneSelectionController().reloadNicknameList(newNickName);
+                ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
             }
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
