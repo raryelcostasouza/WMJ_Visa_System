@@ -132,6 +132,9 @@ public class CtrGUIMain
     @FXML
     void initialize()
     {
+        //starts cleaning tmp files
+        //in case the app was forced to close
+        CtrFileOperation.clearTMPFiles();
         this.ctrMain = new CtrMain(this);
         this.ctrDatePicker = new CtrDatePicker();
 

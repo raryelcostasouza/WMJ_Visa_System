@@ -5,13 +5,10 @@
  */
 package org.watmarpjan.visaManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 
 /**
@@ -21,7 +18,7 @@ import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 public class AppPaths
 {
 
-    private static Path PATH_TMP_FOLDER;
+    private static final Path PATH_TMP_FOLDER = Paths.get(System.getProperty("user.dir")).resolve("appTmp");
 
     public static Path getPathProfileFolder(String nickName)
     {
@@ -65,17 +62,19 @@ public class AppPaths
 
     public static Path getPathAppTMPFolder()
     {
-        if (PATH_TMP_FOLDER == null)
+        //if the tmp folder does not exist
+        //create it
+        if (!PATH_TMP_FOLDER.toFile().exists())
         {
             try
             {
-                PATH_TMP_FOLDER = Files.createTempDirectory("wmj-visa-manager");
+                Files.createDirectory(PATH_TMP_FOLDER);
             } catch (IOException ex)
             {
-                CtrAlertDialog.exceptionDialog(ex, "Unable to create tmp folder.");
+                CtrAlertDialog.exceptionDialog(ex, "Unable to create TMP folder");
+                return null;
             }
         }
-
         return PATH_TMP_FOLDER;
     }
 
