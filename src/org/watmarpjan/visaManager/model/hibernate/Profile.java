@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,6 +64,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Profile.findByNameAdviserToCome", query = "SELECT p FROM Profile p WHERE p.nameAdviserToCome = :nameAdviserToCome"),
     @NamedQuery(name = "Profile.findByPassportNumber", query = "SELECT p FROM Profile p WHERE p.passportNumber = :passportNumber"),
     @NamedQuery(name = "Profile.findByPassportIssuedAt", query = "SELECT p FROM Profile p WHERE p.passportIssuedAt = :passportIssuedAt"),
+    @NamedQuery(name = "Profile.findByPassportIssueDate", query = "SELECT p FROM Profile p WHERE p.passportIssueDate = :passportIssueDate"),
     @NamedQuery(name = "Profile.findByPassportExpiryDate", query = "SELECT p FROM Profile p WHERE p.passportExpiryDate = :passportExpiryDate"),
     @NamedQuery(name = "Profile.findByStatus", query = "SELECT p FROM Profile p WHERE p.status = :status"),
     @NamedQuery(name = "Profile.findByFirstEntryDate", query = "SELECT p FROM Profile p WHERE p.firstEntryDate = :firstEntryDate"),
@@ -121,6 +123,9 @@ public class Profile implements Serializable
     private String emergencyContact;
     private String passportNumber;
     private String passportIssuedAt;
+    @Column(name = "passport_Issue_Date")
+    @Temporal(TemporalType.DATE)
+    private Date passportIssueDate;
     @Temporal(TemporalType.DATE)
     private Date passportExpiryDate;
     @Basic(optional = false)
@@ -473,6 +478,16 @@ public class Profile implements Serializable
     public void setPassportIssuedAt(String passportIssuedAt)
     {
         this.passportIssuedAt = passportIssuedAt;
+    }
+
+    public Date getPassportIssueDate()
+    {
+        return passportIssueDate;
+    }
+
+    public void setPassportIssueDate(Date passportIssueDate)
+    {
+        this.passportIssueDate = passportIssueDate;
     }
 
     public Date getPassportExpiryDate()
