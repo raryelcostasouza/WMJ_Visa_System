@@ -36,10 +36,10 @@ import static java.lang.Integer.parseInt;
  */
 public class CtrPanePassport extends AbstractChildPaneController implements IFormMonasticProfile, IEditableGUIForm
 {
-
+    
     @FXML
     private ImageView ivPassportScan;
-
+    
     @FXML
     private ImageView ivDepartureCardScan;
     @FXML
@@ -48,18 +48,20 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private ImageView ivScan2;
     @FXML
     private ImageView ivScan3;
-
+    
     @FXML
     private Button bScan1;
     @FXML
     private Button bScan2;
     @FXML
     private Button bScan3;
-
+    
     @FXML
     private TextField tfpassportNumber;
     @FXML
     private TextField tfpassportIssuedAt;
+    @FXML
+    private DatePicker dpPassportIssueDate;
     @FXML
     private DatePicker dpPassportExpiryDate;
     @FXML
@@ -80,23 +82,23 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private TextField tfTravelFrom;
     @FXML
     private ComboBox<String> cbTravelBy;
-
+    
     @FXML
     private DatePicker dpNext90dayNotice;
-
+    
     @FXML
     private TextField tfNVisaExt;
-
+    
     @FXML
     private TableView<EntryVisaExt> tvExtensions;
-
+    
     @FXML
     private ToggleGroup tgArriveStamp;
     @FXML
     private ToggleGroup tgVisa;
     @FXML
     private ToggleGroup tgLastVisaExt;
-
+    
     @FXML
     private TextField tfScan1PageNumber;
     @FXML
@@ -105,7 +107,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private RadioButton rbScan1Visa;
     @FXML
     private RadioButton rbScan1LastVisaExt;
-
+    
     @FXML
     private TextField tfScan2PageNumber;
     @FXML
@@ -114,7 +116,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private RadioButton rbScan2Visa;
     @FXML
     private RadioButton rbScan2LastVisaExt;
-
+    
     @FXML
     private TextField tfScan3PageNumber;
     @FXML
@@ -123,67 +125,68 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private RadioButton rbScan3Visa;
     @FXML
     private RadioButton rbScan3LastVisaExt;
-
+    
     @FXML
     private Button bArchive1;
     @FXML
     private Button bArchive2;
     @FXML
     private Button bArchive3;
-
+    
     private FieldsPaneScanContent fieldsScan1;
     private FieldsPaneScanContent fieldsScan2;
     private FieldsPaneScanContent fieldsScan3;
-
+    
     @Override
     public void init()
     {
         TableColumn tc1;
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpFirstEntryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90dayNotice);
-
+        
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
-
+        
         tc1 = tvExtensions.getColumns().get(0);
         tc1.setCellValueFactory(new PropertyValueFactory<>("extNumber"));
-
+        
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
-
+        
         fieldsScan1 = new FieldsPaneScanContent(bScan1, bArchive1, tfScan1PageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
         fieldsScan2 = new FieldsPaneScanContent(bScan2, bArchive2, tfScan2PageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
         fieldsScan3 = new FieldsPaneScanContent(bScan3, bArchive3, tfScan3PageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
-
+        
         initChangeListener();
     }
-
+    
     private void initChangeListener()
     {
         ArrayList listFields;
         listFields = new ArrayList();
-
+        
         listFields.add(dpFirstEntryDate);
         listFields.add(dpNext90dayNotice);
         listFields.add(dpFirstEntryDate);
-
+        
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
     }
-
+    
     @Override
     public void fillData(Profile p)
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
-        LocalDate ldPassportExp, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
-
+        LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
+        
         tfpassportNumber.setText(p.getPassportNumber());
         tfpassportIssuedAt.setText(p.getPassportIssuedAt());
-
+        
         fillDataContentScans(p);
         loadIMGPreviews(p);
-
+        
         if (p.getPassportExpiryDate() != null)
         {
             ldPassportExp = Util.convertDateToLocalDate(p.getPassportExpiryDate());
@@ -192,7 +195,16 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             dpPassportExpiryDate.setValue(null);
         }
-
+        
+        if (p.getPassportIssueDate() != null)
+        {
+            ldPassptIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
+            dpPassportIssueDate.setValue(ldPassptIssue);
+        } else
+        {
+            dpPassportIssueDate.setValue(null);
+        }
+        
         if (p.getFirstEntryDate() != null)
         {
             ldFirstEntry = Util.convertDateToLocalDate(p.getFirstEntryDate());
@@ -201,10 +213,10 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             dpFirstEntryDate.setValue(null);
         }
-
+        
         tfVisaNumber.setText(p.getVisaNumber());
         cbVisaType.setValue(p.getVisaType());
-
+        
         if (p.getVisaExpiryDate() != null)
         {
             ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
@@ -213,7 +225,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             dpVisaExpiryDate.setValue(null);
         }
-
+        
         if (p.getNext90DayNotice() != null)
         {
             ldNext90day = Util.convertDateToLocalDate(p.getNext90DayNotice());
@@ -222,29 +234,29 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             dpNext90dayNotice.setValue(null);
         }
-
+        
         tfArrivalTMNumber.setText(p.getArrivalCardNumber());
         tfPortOfEntry.setText(p.getArrivalPortOfEntry());
         tfTravelFrom.setText(p.getArrivalTravelFrom());
         cbTravelBy.setValue(p.getArrivalTravelBy());
-
+        
         ldLastEntry = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
         dpLastEntry.setValue(ldLastEntry);
-
+        
         alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdprofile());
         tvExtensions.getItems().clear();
         tvExtensions.getItems().addAll(alVisaExtensions);
-
+        
         tfNVisaExt.setText("" + alVisaExtensions.size());
-
+        
     }
-
+    
     @Override
     public boolean isSelectionEmpty()
     {
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
-
+    
     private void fillDataContentScans(Profile p)
     {
         ArrayList<PassportScan> listPassportScans;
@@ -252,15 +264,15 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         fieldsScan1.reset();
         fieldsScan2.reset();
         fieldsScan3.reset();
-
+        
         listPassportScans = new ArrayList<>();
         listPassportScans.addAll(p.getPassportScanSet());
-
+        
         if (listPassportScans.size() >= 1)
         {
             ps1 = listPassportScans.get(0);
             fieldsScan1.setStatusScan(true);
-
+            
             tfScan1PageNumber.setText(ps1.getPageNumber() + "");
             if (ps1.isContentArriveStamp())
             {
@@ -269,7 +281,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                  * selection of ArriveStamp option for other scans
                  */
                 rbScan1ArriveStamp.setSelected(true);
-
+                
                 rbScan2ArriveStamp.setDisable(true);
                 rbScan3ArriveStamp.setDisable(true);
             }
@@ -280,7 +292,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                  * of Visa option for other scans
                  */
                 rbScan1Visa.setSelected(true);
-
+                
                 rbScan2Visa.setDisable(true);
                 rbScan3Visa.setDisable(true);
             }
@@ -291,81 +303,81 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                  * selection of Last Visa Ext option for other scans
                  */
                 rbScan1LastVisaExt.setSelected(true);
-
+                
                 rbScan2LastVisaExt.setDisable(true);
                 rbScan3LastVisaExt.setDisable(true);
             }
         }
-
+        
         if (listPassportScans.size() >= 2)
         {
             ps2 = listPassportScans.get(1);
             fieldsScan2.setStatusScan(true);
-
+            
             tfScan2PageNumber.setText(ps2.getPageNumber() + "");
             if (ps2.isContentArriveStamp())
             {
                 rbScan2ArriveStamp.setSelected(true);
-
+                
                 rbScan1ArriveStamp.setDisable(true);
                 rbScan3ArriveStamp.setDisable(true);
             }
             if (ps2.isContentVisaScan())
             {
                 rbScan2Visa.setSelected(true);
-
+                
                 rbScan1Visa.setDisable(true);
                 rbScan3Visa.setDisable(true);
             }
             if (ps2.isContentLastVisaExt())
             {
                 rbScan2LastVisaExt.setSelected(true);
-
+                
                 rbScan1LastVisaExt.setDisable(true);
                 rbScan3LastVisaExt.setDisable(true);
             }
         }
-
+        
         if (listPassportScans.size() >= 3)
         {
             ps3 = listPassportScans.get(2);
             fieldsScan3.setStatusScan(true);
-
+            
             tfScan3PageNumber.setText(ps3.getPageNumber() + "");
             if (ps3.isContentArriveStamp())
             {
                 rbScan3ArriveStamp.setSelected(true);
-
+                
                 rbScan1ArriveStamp.setDisable(true);
                 rbScan2ArriveStamp.setDisable(true);
             }
             if (ps3.isContentVisaScan())
             {
                 rbScan3Visa.setSelected(true);
-
+                
                 rbScan1Visa.setDisable(true);
                 rbScan2Visa.setDisable(true);
             }
             if (ps3.isContentLastVisaExt())
             {
                 rbScan3LastVisaExt.setSelected(true);
-
+                
                 rbScan1LastVisaExt.setDisable(true);
                 rbScan2LastVisaExt.setDisable(true);
             }
         }
-
+        
     }
-
+    
     private void loadIMGPreviews(Profile p)
     {
         File fPassportScan, fDepartureCard, fScan1, fScan2, fScan3;
         PassportScan ps1 = null, ps2 = null, ps3 = null;
         ArrayList<PassportScan> listPassportScans;
-
+        
         fPassportScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
         fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
-
+        
         listPassportScans = new ArrayList();
         listPassportScans.addAll(p.getPassportScanSet());
         if (listPassportScans.size() >= 1)
@@ -380,18 +392,18 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ps3 = listPassportScans.get(2);
         }
-
+        
         fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
         fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
         fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
-
+        
         ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
         ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fDepartureCard);
         ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_PASSPORT, fScan1);
         ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_PASSPORT, fScan2);
         ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_PASSPORT, fScan3);
     }
-
+    
     @FXML
     void actionArchive(ActionEvent ae)
     {
@@ -423,14 +435,14 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 //        fillDataContentScans(p);
 //        loadIMGPreviews(p);
     }
-
+    
     @FXML
     void actionIMGPassportScanClicked(MouseEvent me)
     {
         Profile p;
         PassportScan ps;
         File fImgScan;
-
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         if (me.getSource().equals(ivPassportScan))
         {
@@ -451,10 +463,10 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 2);
             fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
         }
-
+        
         ImgUtil.openClickedIMG(fImgScan);
     }
-
+    
     @FXML
     void actionChooseExtraScan(ActionEvent ae)
     {
@@ -462,7 +474,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         PassportScan ps;
         int statusCopyOperation;
         File fScanDestination, fSelected;
-
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         //if there is a passport registered allows the user to add other scans
         if (p.getPassportNumber() != null)
@@ -472,24 +484,24 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 if (ae.getSource().equals(bScan1))
                 {
                     ps = new PassportScan(p, parseInt(tfScan1PageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
-
+                    
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
-
+                    
                 } else if (ae.getSource().equals(bScan2))
                 {
                     ps = new PassportScan(p, parseInt(tfScan2PageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
-
+                    
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
                 } else
                 {
                     ps = new PassportScan(p, parseInt(tfScan3PageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
-
+                    
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
                 }
                 fScanDestination = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
-
+                
                 fSelected = CtrFileOperation.selectFile("Extra Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
-
+                
                 if (fSelected != null)
                 {
                     statusCopyOperation = CtrFileOperation.copyOperation(fSelected, fScanDestination);
@@ -505,7 +517,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                         fillDataContentScans(p);
                     }
                 }
-
+                
             } else
             {
                 CtrAlertDialog.errorDialog("Please fill the scan contents information before selecting the file");
@@ -514,9 +526,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             CtrAlertDialog.errorDialog("Please add a passport to this profile before adding other scans.");
         }
-
+        
     }
-
+    
     private boolean validateExtraScanContent(Button sourceButton)
     {
         //if the page number is not empty and at least one of the options is selected
@@ -540,9 +552,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     || rbScan3LastVisaExt.isSelected()
                     || rbScan3Visa.isSelected());
         }
-
+        
     }
-
+    
     private boolean validatePageNumber(String strPageNumber)
     {
         try
@@ -555,28 +567,28 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             return false;
         }
     }
-
+    
     @Override
     public void actionLockEdit()
     {
         dpFirstEntryDate.setDisable(true);
         dpNext90dayNotice.setDisable(true);
     }
-
+    
     @Override
     public void actionUnlockEdit()
     {
         dpFirstEntryDate.setDisable(false);
         dpNext90dayNotice.setDisable(false);
     }
-
+    
     @Override
     public void actionSave()
     {
         Profile p;
-
+        
         int operationStatus;
-
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         //if the passport number changed need to update the filenames for the scans
@@ -587,13 +599,13 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
         p.setVisaNumber(tfVisaNumber.getText());
         p.setVisaType(cbVisaType.getValue());
-
+        
         p.setVisaExpiryDate(Util.convertLocalDateToDate(dpVisaExpiryDate.getValue()));
         p.setNext90DayNotice(Util.convertLocalDateToDate(dpNext90dayNotice.getValue()));
         p.setArrivalLastEntryDate(Util.convertLocalDateToDate(dpLastEntry.getValue()));
-
+        
         operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-
+        
         if (operationStatus == 0)
         {
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
