@@ -1,5 +1,12 @@
 ------------------------------------------------------------------------------
 Questions
+        -Form TM7 -> Extension period 365 days on template
+        -Current Date on TM Forms
+        -Form STM2 -> reason extension need to be included on template
+        - Form SNP Request 
+            -Full Name -> order of the names
+            -need to give warnings if main fields are missing data
+
        -When change visa does the number change as well??
        -Does the limit of extensions reset?
 
@@ -8,18 +15,40 @@ Questions
 
 ------------------------------------------------------------------------------
 Changes/Fixes
+    -DatePicker format dd/mm/yyyy on thai format not always working
+    -datepicker reentry,change visa, extension, change passport, not registered
+
+    -***BUG - if change nickname profile need to rename the data folder as well
+    -Panel Visa extension 
+        ->When there are extensions registered the new expiry date should be counted from the extension and not the visa
+        ->If remove the last extension, need to archive the scan as well
+    -Monastery
+        -Redesign country selection. 
+    -Review cleanup of tmp files
+
     -block edition when there is no profile, monastery etc on the list
     -Optimize loading
-    -When change panel need to re-lock edition
     -Connection pool not use hibernate native one
-    --Derby DB
     --Check about Hibernate session use
         --leave open directly
         -- or open only when have transaction
+    -MonasticProfile Panel -> DhammaStudies and Status change to Combobox
 ------------------------------------------------------------------------------
 Current Working
-    -Archive for Add/change visa and reentry
-    -Implement scan selection on entry add
+    
+    Form Letter SamnakPut
+        - add function to detect the thai fields automatically?
+
+    Project -> use local libraries on project folder
+
+    
+        
+        
+
+    -Add unique and other constraints on Derby via script sql
+    -review update functionality on JPA
+
+    
    
 -Receipts 90 day online
     -Implement table showing saved receipts
@@ -39,6 +68,9 @@ Validation/errors
 ------------------------------------------------------------------------------
 Essential features
     
+
+
+
 Generate printable page 
     -passport/bysuddhi scans
     -photo
@@ -49,6 +81,13 @@ Tm30 - store report date - together entry - store pdf file
 
 ------------------------------------------------------------------------------
 Desirable features
+
+    Generate csv file with due dates for each profile
+    Ex: K.Raryel, 2016-09-09, 2016-09-09, 2016-09-09
+                90 Day      Visa Ext    Passport
+
+
+    Login timeout to close DB connection
     -Entry/re-entry travel from and port of entry should be comboboxes with db data for selection
 
 Pending 
