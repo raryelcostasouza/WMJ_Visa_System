@@ -118,14 +118,39 @@ public class AppFiles
         return pSubFolder.resolve(strFileName).toFile();
     }
 
+    public static File getFormPrawat()
+    {
+        return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
+    }
+
+    public static File getFormTM7ReqExtension()
+    {
+        return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();
+    }
+
+    public static File getFormOverstay()
+    {
+        return AppPaths.getPathToForms().resolve("AckOverstayPenalties.pdf").toFile();
+    }
+
+    public static File getFormSTM2AckConditions()
+    {
+        return AppPaths.getPathToForms().resolve("STM2-AckConditions.pdf").toFile();
+    }
+
     public static File getFormTM47Notice90Day()
     {
-        return AppPaths.getPathToForms().resolve("tm47-90DayNotice.pdf").toFile();
+        return AppPaths.getPathToForms().resolve("TM47-90DayNotice.pdf").toFile();
     }
 
     public static File getExtReqLetterSNP()
     {
         return AppPaths.getPathToForms().resolve("ExtReqLetterSNP.pdf").toFile();
+    }
+
+    public static File getExtReqLetterIMM()
+    {
+        return AppPaths.getPathToForms().resolve("ExtReqLetterIMM.pdf").toFile();
     }
 
     public static File getThaiFont()
