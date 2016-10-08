@@ -274,7 +274,6 @@ public class CtrForm
         }
 
         acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
-        //acroForm.getField("extensionPeriod").setValue();
 
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
@@ -449,12 +448,7 @@ public class CtrForm
         int extensionsCount;
 
         alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("titleThai1"));
-        alThaiFields.add((PDTextField) acroForm.getField("titleThai2"));
-        if (destination.equals(DESTINATION_SAMNAKPUT))
-        {
-            alThaiFields.add((PDTextField) acroForm.getField("titleThai3"));
-        }
+        alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("ordinationTypeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry"));
         alThaiFields.add((PDTextField) acroForm.getField("WatResidingAtThai_addrAmpher_addrJangwat"));
@@ -466,11 +460,9 @@ public class CtrForm
         mResidingAt = p.getMonasteryResidingAt();
 
         acroForm.getField("currentDate").setValue(Util.toStringThaiDateFormat(LocalDate.now()));
-        acroForm.getField("titleThai1").setValue(strTitle);
-        acroForm.getField("titleThai2").setValue(strTitle);
+        acroForm.getField("titleThai").setValue(strTitle);
 
-        acroForm.getField("fullName1").setValue(strFullName);
-        acroForm.getField("fullName2").setValue(strFullName);
+        acroForm.getField("fullName").setValue(strFullName);
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
         acroForm.getField("ordinationTypeThai").setValue(ProfileUtil.getOrdinationType(p));
@@ -536,12 +528,10 @@ public class CtrForm
 
         if (destination.equals(DESTINATION_SAMNAKPUT))
         {
-            acroForm.getField("titleThai3").setValue(strTitle);
-            acroForm.getField("fullName3").setValue(strFullName);
             if (p.getVisaExtensionSet() != null)
             {
                 extensionsCount = p.getVisaExtensionSet().size();
-                acroForm.getField("extensionsCount").setValue(extensionsCount + "");
+                acroForm.getField("visaExtensionsCount").setValue(extensionsCount + "");
             }
         }
 
