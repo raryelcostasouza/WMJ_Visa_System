@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import org.hibernate.exception.ConstraintViolationException;
@@ -108,19 +109,33 @@ public class CtrMonastery
     {
         TypedQuery<Monastery> tq;
 
-        tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-        tq.setParameter("monasteryOfJaokana", "'AMPHER'");
+        try
+        {
+            tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
+            tq.setParameter("monasteryOfJaokana", "'AMPHER'");
 
-        return tq.getSingleResult();
+            return tq.getSingleResult();
+        } catch (NoResultException ex)
+        {
+            return null;
+        }
     }
 
     public Monastery loadMonasteryJaoKanaJangwat()
     {
         TypedQuery<Monastery> tq;
-        tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-        tq.setParameter("monasteryOfJaokana", "'JANGWAT'");
 
-        return tq.getSingleResult();
+        try
+        {
+            tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
+            tq.setParameter("monasteryOfJaokana", "'JANGWAT'");
+
+            return tq.getSingleResult();
+        } catch (NoResultException ex)
+        {
+            return null;
+        }
+
     }
 
 }
