@@ -344,19 +344,23 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         Profile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrForm.fillLetterSamnakPut(p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
     void actionPreviewLetterImmigration(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
     void actionPreviewTM7ExtRequest(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -368,13 +372,17 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewAckOverstayPenalties(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
     void actionPreviewSTM2AckConditions(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -386,19 +394,25 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintLetterSamnakput(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
     void actionPrintLetterImmigration(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
     void actionPrintTM7ExtRequest(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
@@ -410,13 +424,17 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintAckOverstayPenalties(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
     void actionPrintSTM2AckConditions(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
 }

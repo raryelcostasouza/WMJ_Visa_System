@@ -200,18 +200,16 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     void actionPreviewForm90day(ActionEvent ae)
     {
         Profile p;
-
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrForm.fillFormTM47_90DayNotice(p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
     void actionPrintForm(ActionEvent ae)
     {
         Profile p;
-
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrForm.fillFormTM47_90DayNotice(p, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML

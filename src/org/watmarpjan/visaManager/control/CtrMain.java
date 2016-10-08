@@ -32,9 +32,14 @@ public class CtrMain
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
-        ctrForm = new CtrForm();
+        ctrForm = new CtrForm(this);
 
         this.ctrGUI = ctrGUI;
+    }
+
+    public CtrForm getCtrForm()
+    {
+        return ctrForm;
     }
 
     public CtrDatabase getCtrDB()
