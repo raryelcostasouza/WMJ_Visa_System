@@ -22,28 +22,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.Profile;
-import javafx.scene.Node;
 import org.watmarpjan.visaManager.AppConstants;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -130,11 +112,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private RadioButton rbDhammaStudiesNaktamToh;
     @FXML
     private RadioButton rbDhammaStudiesNaktamEk;
-
-    private static final String STUDIES_REGULAR = "Regular";
-    private static final String STUDIES_NAKTAM_TRI = "Naktam Tri";
-    private static final String STUDIES_NAKTAM_TOH = "Naktam Toh";
-    private static final String STUDIES_NAKTAM_EK = "Naktam Ek";
 
     @FXML
     private TextField tfEmail;
@@ -262,13 +239,13 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         switch (p.getDhammaStudies())
         {
-            case STUDIES_NAKTAM_TRI:
+            case AppConstants.STUDIES_NAKTAM_TRI:
                 rbDhammaStudiesNaktamTri.setSelected(true);
                 break;
-            case STUDIES_NAKTAM_TOH:
+            case AppConstants.STUDIES_NAKTAM_TOH:
                 rbDhammaStudiesNaktamToh.setSelected(true);
                 break;
-            case STUDIES_NAKTAM_EK:
+            case AppConstants.STUDIES_NAKTAM_EK:
                 rbDhammaStudiesNaktamEk.setSelected(true);
                 break;
             default:
@@ -553,16 +530,16 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         if (rbDhammaStudiesNaktamTri.isSelected())
         {
-            p.setDhammaStudies(STUDIES_NAKTAM_TRI);
+            p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TRI);
         } else if (rbDhammaStudiesNaktamToh.isSelected())
         {
-            p.setDhammaStudies(STUDIES_NAKTAM_TOH);
+            p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TOH);
         } else if (rbDhammaStudiesNaktamEk.isSelected())
         {
-            p.setDhammaStudies(STUDIES_NAKTAM_EK);
+            p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_EK);
         } else
         {
-            p.setDhammaStudies(STUDIES_REGULAR);
+            p.setDhammaStudies(AppConstants.STUDIES_REGULAR);
         }
 
         p.setEmail(tfEmail.getText());

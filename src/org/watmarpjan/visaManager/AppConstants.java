@@ -11,19 +11,24 @@ package org.watmarpjan.visaManager;
  */
 public class AppConstants
 {
-    
+
     public static final String STATUS_THAILAND = "THAILAND";
     public static final String STATUS_ABROAD = "ABROAD";
     public static final String STATUS_INACTIVE = "INACTIVE";
-    
+
     public static final String[] LIST_VISA_TYPES = new String[]
     {
         "Non-O", "Non-RE", "Non-ED", "Tourist"
     };
-    
+
     public static final String[] LIST_TRAVEL_BY = new String[]
     {
         "Air", "Land", "Sea"
     };
-    
+
+    public static final String STUDIES_REGULAR = "Regular";
+    public static final String STUDIES_NAKTAM_TRI = "Naktam Tri";
+    public static final String STUDIES_NAKTAM_TOH = "Naktam Toh";
+    public static final String STUDIES_NAKTAM_EK = "Naktam Ek";
+
 }
