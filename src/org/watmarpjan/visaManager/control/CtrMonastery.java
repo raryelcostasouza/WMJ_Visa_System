@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
@@ -101,6 +102,25 @@ public class CtrMonastery
 
         hql = "from Monastery m where m.name = '" + name + "'";
         return (Monastery) ctrDB.getSession().createQuery(hql).getSingleResult();
+    }
+
+    public Monastery loadMonasteryJaoKanaAmpher()
+    {
+        TypedQuery<Monastery> tq;
+
+        tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
+        tq.setParameter("monasteryOfJaokana", "'AMPHER'");
+
+        return tq.getSingleResult();
+    }
+
+    public Monastery loadMonasteryJaoKanaJangwat()
+    {
+        TypedQuery<Monastery> tq;
+        tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
+        tq.setParameter("monasteryOfJaokana", "'JANGWAT'");
+
+        return tq.getSingleResult();
     }
 
 }
