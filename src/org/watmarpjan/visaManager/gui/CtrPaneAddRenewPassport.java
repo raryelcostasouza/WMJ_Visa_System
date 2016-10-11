@@ -27,7 +27,7 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile
 {
-    
+
     @FXML
     private TextField tfpassportNumber;
     @FXML
@@ -36,19 +36,26 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     private DatePicker dpPassportExpiryDate;
     @FXML
     private DatePicker dpPassportIssueDate;
-    
+
     @FXML
     private Button bPassportScan;
     @FXML
     private Button bArchive;
     @FXML
     private Button bRegister;
-    
+
     @FXML
     private ImageView ivPassportScan;
-    
+
     private File fScanSelected;
-    
+
+    @Override
+    public void init()
+    {
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
+    }
+
     @Override
     public void fillData(Profile p)
     {
@@ -65,7 +72,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             bArchive.setDisable(false);
             bPassportScan.setDisable(true);
             bRegister.setDisable(true);
-            
+
             tfpassportNumber.setEditable(false);
             tfpassportIssuedAt.setEditable(false);
             dpPassportExpiryDate.setDisable(true);
@@ -76,14 +83,14 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             bArchive.setDisable(true);
             bPassportScan.setDisable(false);
             bRegister.setDisable(false);
-            
+
             tfpassportNumber.setEditable(true);
             tfpassportIssuedAt.setEditable(true);
             dpPassportExpiryDate.setDisable(false);
             dpPassportIssueDate.setDisable(false);
         }
     }
-    
+
     @FXML
     void actionSelectFile(ActionEvent ae)
     {
@@ -93,27 +100,27 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fScanSelected);
         }
     }
-    
+
     private void loadIMGScan(String nickName, String passportNumber)
     {
         File fPassportScan;
-        
+
         fPassportScan = AppFiles.getScanPassportFirstPage(nickName, passportNumber);
         ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
     }
-    
+
     @FXML
     void actionIMGClicked(MouseEvent me)
     {
         Profile p;
         File fImg;
-        
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        
+
         fImg = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
         ImgUtil.openClickedIMG(fImg);
     }
-    
+
     @FXML
     void actionArchive(ActionEvent ae)
     {
@@ -135,7 +142,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
          *
          */
         confirmation = CtrAlertDialog.confirmationDialog("Archive", "The passport data (number, issue location, expiry date) will be cleared and all scans related to the current passport will be archived as well. \nDo you want to continue?");
-        
+
         if (confirmation)
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -185,13 +192,13 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             }
         }
     }
-    
+
     @FXML
     void actionRegister(ActionEvent ae)
     {
         Profile p;
         int operationStatus1, operationStatus2;
-        
+
         File fDestination;
 
         //if all the information is filled out
@@ -208,7 +215,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
              * 3) If the db update fails delete the file inside the app folder
              *
              */
-            
+
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             fDestination = AppFiles.getScanPassportFirstPage(p.getNickname(), tfpassportNumber.getText());
             operationStatus1 = CtrFileOperation.copyOperation(fScanSelected, fDestination);
@@ -234,13 +241,13 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                     CtrFileOperation.deleteFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
                 }
             }
-            
+
         } else
         {
             CtrAlertDialog.errorDialog("Please fill out the ALL passport information before registering.");
         }
     }
-    
+
     private boolean validateFields()
     {
         return ((dpPassportExpiryDate.getValue() != null)

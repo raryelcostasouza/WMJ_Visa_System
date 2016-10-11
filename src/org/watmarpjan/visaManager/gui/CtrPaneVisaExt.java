@@ -59,6 +59,8 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         TableColumn<EntryVisaExt, String> tc;
 
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
+
         //code for inserting a remove button on the last column
         Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> actionCellFactory =
                 new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>()

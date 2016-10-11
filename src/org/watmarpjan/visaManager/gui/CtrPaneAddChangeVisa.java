@@ -50,6 +50,8 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
     public void init()
     {
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
     }
 
     @FXML

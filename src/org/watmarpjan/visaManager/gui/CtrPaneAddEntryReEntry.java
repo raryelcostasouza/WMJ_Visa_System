@@ -64,6 +64,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     public void init()
     {
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
     }
 
     @Override
