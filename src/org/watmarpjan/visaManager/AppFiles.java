@@ -123,6 +123,16 @@ public class AppFiles
         return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
     }
 
+    public static File getFormTM30Residence()
+    {
+        return AppPaths.getPathToForms().resolve("TM30-Residence.pdf").toFile();
+    }
+
+    public static File getOverlayWatermark()
+    {
+        return AppPaths.getPathToForms().resolve("overlay/overlay.png").toFile();
+    }
+
     public static File getFormTM7ReqExtension()
     {
         return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();

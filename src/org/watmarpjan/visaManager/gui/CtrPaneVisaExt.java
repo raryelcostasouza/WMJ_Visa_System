@@ -336,7 +336,9 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -366,7 +368,9 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -388,7 +392,9 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintPrawat(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
@@ -418,7 +424,9 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
-
+        Profile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML

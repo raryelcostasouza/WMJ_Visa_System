@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.control;
 
 import java.awt.Desktop;
+import java.awt.geom.AffineTransform;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -17,12 +18,16 @@ import java.util.Date;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.util.Matrix;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
@@ -157,6 +162,7 @@ public class CtrForm
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+            acroForm.getField("sponsorThai").setValue(mResidingAt.getName());
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getName());
             acroForm.getField("addrNumberWatAdviserToComeThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
@@ -372,9 +378,12 @@ public class CtrForm
 
             // get the document catalog
             acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
-            loadedThaiFontName = acroForm.getDefaultResources().add(font);
 
-            System.out.println("Loaded Font: " + loadedThaiFontName.getName());
+            //if the document is a PDF Form
+            if (acroForm != null)
+            {
+                loadedThaiFontName = acroForm.getDefaultResources().add(font);
+            }
 
             if (sourceFile.getName().equals(AppFiles.getFormSTM2AckConditions().getName()))
             {
@@ -397,12 +406,13 @@ public class CtrForm
             } else if (sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
             {
                 fillPrawat(acroForm, p);
+            } else if (sourceFile.getName().equals(AppFiles.getFormTM30Residence().getName()))
+            {
+                overlayMonasteryWatermark(pdfDocument);
             }
 
             // Save and close the filled out form.
-            {
-                pdfDocument.save(outputFile);
-            }
+            pdfDocument.save(outputFile);
             pdfDocument.close();
 
             if (option == OPTION_PRINT_FORM)
@@ -480,23 +490,7 @@ public class CtrForm
             ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
             acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
 
-            //if there are visa extensions 
-            if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
-            {
-                ArrayList<VisaExtension> listExt = new ArrayList<>();
-                listExt.addAll(p.getVisaExtensionSet());
-                lastExt = listExt.get(listExt.size() - 1);
-                ldExtensionExpiry = Util.convertDateToLocalDate(lastExt.getExpiryDate());
-
-                //the desired expiry date is one year from the last extension
-                ldNewExpiryDate = ldExtensionExpiry.plusYears(1);
-
-            } else
-            {
-                //if there are no extensions
-                //the desired expiry date is one year from the visa expiry
-                ldNewExpiryDate = ldVisaExpiry.plusYears(1);
-            }
+            ldNewExpiryDate = ProfileUtil.getVisaExpiryDateDesired(p);
             acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldNewExpiryDate));
         }
 
@@ -534,6 +528,26 @@ public class CtrForm
                 acroForm.getField("visaExtensionsCount").setValue(extensionsCount + "");
             }
         }
+
+    }
+
+    public void overlayMonasteryWatermark(PDDocument pdfDoc) throws IOException
+    {
+        PDImageXObject pdImage;
+        PDPageContentStream contentStream;
+
+        pdImage = PDImageXObject.createFromFile(AppFiles.getOverlayWatermark().toString(), pdfDoc);
+        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
+
+        //translation, rotation and scale for the image
+        AffineTransform at = new AffineTransform(pdImage.getHeight(), 0, 0, pdImage.getWidth(), 600, 500);
+
+        //rotates the image overlay 90 degree because the document is landscape
+        at.rotate(Math.toRadians(90));
+        Matrix tMatrix = new Matrix(at);
+
+        contentStream.drawImage(pdImage, tMatrix);
+        contentStream.close();
 
     }
 
