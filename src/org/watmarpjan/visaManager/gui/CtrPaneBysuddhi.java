@@ -181,6 +181,9 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     {
         LocalDate issueDate, pahkahwOrd, samaneraOrd, monkOrd;
 
+        loadContentsCBWat();
+        loadContentsCBUpajjhaya();
+
         if (p != null)
         {
             loadIMGPreviews(p.getNickname());
@@ -327,7 +330,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         ArrayList<String> alWatList;
 
         alWatList = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryList();
-
+        cbOrdainedAt.getItems().clear();
         cbOrdainedAt.getItems().addAll(alWatList);
     }
 
@@ -336,6 +339,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         ArrayList<String> alUpajjhayaList;
 
         alUpajjhayaList = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaList();
+        cbUpajjhaya.getItems().clear();
         cbUpajjhaya.getItems().addAll(alUpajjhayaList);
     }
 }
