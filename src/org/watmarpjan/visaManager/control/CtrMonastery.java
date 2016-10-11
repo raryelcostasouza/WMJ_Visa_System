@@ -112,7 +112,7 @@ public class CtrMonastery
         try
         {
             tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-            tq.setParameter("monasteryOfJaokana", "'AMPHER'");
+            tq.setParameter("monasteryOfJaokana", "AMPHER");
 
             return tq.getSingleResult();
         } catch (NoResultException ex)
@@ -128,7 +128,7 @@ public class CtrMonastery
         try
         {
             tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-            tq.setParameter("monasteryOfJaokana", "'JANGWAT'");
+            tq.setParameter("monasteryOfJaokana", "JANGWAT");
 
             return tq.getSingleResult();
         } catch (NoResultException ex)
