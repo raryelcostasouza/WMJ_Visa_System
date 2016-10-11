@@ -57,12 +57,22 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
     private TextField tfAddrNumber;
 
     @FXML
+    private ToggleGroup tgCountry;
+
+    @FXML
+    private RadioButton rbCountryThailand;
+    @FXML
+    private RadioButton rbCountryOther;
+
+    @FXML
     private Button bAddNew;
 
     private static final String JAOKANA_NO = "NO";
     private static final String JAOKANA_TAMBOL = "TAMBOL";
     private static final String JAOKANA_AMPHER = "AMPHER";
     private static final String JAOKANA_JANGWAT = "JANGWAT";
+
+    private static final String COUNTRY_THAILAND = "THAILAND";
 
     public void init()
     {
@@ -77,6 +87,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         listFields.add(tfAddrNumber);
         listFields.add(tfPhoneNumber);
         listFields.add(tgJaokana);
+        listFields.add(tgCountry);
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
@@ -89,6 +100,8 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         tfName.setEditable(false);
         tfPhoneNumber.setEditable(false);
 
+        rbCountryOther.setDisable(true);
+        rbCountryThailand.setDisable(true);
         tfAddrCountry.setEditable(false);
         tfAddrProvince.setEditable(false);
         tfAddrAmpher.setEditable(false);
@@ -135,7 +148,13 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
                 m.setMonasteryOfJaokana(JAOKANA_NO);
             }
 
-            m.setAddrCountry(tfAddrCountry.getText());
+            if (rbCountryThailand.isSelected())
+            {
+                m.setAddrCountry(COUNTRY_THAILAND);
+            } else
+            {
+                m.setAddrCountry(tfAddrCountry.getText());
+            }
             m.setAddrJangwat(tfAddrProvince.getText());
             m.setAddrAmpher(tfAddrAmpher.getText());
             m.setAddrTambon(tfAddrTambol.getText());
@@ -190,6 +209,8 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         tfName.setEditable(true);
         tfPhoneNumber.setEditable(true);
 
+        rbCountryOther.setDisable(false);
+        rbCountryThailand.setDisable(false);
         tfAddrCountry.setEditable(true);
         tfAddrProvince.setEditable(true);
         tfAddrAmpher.setEditable(true);
@@ -220,7 +241,15 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
             tfName.setText(m.getName());
             tfPhoneNumber.setText(m.getPhoneNumber());
 
-            tfAddrCountry.setText(m.getAddrCountry());
+            if (m.getAddrCountry() != null && m.getAddrCountry().equals(COUNTRY_THAILAND))
+            {
+                rbCountryThailand.setSelected(true);
+                tfAddrCountry.setText("");
+            } else
+            {
+                rbCountryOther.setSelected(true);
+                tfAddrCountry.setText(m.getAddrCountry());
+            }
             tfAddrProvince.setText(m.getAddrJangwat());
             tfAddrAmpher.setText(m.getAddrAmpher());
             tfAddrTambol.setText(m.getAddrTambon());
