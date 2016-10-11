@@ -19,6 +19,18 @@ import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 public class ProfileUtil
 {
 
+    public static String getShortenedBirthWeekDay(Date birthDate)
+    {
+        LocalDate ldBirth;
+
+        if (birthDate != null)
+        {
+            ldBirth = Util.convertDateToLocalDate(birthDate);
+            return (String) ldBirth.getDayOfWeek().toString().subSequence(0, 3);
+        }
+        return "";
+    }
+
     public static String getTitle(Profile p)
     {
         if (p.getBhikkhuOrdDate() != null)
@@ -76,20 +88,20 @@ public class ProfileUtil
         }
     }
 
-    public static int getAge(Profile p)
+    public static String getStrAge(Date birthDate)
     {
         LocalDate ldBirth, ldToday;
         Period age;
 
-        if (p.getBirthDate() != null)
+        if (birthDate != null)
         {
             ldToday = LocalDate.now();
-            ldBirth = Util.convertDateToLocalDate(p.getBirthDate());
+            ldBirth = Util.convertDateToLocalDate(birthDate);
             age = Period.between(ldBirth, ldToday);
-            return age.getYears();
+            return age.getYears() + "";
         } else
         {
-            return 0;
+            return "";
         }
 
     }
