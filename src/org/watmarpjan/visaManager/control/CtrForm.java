@@ -102,7 +102,7 @@ public class CtrForm
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("paliNameThai").setValue(p.getPaliNameThai());
-        acroForm.getField("age").setValue(ProfileUtil.getAge(p) + "");
+        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
         acroForm.getField("ethnicity").setValue(p.getEthnicity());
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("previousResidenceCountry").setValue(p.getPreviousResidenceCountry());
@@ -238,7 +238,7 @@ public class CtrForm
             acroForm.getField("middleName").setValue(p.getMiddleName());
         }
 
-        acroForm.getField("age").setValue(ProfileUtil.getAge(p) + "");
+        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
 
         ldBirthDate = Util.convertDateToLocalDate(p.getBirthDate());
         if (ldBirthDate != null)
@@ -356,7 +356,7 @@ public class CtrForm
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("nationality").setValue(p.getNationality());
-        acroForm.getField("age").setValue(ProfileUtil.getAge(p) + "");
+        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
 
     }
 
@@ -443,7 +443,7 @@ public class CtrForm
         acroForm.getField("middleName").setValue(p.getMiddleName());
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
-        acroForm.getField("age").setValue(ProfileUtil.getAge(p) + "");
+        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
 
     }
 

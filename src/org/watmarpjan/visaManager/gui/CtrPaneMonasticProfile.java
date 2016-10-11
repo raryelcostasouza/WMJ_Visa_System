@@ -7,7 +7,6 @@ package org.watmarpjan.visaManager.gui;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.event.ActionEvent;
@@ -26,6 +25,9 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -162,6 +164,18 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
         loadContentsCBWat();
+        dpBirthDate.valueProperty().addListener(new ChangeListener<LocalDate>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue)
+            {
+                Date newBirthDate;
+
+                newBirthDate = Util.convertLocalDateToDate(newValue);
+                tfAge.setText(ProfileUtil.getStrAge(newBirthDate) + "");
+                tfBirthWeekday.setText(ProfileUtil.getShortenedBirthWeekDay(newBirthDate));
+            }
+        });
     }
 
     @Override
@@ -173,9 +187,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public void fillData(Profile p)
     {
-        Period age;
-        LocalDate birthDate;
-
         loadContentsCBOccupation();
         loadContentsCBCertificate();
 
@@ -194,18 +205,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         tfBirthCountry.setText(p.getBirthCountry());
         tfBirthPlace.setText(p.getBirthPlace());
 
-        if (p.getBirthDate() != null)
-        {
-            birthDate = Util.convertDateToLocalDate(p.getBirthDate());
-            dpBirthDate.setValue(birthDate);
-            age = Period.between(birthDate, LocalDate.now());
-            tfAge.setText(age.getYears() + "");
-            tfBirthWeekday.setText((String) birthDate.getDayOfWeek().toString().subSequence(0, 3));
-
-        } else
-        {
-            dpBirthDate.setValue(null);
-        }
+        dpBirthDate.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
+        tfAge.setText(ProfileUtil.getStrAge(p.getBirthDate()) + "");
+        tfBirthWeekday.setText(ProfileUtil.getShortenedBirthWeekDay(p.getBirthDate()));
 
         tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
         tfNationality.setText(p.getNationality());
@@ -305,7 +307,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if (nickNameNewProfile != null)
         {
             ctrGUIMain.getCtrPaneSelection().reloadNicknameList(nickNameNewProfile);
-            //CtrFileOperation.createProfileFolderStructure(ctrGUIMain.getCtrPaneSelection().getIDSelectedProfile());
         }
     }
 
