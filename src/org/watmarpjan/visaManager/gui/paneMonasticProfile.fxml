@@ -37,12 +37,12 @@
                         <GridPane>
                             <children>
                                 <Label text="Nickname: " GridPane.columnIndex="1" />
-                                <Label text="Middle Name: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <TextField fx:id="tfNickname" editable="false" GridPane.columnIndex="2" />
-                                <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                 <Label text="Name: " GridPane.columnIndex="3" />
-                                <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                 <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" />
+                                <Label text="Middle Name: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                 <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                 <Label text="Mother: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <TextField fx:id="tfMother" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
