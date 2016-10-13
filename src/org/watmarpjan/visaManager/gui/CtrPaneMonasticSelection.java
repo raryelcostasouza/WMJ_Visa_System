@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  * .
@@ -32,7 +32,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
     @Override
     public void init()
     {
-        Profile firstProfile;
+        MonasticProfile firstProfile;
 
         fillNicknameList();
         firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByIndex(0);
@@ -40,7 +40,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         if (firstProfile != null)
         {
             cbSelectedMonastic.setValue(firstProfile.getNickname());
-            IDSelectedProfile = firstProfile.getIdprofile();
+            IDSelectedProfile = firstProfile.getIdProfile();
         } else
         {
             cbSelectedMonastic.setValue(null);
@@ -80,16 +80,21 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
 
     }
 
-    public Profile getSelectedProfile()
+    public MonasticProfile getSelectedProfile()
     {
-        return ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(IDSelectedProfile);
+        if (IDSelectedProfile != -1)
+        {
+            return ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(IDSelectedProfile);
+        }
+        return null;
+
     }
 
     @FXML
     void listenerCbSelectedMonastic(ActionEvent ae)
     {
         String selectedNickname = cbSelectedMonastic.getValue();
-        Profile p;
+        MonasticProfile p;
         if (selectedNickname != null)
         {
             if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
@@ -98,7 +103,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
             }
 
             p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(selectedNickname);
-            IDSelectedProfile = p.getIdprofile();
+            IDSelectedProfile = p.getIdProfile();
             ctrGUIMain.fillMonasticProfileData();
         }
     }
@@ -106,7 +111,8 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
     @FXML
     void listenerCBShowOnlyActive(ActionEvent ae)
     {
-        Profile selectedProfile, firstProfile;
+        MonasticProfile selectedProfile;
+        MonasticProfile firstProfile;
 
         selectedProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(IDSelectedProfile);
 
@@ -122,7 +128,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
             //if there is at least one active profile on the DB
             if (firstProfile != null)
             {
-                IDSelectedProfile = firstProfile.getIdprofile();
+                IDSelectedProfile = firstProfile.getIdProfile();
                 fillNicknameList();
                 cbSelectedMonastic.setValue(firstProfile.getNickname());
             } else

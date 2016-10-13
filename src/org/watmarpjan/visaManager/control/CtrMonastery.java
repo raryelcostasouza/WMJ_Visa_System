@@ -34,6 +34,7 @@ public class CtrMonastery
         String errorMessage;
 
         m = new Monastery();
+        m.setAddrCountry("THAILAND");
         m.setMonasteryOfJaokana("NO");
         errorMessage = "Unable to add new Monastery";
         try
@@ -42,12 +43,12 @@ public class CtrMonastery
             ctrDB.getSession().persist(m);
             ctrDB.getSession().flush();
 
-            generatedID = m.getId();
-            m.setName("New Monastery " + generatedID);
+            generatedID = m.getIdMonastery();
+            m.setMonasteryName("New Monastery " + generatedID);
 
             ctrDB.commitCurrentTransaction();
 
-            return m.getName();
+            return m.getMonasteryName();
 
         } catch (PersistenceException he)
         {
@@ -91,7 +92,7 @@ public class CtrMonastery
         ArrayList<String> alMonastery;
         String hql;
 
-        hql = "select m.name from Monastery m";
+        hql = "select m.monasteryName from Monastery m";
         alMonastery = (ArrayList<String>) ctrDB.getSession().createQuery(hql).getResultList();
 
         return alMonastery;
@@ -101,7 +102,7 @@ public class CtrMonastery
     {
         String hql;
 
-        hql = "from Monastery m where m.name = '" + name + "'";
+        hql = "from Monastery m where m.monasteryName = '" + name + "'";
         return (Monastery) ctrDB.getSession().createQuery(hql).getSingleResult();
     }
 
