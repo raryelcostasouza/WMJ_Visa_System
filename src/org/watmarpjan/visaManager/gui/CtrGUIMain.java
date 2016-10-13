@@ -110,6 +110,11 @@ public class CtrGUIMain
     @FXML
     private TabPane paneAddChangeVisa;
 
+    @FXML
+    private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
+    @FXML
+    private VBox paneTM30NotifResidence;
+
     private CtrDialogSelectExtraScan ctrDialogSelectExtraScan;
 
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
@@ -164,6 +169,7 @@ public class CtrGUIMain
         initPaneAddRenewPassport();
         initPaneReEntry();
         initPaneVisaExt();
+        initPaneTM30NotifResidence();
 
         initPaneMonasticSelection();
         initPaneEditSave();
@@ -406,6 +412,22 @@ public class CtrGUIMain
         }
     }
 
+    private void initPaneTM30NotifResidence()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneTM30NotifResidence.fxml"));
+            paneTM30NotifResidence = loader.load();
+            ctrPaneTM30NotifResidence = loader.getController();
+            listPaneControllers.add(ctrPaneTM30NotifResidence);
+
+        } catch (Exception ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
+
     public CtrMain getCtrMain()
     {
         return ctrMain;
@@ -590,6 +612,19 @@ public class CtrGUIMain
         currentPaneController = ctrPaneAddChangeVisa;
         Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
+    }
+
+    @FXML
+    void actionButtonTM30NotifResidence(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        topPane.setRight(null);
+        topPane.setLeft(paneEditSave);
+        centerPane.setCenter(paneTM30NotifResidence);
+        currentPaneController = ctrPaneTM30NotifResidence;
+        Init.MAIN_STAGE.sizeToScene();
+        ctrPaneTM30NotifResidence.fillData();
     }
 
     public Optional<AbstractResultDialogSelectScan> actionShowDialogSelectScan()

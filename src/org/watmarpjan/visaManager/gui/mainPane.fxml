@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrGUIMain">
@@ -55,6 +54,7 @@
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Visa Extension" />
                                         <Button mnemonicParsing="false" onAction="#actionButtonReEntry" text="Register Entry/Re-entry" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="Add/Change Visa" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonTM30NotifResidence" text="TM30 - Notif. Residence" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddRenewPassport" text="Add/Renew Passport" />
                                     </children>
                                 </VBox>
