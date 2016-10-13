@@ -12,7 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
@@ -36,7 +36,7 @@ public class CtrVisa
         {
             ctrDB.openTransaction();
             ctrDB.getSession().persist(vExt);
-            if (psExtScan.getId() == null)
+            if (psExtScan.getIdPassportScan() == null)
             {
                 ctrDB.getSession().persist(psExtScan);
             }
@@ -128,7 +128,7 @@ public class CtrVisa
         return listVisaExt;
     }
 
-    public int addNewVisaForProfile(Profile p, PassportScan psVisaScan)
+    public int addNewVisaForProfile(MonasticProfile p, PassportScan psVisaScan)
     {
         String errorMessage = "Unable to save the visa information.";
 
@@ -136,7 +136,7 @@ public class CtrVisa
         {
             ctrDB.openTransaction();
 
-            if (psVisaScan.getId() == null)
+            if (psVisaScan.getIdPassportScan() == null)
             {
                 ctrDB.getSession().persist(psVisaScan);
             }
@@ -158,7 +158,7 @@ public class CtrVisa
         }
     }
 
-    public int clearVisaInfoForProfile(Profile p, ArrayList<PassportScan> listPassportScanToDelete, PassportScan psVisaScan)
+    public int clearVisaInfoForProfile(MonasticProfile p, ArrayList<PassportScan> listPassportScanToDelete, PassportScan psVisaScan)
     {
         ArrayList<VisaExtension> listVisaExt;
         String errorMessage = "Unable to clear visa extensions and passport scans.";

@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.util.Util;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
@@ -28,6 +28,9 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -185,7 +188,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         loadContentsCBOccupation();
         loadContentsCBCertificate();
@@ -194,7 +197,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         loadProfilePhoto(p.getNickname());
 
-        tfName.setText(p.getName());
+        tfName.setText(p.getMonasticName());
         tfMiddleName.setText(p.getMiddleName());
         tfLastName.setText(p.getLastName());
 
@@ -223,7 +226,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         if (p.getMonasteryResidingAt() != null)
         {
-            cbResidingAt.setValue(p.getMonasteryResidingAt().getName());
+            cbResidingAt.setValue(p.getMonasteryResidingAt().getMonasteryName());
         } else
         {
             cbResidingAt.setValue(null);
@@ -231,7 +234,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         if (p.getMonasteryAdviserToCome() != null)
         {
-            cbAdvisorWat.setValue(p.getMonasteryAdviserToCome().getName());
+            cbAdvisorWat.setValue(p.getMonasteryAdviserToCome().getMonasteryName());
         } else
         {
             cbAdvisorWat.setValue(null);
@@ -283,7 +286,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @FXML
     void actionChooseProfilePhoto(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         File fDestination;
         File fSource;
 
@@ -463,7 +466,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public void actionSave()
     {
-        Profile p;
+        MonasticProfile p;
         int operationStatus;
         Monastery wResidingAt, wAdviserToCome;
         Date birthDate;
@@ -474,7 +477,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         newNickName = tfNickname.getText();
 
         p.setNickname(tfNickname.getText());
-        p.setName(tfName.getText());
+        p.setMonasticName(tfName.getText());
         p.setMiddleName(tfMiddleName.getText());
         p.setLastName(tfLastName.getText());
 

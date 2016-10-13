@@ -128,10 +128,10 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
 
         if (m != null)
         {
-            previousName = m.getName();
+            previousName = m.getMonasteryName();
             newName = tfName.getText();
 
-            m.setName(tfName.getText());
+            m.setMonasteryName(tfName.getText());
             m.setPhoneNumber(tfPhoneNumber.getText());
 
             if (rbJkJangwat.isSelected())
@@ -230,7 +230,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
     {
         //if no monastery is passed as parameter,
         //shows the last selected
-        if (m == null)
+        if (m == null && !cbMonasteryList.getItems().isEmpty())
         {
             m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbMonasteryList.getValue());
         }
@@ -238,7 +238,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         //if Monastery m exists on the database
         if (m != null)
         {
-            tfName.setText(m.getName());
+            tfName.setText(m.getMonasteryName());
             tfPhoneNumber.setText(m.getPhoneNumber());
 
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(COUNTRY_THAILAND))

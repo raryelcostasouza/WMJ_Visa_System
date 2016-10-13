@@ -25,9 +25,9 @@ public class Util
 
     public static int convertYearToThai(int iso_year)
     {
-        return iso_year+543;
+        return iso_year + 543;
     }
-    
+
     public static LocalDate convertDateToLocalDate(Date d)
     {
         if (d != null)

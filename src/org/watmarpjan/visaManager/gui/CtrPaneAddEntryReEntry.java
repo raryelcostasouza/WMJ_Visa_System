@@ -19,7 +19,7 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -68,11 +68,11 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         PassportScan psArriveStamp;
 
-        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
+        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdProfile());
         super.fillData(psArriveStamp);
 
         tfTM6Number.setText(p.getArrivalCardNumber());
@@ -115,7 +115,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     void actionArchive(ActionEvent ae)
     {
         boolean confirmation;
-        Profile p;
+        MonasticProfile p;
         int operationStatus1, operationStatus2, operationStatus3;
         File fScanDepartureCard;
         File fScanArriveStamp;
@@ -126,7 +126,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
         if (confirmation)
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-            psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
+            psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdProfile());
 
             fScanDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
             fScanArriveStamp = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psArriveStamp);
@@ -207,7 +207,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     @FXML
     void actionRegister(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         PassportScan psArriveStamp;
         int operationStatus1_1, operationStatus1_0, operationStatus2;
 
@@ -279,7 +279,7 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
     @FXML
     void actionIMGClicked(MouseEvent me)
     {
-        Profile p;
+        MonasticProfile p;
         File fImg;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -288,14 +288,14 @@ public class CtrPaneAddEntryReEntry extends AbstractFormSelectExtraScan implemen
         ImgUtil.openClickedIMG(fImg);
     }
 
-    private void loadIMGScan(Profile p)
+    private void loadIMGScan(MonasticProfile p)
     {
         File fDepartureCard;
         File fArriveStamp;
         PassportScan psArriveStamp;
 
         fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
-        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdprofile());
+        psArriveStamp = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanArriveStamp(p.getIdProfile());
         fArriveStamp = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psArriveStamp);
 
         ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fDepartureCard);

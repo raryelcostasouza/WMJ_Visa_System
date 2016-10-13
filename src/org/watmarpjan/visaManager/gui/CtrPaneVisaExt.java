@@ -24,7 +24,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -109,13 +109,13 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldVisaExpiry;
         PassportScan psExt;
 
-        psExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
+        psExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdProfile());
         super.fillData(psExt);
 
         if (p.getVisaNumber() != null)
@@ -141,7 +141,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
 
         tfExtNumber.setText("");
 
-        alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdprofile());
+        alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdProfile());
         tvExtensions.getItems().clear();
         tvExtensions.getItems().addAll(alVisaExtensions);
 
@@ -169,7 +169,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         loadIMGScan(p, psExt);
     }
 
-    private void loadIMGScan(Profile p, PassportScan psExt)
+    private void loadIMGScan(MonasticProfile p, PassportScan psExt)
     {
         File fExtScan;
 
@@ -180,7 +180,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionRegisterVisaExt(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         VisaExtension vExt;
         int operationStatus1, operationStatus2;
         PassportScan psExtScan;
@@ -217,7 +217,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
                 vExt.setExtNumber(tfExtNumber.getText());
                 vExt.setExpiryDate(Util.convertLocalDateToDate(dpExpiryDate.getValue()));
 
-                vExt.setProfile(p);
+                vExt.setMonasticProfile(p);
 
                 operationStatus2 = ctrGUIMain.getCtrMain().getCtrVisa().addVisaExt(vExt, psExtScan);
 
@@ -245,7 +245,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         PassportScan psLastVisaExt;
         File fScanAfterUpdate, fScanVExt;
-        Profile p;
+        MonasticProfile p;
         int opStatus1, opStatus2, opStatus3;
 
         /*
@@ -261,7 +261,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
          */
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
+        psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdProfile());
         fScanVExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
 
         //copy the file to the archive folder
@@ -338,7 +338,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -346,7 +346,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewLetterSamnakput(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -354,7 +354,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewLetterImmigration(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -362,7 +362,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewTM7ExtRequest(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -370,7 +370,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -378,7 +378,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewAckOverstayPenalties(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -386,7 +386,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPreviewSTM2AckConditions(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -394,7 +394,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintPrawat(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -402,7 +402,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintLetterSamnakput(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -410,7 +410,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintLetterImmigration(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -418,7 +418,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintTM7ExtRequest(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -426,7 +426,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -434,7 +434,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintAckOverstayPenalties(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -442,7 +442,7 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     void actionPrintSTM2AckConditions(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PRINT_FORM);
     }

@@ -23,7 +23,7 @@ public class CtrDatePicker
     public CtrDatePicker()
     {
         //english locale for the months name appear in english
-        Locale.setDefault(Locale.US);
+        //Locale.setDefault(Locale.US);
         alDatePicker = new ArrayList<>();
     }
 

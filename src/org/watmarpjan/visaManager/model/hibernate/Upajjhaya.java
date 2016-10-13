@@ -6,17 +6,18 @@
 package org.watmarpjan.visaManager.model.hibernate;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries(
 {
     @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u"),
-    @NamedQuery(name = "Upajjhaya.findByIdupajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idupajjhaya = :idupajjhaya"),
+    @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya"),
     @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
 })
 public class Upajjhaya implements Serializable
@@ -35,32 +36,34 @@ public class Upajjhaya implements Serializable
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer idupajjhaya;
+    @Column(name = "ID_UPAJJHAYA")
+    private Integer idUpajjhaya;
     @Column(name = "UPAJJHAYA_NAME")
     private String upajjhayaName;
-    @JoinColumn(name = "MONASTERY", referencedColumnName = "ID")
+    @JoinColumn(name = "MONASTERY", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monastery;
+    @OneToMany(mappedBy = "upajjhaya")
+    private Set<MonasticProfile> monasticProfileSet;
 
     public Upajjhaya()
     {
     }
 
-    public Upajjhaya(Integer idupajjhaya)
+    public Upajjhaya(Integer idUpajjhaya)
     {
-        this.idupajjhaya = idupajjhaya;
+        this.idUpajjhaya = idUpajjhaya;
     }
 
-    public Integer getIdupajjhaya()
+    public Integer getIdUpajjhaya()
     {
-        return idupajjhaya;
+        return idUpajjhaya;
     }
 
-    public void setIdupajjhaya(Integer idupajjhaya)
+    public void setIdUpajjhaya(Integer idUpajjhaya)
     {
-        this.idupajjhaya = idupajjhaya;
+        this.idUpajjhaya = idUpajjhaya;
     }
 
     public String getUpajjhayaName()
@@ -83,11 +86,22 @@ public class Upajjhaya implements Serializable
         this.monastery = monastery;
     }
 
+    @XmlTransient
+    public Set<MonasticProfile> getMonasticProfileSet()
+    {
+        return monasticProfileSet;
+    }
+
+    public void setMonasticProfileSet(Set<MonasticProfile> monasticProfileSet)
+    {
+        this.monasticProfileSet = monasticProfileSet;
+    }
+
     @Override
     public int hashCode()
     {
         int hash = 0;
-        hash += (idupajjhaya != null ? idupajjhaya.hashCode() : 0);
+        hash += (idUpajjhaya != null ? idUpajjhaya.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +114,7 @@ public class Upajjhaya implements Serializable
             return false;
         }
         Upajjhaya other = (Upajjhaya) object;
-        if ((this.idupajjhaya == null && other.idupajjhaya != null) || (this.idupajjhaya != null && !this.idupajjhaya.equals(other.idupajjhaya)))
+        if ((this.idUpajjhaya == null && other.idUpajjhaya != null) || (this.idUpajjhaya != null && !this.idUpajjhaya.equals(other.idUpajjhaya)))
         {
             return false;
         }
@@ -110,7 +124,7 @@ public class Upajjhaya implements Serializable
     @Override
     public String toString()
     {
-        return "org.watmarpjan.visaManager.model.hibernate.Upajjhaya[ idupajjhaya=" + idupajjhaya + " ]";
+        return "org.watmarpjan.visaManager.model.hibernate.Upajjhaya[ idUpajjhaya=" + idUpajjhaya + " ]";
     }
 
 }

@@ -7,9 +7,8 @@ package org.watmarpjan.visaManager.model.hibernate;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,72 +22,106 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author WMJ_user
  */
 @Entity
-@Table(name = "passport_scan")
+@Table(name = "PASSPORT_SCAN")
 @XmlRootElement
 @NamedQueries(
         {
             @NamedQuery(name = "PassportScan.findAll", query = "SELECT p FROM PassportScan p"),
-            @NamedQuery(name = "PassportScan.findById", query = "SELECT p FROM PassportScan p WHERE p.id = :id"),
-            @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber"),
+            @NamedQuery(name = "PassportScan.findByIdPassportScan", query = "SELECT p FROM PassportScan p WHERE p.idPassportScan = :idPassportScan"),
             @NamedQuery(name = "PassportScan.findByContentArriveStamp", query = "SELECT p FROM PassportScan p WHERE p.contentArriveStamp = :contentArriveStamp"),
+            @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt"),
             @NamedQuery(name = "PassportScan.findByContentVisaScan", query = "SELECT p FROM PassportScan p WHERE p.contentVisaScan = :contentVisaScan"),
-            @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt")
+            @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber")
         })
 public class PassportScan implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer id;
+    @Column(name = "ID_PASSPORT_SCAN")
+    private Integer idPassportScan;
     @Basic(optional = false)
+    @Column(name = "CONTENT_ARRIVE_STAMP")
+    private Boolean contentArriveStamp;
+    @Basic(optional = false)
+    @Column(name = "CONTENT_LAST_VISA_EXT")
+    private Boolean contentLastVisaExt;
+    @Basic(optional = false)
+    @Column(name = "CONTENT_VISA_SCAN")
+    private Boolean contentVisaScan;
+    @Basic(optional = false)
+    @Column(name = "PAGE_NUMBER")
     private int pageNumber;
-    @Basic(optional = false)
-    private boolean contentArriveStamp;
-    @Basic(optional = false)
-    private boolean contentVisaScan;
-    @Basic(optional = false)
-    private boolean contentLastVisaExt;
-    @JoinColumn(name = "profile", referencedColumnName = "idprofile")
+    @JoinColumn(name = "MONASTIC_PROFILE", referencedColumnName = "ID_PROFILE")
     @ManyToOne(optional = false)
-    private Profile profile;
+    private MonasticProfile monasticProfile;
 
     public PassportScan()
     {
     }
 
-    public PassportScan(Integer id)
+    public PassportScan(Integer idPassportScan)
     {
-        this.id = id;
+        this.idPassportScan = idPassportScan;
     }
 
-    public PassportScan(Integer id, int pageNumber, boolean contentArriveStamp, boolean contentVisaScan, boolean contentLastVisaExt)
+    public PassportScan(Integer idPassportScan, Boolean contentArriveStamp, Boolean contentLastVisaExt, Boolean contentVisaScan, int pageNumber)
     {
-        this.id = id;
+        this.idPassportScan = idPassportScan;
+        this.contentArriveStamp = contentArriveStamp;
+        this.contentLastVisaExt = contentLastVisaExt;
+        this.contentVisaScan = contentVisaScan;
+        this.pageNumber = pageNumber;
+    }
+
+    public PassportScan(MonasticProfile p, int pageNumber, boolean contentArriveStamp, boolean contentVisaScan, boolean contentLastVisaExt)
+    {
+        this.monasticProfile = p;
         this.pageNumber = pageNumber;
         this.contentArriveStamp = contentArriveStamp;
         this.contentVisaScan = contentVisaScan;
         this.contentLastVisaExt = contentLastVisaExt;
     }
 
-    public PassportScan(Profile p, int pageNumber, boolean contentArriveStamp, boolean contentVisaScan, boolean contentLastVisaExt)
+    public Integer getIdPassportScan()
     {
-        this.profile = p;
-        this.pageNumber = pageNumber;
+        return idPassportScan;
+    }
+
+    public void setIdPassportScan(Integer idPassportScan)
+    {
+        this.idPassportScan = idPassportScan;
+    }
+
+    public Boolean isContentArriveStamp()
+    {
+        return contentArriveStamp;
+    }
+
+    public void setContentArriveStamp(Boolean contentArriveStamp)
+    {
         this.contentArriveStamp = contentArriveStamp;
-        this.contentVisaScan = contentVisaScan;
+    }
+
+    public Boolean isContentLastVisaExt()
+    {
+        return contentLastVisaExt;
+    }
+
+    public void setContentLastVisaExt(Boolean contentLastVisaExt)
+    {
         this.contentLastVisaExt = contentLastVisaExt;
     }
 
-    public Integer getId()
+    public Boolean isContentVisaScan()
     {
-        return id;
+        return contentVisaScan;
     }
 
-    public void setId(Integer id)
+    public void setContentVisaScan(Boolean contentVisaScan)
     {
-        this.id = id;
+        this.contentVisaScan = contentVisaScan;
     }
 
     public int getPageNumber()
@@ -101,51 +134,21 @@ public class PassportScan implements Serializable
         this.pageNumber = pageNumber;
     }
 
-    public boolean isContentArriveStamp()
+    public MonasticProfile getMonasticProfile()
     {
-        return contentArriveStamp;
+        return monasticProfile;
     }
 
-    public void setContentArriveStamp(boolean contentArriveStamp)
+    public void setMonasticProfile(MonasticProfile monasticProfile)
     {
-        this.contentArriveStamp = contentArriveStamp;
-    }
-
-    public boolean isContentVisaScan()
-    {
-        return contentVisaScan;
-    }
-
-    public void setContentVisaScan(boolean contentVisaScan)
-    {
-        this.contentVisaScan = contentVisaScan;
-    }
-
-    public boolean isContentLastVisaExt()
-    {
-        return contentLastVisaExt;
-    }
-
-    public void setContentLastVisaExt(boolean contentLastVisaExt)
-    {
-        this.contentLastVisaExt = contentLastVisaExt;
-    }
-
-    public Profile getProfile()
-    {
-        return profile;
-    }
-
-    public void setProfile(Profile profile)
-    {
-        this.profile = profile;
+        this.monasticProfile = monasticProfile;
     }
 
     @Override
     public int hashCode()
     {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idPassportScan != null ? idPassportScan.hashCode() : 0);
         return hash;
     }
 
@@ -158,7 +161,7 @@ public class PassportScan implements Serializable
             return false;
         }
         PassportScan other = (PassportScan) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        if ((this.idPassportScan == null && other.idPassportScan != null) || (this.idPassportScan != null && !this.idPassportScan.equals(other.idPassportScan)))
         {
             return false;
         }
@@ -168,6 +171,7 @@ public class PassportScan implements Serializable
     @Override
     public String toString()
     {
-        return "org.watmarpjan.visaManager.model.hibernate.PassportScan[ id=" + id + " ]";
+        return "org.watmarpjan.visaManager.model.hibernate.PassportScan[ idPassportScan=" + idPassportScan + " ]";
     }
+
 }

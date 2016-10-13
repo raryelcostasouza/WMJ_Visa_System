@@ -47,8 +47,6 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
     {
         if (!ctrEditSave.getLockStatus() && !unsavedChangesCurrentForm)
         {
-            //TODO remove this line
-            System.out.println("oldValue: " + oldValue + " | newValue: " + newValue);
             unsavedChangesCurrentForm = true;
             ctrEditSave.enableSaveButton();
         }

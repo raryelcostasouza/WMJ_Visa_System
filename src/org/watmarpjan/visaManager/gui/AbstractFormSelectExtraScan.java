@@ -17,7 +17,7 @@ import org.watmarpjan.visaManager.model.ResultDialogSelectScan.AbstractResultDia
 import org.watmarpjan.visaManager.model.ResultDialogSelectScan.ResultExistingScan;
 import org.watmarpjan.visaManager.model.ResultDialogSelectScan.ResultNewFileScan;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  *
@@ -47,7 +47,7 @@ public abstract class AbstractFormSelectExtraScan extends AbstractChildPaneContr
         Optional<AbstractResultDialogSelectScan> optionSelected = ctrGUIMain.actionShowDialogSelectScan();
         PassportScan psExistingScan;
         File fNewScan, fExistingScan;
-        Profile p;
+        MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
@@ -73,7 +73,7 @@ public abstract class AbstractFormSelectExtraScan extends AbstractChildPaneContr
         }
     }
 
-    protected int processSelectedScan(Profile p, int scanType)
+    protected int processSelectedScan(MonasticProfile p, int scanType)
     {
         int pageNumber, operationStatus;
 
@@ -126,7 +126,7 @@ public abstract class AbstractFormSelectExtraScan extends AbstractChildPaneContr
         return operationStatus;
     }
 
-    protected void undoProcessingSelectedScan(Profile p)
+    protected void undoProcessingSelectedScan(MonasticProfile p)
     {
         if (resultSelectScan instanceof ResultNewFileScan)
         {

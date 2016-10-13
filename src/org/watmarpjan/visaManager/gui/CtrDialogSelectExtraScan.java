@@ -23,7 +23,7 @@ import org.watmarpjan.visaManager.model.ResultDialogSelectScan.AbstractResultDia
 import org.watmarpjan.visaManager.model.ResultDialogSelectScan.ResultExistingScan;
 import org.watmarpjan.visaManager.model.ResultDialogSelectScan.ResultNewFileScan;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  *
@@ -58,7 +58,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
     private Button bApply;
 
     private File fSelected;
-    private Profile selectedProfile;
+    private MonasticProfile selectedProfile;
 
     public static final String OPTION_NEW_SCAN = "NEW_SCAN";
     public static final String OPTION_SCAN_1 = "SCAN_1";
@@ -108,7 +108,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         ArrayList<PassportScan> listPassportScans;
 
@@ -143,7 +143,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
 
     }
 
-    private void loadScanInfo(RadioButton rb, ImageView iv, Profile p, PassportScan ps)
+    private void loadScanInfo(RadioButton rb, ImageView iv, MonasticProfile p, PassportScan ps)
     {
         if (ps != null)
         {
@@ -154,7 +154,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
         loadIMGPreview(p, ps, iv);
     }
 
-    private void loadIMGPreview(Profile p, PassportScan ps, ImageView iv)
+    private void loadIMGPreview(MonasticProfile p, PassportScan ps, ImageView iv)
     {
         File fExtraScan;
 
@@ -187,7 +187,7 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
     @FXML
     void actionIMGClicked(MouseEvent me)
     {
-        Profile p;
+        MonasticProfile p;
         PassportScan psVisaScan;
         File fImg;
 
@@ -203,13 +203,13 @@ public class CtrDialogSelectExtraScan extends AbstractChildPaneController implem
         {
             if (me.getSource().equals(ivScan1))
             {
-                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 0);
+                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 0);
             } else if (me.getSource().equals(ivScan2))
             {
-                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 1);
+                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 1);
             } else
             {
-                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 2);
+                psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 2);
             }
 
             fImg = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psVisaScan);

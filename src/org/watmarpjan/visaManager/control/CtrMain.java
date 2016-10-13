@@ -16,7 +16,7 @@ public class CtrMain
 {
 
     private final CtrDatabase ctrDB;
-    private final CtrProfile ctrProfile;
+    private final CtrMonasticProfile ctrProfile;
     private final CtrMonastery ctrWat;
     private final CtrForm ctrForm;
     private final CtrVisa ctrVisa;
@@ -27,7 +27,7 @@ public class CtrMain
     public CtrMain(CtrGUIMain ctrGUI)
     {
         ctrDB = new CtrDatabase();
-        ctrProfile = new CtrProfile(ctrDB);
+        ctrProfile = new CtrMonasticProfile(ctrDB);
         ctrWat = new CtrMonastery(ctrDB);
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
@@ -47,7 +47,7 @@ public class CtrMain
         return ctrDB;
     }
 
-    public CtrProfile getCtrProfile()
+    public CtrMonasticProfile getCtrProfile()
     {
         return ctrProfile;
     }

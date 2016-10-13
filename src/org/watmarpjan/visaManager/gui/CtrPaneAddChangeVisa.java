@@ -17,7 +17,7 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -59,7 +59,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
     {
         int opStatus1, opStatus2, opStatus3;
         boolean confirmation;
-        Profile p;
+        MonasticProfile p;
         File fScanVisa, fScanLastVisaExt, fScanAfterUpdate;
         PassportScan psVisaPage, psLastVisaExt;
         ArrayList<PassportScan> listPassportScanToDelete;
@@ -69,8 +69,8 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-            psVisaPage = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
-            psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdprofile());
+            psVisaPage = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdProfile());
+            psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdProfile());
 
             fScanVisa = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psVisaPage);
             fScanLastVisaExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
@@ -157,7 +157,7 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
     @FXML
     void actionRegister(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         PassportScan psVisaScan;
         int operationStatus1, operationStatus2;
 
@@ -212,11 +212,11 @@ public class CtrPaneAddChangeVisa extends AbstractFormSelectExtraScan implements
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         PassportScan psVisaScan;
 
-        psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdprofile());
+        psVisaScan = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanVisa(p.getIdProfile());
         super.fillData(psVisaScan);
 
         tfVisaNumber.setText(p.getVisaNumber());

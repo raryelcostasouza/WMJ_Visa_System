@@ -20,7 +20,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.watmarpjan.visaManager.control.CtrMain;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
@@ -629,7 +629,7 @@ public class CtrGUIMain
 
     public Optional<AbstractResultDialogSelectScan> actionShowDialogSelectScan()
     {
-        Profile p;
+        MonasticProfile p;
 
         p = getCtrPaneSelection().getSelectedProfile();
         if (p != null)
@@ -666,7 +666,7 @@ public class CtrGUIMain
 
     public void fillMonasticProfileData()
     {
-        Profile p;
+        MonasticProfile p;
 
         p = ctrPaneMonasticSelection.getSelectedProfile();
 

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
@@ -31,7 +31,7 @@ public class ProfileUtil
         return "";
     }
 
-    public static String getTitle(Profile p)
+    public static String getTitle(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
         {
@@ -45,11 +45,11 @@ public class ProfileUtil
         }
     }
 
-    public static String getFullName(Profile p)
+    public static String getFullName(MonasticProfile p)
     {
         String strFullName;
 
-        strFullName = p.getName();
+        strFullName = p.getMonasticName();
         if (p.getMiddleName() != null)
         {
             strFullName += " " + p.getMiddleName();
@@ -60,7 +60,7 @@ public class ProfileUtil
         return strFullName;
     }
 
-    public static String getOrdinationType(Profile p)
+    public static String getOrdinationType(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
         {
@@ -74,7 +74,7 @@ public class ProfileUtil
         }
     }
 
-    public static String getStrOrdinationDate(Profile p)
+    public static String getStrOrdinationDate(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
         {
@@ -106,7 +106,7 @@ public class ProfileUtil
 
     }
 
-    public static LocalDate getVisaExpiryDateDesired(Profile p)
+    public static LocalDate getVisaExpiryDateDesired(MonasticProfile p)
     {
         LocalDate ldVisaExpiry, ldExtensionExpiry, ldNewExpiryDate;
         Date dVisaExpiry;

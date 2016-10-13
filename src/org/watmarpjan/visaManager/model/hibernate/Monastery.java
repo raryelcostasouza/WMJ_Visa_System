@@ -8,9 +8,8 @@ package org.watmarpjan.visaManager.model.hibernate;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,77 +26,86 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries(
 {
     @NamedQuery(name = "Monastery.findAll", query = "SELECT m FROM Monastery m"),
-    @NamedQuery(name = "Monastery.findById", query = "SELECT m FROM Monastery m WHERE m.id = :id"),
-    @NamedQuery(name = "Monastery.findByName", query = "SELECT m FROM Monastery m WHERE m.name = :name"),
+    @NamedQuery(name = "Monastery.findByIdMonastery", query = "SELECT m FROM Monastery m WHERE m.idMonastery = :idMonastery"),
+    @NamedQuery(name = "Monastery.findByAddrAmpher", query = "SELECT m FROM Monastery m WHERE m.addrAmpher = :addrAmpher"),
     @NamedQuery(name = "Monastery.findByAddrCountry", query = "SELECT m FROM Monastery m WHERE m.addrCountry = :addrCountry"),
     @NamedQuery(name = "Monastery.findByAddrJangwat", query = "SELECT m FROM Monastery m WHERE m.addrJangwat = :addrJangwat"),
-    @NamedQuery(name = "Monastery.findByAddrTambon", query = "SELECT m FROM Monastery m WHERE m.addrTambon = :addrTambon"),
-    @NamedQuery(name = "Monastery.findByAddrAmpher", query = "SELECT m FROM Monastery m WHERE m.addrAmpher = :addrAmpher"),
-    @NamedQuery(name = "Monastery.findByAddrRoad", query = "SELECT m FROM Monastery m WHERE m.addrRoad = :addrRoad"),
     @NamedQuery(name = "Monastery.findByAddrNumber", query = "SELECT m FROM Monastery m WHERE m.addrNumber = :addrNumber"),
-    @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber"),
-    @NamedQuery(name = "Monastery.findByMonasteryOfJaokana", query = "SELECT m FROM Monastery m WHERE m.monasteryOfJaokana = :monasteryOfJaokana")
+    @NamedQuery(name = "Monastery.findByAddrRoad", query = "SELECT m FROM Monastery m WHERE m.addrRoad = :addrRoad"),
+    @NamedQuery(name = "Monastery.findByAddrTambon", query = "SELECT m FROM Monastery m WHERE m.addrTambon = :addrTambon"),
+    @NamedQuery(name = "Monastery.findByMonasteryOfJaokana", query = "SELECT m FROM Monastery m WHERE m.monasteryOfJaokana = :monasteryOfJaokana"),
+    @NamedQuery(name = "Monastery.findByMonasteryName", query = "SELECT m FROM Monastery m WHERE m.monasteryName = :monasteryName"),
+    @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber")
 })
 public class Monastery implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer id;
-    private String name;
-    private String addrCountry;
-    private String addrJangwat;
-    private String addrTambon;
+    @Column(name = "ID_MONASTERY")
+    private Integer idMonastery;
+    @Column(name = "ADDR_AMPHER")
     private String addrAmpher;
-    private String addrRoad;
+    @Column(name = "ADDR_COUNTRY")
+    private String addrCountry;
+    @Column(name = "ADDR_JANGWAT")
+    private String addrJangwat;
+    @Column(name = "ADDR_NUMBER")
     private String addrNumber;
-    private String phoneNumber;
+    @Column(name = "ADDR_ROAD")
+    private String addrRoad;
+    @Column(name = "ADDR_TAMBON")
+    private String addrTambon;
     @Basic(optional = false)
+    @Column(name = "MONASTERY_OF_JAOKANA")
     private String monasteryOfJaokana;
-    @OneToMany(mappedBy = "monasteryAdviserToCome")
-    private Set<Profile> profileSet;
-    @OneToMany(mappedBy = "monasteryOrdainedAt")
-    private Set<Profile> profileSet1;
-    @OneToMany(mappedBy = "monasteryResidingAt")
-    private Set<Profile> profileSet2;
+    @Column(name = "MONASTERY_NAME")
+    private String monasteryName;
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
     @OneToMany(mappedBy = "monastery")
     private Set<Upajjhaya> upajjhayaSet;
+    @OneToMany(mappedBy = "monasteryAdviserToCome")
+    private Set<MonasticProfile> monasticProfileSet;
+    @OneToMany(mappedBy = "monasteryOrdainedAt")
+    private Set<MonasticProfile> monasticProfileSet1;
+    @OneToMany(mappedBy = "monasteryResidingAt")
+    private Set<MonasticProfile> monasticProfileSet2;
 
     public Monastery()
     {
     }
 
-    public Monastery(Integer id)
+    public Monastery(Integer idMonastery)
     {
-        this.id = id;
+        this.idMonastery = idMonastery;
     }
 
-    public Monastery(Integer id, String monasteryOfJaokana)
+    public Monastery(Integer idMonastery, String monasteryOfJaokana)
     {
-        this.id = id;
+        this.idMonastery = idMonastery;
         this.monasteryOfJaokana = monasteryOfJaokana;
     }
 
-    public Integer getId()
+    public Integer getIdMonastery()
     {
-        return id;
+        return idMonastery;
     }
 
-    public void setId(Integer id)
+    public void setIdMonastery(Integer idMonastery)
     {
-        this.id = id;
+        this.idMonastery = idMonastery;
     }
 
-    public String getName()
+    public String getAddrAmpher()
     {
-        return name;
+        return addrAmpher;
     }
 
-    public void setName(String name)
+    public void setAddrAmpher(String addrAmpher)
     {
-        this.name = name;
+        this.addrAmpher = addrAmpher;
     }
 
     public String getAddrCountry()
@@ -120,24 +128,14 @@ public class Monastery implements Serializable
         this.addrJangwat = addrJangwat;
     }
 
-    public String getAddrTambon()
+    public String getAddrNumber()
     {
-        return addrTambon;
+        return addrNumber;
     }
 
-    public void setAddrTambon(String addrTambon)
+    public void setAddrNumber(String addrNumber)
     {
-        this.addrTambon = addrTambon;
-    }
-
-    public String getAddrAmpher()
-    {
-        return addrAmpher;
-    }
-
-    public void setAddrAmpher(String addrAmpher)
-    {
-        this.addrAmpher = addrAmpher;
+        this.addrNumber = addrNumber;
     }
 
     public String getAddrRoad()
@@ -150,24 +148,14 @@ public class Monastery implements Serializable
         this.addrRoad = addrRoad;
     }
 
-    public String getAddrNumber()
+    public String getAddrTambon()
     {
-        return addrNumber;
+        return addrTambon;
     }
 
-    public void setAddrNumber(String addrNumber)
+    public void setAddrTambon(String addrTambon)
     {
-        this.addrNumber = addrNumber;
-    }
-
-    public String getPhoneNumber()
-    {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber)
-    {
-        this.phoneNumber = phoneNumber;
+        this.addrTambon = addrTambon;
     }
 
     public String getMonasteryOfJaokana()
@@ -180,37 +168,24 @@ public class Monastery implements Serializable
         this.monasteryOfJaokana = monasteryOfJaokana;
     }
 
-    @XmlTransient
-    public Set<Profile> getProfileSet()
+    public String getMonasteryName()
     {
-        return profileSet;
+        return monasteryName;
     }
 
-    public void setProfileSet(Set<Profile> profileSet)
+    public void setMonasteryName(String monasteryName)
     {
-        this.profileSet = profileSet;
+        this.monasteryName = monasteryName;
     }
 
-    @XmlTransient
-    public Set<Profile> getProfileSet1()
+    public String getPhoneNumber()
     {
-        return profileSet1;
+        return phoneNumber;
     }
 
-    public void setProfileSet1(Set<Profile> profileSet1)
+    public void setPhoneNumber(String phoneNumber)
     {
-        this.profileSet1 = profileSet1;
-    }
-
-    @XmlTransient
-    public Set<Profile> getProfileSet2()
-    {
-        return profileSet2;
-    }
-
-    public void setProfileSet2(Set<Profile> profileSet2)
-    {
-        this.profileSet2 = profileSet2;
+        this.phoneNumber = phoneNumber;
     }
 
     @XmlTransient
@@ -224,11 +199,44 @@ public class Monastery implements Serializable
         this.upajjhayaSet = upajjhayaSet;
     }
 
+    @XmlTransient
+    public Set<MonasticProfile> getMonasticProfileSet()
+    {
+        return monasticProfileSet;
+    }
+
+    public void setMonasticProfileSet(Set<MonasticProfile> monasticProfileSet)
+    {
+        this.monasticProfileSet = monasticProfileSet;
+    }
+
+    @XmlTransient
+    public Set<MonasticProfile> getMonasticProfileSet1()
+    {
+        return monasticProfileSet1;
+    }
+
+    public void setMonasticProfileSet1(Set<MonasticProfile> monasticProfileSet1)
+    {
+        this.monasticProfileSet1 = monasticProfileSet1;
+    }
+
+    @XmlTransient
+    public Set<MonasticProfile> getMonasticProfileSet2()
+    {
+        return monasticProfileSet2;
+    }
+
+    public void setMonasticProfileSet2(Set<MonasticProfile> monasticProfileSet2)
+    {
+        this.monasticProfileSet2 = monasticProfileSet2;
+    }
+
     @Override
     public int hashCode()
     {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idMonastery != null ? idMonastery.hashCode() : 0);
         return hash;
     }
 
@@ -241,7 +249,7 @@ public class Monastery implements Serializable
             return false;
         }
         Monastery other = (Monastery) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        if ((this.idMonastery == null && other.idMonastery != null) || (this.idMonastery != null && !this.idMonastery.equals(other.idMonastery)))
         {
             return false;
         }
@@ -251,7 +259,7 @@ public class Monastery implements Serializable
     @Override
     public String toString()
     {
-        return "org.watmarpjan.visaManager.model.hibernate.Monastery[ id=" + id + " ]";
+        return "org.watmarpjan.visaManager.model.hibernate.Monastery[ idMonastery=" + idMonastery + " ]";
     }
 
 }

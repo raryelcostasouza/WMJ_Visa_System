@@ -21,7 +21,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 
 /**
@@ -133,7 +133,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     @Override
     public void actionSave()
     {
-        Profile p;
+        MonasticProfile p;
         Date issueDate, pkOrdDate, snOrdDate, bkOrdDate;
         Monastery wOrdainedAt;
         Upajjhaya u;
@@ -177,7 +177,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         LocalDate issueDate, pahkahwOrd, samaneraOrd, monkOrd;
 
@@ -238,7 +238,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
 
             if (p.getMonasteryOrdainedAt() != null)
             {
-                cbOrdainedAt.setValue(p.getMonasteryOrdainedAt().getName());
+                cbOrdainedAt.setValue(p.getMonasteryOrdainedAt().getMonasteryName());
             } else
             {
                 cbOrdainedAt.setValue(null);
@@ -271,7 +271,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     @FXML
     void actionChooseBysuddhiScan(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         File fDestination, fSource;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -302,7 +302,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     @FXML
     void actionIMGBysuddhiScanClicked(MouseEvent me)
     {
-        Profile p;
+        MonasticProfile p;
         File fImg;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();

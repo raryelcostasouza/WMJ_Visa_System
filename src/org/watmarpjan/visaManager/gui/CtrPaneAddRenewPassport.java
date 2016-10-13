@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -57,7 +57,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         tfpassportNumber.setText(p.getPassportNumber());
         tfpassportIssuedAt.setText(p.getPassportIssuedAt());
@@ -112,7 +112,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @FXML
     void actionIMGClicked(MouseEvent me)
     {
-        Profile p;
+        MonasticProfile p;
         File fImg;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -125,7 +125,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     void actionArchive(ActionEvent ae)
     {
         boolean confirmation;
-        Profile p;
+        MonasticProfile p;
         ArrayList<File> alFilePassportScans;
         int operationStatus1, operationStatus2;
         boolean error = false;
@@ -196,7 +196,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @FXML
     void actionRegister(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         int operationStatus1, operationStatus2;
 
         File fDestination;

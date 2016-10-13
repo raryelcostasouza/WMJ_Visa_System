@@ -40,7 +40,7 @@ public class CtrUpajjhaya
             ctrDB.getSession().persist(u);
             ctrDB.getSession().flush();
 
-            generatedID = u.getIdupajjhaya();
+            generatedID = u.getIdUpajjhaya();
             u.setUpajjhayaName("New Upajjhaya " + generatedID);
 
             ctrDB.commitCurrentTransaction();

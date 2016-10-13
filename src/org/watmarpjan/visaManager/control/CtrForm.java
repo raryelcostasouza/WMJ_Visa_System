@@ -32,7 +32,7 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.ProfileUtil;
@@ -62,7 +62,7 @@ public class CtrForm
         this.ctrMain = pCtrMain;
     }
 
-    private void fillPrawat(PDAcroForm acroForm, Profile p) throws IOException
+    private void fillPrawat(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
@@ -115,7 +115,7 @@ public class CtrForm
         mOrdainedAt = p.getMonasteryOrdainedAt();
         if (mOrdainedAt != null)
         {
-            acroForm.getField("watOrdainedAtThai").setValue(p.getMonasteryOrdainedAt().getName());
+            acroForm.getField("watOrdainedAtThai").setValue(p.getMonasteryOrdainedAt().getMonasteryName());
         }
 
         u = p.getUpajjhaya();
@@ -125,7 +125,7 @@ public class CtrForm
             mUpajjhaya = u.getMonastery();
             if (mUpajjhaya != null)
             {
-                acroForm.getField("watUpajjhayaThai").setValue(u.getMonastery().getName());
+                acroForm.getField("watUpajjhayaThai").setValue(u.getMonastery().getMonasteryName());
             }
         }
 
@@ -143,7 +143,7 @@ public class CtrForm
         mAdviserToCome = p.getMonasteryAdviserToCome();
         if (mAdviserToCome != null)
         {
-            acroForm.getField("watAdviserToComeThai").setValue(mAdviserToCome.getName());
+            acroForm.getField("watAdviserToComeThai").setValue(mAdviserToCome.getMonasteryName());
             acroForm.getField("addrNumberWatAdviserToComeThai").setValue(mAdviserToCome.getAddrNumber());
             acroForm.getField("addrRoadWatAdviserToComeThai").setValue(mAdviserToCome.getAddrRoad());
             acroForm.getField("addrTambonWatAdviserToComeThai").setValue(mAdviserToCome.getAddrTambon());
@@ -162,8 +162,8 @@ public class CtrForm
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("sponsorThai").setValue(mResidingAt.getName());
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getName());
+            acroForm.getField("sponsorThai").setValue(mResidingAt.getMonasteryName());
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatAdviserToComeThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
@@ -201,19 +201,19 @@ public class CtrForm
         if (mJaoKanaAmpher != null)
         {
             acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getAddrAmpher() + " " + mJaoKanaAmpher.getAddrJangwat());
-            acroForm.getField("watJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getName());
+            acroForm.getField("watJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getMonasteryName());
         }
 
         mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat();
         if (mJaoKanaJangwat != null)
         {
             acroForm.getField("addrJangwatJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getAddrJangwat());
-            acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getName());
+            acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getMonasteryName());
         }
 
     }
 
-    private void fillTM7ReqExtension(PDAcroForm acroForm, Profile p) throws IOException
+    private void fillTM7ReqExtension(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldPassportIssue, ldPassportExp, ldBirthDate, ldLastEntry;
@@ -232,7 +232,7 @@ public class CtrForm
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
         acroForm.getField("lastName").setValue(p.getLastName());
-        acroForm.getField("name").setValue(p.getName());
+        acroForm.getField("name").setValue(p.getMonasticName());
         if (p.getMiddleName() != null)
         {
             acroForm.getField("middleName").setValue(p.getMiddleName());
@@ -284,7 +284,7 @@ public class CtrForm
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getName());
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
@@ -294,7 +294,7 @@ public class CtrForm
         }
     }
 
-    private void fillFormTM47_90DayNotice(PDAcroForm acroForm, Profile p) throws IOException
+    private void fillFormTM47_90DayNotice(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldArrival;
@@ -335,7 +335,7 @@ public class CtrForm
         if (mResidingAt != null)
         {
 
-            acroForm.getField("WatResidingAtThai").setValue(mResidingAt.getName());
+            acroForm.getField("WatResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
@@ -345,7 +345,7 @@ public class CtrForm
 
     }
 
-    public void fillFormSTM2AckConditions2(PDAcroForm acroForm, Profile p) throws IOException
+    public void fillFormSTM2AckConditions2(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
 
@@ -360,7 +360,7 @@ public class CtrForm
 
     }
 
-    public void fillForm(File sourceFile, Profile p, int option)
+    public void fillForm(File sourceFile, MonasticProfile p, int option)
     {
         PDDocument pdfDocument;
         PDAcroForm acroForm;
@@ -429,7 +429,7 @@ public class CtrForm
         }
     }
 
-    public void fillFormAckOverstayPenalties(PDAcroForm acroForm, Profile p) throws IOException
+    public void fillFormAckOverstayPenalties(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
 
@@ -439,7 +439,7 @@ public class CtrForm
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
         acroForm.getField("lastName").setValue(p.getLastName());
-        acroForm.getField("name").setValue(p.getName());
+        acroForm.getField("name").setValue(p.getMonasticName());
         acroForm.getField("middleName").setValue(p.getMiddleName());
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
@@ -447,7 +447,7 @@ public class CtrForm
 
     }
 
-    public void fillExtReqLetter(PDAcroForm acroForm, Profile p, String destination) throws IOException
+    public void fillExtReqLetter(PDAcroForm acroForm, MonasticProfile p, String destination) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
         String strFullName, strTitle, strMOrdainedAt;
@@ -498,11 +498,11 @@ public class CtrForm
         {
             if (mOrdainedAt.getAddrCountry().equals("THAILAND"))
             {
-                strMOrdainedAt = mOrdainedAt.getName() + " อ." + mOrdainedAt.getAddrAmpher() + " จ." + mOrdainedAt.getAddrJangwat();
+                strMOrdainedAt = mOrdainedAt.getMonasteryName() + " อ." + mOrdainedAt.getAddrAmpher() + " จ." + mOrdainedAt.getAddrJangwat();
 
             } else
             {
-                strMOrdainedAt = mOrdainedAt.getName() + " " + mOrdainedAt.getAddrAmpher() + " " + mOrdainedAt.getAddrJangwat() + " " + mOrdainedAt.getAddrCountry();
+                strMOrdainedAt = mOrdainedAt.getMonasteryName() + " " + mOrdainedAt.getAddrAmpher() + " " + mOrdainedAt.getAddrJangwat() + " " + mOrdainedAt.getAddrCountry();
             }
             acroForm.getField("WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry").setValue(strMOrdainedAt);
         }
@@ -511,11 +511,11 @@ public class CtrForm
         {
             if (mResidingAt.getAddrCountry().equals("THAILAND"))
             {
-                strMOrdainedAt = mResidingAt.getName() + " อ." + mResidingAt.getAddrAmpher() + " จ." + mResidingAt.getAddrJangwat();
+                strMOrdainedAt = mResidingAt.getMonasteryName() + " อ." + mResidingAt.getAddrAmpher() + " จ." + mResidingAt.getAddrJangwat();
 
             } else
             {
-                strMOrdainedAt = mResidingAt.getName() + " " + mResidingAt.getAddrAmpher() + " " + mResidingAt.getAddrJangwat();
+                strMOrdainedAt = mResidingAt.getMonasteryName() + " " + mResidingAt.getAddrAmpher() + " " + mResidingAt.getAddrJangwat();
             }
             acroForm.getField("WatResidingAtThai_addrAmpher_addrJangwat").setValue(strMOrdainedAt);
         }

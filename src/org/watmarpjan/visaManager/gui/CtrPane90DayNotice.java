@@ -28,7 +28,7 @@ import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -157,7 +157,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     }
 
     @Override
-    public void fillData(Profile p)
+    public void fillData(MonasticProfile p)
     {
         Monastery monastery;
 
@@ -167,7 +167,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         tfPassportNumber.setText(p.getPassportNumber());
         tfSurname.setText(p.getLastName());
         tfMiddleName.setText(p.getMiddleName());
-        tfGivenName.setText(p.getName());
+        tfGivenName.setText(p.getMonasticName());
         dpDateOfBirth.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
         tfNationality.setText(p.getNationality());
 
@@ -178,7 +178,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         if (p.getMonasteryResidingAt() != null)
         {
             monastery = p.getMonasteryResidingAt();
-            tfBuildingName.setText(monastery.getName());
+            tfBuildingName.setText(monastery.getMonasteryName());
             tfAddrNumber.setText(monastery.getAddrNumber());
             tfAddrSoiRoad.setText(monastery.getAddrRoad());
             tfAddrStateProvince.setText(monastery.getAddrJangwat());
@@ -199,7 +199,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     @FXML
     void actionPreviewForm90day(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PREVIEW_FORM);
     }
@@ -207,7 +207,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     @FXML
     void actionPrintForm(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PRINT_FORM);
     }
@@ -215,7 +215,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     @FXML
     void actionUpdate90Day(ActionEvent ae)
     {
-        Profile p;
+        MonasticProfile p;
         LocalDate ldNextNotice;
         Date dNextNotice;
 
@@ -250,7 +250,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     void actionButtonAddReceipt(ActionEvent ae)
     {
         File fReceipt, destFile;
-        Profile p;
+        MonasticProfile p;
         String receiptStatus;
         int opStatus;
 

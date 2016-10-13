@@ -5,7 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui;
 
-import org.watmarpjan.visaManager.model.hibernate.Profile;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  *
@@ -14,5 +14,5 @@ import org.watmarpjan.visaManager.model.hibernate.Profile;
 public interface IFormMonasticProfile
 {
 
-    public void fillData(Profile p);
+    public void fillData(MonasticProfile p);
 }
