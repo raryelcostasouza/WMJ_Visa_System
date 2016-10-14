@@ -15,14 +15,12 @@ import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
  *
  * @author WMJ_user
  */
-public class CtrUpajjhaya
+public class CtrUpajjhaya extends AbstractControllerDB
 {
-
-    private final CtrDatabase ctrDB;
 
     public CtrUpajjhaya(CtrDatabase ctrDB)
     {
-        this.ctrDB = ctrDB;
+        super(ctrDB);
     }
 
     public String addNew()

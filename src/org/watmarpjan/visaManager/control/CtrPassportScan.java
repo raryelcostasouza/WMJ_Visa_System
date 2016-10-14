@@ -18,20 +18,18 @@ import org.watmarpjan.visaManager.model.hibernate.PassportScan;
  *
  * @author WMJ_user
  */
-public class CtrPassportScan
+public class CtrPassportScan extends AbstractControllerDB
 {
-
+    
     public static final int SCAN_NUMBER_1 = 1;
     public static final int SCAN_NUMBER_2 = 2;
     public static final int SCAN_NUMBER_3 = 3;
-
-    private final CtrDatabase ctrDB;
-
+    
     public CtrPassportScan(CtrDatabase ctrDB)
     {
-        this.ctrDB = ctrDB;
+        super(ctrDB);
     }
-
+    
     public int addPassportScan(PassportScan ps)
     {
         String errorMessage = "Unable to add passport scan data.";
@@ -41,7 +39,7 @@ public class CtrPassportScan
             ctrDB.getSession().persist(ps);
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -55,7 +53,7 @@ public class CtrPassportScan
             return -1;
         }
     }
-
+    
     public int update()
     {
         String errorMessage = "Unable to update Passport Scan data.";
@@ -64,7 +62,7 @@ public class CtrPassportScan
             ctrDB.openTransaction();
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException pe)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -78,7 +76,7 @@ public class CtrPassportScan
             return -1;
         }
     }
-
+    
     public int updateAndRemoveScan(PassportScan ps2Remove)
     {
         String errorMessage = "Unable to remove Passport Scan data.";
@@ -89,10 +87,10 @@ public class CtrPassportScan
             {
                 ctrDB.getSession().remove(ps2Remove);
             }
-
+            
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException pe)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -106,7 +104,7 @@ public class CtrPassportScan
             return -1;
         }
     }
-
+    
     public int remove(PassportScan ps)
     {
         String errorMessage = "Unable to remove Passport Scan data.";
@@ -116,7 +114,7 @@ public class CtrPassportScan
             ctrDB.getSession().remove(ps);
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException pe)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -130,7 +128,7 @@ public class CtrPassportScan
             return -1;
         }
     }
-
+    
     public int removeExtraScans(Set<PassportScan> listPassportScan)
     {
         try
@@ -150,15 +148,15 @@ public class CtrPassportScan
             return -1;
         }
     }
-
+    
     public PassportScan getPassportScanByIndex(Integer idProfile, int index)
     {
         String hql;
         ArrayList<PassportScan> listPassportScans;
-
+        
         hql = "from PassportScan ps"
                 + " where ps.profile.idprofile = " + idProfile;
-
+        
         listPassportScans = (ArrayList<PassportScan>) ctrDB.getSession().createQuery(hql).getResultList();
         if (index <= listPassportScans.size() - 1)
         {
@@ -168,38 +166,38 @@ public class CtrPassportScan
             return null;
         }
     }
-
+    
     public PassportScan getScanVisa(Integer idProfile)
     {
         String hql;
         PassportScan ps;
-
+        
         hql = "from PassportScan ps"
                 + " where ps.profile.idprofile = " + idProfile
                 + " and ps.contentVisaScan = true";
-
+        
         try
         {
             ps = ctrDB.getSession().createQuery(hql, PassportScan.class
             ).getSingleResult();
-
+            
         } catch (NoResultException nrex)
         {
             ps = null;
         }
-
+        
         return ps;
     }
-
+    
     public PassportScan getScanArriveStamp(Integer idProfile)
     {
         String hql;
         PassportScan ps;
-
+        
         hql = "from PassportScan ps"
                 + " where ps.profile.idprofile = " + idProfile
                 + " and ps.contentArriveStamp = true";
-
+        
         try
         {
             ps = ctrDB.getSession().createQuery(hql, PassportScan.class
@@ -208,19 +206,19 @@ public class CtrPassportScan
         {
             ps = null;
         }
-
+        
         return ps;
     }
-
+    
     public PassportScan getScanLastVisaExt(Integer idProfile)
     {
         String hql;
         PassportScan ps;
-
+        
         hql = "from PassportScan ps"
                 + " where ps.profile.idprofile = " + idProfile
                 + " and ps.contentLastVisaExt = true";
-
+        
         try
         {
             ps = ctrDB.getSession().createQuery(hql, PassportScan.class
@@ -229,8 +227,8 @@ public class CtrPassportScan
         {
             ps = null;
         }
-
+        
         return ps;
     }
-
+    
 }

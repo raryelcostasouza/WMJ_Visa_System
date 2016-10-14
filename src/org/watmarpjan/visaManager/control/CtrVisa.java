@@ -19,16 +19,14 @@ import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
  *
  * @author WMJ_user
  */
-public class CtrVisa
+public class CtrVisa extends AbstractControllerDB
 {
-
-    private final CtrDatabase ctrDB;
-
+    
     public CtrVisa(CtrDatabase ctrDB)
     {
-        this.ctrDB = ctrDB;
+        super(ctrDB);
     }
-
+    
     public int addVisaExt(VisaExtension vExt, PassportScan psExtScan)
     {
         String errorMessage = "Unable to add visa extension.";
@@ -42,7 +40,7 @@ public class CtrVisa
             }
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -56,7 +54,7 @@ public class CtrVisa
             return -1;
         }
     }
-
+    
     public int removeVisaExt(VisaExtension vExt)
     {
         String errorMessage = "Unable to remove visa extension.";
@@ -66,7 +64,7 @@ public class CtrVisa
             ctrDB.getSession().remove(vExt);
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -80,70 +78,70 @@ public class CtrVisa
             return -1;
         }
     }
-
+    
     public VisaExtension loadVisaExtensionByNumber(String extNumber)
     {
         Query result;
         String hql;
-
+        
         hql = "from VisaExtension vext"
                 + " where vext.extNumber = '" + extNumber + "'";
-
+        
         result = ctrDB.getSession().createQuery(hql);
         return (VisaExtension) result.getSingleResult();
-
+        
     }
-
+    
     public ArrayList<EntryVisaExt> loadListExtensions(Integer idProfile)
     {
         Query result;
         String hql;
         ArrayList<EntryVisaExt> alVisaExtensions;
-
+        
         hql = "select new org.watmarpjan.visaManager.model.EntryVisaExt(vext.extNumber, vext.expiryDate)"
                 + " from Profile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where p.idprofile = " + idProfile
                 + " order by vext.expiryDate";
-
+        
         result = ctrDB.getSession().createQuery(hql);
         alVisaExtensions = (ArrayList<EntryVisaExt>) result.getResultList();
-
+        
         return alVisaExtensions;
     }
-
+    
     private ArrayList<VisaExtension> loadListVisaExtForProfile(Integer idProfile)
     {
         ArrayList<VisaExtension> listVisaExt;
         String hql;
         Query result;
         int status;
-
+        
         hql = "from VisaExtension vext"
                 + " where vext.profile.idprofile = " + idProfile + "";
-
+        
         result = ctrDB.getSession().createQuery(hql);
         listVisaExt = (ArrayList<VisaExtension>) result.getResultList();
-
+        
         return listVisaExt;
     }
-
+    
     public int addNewVisaForProfile(MonasticProfile p, PassportScan psVisaScan)
     {
         String errorMessage = "Unable to save the visa information.";
-
+        
         try
         {
             ctrDB.openTransaction();
-
+            
             if (psVisaScan.getIdPassportScan() == null)
             {
                 ctrDB.getSession().persist(psVisaScan);
             }
-
+            
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -157,12 +155,12 @@ public class CtrVisa
             return -1;
         }
     }
-
+    
     public int clearVisaInfoForProfile(MonasticProfile p, ArrayList<PassportScan> listPassportScanToDelete, PassportScan psVisaScan)
     {
         ArrayList<VisaExtension> listVisaExt;
         String errorMessage = "Unable to clear visa extensions and passport scans.";
-
+        
         listVisaExt = new ArrayList<>();
         listVisaExt.addAll(p.getVisaExtensionSet());
 
@@ -171,7 +169,7 @@ public class CtrVisa
         p.setVisaType(null);
         p.setVisaExpiryDate(null);
         p.setNext90DayNotice(null);
-
+        
         try
         {
             ctrDB.openTransaction();
@@ -188,16 +186,16 @@ public class CtrVisa
                 ctrDB.getSession()
                         .remove(vext);
             }
-
+            
             for (PassportScan ps : listPassportScanToDelete)
             {
                 ctrDB.getSession()
                         .remove(ps);
             }
-
+            
             ctrDB.commitCurrentTransaction();
             return 0;
-
+            
         } catch (PersistenceException hex)
         {
             ctrDB.rollbackCurrentTransaction();
@@ -211,5 +209,5 @@ public class CtrVisa
             return -1;
         }
     }
-
+    
 }

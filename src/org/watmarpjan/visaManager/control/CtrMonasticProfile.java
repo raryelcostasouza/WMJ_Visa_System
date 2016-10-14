@@ -20,14 +20,12 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author WMJ_user
  */
-public class CtrMonasticProfile
+public class CtrMonasticProfile extends AbstractControllerDB
 {
-
-    private final CtrDatabase ctrDatabase;
 
     public CtrMonasticProfile(CtrDatabase ctrDatabase)
     {
-        this.ctrDatabase = ctrDatabase;
+        super(ctrDatabase);
     }
 
     public String addProfile()
@@ -44,17 +42,17 @@ public class CtrMonasticProfile
 
         try
         {
-            ctrDatabase.openTransaction();
-            ctrDatabase.getSession().persist(p);
-            ctrDatabase.getSession().flush();
+            ctrDB.openTransaction();
+            ctrDB.getSession().persist(p);
+            ctrDB.getSession().flush();
             generatedID = p.getIdProfile();
             p.setNickname("New MonasticProfile " + generatedID);
-            ctrDatabase.commitCurrentTransaction();
+            ctrDB.commitCurrentTransaction();
             return p.getNickname();
 
         } catch (PersistenceException he)
         {
-            ctrDatabase.rollbackCurrentTransaction();
+            ctrDB.rollbackCurrentTransaction();
 
             if (he instanceof ConstraintViolationException)
             {
@@ -73,13 +71,13 @@ public class CtrMonasticProfile
 
         try
         {
-            ctrDatabase.openTransaction();
+            ctrDB.openTransaction();
 
-            ctrDatabase.commitCurrentTransaction();
+            ctrDB.commitCurrentTransaction();
             return 0;
         } catch (PersistenceException he)
         {
-            ctrDatabase.rollbackCurrentTransaction();
+            ctrDB.rollbackCurrentTransaction();
 
             if (he instanceof ConstraintViolationException)
             {
@@ -100,17 +98,17 @@ public class CtrMonasticProfile
 
         try
         {
-            ctrDatabase.openTransaction();
+            ctrDB.openTransaction();
             if (psArriveStamp.getIdPassportScan() == null)
             {
-                ctrDatabase.getSession().persist(psArriveStamp);
+                ctrDB.getSession().persist(psArriveStamp);
             }
 
-            ctrDatabase.commitCurrentTransaction();
+            ctrDB.commitCurrentTransaction();
             return 0;
         } catch (PersistenceException he)
         {
-            ctrDatabase.rollbackCurrentTransaction();
+            ctrDB.rollbackCurrentTransaction();
 
             if (he instanceof ConstraintViolationException)
             {
@@ -150,7 +148,7 @@ public class CtrMonasticProfile
 
         }
 
-        listProfile = ctrDatabase.getSession().createQuery(hql, MonasticProfile.class).getResultList();
+        listProfile = ctrDB.getSession().createQuery(hql, MonasticProfile.class).getResultList();
         listNickname = new ArrayList<>();
         for (MonasticProfile p : listProfile)
         {
@@ -170,7 +168,7 @@ public class CtrMonasticProfile
                 + "p.samaneraOrdDate asc nulls last,"
                 + "p.pahkahwOrdDate asc nulls last";
 
-        alProfile = (ArrayList<MonasticProfile>) ctrDatabase.getSession().createQuery(hql, MonasticProfile.class).getResultList();
+        alProfile = (ArrayList<MonasticProfile>) ctrDB.getSession().createQuery(hql, MonasticProfile.class).getResultList();
 
         if (!alProfile.isEmpty())
         {
@@ -194,7 +192,7 @@ public class CtrMonasticProfile
         MonasticProfile p;
         try
         {
-            p = (MonasticProfile) ctrDatabase.getSession().getReference(MonasticProfile.class, id);
+            p = (MonasticProfile) ctrDB.getSession().getReference(MonasticProfile.class, id);
             return p;
         } catch (PersistenceException he)
         {
@@ -205,7 +203,7 @@ public class CtrMonasticProfile
 
     public void refreshProfile(MonasticProfile p)
     {
-        ctrDatabase.getSession().refresh(p);
+        ctrDB.getSession().refresh(p);
     }
 
     public ArrayList<String> loadOccupationEnglishList()
@@ -282,7 +280,7 @@ public class CtrMonasticProfile
                 + " p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
-        return (ArrayList<EntryUpdate90DayNotice>) ctrDatabase.getSession().createQuery(hql).getResultList();
+        return (ArrayList<EntryUpdate90DayNotice>) ctrDB.getSession().createQuery(hql).getResultList();
     }
 
     public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
@@ -315,7 +313,7 @@ public class CtrMonasticProfile
     {
         ArrayList<MonasticProfile> alProfile;
 
-        alProfile = (ArrayList<MonasticProfile>) ctrDatabase.getSession().createQuery(hql).getResultList();
+        alProfile = (ArrayList<MonasticProfile>) ctrDB.getSession().createQuery(hql).getResultList();
 
         if (!alProfile.isEmpty())
         {
@@ -330,7 +328,7 @@ public class CtrMonasticProfile
     {
         Query qResult;
 
-        qResult = ctrDatabase.getSession().createQuery(hql);
+        qResult = ctrDB.getSession().createQuery(hql);
 
         return (ArrayList<String>) qResult.getResultList();
     }
@@ -339,7 +337,7 @@ public class CtrMonasticProfile
     {
         Query qResult;
 
-        qResult = ctrDatabase.getSession().createQuery(hql);
+        qResult = ctrDB.getSession().createQuery(hql);
 
         return (ArrayList<EntryDueTask>) qResult.getResultList();
     }

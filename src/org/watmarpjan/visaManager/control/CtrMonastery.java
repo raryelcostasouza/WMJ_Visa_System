@@ -17,14 +17,12 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author WMJ_user
  */
-public class CtrMonastery
+public class CtrMonastery extends AbstractControllerDB
 {
-
-    private CtrDatabase ctrDB;
 
     public CtrMonastery(CtrDatabase ctrDB)
     {
-        this.ctrDB = ctrDB;
+        super(ctrDB);
     }
 
     public String addMonastery()
