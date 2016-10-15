@@ -32,7 +32,7 @@ public class CtrMain
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
-        ctrFormTM30 = new CtrFormTM30(ctrDB);
+        ctrFormTM30 = new CtrFormTM30(ctrDB, ctrProfile);
         ctrForm = new CtrForm(this);
     }
 

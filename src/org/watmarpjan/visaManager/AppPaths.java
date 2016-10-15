@@ -45,6 +45,11 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName + "/Scans/Profile");
     }
 
+    public static Path getPathToTM30Printout()
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("../Data/TM30-Printout");
+    }
+
     public static Path getPathToForms()
     {
         return Paths.get(System.getProperty("user.dir")).resolve("appData/Forms-Templates");

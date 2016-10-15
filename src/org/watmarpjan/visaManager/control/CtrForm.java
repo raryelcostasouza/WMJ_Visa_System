@@ -12,13 +12,11 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
@@ -406,7 +404,7 @@ public class CtrForm
             } else if (sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
             {
                 fillPrawat(acroForm, p);
-            } else if (sourceFile.getName().equals(AppFiles.getFormTM30Residence().getName()))
+            } else if (sourceFile.getName().contains("TM30-"))
             {
                 overlayMonasteryWatermark(pdfDocument);
             }

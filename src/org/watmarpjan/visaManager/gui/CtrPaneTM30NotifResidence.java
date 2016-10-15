@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.gui;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,63 +20,48 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.Tm30NotificationResidence;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
  * @author WMJ_user
  */
-public class CtrPaneTM30NotifResidence extends AbstractChildPaneController implements IEditableGUIForm
+public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
 {
-
+    
     @FXML
     private Button bArchive;
-
+    
     @FXML
     private Button bSelectPDF;
-
+    
     @FXML
     private TreeView<String> tvSavedNotifications;
-
+    
     @FXML
     private TreeView<String> tvMonastics;
-
+    
     @FXML
     private DatePicker dpNotification;
-
+    
     @FXML
     private TextField tfPathPDF;
-
+    
     private ArrayList<CheckBoxTreeItem<String>> listItemTMonastics;
     private File fSelected;
-
-    @Override
-    public void actionLockEdit()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void actionSave()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void actionUnlockEdit()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public void init()
     {
         TreeItem<String> rootSavedNotif;
-
+        
         listItemTMonastics = new ArrayList<>();
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-
+        
         rootSavedNotif = new TreeItem<>("Saved Residence Notifications");
         tvSavedNotifications.setRoot(rootSavedNotif);
         tvSavedNotifications.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>()
@@ -83,38 +69,35 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController imple
             @Override
             public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue)
             {
-                if (!newValue.isLeaf())
+                if (newValue != null && !newValue.isLeaf())
                 {
                     bArchive.setDisable(false);
                 } else
                 {
                     bArchive.setDisable(true);
                 }
+                
             }
         });
+        
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
     }
-
+    
     public void fillData()
     {
-        //loadSavedNotificationTree();
+        loadSavedNotificationTree();
         loadMonasticTree();
-
+        
         dpNotification.setValue(null);
         tfPathPDF.setText("");
-
+        
         tvMonastics.getSelectionModel().clearSelection();
     }
-
-    @Override
-    public boolean isSelectionEmpty()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     private void loadMonasticTree()
     {
         ArrayList<String> monasticNickNameList;
-
+        
         monasticNickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
         TreeItem<String> rootItem = new TreeItem<>("Monastics");
         listItemTMonastics.clear();
@@ -125,43 +108,80 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController imple
         }
         rootItem.getChildren().addAll(listItemTMonastics);
         tvMonastics.setRoot(rootItem);
-
+        
     }
-
+    
     private void loadSavedNotificationTree()
     {
-        TreeItem<String> rootItem = new TreeItem<>("Saved notifications");
-        rootItem.setExpanded(true);
-        for (int i = 1; i < 6; i++)
+        TreeItem<String> rootItem, formItem, monasticItem;
+        ArrayList<Tm30NotificationResidence> listFormTM30;
+        LocalDate ldNotifDate;
+        
+        tvSavedNotifications.getRoot().getChildren().clear();
+        listFormTM30 = ctrGUIMain.getCtrMain().getCtrFormTM30().loadAll();
+        
+        for (Tm30NotificationResidence form : listFormTM30)
         {
-            TreeItem<String> item = new TreeItem<>("Message" + i);
-            rootItem.getChildren().add(item);
+            ldNotifDate = Util.convertDateToLocalDate(form.getNotificationDate());
+            formItem = new TreeItem<>(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
+            if (form.getMonasticProfileSet() != null)
+            {
+                for (Iterator<MonasticProfile> iterator = form.getMonasticProfileSet().iterator(); iterator.hasNext();)
+                {
+                    monasticItem = new TreeItem<>(iterator.next().getNickname());
+                    formItem.getChildren().add(monasticItem);
+                }
+            }
+            
+            tvSavedNotifications.getRoot().getChildren().add(formItem);
         }
-        tvSavedNotifications.setRoot(rootItem);
     }
-
+    
     @FXML
     void actionAddNew(ActionEvent ae)
     {
         LocalDate ldNotifDate;
         TreeItem<String> newNotif;
         TreeItem<String> monasticNode;
-
+        Tm30NotificationResidence objFormTM30;
+        int opStatus2, opStatus1;
+        
         ldNotifDate = dpNotification.getValue();
-
+        
         if (ldNotifDate != null)
         {
-            newNotif = new TreeItem<>(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
-            for (String nickName : getNicknameSelectedMonastics())
+            objFormTM30 = new Tm30NotificationResidence();
+            objFormTM30.setNotificationDate(Util.convertLocalDateToDate(ldNotifDate));
+            
+            opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate));
+            //if the file copy was successfull
+            if (opStatus1 == 0)
             {
-                monasticNode = new TreeItem<>(nickName);
-                newNotif.getChildren().add(monasticNode);
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrFormTM30().create(objFormTM30, getNicknameSelectedMonastics());
+                //if the DB update was successfull
+                if (opStatus2 == 0)
+                {
+                    CtrAlertDialog.infoDialog("TM30 Registered", "The TM30 Form was added successfully.");
+                } else
+                {
+                    CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate));
+                }
             }
-            tvSavedNotifications.getRoot().getChildren().add(newNotif);
+            
+            {
+//                newNotif = new TreeItem<>(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
+//                for (String nickName : getNicknameSelectedMonastics())
+//                {
+//                    monasticNode = new TreeItem<>(nickName);
+//                    newNotif.getChildren().add(monasticNode);
+//                }
+//                tvSavedNotifications.getRoot().getChildren().add(newNotif);
+            }
         }
         fillData();
+        
     }
-
+    
     @FXML
     void actionSelectFile(ActionEvent ae)
     {
@@ -171,11 +191,11 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController imple
             tfPathPDF.setText(fSelected.getAbsolutePath().toString());
         }
     }
-
+    
     private ArrayList<String> getNicknameSelectedMonastics()
     {
         ArrayList<String> listSelectedMonastics;
-
+        
         listSelectedMonastics = new ArrayList<>();
         for (CheckBoxTreeItem<String> cbMonasticItem : listItemTMonastics)
         {

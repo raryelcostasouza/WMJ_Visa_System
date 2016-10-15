@@ -123,9 +123,15 @@ public class AppFiles
         return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
     }
 
-    public static File getFormTM30Residence()
+    public static File getPrintoutTM30(LocalDate ldNotifDate)
     {
-        return AppPaths.getPathToForms().resolve("TM30-Residence.pdf").toFile();
+        String day, month, year;
+
+        day = ldNotifDate.getDayOfMonth() + "";
+        month = ldNotifDate.getMonthValue() + "";
+        year = ldNotifDate.getYear() + "";
+
+        return AppPaths.getPathToTM30Printout().resolve("TM30-" + year + "-" + month + "-" + day + ".pdf").toFile();
     }
 
     public static File getOverlayWatermark()
