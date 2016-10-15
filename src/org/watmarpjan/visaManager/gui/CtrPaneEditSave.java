@@ -55,6 +55,9 @@ public class CtrPaneEditSave extends AbstractChildPaneController
         if (lockStatus && !ctrGUIMain.getCurrentEditableGUIFormController().isSelectionEmpty())
         {
             actionUnlock();
+        } else if (lockStatus && ctrGUIMain.getCurrentEditableGUIFormController().isSelectionEmpty())
+        {
+            actionUnlockAddNewButton();
         } else
         {
             actionLock();
@@ -73,6 +76,19 @@ public class CtrPaneEditSave extends AbstractChildPaneController
         lockStatus = false;
         bLockUnlock.setGraphic(ivUnlock);
         ctrGUIMain.getCurrentEditableGUIFormController().actionUnlockEdit();
+    }
+
+    private void actionUnlockAddNewButton()
+    {
+        IEditableGUIForm ctrEditForm;
+        lockStatus = false;
+        bLockUnlock.setGraphic(ivUnlock);
+        ctrEditForm = ctrGUIMain.getCurrentEditableGUIFormController();
+
+        if (ctrEditForm instanceof ICreateEditGUIForm)
+        {
+            ((ICreateEditGUIForm) ctrEditForm).actionUnlockAddNewButton();
+        }
     }
 
     @FXML

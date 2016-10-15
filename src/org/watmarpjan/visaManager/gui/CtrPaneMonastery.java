@@ -19,7 +19,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonastery extends AbstractChildPaneController implements IEditableGUIForm
+public class CtrPaneMonastery extends AbstractChildPaneController implements ICreateEditGUIForm
 {
 
     @FXML
@@ -223,6 +223,12 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements IEd
         rbJKAmpher.setDisable(false);
         rbJKTambol.setDisable(false);
 
+        bAddNew.setDisable(false);
+    }
+
+    @Override
+    public void actionUnlockAddNewButton()
+    {
         bAddNew.setDisable(false);
     }
 

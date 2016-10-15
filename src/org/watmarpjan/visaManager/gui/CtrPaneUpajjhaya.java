@@ -17,7 +17,7 @@ import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
  *
  * @author WMJ_user
  */
-public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEditableGUIForm
+public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICreateEditGUIForm
 {
 
     @FXML
@@ -96,6 +96,12 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements IEd
     {
         tfName.setEditable(true);
         cbMonasteryList.setDisable(false);
+
+    }
+
+    @Override
+    public void actionUnlockAddNewButton()
+    {
         bNewUpajjhaya.setDisable(false);
     }
 

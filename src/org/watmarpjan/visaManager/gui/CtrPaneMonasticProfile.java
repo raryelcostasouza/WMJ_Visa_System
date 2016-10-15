@@ -30,14 +30,12 @@ import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 
 /**
  *
  * @author WMJ_user
  */
-public class CtrPaneMonasticProfile extends AbstractChildPaneController implements IFormMonasticProfile, IEditableGUIForm
+public class CtrPaneMonasticProfile extends AbstractChildPaneController implements IFormMonasticProfile, ICreateEditGUIForm
 {
 
     private final String PATH_DEFAULT_PROFILE_PHOTO = "img/profile/default.png";
@@ -460,6 +458,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         tfEmail.setEditable(true);
         taEmergencyContact.setEditable(true);
 
+        bNewProfile.setDisable(false);
+    }
+
+    @Override
+    public void actionUnlockAddNewButton()
+    {
         bNewProfile.setDisable(false);
     }
 
