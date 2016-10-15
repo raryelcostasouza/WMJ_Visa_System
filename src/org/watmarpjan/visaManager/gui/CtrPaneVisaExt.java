@@ -25,6 +25,7 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.Tm30NotificationResidence;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -371,8 +372,20 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
+        Tm30NotificationResidence objFormTM30;
+        LocalDate ldNotifDate;
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PREVIEW_FORM);
+        objFormTM30 = p.getFormTm30();
+
+        if (objFormTM30 != null)
+        {
+            ldNotifDate = Util.convertDateToLocalDate(objFormTM30.getNotificationDate());
+            ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PREVIEW_FORM);
+        } else
+        {
+            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
+        }
     }
 
     @FXML
@@ -427,8 +440,20 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
+        Tm30NotificationResidence objFormTM30;
+        LocalDate ldNotifDate;
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM30Residence(), p, CtrForm.OPTION_PRINT_FORM);
+        objFormTM30 = p.getFormTm30();
+
+        if (objFormTM30 != null)
+        {
+            ldNotifDate = Util.convertDateToLocalDate(objFormTM30.getNotificationDate());
+            ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PRINT_FORM);
+        } else
+        {
+            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
+        }
     }
 
     @FXML
