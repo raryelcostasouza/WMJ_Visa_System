@@ -1,6 +1,8 @@
 REATE TABLE "APPVISAMANAGER"."APP_USER"
 (
-   IDUSER int PRIMARY KEY NOT NULL,
+   IDUSER int not null primary key
+        GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
    EMAIL varchar(255),
    LOGIN varchar(255) NOT NULL,
    PASSWORD varchar(255),
