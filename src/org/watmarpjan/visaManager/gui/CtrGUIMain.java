@@ -620,7 +620,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         topPane.setRight(null);
-        topPane.setLeft(paneEditSave);
+        topPane.setLeft(null);
         centerPane.setCenter(paneTM30NotifResidence);
         currentPaneController = ctrPaneTM30NotifResidence;
         Init.MAIN_STAGE.sizeToScene();
