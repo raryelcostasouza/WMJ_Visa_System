@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,6 +44,7 @@ public class Monastery implements Serializable
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_MONASTERY")
     private Integer idMonastery;
@@ -68,9 +71,9 @@ public class Monastery implements Serializable
     private Set<Upajjhaya> upajjhayaSet;
     @OneToMany(mappedBy = "monasteryAdviserToCome")
     private Set<MonasticProfile> monasticProfileSet;
-    @OneToMany(mappedBy = "monasteryOrdainedAt")
-    private Set<MonasticProfile> monasticProfileSet1;
     @OneToMany(mappedBy = "monasteryResidingAt")
+    private Set<MonasticProfile> monasticProfileSet1;
+    @OneToMany(mappedBy = "monasteryOrdainedAt")
     private Set<MonasticProfile> monasticProfileSet2;
 
     public Monastery()

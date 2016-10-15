@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -85,6 +87,7 @@ public class MonasticProfile implements Serializable
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_PROFILE")
     private Integer idProfile;
@@ -189,12 +192,15 @@ public class MonasticProfile implements Serializable
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryAdviserToCome;
-    @JoinColumn(name = "MONASTERY_ORDAINED_AT", referencedColumnName = "ID_MONASTERY")
-    @ManyToOne
-    private Monastery monasteryOrdainedAt;
     @JoinColumn(name = "MONASTERY_RESIDING_AT", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryResidingAt;
+    @JoinColumn(name = "MONASTERY_ORDAINED_AT", referencedColumnName = "ID_MONASTERY")
+    @ManyToOne
+    private Monastery monasteryOrdainedAt;
+    @JoinColumn(name = "FORM_TM30", referencedColumnName = "ID_FORM")
+    @ManyToOne
+    private Tm30NotificationResidence formTm30;
     @JoinColumn(name = "UPAJJHAYA", referencedColumnName = "ID_UPAJJHAYA")
     @ManyToOne
     private Upajjhaya upajjhaya;
@@ -688,6 +694,16 @@ public class MonasticProfile implements Serializable
         this.monasteryAdviserToCome = monasteryAdviserToCome;
     }
 
+    public Monastery getMonasteryResidingAt()
+    {
+        return monasteryResidingAt;
+    }
+
+    public void setMonasteryResidingAt(Monastery monasteryResidingAt)
+    {
+        this.monasteryResidingAt = monasteryResidingAt;
+    }
+
     public Monastery getMonasteryOrdainedAt()
     {
         return monasteryOrdainedAt;
@@ -698,14 +714,14 @@ public class MonasticProfile implements Serializable
         this.monasteryOrdainedAt = monasteryOrdainedAt;
     }
 
-    public Monastery getMonasteryResidingAt()
+    public Tm30NotificationResidence getFormTm30()
     {
-        return monasteryResidingAt;
+        return formTm30;
     }
 
-    public void setMonasteryResidingAt(Monastery monasteryResidingAt)
+    public void setFormTm30(Tm30NotificationResidence formTm30)
     {
-        this.monasteryResidingAt = monasteryResidingAt;
+        this.formTm30 = formTm30;
     }
 
     public Upajjhaya getUpajjhaya()
