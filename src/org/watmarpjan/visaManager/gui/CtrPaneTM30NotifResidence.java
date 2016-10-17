@@ -8,7 +8,6 @@ package org.watmarpjan.visaManager.gui;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,14 +15,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.model.EntryTM30GroupByDate;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.Tm30NotificationResidence;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -32,72 +33,68 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
 {
-    
+
     @FXML
     private Button bArchive;
-    
+
     @FXML
-    private Button bSelectPDF;
-    
-    @FXML
-    private TreeView<String> tvSavedNotifications;
-    
+    private TableView<EntryTM30GroupByDate> tvSavedNotifications;
+
     @FXML
     private TreeView<String> tvMonastics;
-    
+
     @FXML
     private DatePicker dpNotification;
-    
+
     @FXML
     private TextField tfPathPDF;
-    
+
     private ArrayList<CheckBoxTreeItem<String>> listItemTMonastics;
     private File fSelected;
-    
+
     @Override
     public void init()
     {
-        TreeItem<String> rootSavedNotif;
-        
+
         listItemTMonastics = new ArrayList<>();
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-        
-        rootSavedNotif = new TreeItem<>("Saved Residence Notifications");
-        tvSavedNotifications.setRoot(rootSavedNotif);
-        tvSavedNotifications.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>()
+
+        tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
+        tvSavedNotifications.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
+
+        tvSavedNotifications.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EntryTM30GroupByDate>()
         {
             @Override
-            public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> oldValue, TreeItem<String> newValue)
+            public void changed(ObservableValue<? extends EntryTM30GroupByDate> observable, EntryTM30GroupByDate oldValue, EntryTM30GroupByDate newValue)
             {
-                if (newValue != null && !newValue.isLeaf())
+                if (newValue != null)
                 {
                     bArchive.setDisable(false);
                 } else
                 {
                     bArchive.setDisable(true);
                 }
-                
             }
-        });
-        
+        }
+        );
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
     }
-    
+
     public void fillData()
     {
-        loadSavedNotificationTree();
+        loadTableNotifResidence();
         loadMonasticTree();
-        
+
         dpNotification.setValue(null);
         tfPathPDF.setText("");
-        
+
         tvMonastics.getSelectionModel().clearSelection();
     }
-    
+
     private void loadMonasticTree()
     {
         ArrayList<String> monasticNickNameList;
-        
+
         monasticNickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
         TreeItem<String> rootItem = new TreeItem<>("Monastics");
         listItemTMonastics.clear();
@@ -108,80 +105,64 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
         }
         rootItem.getChildren().addAll(listItemTMonastics);
         tvMonastics.setRoot(rootItem);
-        
+
     }
-    
-    private void loadSavedNotificationTree()
+
+    private void loadTableNotifResidence()
     {
-        TreeItem<String> rootItem, formItem, monasticItem;
-        ArrayList<Tm30NotificationResidence> listFormTM30;
-        LocalDate ldNotifDate;
-        
-        tvSavedNotifications.getRoot().getChildren().clear();
-        listFormTM30 = ctrGUIMain.getCtrMain().getCtrFormTM30().loadAll();
-        
-        for (Tm30NotificationResidence form : listFormTM30)
-        {
-            ldNotifDate = Util.convertDateToLocalDate(form.getNotificationDate());
-            formItem = new TreeItem<>(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
-            if (form.getMonasticProfileSet() != null)
-            {
-                for (Iterator<MonasticProfile> iterator = form.getMonasticProfileSet().iterator(); iterator.hasNext();)
-                {
-                    monasticItem = new TreeItem<>(iterator.next().getNickname());
-                    formItem.getChildren().add(monasticItem);
-                }
-            }
-            
-            tvSavedNotifications.getRoot().getChildren().add(formItem);
-        }
+        ArrayList<EntryTM30GroupByDate> listEntryTM30GroupByDate;
+
+        listEntryTM30GroupByDate = ctrGUIMain.getCtrMain().getCtrProfile().loadListTM30GroupByDate();
+
+        tvSavedNotifications.getItems().clear();
+        tvSavedNotifications.getItems().addAll(listEntryTM30GroupByDate);
     }
-    
+
+    @FXML
+    void actionArchive(ActionEvent ae)
+    {
+        EntryTM30GroupByDate objTableEntry;
+
+        objTableEntry = tvSavedNotifications.getSelectionModel().getSelectedItem();
+
+    }
+
     @FXML
     void actionAddNew(ActionEvent ae)
     {
         LocalDate ldNotifDate;
         TreeItem<String> newNotif;
         TreeItem<String> monasticNode;
-        Tm30NotificationResidence objFormTM30;
         int opStatus2, opStatus1;
-        
+        MonasticProfile mp;
+
         ldNotifDate = dpNotification.getValue();
-        
+
         if (ldNotifDate != null)
         {
-            objFormTM30 = new Tm30NotificationResidence();
-            objFormTM30.setNotificationDate(Util.convertLocalDateToDate(ldNotifDate));
-            
             opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate));
             //if the file copy was successfull
             if (opStatus1 == 0)
             {
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrFormTM30().create(objFormTM30, getNicknameSelectedMonastics());
+                for (String nickname : getNicknameSelectedMonastics())
+                {
+                    mp = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(nickname);
+                    mp.setTm30NotifDate(Util.convertLocalDateToDate(ldNotifDate));
+                }
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(null);
                 //if the DB update was successfull
                 if (opStatus2 == 0)
                 {
                     CtrAlertDialog.infoDialog("TM30 Registered", "The TM30 Form was added successfully.");
+                    fillData();
                 } else
                 {
                     CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate));
                 }
             }
-            
-            {
-//                newNotif = new TreeItem<>(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
-//                for (String nickName : getNicknameSelectedMonastics())
-//                {
-//                    monasticNode = new TreeItem<>(nickName);
-//                    newNotif.getChildren().add(monasticNode);
-//                }
-//                tvSavedNotifications.getRoot().getChildren().add(newNotif);
-            }
         }
-        fillData();
-        
     }
-    
+
     @FXML
     void actionSelectFile(ActionEvent ae)
     {
@@ -191,11 +172,11 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
             tfPathPDF.setText(fSelected.getAbsolutePath().toString());
         }
     }
-    
+
     private ArrayList<String> getNicknameSelectedMonastics()
     {
         ArrayList<String> listSelectedMonastics;
-        
+
         listSelectedMonastics = new ArrayList<>();
         for (CheckBoxTreeItem<String> cbMonasticItem : listItemTMonastics)
         {

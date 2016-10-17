@@ -22,7 +22,6 @@ public class CtrMain
     private final CtrVisa ctrVisa;
     private final CtrPassportScan ctrPassportScan;
     private final CtrUpajjhaya ctrUpajjhaya;
-    private final CtrFormTM30 ctrFormTM30;
 
     public CtrMain(CtrGUIMain ctrGUI)
     {
@@ -32,18 +31,12 @@ public class CtrMain
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
-        ctrFormTM30 = new CtrFormTM30(ctrDB, ctrProfile);
         ctrForm = new CtrForm(this);
     }
 
     public CtrForm getCtrForm()
     {
         return ctrForm;
-    }
-
-    public CtrFormTM30 getCtrFormTM30()
-    {
-        return ctrFormTM30;
     }
 
     public CtrDatabase getCtrDB()

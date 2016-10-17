@@ -80,7 +80,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonasticProfile.findByVisaExpiryDate", query = "SELECT m FROM MonasticProfile m WHERE m.visaExpiryDate = :visaExpiryDate"),
     @NamedQuery(name = "MonasticProfile.findByVisaNumber", query = "SELECT m FROM MonasticProfile m WHERE m.visaNumber = :visaNumber"),
     @NamedQuery(name = "MonasticProfile.findByVisaType", query = "SELECT m FROM MonasticProfile m WHERE m.visaType = :visaType"),
-    @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate")
+    @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate"),
+    @NamedQuery(name = "MonasticProfile.findByTm30NotifDate", query = "SELECT m FROM MonasticProfile m WHERE m.tm30NotifDate = :tm30NotifDate")
 })
 public class MonasticProfile implements Serializable
 {
@@ -187,6 +188,9 @@ public class MonasticProfile implements Serializable
     @Column(name = "PASSPORT_ISSUE_DATE")
     @Temporal(TemporalType.DATE)
     private Date passportIssueDate;
+    @Column(name = "TM30_NOTIF_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date tm30NotifDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -198,9 +202,6 @@ public class MonasticProfile implements Serializable
     @JoinColumn(name = "MONASTERY_ORDAINED_AT", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryOrdainedAt;
-    @JoinColumn(name = "FORM_TM30", referencedColumnName = "ID_FORM")
-    @ManyToOne
-    private Tm30NotificationResidence formTm30;
     @JoinColumn(name = "UPAJJHAYA", referencedColumnName = "ID_UPAJJHAYA")
     @ManyToOne
     private Upajjhaya upajjhaya;
@@ -673,6 +674,16 @@ public class MonasticProfile implements Serializable
         this.passportIssueDate = passportIssueDate;
     }
 
+    public Date getTm30NotifDate()
+    {
+        return tm30NotifDate;
+    }
+
+    public void setTm30NotifDate(Date tm30NotifDate)
+    {
+        this.tm30NotifDate = tm30NotifDate;
+    }
+
     @XmlTransient
     public Set<PassportScan> getPassportScanSet()
     {
@@ -712,16 +723,6 @@ public class MonasticProfile implements Serializable
     public void setMonasteryOrdainedAt(Monastery monasteryOrdainedAt)
     {
         this.monasteryOrdainedAt = monasteryOrdainedAt;
-    }
-
-    public Tm30NotificationResidence getFormTm30()
-    {
-        return formTm30;
-    }
-
-    public void setFormTm30(Tm30NotificationResidence formTm30)
-    {
-        this.formTm30 = formTm30;
     }
 
     public Upajjhaya getUpajjhaya()

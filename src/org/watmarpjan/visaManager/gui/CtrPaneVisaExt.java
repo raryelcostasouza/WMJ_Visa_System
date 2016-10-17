@@ -9,6 +9,7 @@ import java.io.File;
 import java.time.LocalDate;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import java.util.ArrayList;
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,7 +26,6 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.Tm30NotificationResidence;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -372,15 +372,15 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        Tm30NotificationResidence objFormTM30;
+        Date dNotifDate;
         LocalDate ldNotifDate;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objFormTM30 = p.getFormTm30();
+        dNotifDate = p.getTm30NotifDate();
 
-        if (objFormTM30 != null)
+        if (dNotifDate != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(objFormTM30.getNotificationDate());
+            ldNotifDate = Util.convertDateToLocalDate(dNotifDate);
             ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PREVIEW_FORM);
         } else
         {
@@ -440,15 +440,15 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        Tm30NotificationResidence objFormTM30;
+        Date dNotifDate;
         LocalDate ldNotifDate;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objFormTM30 = p.getFormTm30();
+        dNotifDate = p.getTm30NotifDate();
 
-        if (objFormTM30 != null)
+        if (dNotifDate != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(objFormTM30.getNotificationDate());
+            ldNotifDate = Util.convertDateToLocalDate(dNotifDate);
             ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PRINT_FORM);
         } else
         {
