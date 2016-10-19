@@ -35,6 +35,11 @@ public class EntryTM30GroupByDate
 
     }
 
+    public EntryTM30GroupByDate(LocalDate ldNotif)
+    {
+        this(Util.convertLocalDateToDate(ldNotif));
+    }
+
     public String getPNotifDate()
     {
         return pNotifDate.get();
@@ -72,6 +77,21 @@ public class EntryTM30GroupByDate
         //removes the last comma from the string
         strListNickname = pListMonasticNickname.get();
         pListMonasticNickname.set(strListNickname.substring(0, strListNickname.length() - 2));
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null)
+        {
+            return false;
+        } else if (this.getDateNotif().equals(((EntryTM30GroupByDate) o).getDateNotif()))
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
 }

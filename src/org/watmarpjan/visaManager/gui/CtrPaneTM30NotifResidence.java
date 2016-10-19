@@ -15,14 +15,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.model.EntryDueTask;
 import org.watmarpjan.visaManager.model.EntryTM30GroupByDate;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
@@ -41,6 +47,9 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     private TableView<EntryTM30GroupByDate> tvSavedNotifications;
 
     @FXML
+    private TableColumn<EntryTM30GroupByDate, String> tcOpenPDF;
+
+    @FXML
     private TreeView<String> tvMonastics;
 
     @FXML
@@ -55,12 +64,59 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     @Override
     public void init()
     {
+        ImageView ivPDFIcon;
 
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
         listItemTMonastics = new ArrayList<>();
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
 
         tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
-        tvSavedNotifications.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
+        tvSavedNotifications.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
+        tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
+
+        tvSavedNotifications.setColumnResizePolicy((param) -> true);
+        Callback<TableColumn<EntryTM30GroupByDate, String>, TableCell<EntryTM30GroupByDate, String>> openPDFCellFactory =
+                new Callback<TableColumn<EntryTM30GroupByDate, String>, TableCell<EntryTM30GroupByDate, String>>()
+        {
+            @Override
+            public TableCell call(final TableColumn<EntryTM30GroupByDate, String> param)
+            {
+                final TableCell<EntryTM30GroupByDate, String> cell = new TableCell<EntryTM30GroupByDate, String>()
+                {
+
+                    final Button btn = new Button("");
+                    final ImageView ivPDFIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("pdf.png").toUri().toString());
+
+                    @Override
+                    public void updateItem(String item, boolean empty)
+                    {
+                        super.updateItem(item, empty);
+                        if (empty)
+                        {
+                            setGraphic(null);
+                            setText(null);
+                        } else
+                        {
+
+                            btn.setGraphic(ivPDFIcon);
+                            btn.setOnAction((ActionEvent event)
+                                    -> 
+                                    {
+                                        EntryTM30GroupByDate clickedEntry;
+
+                                        clickedEntry = getTableView().getItems().get(getIndex());
+                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getaLdNotifDate()));
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        tcOpenPDF.setCellFactory(openPDFCellFactory);
 
         tvSavedNotifications.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EntryTM30GroupByDate>()
         {
@@ -77,7 +133,6 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
             }
         }
         );
-        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
     }
 
     public void fillData()
@@ -111,28 +166,33 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     private void loadTableNotifResidence()
     {
         ArrayList<EntryTM30GroupByDate> listEntryTM30GroupByDate;
+        ArrayList<LocalDate> listNotifDateSavedTM30;
 
+        //loads the list of the notif dates for all saved files of TM30 from disk
+        listNotifDateSavedTM30 = CtrFileOperation.getListNotifDateFilesTM30();
+
+        //loads the entries of notif dates and the associated monastics from DB
         listEntryTM30GroupByDate = ctrGUIMain.getCtrMain().getCtrProfile().loadListTM30GroupByDate();
+
+        for (LocalDate ldSavedFileTM30 : listNotifDateSavedTM30)
+        {
+            //if there is a TM30 that is not currently associated to any monastic
+            //add a table entry as well
+            //compares the entry date of the fileList on the disk with the entry dates from the DB
+            if (!listEntryTM30GroupByDate.contains(new EntryTM30GroupByDate(ldSavedFileTM30)))
+            {
+                listEntryTM30GroupByDate.add(new EntryTM30GroupByDate(ldSavedFileTM30));
+            }
+        }
 
         tvSavedNotifications.getItems().clear();
         tvSavedNotifications.getItems().addAll(listEntryTM30GroupByDate);
     }
 
     @FXML
-    void actionArchive(ActionEvent ae)
-    {
-        EntryTM30GroupByDate objTableEntry;
-
-        objTableEntry = tvSavedNotifications.getSelectionModel().getSelectedItem();
-
-    }
-
-    @FXML
     void actionAddNew(ActionEvent ae)
     {
         LocalDate ldNotifDate;
-        TreeItem<String> newNotif;
-        TreeItem<String> monasticNode;
         int opStatus2, opStatus1;
         MonasticProfile mp;
 

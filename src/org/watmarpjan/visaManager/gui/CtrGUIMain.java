@@ -113,7 +113,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
     @FXML
-    private VBox paneTM30NotifResidence;
+    private TabPane paneTM30NotifResidence;
 
     private CtrDialogSelectExtraScan ctrDialogSelectExtraScan;
 

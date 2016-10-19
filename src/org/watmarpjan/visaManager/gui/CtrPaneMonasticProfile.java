@@ -29,7 +29,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 
 /**
  *
