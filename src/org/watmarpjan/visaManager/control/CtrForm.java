@@ -418,7 +418,7 @@ public class CtrForm
                 printPDF(pdfDocument);
             } else
             {
-                openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
 
         } catch (IOException ex)
@@ -547,25 +547,6 @@ public class CtrForm
         contentStream.drawImage(pdImage, tMatrix);
         contentStream.close();
 
-    }
-
-    private void openPDFOnDefaultProgram(File f)
-    {
-        //show the generated form on the default pdf viewer
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
-        {
-            try
-            {
-                Desktop.getDesktop().open(f);
-            } catch (IOException ex)
-            {
-                CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
-            }
-
-        } else
-        {
-            CtrAlertDialog.errorDialog("No support for opening files on this OS.");
-        }
     }
 
     private void printPDF(PDDocument p)

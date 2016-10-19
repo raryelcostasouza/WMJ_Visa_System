@@ -5,13 +5,16 @@
  */
 package org.watmarpjan.visaManager.control;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
@@ -192,6 +195,45 @@ public class CtrFileOperation
             f.delete();
         }
         fTMPFolder.delete();
+    }
+
+    public static ArrayList<LocalDate> getListNotifDateFilesTM30()
+    {
+        ArrayList<LocalDate> listNotifDateSavedTM30;
+        File[] fList;
+        String strFilenameWithotPrefix, strFileName;
+        LocalDate ldParsed;
+
+        listNotifDateSavedTM30 = new ArrayList<>();
+        fList = AppPaths.getPathToTM30Printout().toFile().listFiles();
+
+        for (File file : fList)
+        {
+            strFileName = file.getName();
+            strFilenameWithotPrefix = strFileName.substring(5, strFileName.length() - 4);
+            ldParsed = LocalDate.parse(strFilenameWithotPrefix);
+            listNotifDateSavedTM30.add(ldParsed);
+        }
+        return listNotifDateSavedTM30;
+    }
+
+    public static void openPDFOnDefaultProgram(File f)
+    {
+        //show the generated form on the default pdf viewer
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+        {
+            try
+            {
+                Desktop.getDesktop().open(f);
+            } catch (IOException ex)
+            {
+                CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
+            }
+
+        } else
+        {
+            CtrAlertDialog.errorDialog("No support for opening files on this OS.");
+        }
     }
 
 }
