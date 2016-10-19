@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
@@ -125,13 +126,7 @@ public class AppFiles
 
     public static File getPrintoutTM30(LocalDate ldNotifDate)
     {
-        String day, month, year;
-
-        day = ldNotifDate.getDayOfMonth() + "";
-        month = ldNotifDate.getMonthValue() + "";
-        year = ldNotifDate.getYear() + "";
-
-        return AppPaths.getPathToTM30Printout().resolve("TM30-" + year + "-" + month + "-" + day + ".pdf").toFile();
+        return AppPaths.getPathToTM30Printout().resolve("TM30-" + ldNotifDate.format(DateTimeFormatter.ISO_DATE) + ".pdf").toFile();
     }
 
     public static File getOverlayWatermark()
