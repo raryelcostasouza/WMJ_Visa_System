@@ -15,11 +15,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.stage.FileChooser;
+import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.EntryReceipt90Day;
 import org.watmarpjan.visaManager.util.Util;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
  *
@@ -47,6 +52,40 @@ public class CtrFileOperation
         fPreviousFolder.renameTo(fNewFolder);
     }
 
+    public static int archiveAllPassportScans(MonasticProfile p)
+    {
+        ArrayList<File> listFiles2Archive;
+        int opStatus, opStatusAux;
+
+        if (p.getPassportNumber() != null)
+        {
+            listFiles2Archive = new ArrayList<>();
+            listFiles2Archive.add(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
+
+            if (p.getPassportScanSet() != null)
+            {
+                for (Iterator<PassportScan> iterator = p.getPassportScanSet().iterator(); iterator.hasNext();)
+                {
+                    PassportScan ps = iterator.next();
+                    listFiles2Archive.add(AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+                }
+            }
+
+            opStatus = 0;
+            for (File f2Archive : listFiles2Archive)
+            {
+                opStatusAux = archiveScanFile(p.getNickname(), SCAN_TYPE_PASSPORT, f2Archive);
+                if (opStatusAux == -1)
+                {
+                    opStatus = -1;
+                }
+            }
+            return opStatus;
+        }
+
+        return 0;
+    }
+
     public static int archiveScanFile(String profileNickName, String scanType, File f2Archive)
     {
         File fProfileArchive;
@@ -71,7 +110,7 @@ public class CtrFileOperation
             {
                 fProfileArchive.mkdirs();
             }
-            Files.copy(pSourceFile, pDestFile);
+            Files.move(pSourceFile, pDestFile);
             return 0;
 
         } catch (IOException ex)
@@ -197,26 +236,6 @@ public class CtrFileOperation
         fTMPFolder.delete();
     }
 
-    public static ArrayList<LocalDate> getListNotifDateFilesTM30()
-    {
-        ArrayList<LocalDate> listNotifDateSavedTM30;
-        File[] fList;
-        String strFilenameWithotPrefix, strFileName;
-        LocalDate ldParsed;
-
-        listNotifDateSavedTM30 = new ArrayList<>();
-        fList = AppPaths.getPathToTM30Printout().toFile().listFiles();
-
-        for (File file : fList)
-        {
-            strFileName = file.getName();
-            strFilenameWithotPrefix = strFileName.substring(5, strFileName.length() - 4);
-            ldParsed = LocalDate.parse(strFilenameWithotPrefix);
-            listNotifDateSavedTM30.add(ldParsed);
-        }
-        return listNotifDateSavedTM30;
-    }
-
     public static void openPDFOnDefaultProgram(File f)
     {
         //show the generated form on the default pdf viewer
@@ -230,9 +249,51 @@ public class CtrFileOperation
                 CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
             }
 
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("No support for opening files on this OS.");
+        }
+    }
+
+    public static ArrayList<EntryReceipt90Day> loadListReceipts90Day(MonasticProfile mp)
+    {
+        ArrayList<EntryReceipt90Day> listReceipts90D;
+        File fDirReceipts;
+        File[] fList;
+        String receiptDate, receiptStatus, refNumber;
+        int indexLastSeparator;
+        LocalDate ldReceipt;
+        EntryReceipt90Day objEntryReceipt;
+
+        listReceipts90D = new ArrayList<>();
+        fDirReceipts = AppPaths.getPathToReceiptsOnline90dNotice(mp.getNickname()).toFile();
+        if (fDirReceipts.exists())
+        {
+            fList = fDirReceipts.listFiles();
+
+            for (File f : fList)
+            {
+                receiptDate = f.getName().substring(0, 10);
+
+                indexLastSeparator = f.getName().lastIndexOf("-");
+                receiptStatus = f.getName().substring(11, indexLastSeparator);
+                refNumber = f.getName().substring(indexLastSeparator + 1, f.getName().length() - 4);
+
+                ldReceipt = LocalDate.parse(receiptDate);
+
+                objEntryReceipt = new EntryReceipt90Day(ldReceipt, refNumber, receiptStatus);
+                listReceipts90D.add(objEntryReceipt);
+
+                System.out.println("Date: " + receiptDate);
+                System.out.println("Status: " + receiptStatus);
+                System.out.println("RefNumber: " + refNumber);
+            }
+            return listReceipts90D;
+        }
+        else
+        {
+            return null;
         }
     }
 
