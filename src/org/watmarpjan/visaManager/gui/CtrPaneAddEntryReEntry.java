@@ -124,7 +124,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
             p.setArrivalTravelBy(cbTravelBy.getValue());
             p.setArrivalPortOfEntry(tfPortOfEntry.getText());
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().addEntryReentry(p);
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (opStatus == 0)
             {
                 CtrAlertDialog.infoDialog("Entry/Re-entry registered", "The entry/re-entry info was registered successfully.");
