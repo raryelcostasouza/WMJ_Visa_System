@@ -11,6 +11,5 @@ package org.watmarpjan.visaManager.gui;
  */
 public interface ICreateEditGUIForm extends IEditableGUIForm
 {
-
-    public void actionUnlockAddNewButton();
+    public void actionAddNew();
 }
