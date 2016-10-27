@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -11,15 +10,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneVisaExt">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneVisaExt">
   <tabs>
     <Tab text="Forms">
          <content>
@@ -118,34 +115,6 @@
                               </GridPane>
                            </children>
                         </HBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane collapsible="false" text="Visa Extension Scan">
-                     <content>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fx:id="ivPreview" fitHeight="395.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../icons/passport.png" />
-                                 </image>
-                                 <viewport>
-                                    <Rectangle2D />
-                                 </viewport>
-                              </ImageView>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                 <children>
-                                    <Button fx:id="bArchive" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
-                                    <Button fx:id="bSelectScan" mnemonicParsing="false" onAction="#actionSelectScan" text="Select Visa Extension Scan" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label text="Passport page number:" />
-                                    <TextField fx:id="tfPsptPageNumber" editable="false" prefWidth="50.0" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
                      </content>
                   </TitledPane>
                   <HBox alignment="CENTER">
