@@ -284,10 +284,6 @@ public class CtrFileOperation
 
                 objEntryReceipt = new EntryReceipt90Day(ldReceipt, refNumber, receiptStatus);
                 listReceipts90D.add(objEntryReceipt);
-
-                System.out.println("Date: " + receiptDate);
-                System.out.println("Status: " + receiptStatus);
-                System.out.println("RefNumber: " + refNumber);
             }
             return listReceipts90D;
         }
