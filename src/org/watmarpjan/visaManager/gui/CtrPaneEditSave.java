@@ -30,22 +30,29 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     @FXML
     private Button bSave;
 
+    @FXML
+    private Button bAddNew;
+
     @Override
     public void init()
     {
-        Path pIconLock, pIconUnlock, pIconSave;
-        ImageView ivSaveButton;
+        Path pIconLock, pIconUnlock, pIconSave, pIconAdd;
+        ImageView ivSaveButton, ivAddButton;
 
         pIconLock = AppPaths.getPathToIconSubfolder().resolve("lock.png");
         pIconUnlock = AppPaths.getPathToIconSubfolder().resolve("unlock.png");
         pIconSave = AppPaths.getPathToIconSubfolder().resolve("save.png");
+        pIconAdd = AppPaths.getPathToIconSubfolder().resolve("add.png");
 
         ivLock = new ImageView(pIconLock.toFile().toURI().toString());
         ivUnlock = new ImageView(pIconUnlock.toFile().toURI().toString());
         ivSaveButton = new ImageView(pIconSave.toFile().toURI().toString());
+        ivAddButton = new ImageView(pIconAdd.toFile().toURI().toString());
 
         bLockUnlock.setGraphic(ivLock);
         bSave.setGraphic(ivSaveButton);
+        bAddNew.setGraphic(ivAddButton);
+
         lockStatus = true;
     }
 
@@ -68,6 +75,7 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     {
         lockStatus = true;
         bLockUnlock.setGraphic(ivLock);
+        bAddNew.setDisable(true);
         ctrGUIMain.getCurrentEditableGUIFormController().actionLockEdit();
     }
 
@@ -75,26 +83,33 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     {
         lockStatus = false;
         bLockUnlock.setGraphic(ivUnlock);
+        bAddNew.setDisable(false);
         ctrGUIMain.getCurrentEditableGUIFormController().actionUnlockEdit();
     }
 
     private void actionUnlockAddNewButton()
     {
-        IEditableGUIForm ctrEditForm;
         lockStatus = false;
         bLockUnlock.setGraphic(ivUnlock);
-        ctrEditForm = ctrGUIMain.getCurrentEditableGUIFormController();
-
-        if (ctrEditForm instanceof ICreateEditGUIForm)
-        {
-            ((ICreateEditGUIForm) ctrEditForm).actionUnlockAddNewButton();
-        }
+        bAddNew.setDisable(false);
     }
 
     @FXML
     void actionSave(ActionEvent ae)
     {
         ctrGUIMain.getCurrentEditableGUIFormController().actionSave();
+    }
+    
+    @FXML
+    void actionAddNew(ActionEvent ae)
+    {
+        IEditableGUIForm ctrEditForm;
+        
+        ctrEditForm = ctrGUIMain.getCurrentEditableGUIFormController();
+        if (ctrEditForm instanceof ICreateEditGUIForm)
+        {
+            ((ICreateEditGUIForm) ctrEditForm).actionAddNew();
+        }
     }
 
     public void enableSaveButton()
@@ -110,6 +125,11 @@ public class CtrPaneEditSave extends AbstractChildPaneController
     public boolean getLockStatus()
     {
         return lockStatus;
+    }
+
+    public void setVisible_ButtonAddNew(boolean newStatus)
+    {
+        bAddNew.setVisible(newStatus);
     }
 
 }
