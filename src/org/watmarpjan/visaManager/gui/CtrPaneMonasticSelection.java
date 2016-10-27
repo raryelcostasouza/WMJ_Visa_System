@@ -89,6 +89,14 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         return null;
 
     }
+    
+    public void setSelectedProfileByNickname(String nickname)
+    {
+        if (cbSelectedMonastic.getItems().contains(nickname))
+        {
+            cbSelectedMonastic.setValue(nickname);
+        }
+    }
 
     @FXML
     void listenerCbSelectedMonastic(ActionEvent ae)
