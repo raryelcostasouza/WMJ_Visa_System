@@ -10,8 +10,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
@@ -21,12 +24,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.model.EntryReceipt90Day;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
@@ -103,7 +109,13 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     private ToggleGroup tgReceiptStatus;
 
     @FXML
-    private TableView<EntryReceiptOnlineNotice> tvReceipts;
+    private TableView<EntryReceipt90Day> tvReceipts;
+
+    @FXML
+    private TextField tfSelectionRefNumber;
+
+    @FXML
+    private TableColumn tcOpenPDF;
 
     private ArrayList<TextField> alTextFields;
 
@@ -120,6 +132,76 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
 
         tvDueNotice90Day.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
         tvDueNotice90Day.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("strDueDate"));
+
+        tvReceipts.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>(""));
+        tvReceipts.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("receiptDate"));
+        tvReceipts.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("receiptType"));
+        tvReceipts.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("refNumber"));
+
+        Callback<TableColumn<EntryReceipt90Day, String>, TableCell<EntryReceipt90Day, String>> openPDFCellFactory
+                = new Callback<TableColumn<EntryReceipt90Day, String>, TableCell<EntryReceipt90Day, String>>()
+        {
+            @Override
+            public TableCell<EntryReceipt90Day, String> call(TableColumn<EntryReceipt90Day, String> param)
+            {
+                final TableCell<EntryReceipt90Day, String> cell = new TableCell<EntryReceipt90Day, String>()
+                {
+
+                    final Button btn = new Button("");
+                    final ImageView ivPDFIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("pdf.png").toUri().toString());
+
+                    @Override
+                    public void updateItem(String item, boolean empty)
+                    {
+                        super.updateItem(item, empty);
+                        if (empty)
+                        {
+                            setGraphic(null);
+                            setText(null);
+                        }
+                        else
+                        {
+
+                            btn.setGraphic(ivPDFIcon);
+                            btn.setOnAction((ActionEvent event)
+                                    ->
+                            {
+                                MonasticProfile mp;
+                                EntryReceipt90Day clickedEntry;
+
+                                mp = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+                                clickedEntry = getTableView().getItems().get(getIndex());
+                                CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getReceiptOnline90d(mp.getNickname(),
+                                        clickedEntry.getRefNumber(),
+                                        clickedEntry.getLdReceiptDate(),
+                                        clickedEntry.getReceiptType()));
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        tcOpenPDF.setCellFactory(openPDFCellFactory);
+
+        tvReceipts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EntryReceipt90Day>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends EntryReceipt90Day> observable, EntryReceipt90Day oldValue, EntryReceipt90Day newValue)
+            {
+                if (newValue != null)
+                {
+                    tfSelectionRefNumber.setText(newValue.getRefNumber());
+                }
+                else
+                {
+                    tfSelectionRefNumber.setText("");
+                }
+            }
+        });
 
         alTextFields = new ArrayList<>();
         alTextFields.add(tfPassportNumber);
@@ -162,6 +244,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         Monastery monastery;
 
         fillData();
+        fillDataReceipts(p);
 
         //dpValidDatesNoticeOnline.setValue(Util.convertDateToLocalDate(p.getNext90dayNotice()));
         tfPassportNumber.setText(p.getPassportNumber());
@@ -192,6 +275,18 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
             {
                 tf.setText(tf.getText().toUpperCase(Locale.ENGLISH));
             }
+        }
+    }
+
+    private void fillDataReceipts(MonasticProfile p)
+    {
+        ArrayList<EntryReceipt90Day> listReceipts90D;
+
+        tvReceipts.getItems().clear();
+        listReceipts90D = CtrFileOperation.loadListReceipts90Day(p);
+        if (listReceipts90D != null)
+        {
+            tvReceipts.getItems().addAll(listReceipts90D);
         }
 
     }
@@ -261,7 +356,8 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
             if (rbReceiptApproved.isSelected())
             {
                 receiptStatus = AppFileNames.RECEIPT_STATUS_APPROVED;
-            } else
+            }
+            else
             {
                 receiptStatus = AppFileNames.RECEIPT_STATUS_PENDING;
             }
@@ -270,14 +366,15 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
             opStatus = CtrFileOperation.copyOperation(fReceipt, destFile);
             if (opStatus == 0)
             {
+                fillDataReceipts(p);
                 clearAddReceiptFields();
                 CtrAlertDialog.infoDialog("Receipt saved successfully", "The receipt was successfully saved.");
             }
-        } else
+        }
+        else
         {
             CtrAlertDialog.warningDialog("Please fill out all fields before adding a receipt.");
         }
-
     }
 
     private void clearAddReceiptFields()
