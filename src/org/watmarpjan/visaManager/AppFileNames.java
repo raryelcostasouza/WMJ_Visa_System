@@ -16,8 +16,8 @@ import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 public class AppFileNames
 {
 
-    public static final String RECEIPT_STATUS_PENDING = "pending";
-    public static final String RECEIPT_STATUS_APPROVED = "approved";
+    public static final String RECEIPT_STATUS_PENDING = "PENDING";
+    public static final String RECEIPT_STATUS_APPROVED = "APPROVED";
 
     public static String getProfilePhoto()
     {
