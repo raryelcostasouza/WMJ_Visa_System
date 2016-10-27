@@ -23,63 +23,65 @@
 
 <TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPane90DayNotice">
   <tabs>
-    <Tab text="Forms">
+    <Tab text="Register 90 day Notice">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox>
                <children>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
-                     <children>
-                        <Label text="TM47 - Form 90 day Notice:" />
-                        <Pane prefHeight="36.0" prefWidth="56.0" />
-                        <Button mnemonicParsing="false" onAction="#actionPreviewForm90day" text="Preview" />
-                        <Pane prefHeight="36.0" prefWidth="56.0" />
-                        <Button mnemonicParsing="false" onAction="#actionPrintForm" text="Print" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
+                  <TitledPane collapsible="false" text="Forms">
+                     <content>
+                        <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
+                           <children>
+                              <Label text="TM47 - Form 90 day Notice:" />
+                              <Pane prefHeight="36.0" prefWidth="56.0" />
+                              <Button mnemonicParsing="false" onAction="#actionPreviewForm90day" text="Preview" />
+                              <Pane prefHeight="36.0" prefWidth="56.0" />
+                              <Button mnemonicParsing="false" onAction="#actionPrintForm" text="Print" />
+                              <VBox />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" text="Register 90 Day Notice">
+                     <content>
+                        <BorderPane>
+                           <top>
+                              <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="Next 90 Day Notice at:" />
+                                    <DatePicker fx:id="dpNext90DayNotice" />
+                                 </children>
+                              </HBox>
+                           </top>
+                           <center>
+                              <HBox alignment="CENTER" prefHeight="400.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TableView fx:id="tvDueNotice90Day" editable="true" prefHeight="100.0" prefWidth="390.0">
+                                       <columns>
+                                          <TableColumn fx:id="tcSelected" prefWidth="65.0" text="Selection" />
+                                          <TableColumn editable="false" prefWidth="159.0" text="Monastic" />
+                                          <TableColumn editable="false" minWidth="0.0" prefWidth="164.0" resizable="false" text="90 Day Notice Due Date" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </HBox>
+                           </center>
+                           <bottom>
+                              <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#actionUpdate90Day" text="Update" />
+                                 </children>
+                              </HBox>
+                           </bottom>
+                        </BorderPane>
+                     </content>
+                  </TitledPane>
                </children>
             </VBox>
          </content>
     </Tab>
-      <Tab text="Register 90 day Notice">
-         <content>
-            <BorderPane prefHeight="415.0" prefWidth="630.0">
-               <bottom>
-                  <HBox alignment="CENTER" prefHeight="48.0" prefWidth="630.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#actionUpdate90Day" text="Update" />
-                     </children>
-                  </HBox>
-               </bottom>
-               <center>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <TableView fx:id="tvDueNotice90Day" editable="true" prefHeight="100.0" prefWidth="390.0">
-                           <columns>
-                              <TableColumn fx:id="tcSelected" prefWidth="65.0" text="Selection" />
-                              <TableColumn editable="false" prefWidth="159.0" text="Monastic" />
-                              <TableColumn editable="false" minWidth="0.0" prefWidth="164.0" resizable="false" text="90 Day Notice Due Date" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </HBox>
-               </center>
-               <top>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Next 90 Day Notice at:" />
-                        <DatePicker fx:id="dpNext90DayNotice" />
-                     </children>
-                  </HBox>
-               </top>
-            </BorderPane>
-         </content>
-      </Tab>
     <Tab text="Online Notification">
          <content>
             <VBox>
