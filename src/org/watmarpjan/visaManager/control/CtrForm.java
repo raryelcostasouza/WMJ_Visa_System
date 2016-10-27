@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.control;
 
-import java.awt.Desktop;
 import java.awt.geom.AffineTransform;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -314,7 +313,7 @@ public class CtrForm
         acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
         acroForm.getField("arrivalTravelBy").setValue(p.getArrivalTravelBy());
 
-        if (p.getVisaType().equals("Tourist"))
+        if (p.getVisaType() != null && p.getVisaType().equals("Tourist"))
         {
             ((PDCheckBox) acroForm.getField("TOURIST")).check();
             ((PDCheckBox) acroForm.getField("NONIMM")).unCheck();
