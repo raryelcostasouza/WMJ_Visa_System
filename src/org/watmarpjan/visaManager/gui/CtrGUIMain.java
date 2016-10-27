@@ -6,13 +6,11 @@
 package org.watmarpjan.visaManager.gui;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TabPane;
@@ -115,8 +113,6 @@ public class CtrGUIMain
     @FXML
     private TabPane paneTM30NotifResidence;
 
-    private CtrDialogSelectExtraScan ctrDialogSelectExtraScan;
-
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
     @FXML
@@ -173,35 +169,10 @@ public class CtrGUIMain
 
         initPaneMonasticSelection();
         initPaneEditSave();
-        initDialogSelectExtraScan();
 
         this.ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
         initChildControllers();
         actionDueTasksButton(null);
-    }
-
-    private void initDialogSelectExtraScan()
-    {
-        FXMLLoader loader;
-        DialogPane dp;
-        try
-        {
-            loader = new FXMLLoader(getClass().getResource("dialogPaneSelectExtraScan.fxml"));
-            dp = (DialogPane) loader.load();
-            ctrDialogSelectExtraScan = ((CtrDialogSelectExtraScan) loader.getController());
-            ctrDialogSelectExtraScan.setParent(this);
-
-            dialogSelectExtraScan = new Dialog();
-            dialogSelectExtraScan.setTitle("Select scan file");
-            dialogSelectExtraScan.setDialogPane(dp);
-
-            ctrDialogSelectExtraScan.init(dialogSelectExtraScan);
-
-        } catch (Exception e)
-        {
-            CtrAlertDialog.exceptionDialog(e, "Error to load Dialog Panel.");
-        }
-
     }
 
     private void initPaneMonasticProfile()
@@ -433,10 +404,6 @@ public class CtrGUIMain
         return ctrMain;
     }
 
-    public CtrDialogSelectExtraScan getCtrDialogSelectExtraScan()
-    {
-        return ctrDialogSelectExtraScan;
-    }
 
     @FXML
     void actionChangeDateFormat(ActionEvent ae)
@@ -483,6 +450,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
+        ctrPaneEditSave.setVisible_ButtonAddNew(true);
         topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonasticProfile);
@@ -497,6 +465,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
+        ctrPaneEditSave.setVisible_ButtonAddNew(true);
         topPane.setRight(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonastery);
@@ -511,6 +480,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
+        ctrPaneEditSave.setVisible_ButtonAddNew(true);
         topPane.setRight(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneUpajjhaya);
@@ -525,6 +495,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
+        ctrPaneEditSave.setVisible_ButtonAddNew(false);
         topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(panePassport);
@@ -539,6 +510,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
+        ctrPaneEditSave.setVisible_ButtonAddNew(false);
         topPane.setRight(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneBysuddhi);
@@ -625,19 +597,6 @@ public class CtrGUIMain
         currentPaneController = ctrPaneTM30NotifResidence;
         Init.MAIN_STAGE.sizeToScene();
         ctrPaneTM30NotifResidence.fillData();
-    }
-
-    public Optional<AbstractResultDialogSelectScan> actionShowDialogSelectScan()
-    {
-        MonasticProfile p;
-
-        p = getCtrPaneSelection().getSelectedProfile();
-        if (p != null)
-        {
-            ctrDialogSelectExtraScan.fillData(p);
-        }
-
-        return dialogSelectExtraScan.showAndWait();
     }
 
     public void initChildControllers()

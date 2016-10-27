@@ -5,19 +5,12 @@
  */
 package org.watmarpjan.visaManager.gui;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -25,8 +18,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile
-{
+public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile {
 
     @FXML
     private TextField tfpassportNumber;
@@ -38,16 +30,9 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     private DatePicker dpPassportIssueDate;
 
     @FXML
-    private Button bPassportScan;
-    @FXML
-    private Button bArchive;
+    private Button bClear;
     @FXML
     private Button bRegister;
-
-    @FXML
-    private ImageView ivPassportScan;
-
-    private File fScanSelected;
 
     @Override
     public void init()
@@ -63,25 +48,23 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         tfpassportIssuedAt.setText(p.getPassportIssuedAt());
         dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
         dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
-        loadIMGScan(p.getNickname(), p.getPassportNumber());
 
         //if there is a passport registered already
         if (p.getPassportNumber() != null)
         {
             //blocks edition and enables archive button
-            bArchive.setDisable(false);
-            bPassportScan.setDisable(true);
+            bClear.setDisable(false);
             bRegister.setDisable(true);
 
             tfpassportNumber.setEditable(false);
             tfpassportIssuedAt.setEditable(false);
             dpPassportExpiryDate.setDisable(true);
             dpPassportIssueDate.setDisable(true);
-        } else
+        }
+        else
         {
             //unlocks edition and enables select scan button
-            bArchive.setDisable(true);
-            bPassportScan.setDisable(false);
+            bClear.setDisable(true);
             bRegister.setDisable(false);
 
             tfpassportNumber.setEditable(true);
@@ -92,103 +75,35 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     }
 
     @FXML
-    void actionSelectFile(ActionEvent ae)
-    {
-        fScanSelected = CtrFileOperation.selectFile("Select Passport Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
-        if (fScanSelected != null)
-        {
-            ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fScanSelected);
-        }
-    }
-
-    private void loadIMGScan(String nickName, String passportNumber)
-    {
-        File fPassportScan;
-
-        fPassportScan = AppFiles.getScanPassportFirstPage(nickName, passportNumber);
-        ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
-    }
-
-    @FXML
-    void actionIMGClicked(MouseEvent me)
-    {
-        MonasticProfile p;
-        File fImg;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-        fImg = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
-        ImgUtil.openClickedIMG(fImg);
-    }
-
-    @FXML
-    void actionArchive(ActionEvent ae)
+    void actionClearPassportData(ActionEvent ae)
     {
         boolean confirmation;
         MonasticProfile p;
-        ArrayList<File> alFilePassportScans;
-        int operationStatus1, operationStatus2;
-        boolean error = false;
+        int opStatus;
 
-        /*
-         * For proper consistency 2 operations need to be successful
-         * 1 - move the scan file to the archive
-         * 2 - update the Database information
-         *
-         * Implementation:
-         * 1) Copy the scan file to the archive
-         * 2) If the copy is successful, then update the DB info
-         * 3) If the db update is successful then deletes the original files
-         *
-         */
-        confirmation = CtrAlertDialog.confirmationDialog("Archive", "The passport data (number, issue location, expiry date) will be cleared and all scans related to the current passport will be archived as well. \nDo you want to continue?");
+        confirmation = CtrAlertDialog.confirmationDialog("Clear passport data", "The passport data (number, issue location, expiry date) will be cleared and all passport scans will be archived. \nDo you want to continue?");
 
         if (confirmation)
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-            //adds all passport scans to a list
-            alFilePassportScans = new ArrayList<>();
-            alFilePassportScans.add(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
-            for (Iterator<PassportScan> it = p.getPassportScanSet().iterator(); it.hasNext();)
+            p.setPassportNumber(null);
+            p.setPassportIssuedAt(null);
+            p.setPassportExpiryDate(null);
+            p.setPassportIssueDate(null);
+            
+            //archive passport scans
+            if (p.getPassportScanSet() != null)
             {
-                PassportScan ps = it.next();
-                alFilePassportScans.add(AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+                //archives the scan files
+                CtrFileOperation.archiveAllPassportScans(p);
+                //clears the DB entries for the Extra Scans
+                ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
             }
-
-            //archive all passport scans on a loop
-            for (File f2Archive : alFilePassportScans)
+            
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            if (opStatus == 0)
             {
-                operationStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, f2Archive);
-                if (operationStatus1 == -1)
-                {
-                    error = true;
-                }
-            }
-
-            //if all the archiving operation works correctly
-            if (!error)
-            {
-                //clear the passport info
-                p.setPassportNumber(null);
-                p.setPassportIssuedAt(null);
-                p.setPassportExpiryDate(null);
-                p.setPassportIssueDate(null);
-
-                //op1Status = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-                //update DB operation
-                operationStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
-                if (operationStatus2 == 0)
-                {
-                    //if the DB update is successful can delete the scan files
-                    for (File fScan : alFilePassportScans)
-                    {
-                        CtrFileOperation.deleteFile(fScan);
-                    }
-                    ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-                    fillData(p);
-                    CtrAlertDialog.infoDialog("Archived successfully", "The previous passport was archived successfully.");
-                }
+                 CtrAlertDialog.infoDialog("Cleared successfully", "The previous passport info was cleared successfully.");
             }
         }
     }
@@ -197,52 +112,25 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     void actionRegister(ActionEvent ae)
     {
         MonasticProfile p;
-        int operationStatus1, operationStatus2;
-
-        File fDestination;
+        int operationStatus;
 
         //if all the information is filled out
-        if (validateFields() && fScanSelected != null)
+        if (validateFields())
         {
-            /*
-             * For proper consistency 2 operations need to be successful
-             * 1 - copy the scan file to the app folder
-             * 2 - update the Database information
-             *
-             * Implementation:
-             * 1) Copy the scan file
-             * 2) If the copy is successful, then update the DB info
-             * 3) If the db update fails delete the file inside the app folder
-             *
-             */
-
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-            fDestination = AppFiles.getScanPassportFirstPage(p.getNickname(), tfpassportNumber.getText());
-            operationStatus1 = CtrFileOperation.copyOperation(fScanSelected, fDestination);
+            p.setPassportNumber(tfpassportNumber.getText());
+            p.setPassportIssuedAt(tfpassportIssuedAt.getText());
+            p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
+            p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
 
-            //if the file was successfully copied saves the data as well
-            if (operationStatus1 == 0)
+            if (operationStatus == 0)
             {
-                p.setPassportNumber(tfpassportNumber.getText());
-                p.setPassportIssuedAt(tfpassportIssuedAt.getText());
-                p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
-                p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
-                operationStatus2 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-
-                //if the DB update was successful
-                if (operationStatus2 == 0)
-                {
-                    CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
-                    fScanSelected = null;
-                    fillData(p);
-                } else
-                {
-                    //if the DB update fails has to delete the scan file
-                    CtrFileOperation.deleteFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
-                }
+                CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
+                fillData(p);
             }
-
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("Please fill out the ALL passport information before registering.");
         }
