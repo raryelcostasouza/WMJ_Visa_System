@@ -121,8 +121,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextArea taEmergencyContact;
 
     @FXML
-    private Button bNewProfile;
-    @FXML
     private Button bChangeProfilePhoto;
 
     @FXML
@@ -189,6 +187,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     {
         loadContentsCBOccupation();
         loadContentsCBCertificate();
+        loadContentsCBWat();
 
         tfNickname.setText(p.getNickname());
 
@@ -218,13 +217,30 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         tfSchool.setText(p.getSchool());
         cbCertificate.setValue(p.getCertificateEnglish());
         cbCertificateThai.setValue(p.getCertificateThai());
-        tfDuration.setText(p.getCertificateDuration() + "");
-        tfGraduationYear.setText(p.getCertificateGradYear() + "");
+        if (p.getCertificateDuration() != null)
+        {
+            tfDuration.setText(p.getCertificateDuration() + "");
+        }
+        else
+        {
+            tfDuration.setText("");
+        }
+        
+        if (p.getCertificateGradYear() != null)
+        {
+            tfGraduationYear.setText(p.getCertificateGradYear() + "");
+        }
+        else
+        {
+            tfGraduationYear.setText("");
+        }
+        
 
         if (p.getMonasteryResidingAt() != null)
         {
             cbResidingAt.setValue(p.getMonasteryResidingAt().getMonasteryName());
-        } else
+        }
+        else
         {
             cbResidingAt.setValue(null);
         }
@@ -232,7 +248,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if (p.getMonasteryAdviserToCome() != null)
         {
             cbAdvisorWat.setValue(p.getMonasteryAdviserToCome().getMonasteryName());
-        } else
+        }
+        else
         {
             cbAdvisorWat.setValue(null);
         }
@@ -299,8 +316,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
     }
 
-    @FXML
-    void actionNewProfileButton(ActionEvent ae)
+    @Override
+    public void actionAddNew()
     {
         String nickNameNewProfile;
         nickNameNewProfile = ctrGUIMain.getCtrMain().getCtrProfile().addProfile();
@@ -408,8 +425,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(false);
         taEmergencyContact.setEditable(false);
-
-        bNewProfile.setDisable(true);
     }
 
     @Override
@@ -456,14 +471,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(true);
         taEmergencyContact.setEditable(true);
-
-        bNewProfile.setDisable(false);
-    }
-
-    @Override
-    public void actionUnlockAddNewButton()
-    {
-        bNewProfile.setDisable(false);
     }
 
     @Override
@@ -504,21 +511,40 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         p.setCertificateThai(cbCertificateThai.getValue());
 
-        try
+        //if the duration changed and the text field is not empty
+        if ((!tfDuration.getText().equals(p.getCertificateDuration()) && 
+                (!tfDuration.getText().equals(""))))
         {
-            p.setCertificateDuration(parseInt(tfDuration.getText()));
-        } catch (NumberFormatException nfe)
+            try
+            {
+                p.setCertificateDuration(parseInt(tfDuration.getText()));
+            } catch (NumberFormatException nfe)
+            {
+                CtrAlertDialog.errorDialog("Invalid number for 'Certificate Duration'");
+            }
+        }
+        else
         {
-            CtrAlertDialog.errorDialog("Invalid number for 'Certificate Duration'");
+            p.setCertificateDuration(null);
         }
 
-        try
+        //if the graduation year changed and the text field is not empty
+        if ((!tfGraduationYear.getText().equals(p.getCertificateGradYear()))&&
+                (!tfGraduationYear.getText().equals("")))
         {
-            p.setCertificateGradYear(parseInt(tfGraduationYear.getText()));
+            try
+            {
+                p.setCertificateGradYear(parseInt(tfGraduationYear.getText()));
 
-        } catch (NumberFormatException nfe)
+            } catch (NumberFormatException nfe)
+            {
+
+                CtrAlertDialog.errorDialog("Invalid number for 'Graduation Year'");
+            }
+        }
+        else
         {
-            CtrAlertDialog.errorDialog("Invalid number for 'Graduation Year'");
+            p.setCertificateGradYear(null);
         }
 
         if (cbResidingAt.getValue() != null)
@@ -538,13 +564,16 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if (rbDhammaStudiesNaktamTri.isSelected())
         {
             p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TRI);
-        } else if (rbDhammaStudiesNaktamToh.isSelected())
+        }
+        else if (rbDhammaStudiesNaktamToh.isSelected())
         {
             p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TOH);
-        } else if (rbDhammaStudiesNaktamEk.isSelected())
+        }
+        else if (rbDhammaStudiesNaktamEk.isSelected())
         {
             p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_EK);
-        } else
+        }
+        else
         {
             p.setDhammaStudies(AppConstants.STUDIES_REGULAR);
         }
@@ -555,10 +584,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if (rbInThailand.isSelected())
         {
             p.setStatus(AppConstants.STATUS_THAILAND);
-        } else if (rbAbroad.isSelected())
+        }
+        else if (rbAbroad.isSelected())
         {
             p.setStatus(AppConstants.STATUS_ABROAD);
-        } else
+        }
+        else
         {
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }

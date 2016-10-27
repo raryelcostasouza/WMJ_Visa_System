@@ -8,7 +8,6 @@ package org.watmarpjan.visaManager.gui;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
@@ -28,9 +27,6 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICr
 
     @FXML
     private ComboBox<String> cbMonasteryList;
-
-    @FXML
-    private Button bNewUpajjhaya;
 
     @Override
     public void init()
@@ -52,7 +48,6 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICr
     {
         tfName.setEditable(false);
         cbMonasteryList.setDisable(true);
-        bNewUpajjhaya.setDisable(true);
     }
 
     @Override
@@ -100,12 +95,6 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICr
     }
 
     @Override
-    public void actionUnlockAddNewButton()
-    {
-        bNewUpajjhaya.setDisable(false);
-    }
-
-    @Override
     public boolean isSelectionEmpty()
     {
         if (cbUpajjhayaList.getValue() == null)
@@ -141,6 +130,7 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICr
 
     public void fillUpajjhayaData(Upajjhaya u)
     {
+        fillMonasteryList();
         //If no Upajjhaya is passed as parameter
         //shows the last selected 
         if (u == null)
@@ -177,8 +167,8 @@ public class CtrPaneUpajjhaya extends AbstractChildPaneController implements ICr
         }
     }
 
-    @FXML
-    void actionButtonNewUpajjhaya(ActionEvent ae)
+    @Override
+    public void actionAddNew()
     {
         String nameNewUpajjhaya;
 

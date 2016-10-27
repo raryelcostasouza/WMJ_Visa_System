@@ -64,9 +64,6 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
     @FXML
     private RadioButton rbCountryOther;
 
-    @FXML
-    private Button bAddNew;
-
     private static final String JAOKANA_NO = "NO";
     private static final String JAOKANA_TAMBOL = "TAMBOL";
     private static final String JAOKANA_AMPHER = "AMPHER";
@@ -113,8 +110,6 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         rbJkJangwat.setDisable(true);
         rbJKAmpher.setDisable(true);
         rbJKTambol.setDisable(true);
-
-        bAddNew.setDisable(true);
     }
 
     @Override
@@ -222,14 +217,6 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         rbJkJangwat.setDisable(false);
         rbJKAmpher.setDisable(false);
         rbJKTambol.setDisable(false);
-
-        bAddNew.setDisable(false);
-    }
-
-    @Override
-    public void actionUnlockAddNewButton()
-    {
-        bAddNew.setDisable(false);
     }
 
     public void fillMonasteryData(Monastery m)
@@ -309,6 +296,20 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             ctrGUIMain.getPaneEditSaveController().actionLock();
             m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(nameSelectedMonastery);
             fillMonasteryData(m);
+        }
+    }
+
+    @Override
+    public void actionAddNew()
+    {
+        String nameNewMonastery;
+
+        nameNewMonastery = ctrGUIMain.getCtrMain().getCtrMonastery().addMonastery();
+        if (nameNewMonastery != null)
+        {
+            //reloads the monastery list and selects the new monastery
+            fillMonasteryList();
+            cbMonasteryList.setValue(nameNewMonastery);
         }
     }
 
