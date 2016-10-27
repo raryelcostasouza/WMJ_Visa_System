@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="WMJ_Visa_ManagerPU" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>org.watmarpjan.visaManager.model.hibernate.Monastery</class>
-        <class>org.watmarpjan.visaManager.model.hibernate.PassportScan</class>
-        <class>org.watmarpjan.visaManager.model.hibernate.Upajjhaya</class>
-        <class>org.watmarpjan.visaManager.model.hibernate.VisaExtension</class>
-        <class>org.watmarpjan.visaManager.model.hibernate.MonasticProfile</class>
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:DB"/>
-            <property name="javax.persistence.jdbc.user" value="appVisaManager"/>
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-            <property name="javax.persistence.jdbc.password" value="3APeSV8eSZJ7xV8z"/>
-            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="WMJ_Visa_ManagerPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>org.watmarpjan.visaManager.model.hibernate.Monastery</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.PassportScan</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.Upajjhaya</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.VisaExtension</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.MonasticProfile</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.PrintoutTm30</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:DB"/>
+      <property name="javax.persistence.jdbc.user" value="appVisaManager"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.password" value="3APeSV8eSZJ7xV8z"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+    </properties>
+  </persistence-unit>
 </persistence>
