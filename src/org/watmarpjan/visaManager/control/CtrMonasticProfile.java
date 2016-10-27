@@ -6,17 +6,13 @@
 package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryDueTask;
-import org.watmarpjan.visaManager.model.EntryTM30GroupByDate;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
-import org.watmarpjan.visaManager.model.EntryTM30;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -89,37 +85,6 @@ public class CtrMonasticProfile extends AbstractControllerDB
             } else
             {
                 CtrAlertDialog.exceptionDialog(he, "Error when saving profile info.");
-            }
-            return -1;
-        }
-    }
-
-    public int addEntryReentry(MonasticProfile p, PassportScan psArriveStamp)
-    {
-        ConstraintViolationException cve;
-        final String msg = "Unable to register entry/reentry information.";
-
-        try
-        {
-            ctrDB.openTransaction();
-            if (psArriveStamp.getIdPassportScan() == null)
-            {
-                ctrDB.getSession().persist(psArriveStamp);
-            }
-
-            ctrDB.commitCurrentTransaction();
-            return 0;
-        } catch (PersistenceException he)
-        {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                cve = (ConstraintViolationException) he;
-                CtrAlertDialog.databaseExceptionDialog(cve, msg);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(he, msg);
             }
             return -1;
         }
@@ -277,7 +242,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     public ArrayList<EntryUpdate90DayNotice> loadListUpdate90DayNotice()
     {
         String hql;
-        hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idprofile, p.nickname, p.next90DayNotice)"
+        hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idProfile, p.nickname, p.next90DayNotice)"
                 + " from MonasticProfile p "
                 + " where p.status = 'THAILAND' and"
                 + " p.next90DayNotice is not null "
@@ -312,52 +277,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return queryDueTaskEntry(hql);
     }
 
-    private ArrayList<EntryTM30> loadListTM30OrderByDate()
-    {
-        String hql;
-
-        hql = "select new org.watmarpjan.visaManager.model.EntryTM30(p.tm30NotifDate, p.nickname)"
-                + " from MonasticProfile p"
-                + " where p.tm30NotifDate is not null"
-                + " order by p.tm30NotifDate";
-        return (ArrayList<EntryTM30>) ctrDB.getSession().createQuery(hql).getResultList();
-    }
-
-    public ArrayList<EntryTM30GroupByDate> loadListTM30GroupByDate()
-    {
-        ArrayList<EntryTM30GroupByDate> listEntryTM30GroupByDate;
-        ArrayList<EntryTM30> listEntryTM30;
-        Date d1;
-        EntryTM30GroupByDate objEntryGroupByDate;
-
-        listEntryTM30 = loadListTM30OrderByDate();
-
-        //loop to group the TM30 entries by date
-        listEntryTM30GroupByDate = new ArrayList<>();
-        d1 = listEntryTM30.get(0).getDateNotif();
-        objEntryGroupByDate = new EntryTM30GroupByDate(d1);
-        for (EntryTM30 objEntryTM30 : listEntryTM30)
-        {
-            //if the date of the current element is different to the date of the previous element
-            if (!objEntryTM30.getDateNotif().equals(d1))
-            {
-                //need to keep the instance with the previous date on the list
-                objEntryGroupByDate.closeNickNameList();
-                listEntryTM30GroupByDate.add(objEntryGroupByDate);
-                //replace d1 with the date of the current element
-                d1 = objEntryTM30.getDateNotif();
-                //and start a new group
-                objEntryGroupByDate = new EntryTM30GroupByDate(objEntryTM30.getDateNotif());
-            }
-            //concat the nickname of the monastic on the group entry
-            objEntryGroupByDate.addNickname(objEntryTM30.getMonasticNickname());
-        }
-        //after the loop adds the last EntryTM30GroupByDate to the list
-        objEntryGroupByDate.closeNickNameList();
-        listEntryTM30GroupByDate.add(objEntryGroupByDate);
-
-        return listEntryTM30GroupByDate;
-    }
+    
 
     private MonasticProfile queryProfile(String hql)
     {

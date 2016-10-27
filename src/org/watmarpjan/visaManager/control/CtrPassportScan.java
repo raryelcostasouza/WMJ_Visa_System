@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.control;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.NoResultException;
@@ -139,6 +138,7 @@ public class CtrPassportScan extends AbstractControllerDB
                 PassportScan ps = it.next();
                 ctrDB.getSession().remove(ps);
             }
+            listPassportScan.clear();            
             ctrDB.commitCurrentTransaction();
             return 0;
         } catch (PersistenceException hex)
@@ -149,31 +149,13 @@ public class CtrPassportScan extends AbstractControllerDB
         }
     }
     
-    public PassportScan getPassportScanByIndex(Integer idProfile, int index)
-    {
-        String hql;
-        ArrayList<PassportScan> listPassportScans;
-        
-        hql = "from PassportScan ps"
-                + " where ps.profile.idprofile = " + idProfile;
-        
-        listPassportScans = (ArrayList<PassportScan>) ctrDB.getSession().createQuery(hql).getResultList();
-        if (index <= listPassportScans.size() - 1)
-        {
-            return listPassportScans.get(index);
-        } else
-        {
-            return null;
-        }
-    }
-    
     public PassportScan getScanVisa(Integer idProfile)
     {
         String hql;
         PassportScan ps;
         
         hql = "from PassportScan ps"
-                + " where ps.profile.idprofile = " + idProfile
+                + " where ps.monasticProfile.idProfile = " + idProfile
                 + " and ps.contentVisaScan = true";
         
         try
@@ -195,7 +177,7 @@ public class CtrPassportScan extends AbstractControllerDB
         PassportScan ps;
         
         hql = "from PassportScan ps"
-                + " where ps.profile.idprofile = " + idProfile
+                + " where ps.monasticProfile.idProfile = " + idProfile
                 + " and ps.contentArriveStamp = true";
         
         try
@@ -216,7 +198,7 @@ public class CtrPassportScan extends AbstractControllerDB
         PassportScan ps;
         
         hql = "from PassportScan ps"
-                + " where ps.profile.idprofile = " + idProfile
+                + " where ps.monasticProfile.idProfile = " + idProfile
                 + " and ps.contentLastVisaExt = true";
         
         try
