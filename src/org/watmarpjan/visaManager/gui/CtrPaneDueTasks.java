@@ -16,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.model.EntryDueTask;
+import org.watmarpjan.visaManager.model.Notice90DayTaskEntry;
+import org.watmarpjan.visaManager.model.VisaExtTaskEntry;
 
 /**
  *
@@ -74,8 +76,22 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
                             btn.setOnAction((ActionEvent event)
                                     -> 
                                     {
-                                        //ctrGUIMain.actionButton90DayNotice(null);
-                                        System.out.println("hello");
+                                        EntryDueTask objEntry;
+                                        
+                                        objEntry = getTableView().getItems().get(getIndex());
+                                        ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
+                                        if (objEntry instanceof Notice90DayTaskEntry)
+                                        {
+                                            ctrGUIMain.actionButton90DayNotice(null);
+                                        }
+                                        else if (objEntry instanceof VisaExtTaskEntry)
+                                        {
+                                            ctrGUIMain.actionButtonVisaExt(null);
+                                        }
+                                        else
+                                        {
+                                            ctrGUIMain.actionButtonAddRenewPassport(null);
+                                        }
                             });
                             setGraphic(btn);
                             setText(null);
