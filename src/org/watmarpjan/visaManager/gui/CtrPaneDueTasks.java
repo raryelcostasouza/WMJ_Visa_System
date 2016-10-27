@@ -13,8 +13,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.model.EntryDueTask;
 import org.watmarpjan.visaManager.model.Notice90DayTaskEntry;
 import org.watmarpjan.visaManager.model.VisaExtTaskEntry;
@@ -60,8 +62,8 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
             {
                 final TableCell<EntryDueTask, String> cell = new TableCell<EntryDueTask, String>()
                 {
-
-                    final Button btn = new Button(">");
+                    final ImageView ivActionIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("action.png").toUri().toString());
+                    final Button btn = new Button("");
 
                     @Override
                     public void updateItem(String item, boolean empty)
@@ -73,6 +75,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
                             setText(null);
                         } else
                         {
+                            btn.setGraphic(ivActionIcon);
                             btn.setOnAction((ActionEvent event)
                                     -> 
                                     {
