@@ -22,6 +22,7 @@ public class CtrMain
     private final CtrVisa ctrVisa;
     private final CtrPassportScan ctrPassportScan;
     private final CtrUpajjhaya ctrUpajjhaya;
+    private final CtrPrintoutTM30 ctrPrintoutTM30;
 
     public CtrMain(CtrGUIMain ctrGUI)
     {
@@ -32,6 +33,12 @@ public class CtrMain
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
         ctrForm = new CtrForm(this);
+        ctrPrintoutTM30 = new CtrPrintoutTM30(ctrDB, ctrProfile);
+    }
+
+    public CtrPrintoutTM30 getCtrPrintoutTM30()
+    {
+        return ctrPrintoutTM30;
     }
 
     public CtrForm getCtrForm()

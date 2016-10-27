@@ -8,8 +8,6 @@ package org.watmarpjan.visaManager.gui;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,9 +26,8 @@ import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
-import org.watmarpjan.visaManager.model.EntryDueTask;
-import org.watmarpjan.visaManager.model.EntryTM30GroupByDate;
-import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.EntryPrintoutTM30;
+import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -40,14 +37,14 @@ import org.watmarpjan.visaManager.util.Util;
 public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
 {
 
-    @FXML
-    private Button bArchive;
+//    @FXML
+//    private Button bArchive;
 
     @FXML
-    private TableView<EntryTM30GroupByDate> tvSavedNotifications;
+    private TableView<EntryPrintoutTM30> tvSavedNotifications;
 
     @FXML
-    private TableColumn<EntryTM30GroupByDate, String> tcOpenPDF;
+    private TableColumn<EntryPrintoutTM30, String> tcOpenPDF;
 
     @FXML
     private TreeView<String> tvMonastics;
@@ -75,13 +72,13 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
         tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
 
         tvSavedNotifications.setColumnResizePolicy((param) -> true);
-        Callback<TableColumn<EntryTM30GroupByDate, String>, TableCell<EntryTM30GroupByDate, String>> openPDFCellFactory =
-                new Callback<TableColumn<EntryTM30GroupByDate, String>, TableCell<EntryTM30GroupByDate, String>>()
+        Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> openPDFCellFactory =
+                new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
         {
             @Override
-            public TableCell call(final TableColumn<EntryTM30GroupByDate, String> param)
+            public TableCell call(final TableColumn<EntryPrintoutTM30, String> param)
             {
-                final TableCell<EntryTM30GroupByDate, String> cell = new TableCell<EntryTM30GroupByDate, String>()
+                final TableCell<EntryPrintoutTM30, String> cell = new TableCell<EntryPrintoutTM30, String>()
                 {
 
                     final Button btn = new Button("");
@@ -102,10 +99,12 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
                             btn.setOnAction((ActionEvent event)
                                     -> 
                                     {
-                                        EntryTM30GroupByDate clickedEntry;
-
+                                        EntryPrintoutTM30 clickedEntry;
+                                        LocalDate ldNotif;
+                                        
                                         clickedEntry = getTableView().getItems().get(getIndex());
-                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getaLdNotifDate()));
+                                        ldNotif = Util.convertDateToLocalDate(clickedEntry.getPrintoutTM30().getNotifDate());
+                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(ldNotif));
                             });
                             setGraphic(btn);
                             setText(null);
@@ -117,22 +116,6 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
         };
 
         tcOpenPDF.setCellFactory(openPDFCellFactory);
-
-        tvSavedNotifications.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EntryTM30GroupByDate>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends EntryTM30GroupByDate> observable, EntryTM30GroupByDate oldValue, EntryTM30GroupByDate newValue)
-            {
-                if (newValue != null)
-                {
-                    bArchive.setDisable(false);
-                } else
-                {
-                    bArchive.setDisable(true);
-                }
-            }
-        }
-        );
     }
 
     public void fillData()
@@ -165,28 +148,21 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
 
     private void loadTableNotifResidence()
     {
-        ArrayList<EntryTM30GroupByDate> listEntryTM30GroupByDate;
-        ArrayList<LocalDate> listNotifDateSavedTM30;
-
-        //loads the list of the notif dates for all saved files of TM30 from disk
-        listNotifDateSavedTM30 = CtrFileOperation.getListNotifDateFilesTM30();
-
-        //loads the entries of notif dates and the associated monastics from DB
-        listEntryTM30GroupByDate = ctrGUIMain.getCtrMain().getCtrProfile().loadListTM30GroupByDate();
-
-        for (LocalDate ldSavedFileTM30 : listNotifDateSavedTM30)
+        ArrayList<PrintoutTm30> listPrintoutTM30;
+        ArrayList<EntryPrintoutTM30> listEntryTM30;
+        EntryPrintoutTM30 objEntryTM30;
+        
+        listPrintoutTM30 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().loadListPrintoutTM30();
+        listEntryTM30 = new ArrayList<>();
+        for (PrintoutTm30 objTM30 : listPrintoutTM30)
         {
-            //if there is a TM30 that is not currently associated to any monastic
-            //add a table entry as well
-            //compares the entry date of the fileList on the disk with the entry dates from the DB
-            if (!listEntryTM30GroupByDate.contains(new EntryTM30GroupByDate(ldSavedFileTM30)))
-            {
-                listEntryTM30GroupByDate.add(new EntryTM30GroupByDate(ldSavedFileTM30));
-            }
+            ctrGUIMain.getCtrMain().getCtrPrintoutTM30().refresh(objTM30);
+            objEntryTM30 = new EntryPrintoutTM30(objTM30);
+            listEntryTM30.add(objEntryTM30);
         }
 
         tvSavedNotifications.getItems().clear();
-        tvSavedNotifications.getItems().addAll(listEntryTM30GroupByDate);
+        tvSavedNotifications.getItems().addAll(listEntryTM30);
     }
 
     @FXML
@@ -194,22 +170,16 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     {
         LocalDate ldNotifDate;
         int opStatus2, opStatus1;
-        MonasticProfile mp;
 
         ldNotifDate = dpNotification.getValue();
 
-        if (ldNotifDate != null)
+        if (validateFields())
         {
             opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate));
             //if the file copy was successfull
             if (opStatus1 == 0)
             {
-                for (String nickname : getNicknameSelectedMonastics())
-                {
-                    mp = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(nickname);
-                    mp.setTm30NotifDate(Util.convertLocalDateToDate(ldNotifDate));
-                }
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(null);
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().addNewPrintout(ldNotifDate, getNicknameSelectedMonastics());
                 //if the DB update was successfull
                 if (opStatus2 == 0)
                 {
@@ -220,6 +190,10 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
                     CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate));
                 }
             }
+        }
+        else
+        {
+            CtrAlertDialog.warningDialog("Fill out all fields before adding a new Printout.");
         }
     }
 
@@ -246,5 +220,11 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
             }
         }
         return listSelectedMonastics;
+    }
+    
+    private boolean validateFields()
+    {
+        return (fSelected!= null) && 
+                (dpNotification.getValue() != null);
     }
 }
