@@ -96,7 +96,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneAddEntryReEntry ctrPaneReEntry;
     @FXML
-    private TabPane paneReEntry;
+    private VBox paneReEntry;
 
     @FXML
     private CtrPaneAddRenewPassport ctrPaneAddRenewPassport;

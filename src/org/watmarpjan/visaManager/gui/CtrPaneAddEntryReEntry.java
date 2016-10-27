@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -143,6 +145,22 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
                 && (!tfPortOfEntry.getText().isEmpty())
                 && (!tfTravelFrom.getText().isEmpty())
                 && (cbTravelBy.getValue() != null);
+    }
+    
+    @FXML
+    void actionPreviewFormTM8Reentry(ActionEvent ae)
+    {
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PREVIEW_FORM);
+    }
+    
+    @FXML
+    void actionPrintFormTM8Reentry(ActionEvent ae)
+    {
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PRINT_FORM);
     }
 
 }
