@@ -50,6 +50,18 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private ImageView ivScan3;
 
     @FXML
+    private Button bArchivePassport;
+
+    @FXML
+    private Button bArchiveDepartureCard;
+
+    @FXML
+    private Button bScanPassport;
+
+    @FXML
+    private Button bScanDepartureCard;
+
+    @FXML
     private Button bScan1;
     @FXML
     private Button bScan2;
@@ -137,6 +149,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private FieldsPaneScanContent fieldsScan2;
     private FieldsPaneScanContent fieldsScan3;
 
+    private final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
+
     @Override
     public void init()
     {
@@ -191,7 +205,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ldPassportExp = Util.convertDateToLocalDate(p.getPassportExpiryDate());
             dpPassportExpiryDate.setValue(ldPassportExp);
-        } else
+        }
+        else
         {
             dpPassportExpiryDate.setValue(null);
         }
@@ -200,7 +215,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ldPassptIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
             dpPassportIssueDate.setValue(ldPassptIssue);
-        } else
+        }
+        else
         {
             dpPassportIssueDate.setValue(null);
         }
@@ -209,7 +225,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ldFirstEntry = Util.convertDateToLocalDate(p.getFirstEntryDate());
             dpFirstEntryDate.setValue(ldFirstEntry);
-        } else
+        }
+        else
         {
             dpFirstEntryDate.setValue(null);
         }
@@ -221,7 +238,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
             dpVisaExpiryDate.setValue(ldVisaExp);
-        } else
+        }
+        else
         {
             dpVisaExpiryDate.setValue(null);
         }
@@ -230,7 +248,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         {
             ldNext90day = Util.convertDateToLocalDate(p.getNext90DayNotice());
             dpNext90dayNotice.setValue(ldNext90day);
-        } else
+        }
+        else
         {
             dpNext90dayNotice.setValue(null);
         }
@@ -267,6 +286,28 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         listPassportScans = new ArrayList<>();
         listPassportScans.addAll(p.getPassportScanSet());
+
+        if (AppFiles.getScanDepartureCard(p.getNickname()).exists())
+        {
+            bArchiveDepartureCard.setDisable(false);
+            bScanDepartureCard.setDisable(true);
+        }
+        else
+        {
+            bArchiveDepartureCard.setDisable(true);
+            bScanDepartureCard.setDisable(false);
+        }
+
+        if (AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).exists())
+        {
+            bArchivePassport.setDisable(false);
+            bScanPassport.setDisable(true);
+        }
+        else
+        {
+            bArchivePassport.setDisable(true);
+            bScanPassport.setDisable(false);
+        }
 
         if (listPassportScans.size() >= 1)
         {
@@ -407,33 +448,65 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @FXML
     void actionArchive(ActionEvent ae)
     {
-//        MonasticProfile p;
-//        PassportScan ps;
-//
-//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-//
-//        if (ae.getSource().equals(bArchive1))
-//        {
-//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 0);
-//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_1);
-//
-//        } else if (ae.getSource().equals(bArchive2))
-//        {
-//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 1);
-//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_2);
-//        } else
-//        {
-//            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdprofile(), 2);
-//            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-//            ctrGUIMain.getCtrMain().getCtrPassportScan().removeByScanNumber(p.getIdprofile(), CtrPassportScan.SCAN_NUMBER_3);
-//        }
-//
-//        //refresh the profile because the passportScan list was updated
-//        ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-//        fillDataContentScans(p);
-//        loadIMGPreviews(p);
+        MonasticProfile p;
+        PassportScan ps;
+        ArrayList<PassportScan> listPassportScan;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        listPassportScan = new ArrayList<>();
+        listPassportScan.addAll(p.getPassportScanSet());
+
+        if (ae.getSource().equals(bArchive1))
+        {
+            ps = listPassportScan.get(0);
+        }
+        else if (ae.getSource().equals(bArchive2))
+        {
+            ps = listPassportScan.get(1);
+        }
+        else
+        {
+            ps = listPassportScan.get(2);
+        }
+        p.getPassportScanSet().remove(ps);
+
+        CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+        ctrGUIMain.getCtrMain().getCtrPassportScan().remove(ps);
+
+        fillDataContentScans(p);
+        loadIMGPreviews(p);
+    }
+
+    @FXML
+    void actionArchivePassportScan(ActionEvent ae)
+    {
+        int opStatus;
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        opStatus = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
+        if (opStatus == 0)
+        {
+            loadIMGPreviews(p);
+            CtrAlertDialog.infoDialog("Archived successfully", "Departure card scan archived successfully.");
+        }
+
+    }
+
+    @FXML
+    void actionArchiveDepartureCard(ActionEvent ae)
+    {
+        int opStatus;
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        opStatus = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getScanDepartureCard(p.getNickname()));
+        if (opStatus == 0)
+        {
+            loadIMGPreviews(p);
+            CtrAlertDialog.infoDialog("Archived successfully", "Departure card scan archived successfully.");
+        }
+
     }
 
     @FXML
@@ -442,29 +515,98 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         MonasticProfile p;
         PassportScan ps;
         File fImgScan;
+        ArrayList<PassportScan> listPassportScan;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        listPassportScan = new ArrayList<>();
+        listPassportScan.addAll(p.getPassportScanSet());
+
         if (me.getSource().equals(ivPassportScan))
         {
             fImgScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
-        } else if (me.getSource().equals(ivDepartureCardScan))
+        }
+        else if (me.getSource().equals(ivDepartureCardScan))
         {
             fImgScan = AppFiles.getScanDepartureCard(p.getNickname());
-        } else if (me.getSource().equals(ivScan1))
+        }
+        else if (me.getSource().equals(ivScan1))
         {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 0);
+            ps = listPassportScan.get(0);
             fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
-        } else if (me.getSource().equals(ivScan2))
+        }
+        else if (me.getSource().equals(ivScan2))
         {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 1);
+            ps = listPassportScan.get(1);
             fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
-        } else
+        }
+        else
         {
-            ps = ctrGUIMain.getCtrMain().getCtrPassportScan().getPassportScanByIndex(p.getIdProfile(), 2);
+            ps = listPassportScan.get(2);
             fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
         }
 
         ImgUtil.openClickedIMG(fImgScan);
+    }
+
+    @FXML
+    void actionChooseScanPassport(ActionEvent ae)
+    {
+        MonasticProfile p;
+        File fScanDestination;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        if (p.getPassportNumber() != null)
+        {
+            fScanDestination = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
+            actionChooseScan(p, fScanDestination, "Passport First Page Scan");
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
+        }
+
+    }
+
+    @FXML
+    void actionChooseScanDepartureCard(ActionEvent ae)
+    {
+        MonasticProfile p;
+        File fScanDestination;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        if (p.getPassportNumber() != null)
+        {
+            fScanDestination = AppFiles.getScanDepartureCard(p.getNickname());
+            actionChooseScan(p, fScanDestination, "Departure Card Scan");
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
+        }
+
+    }
+
+    private void actionChooseScan(MonasticProfile profile, File fScanDestination, String title)
+    {
+        File fSelected;
+        int opStatus;
+
+        fSelected = CtrFileOperation.selectFile(title, CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
+
+        if (fSelected != null)
+        {
+            opStatus = CtrFileOperation.copyOperation(fSelected, fScanDestination);
+
+            //if the operation was successful
+            //saves the scan content information as well
+            if (opStatus == 0)
+            {
+                //refresh the profile because the passportScan list was updated
+                ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(profile);
+                loadIMGPreviews(profile);
+                fillDataContentScans(profile);
+            }
+        }
     }
 
     @FXML
@@ -487,12 +629,14 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
 
-                } else if (ae.getSource().equals(bScan2))
+                }
+                else if (ae.getSource().equals(bScan2))
                 {
                     ps = new PassportScan(p, parseInt(tfScan2PageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
 
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
-                } else
+                }
+                else
                 {
                     ps = new PassportScan(p, parseInt(tfScan3PageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
 
@@ -518,13 +662,15 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     }
                 }
 
-            } else
+            }
+            else
             {
                 CtrAlertDialog.errorDialog("Please fill the scan contents information before selecting the file");
             }
-        } else
+        }
+        else
         {
-            CtrAlertDialog.errorDialog("Please add a passport to this profile before adding other scans.");
+            CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
         }
 
     }
@@ -539,13 +685,15 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     && (rbScan1ArriveStamp.isSelected()
                     || rbScan1LastVisaExt.isSelected()
                     || rbScan1Visa.isSelected());
-        } else if (sourceButton.equals(bScan2))
+        }
+        else if (sourceButton.equals(bScan2))
         {
             return validatePageNumber(tfScan2PageNumber.getText())
                     && (rbScan2ArriveStamp.isSelected()
                     || rbScan2LastVisaExt.isSelected()
                     || rbScan2Visa.isSelected());
-        } else
+        }
+        else
         {
             return validatePageNumber(tfScan3PageNumber.getText())
                     && (rbScan3ArriveStamp.isSelected()

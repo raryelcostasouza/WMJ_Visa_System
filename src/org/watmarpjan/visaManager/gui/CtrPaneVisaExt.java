@@ -5,11 +5,9 @@
  */
 package org.watmarpjan.visaManager.gui;
 
-import java.io.File;
 import java.time.LocalDate;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import java.util.ArrayList;
-import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,10 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -33,8 +30,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IFormMonasticProfile
-{
+public class CtrPaneVisaExt extends AbstractChildPaneController implements IFormMonasticProfile {
 
     @FXML
     private TextField tfParentVisaNumber;
@@ -48,13 +44,8 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     @FXML
     private DatePicker dpExpiryDate;
     @FXML
-    private Button bSelectScan;
-    @FXML
     private Button bRegister;
-    @FXML
-    private Button bArchive;
 
-//    private AbstractResultDialogSelectScan resultSelectScan;
     @Override
     public void init()
     {
@@ -63,14 +54,12 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 
         //code for inserting a remove button on the last column
-        Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> actionCellFactory =
-                new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>()
-        {
+        Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> actionCellFactory
+                = new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>() {
             @Override
             public TableCell call(final TableColumn<EntryVisaExt, String> param)
             {
-                final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>()
-                {
+                final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>() {
 
                     final Button btn = new Button("Remove");
 
@@ -82,10 +71,10 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
                         {
                             setGraphic(null);
                             setText(null);
-                        } else
+                        }
+                        else
                         {
-                            btn.setOnAction(new EventHandler<ActionEvent>()
-                            {
+                            btn.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event)
                                 {
@@ -114,10 +103,6 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldVisaExpiry;
-        PassportScan psExt;
-
-        psExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdProfile());
-        super.fillData(psExt);
 
         if (p.getVisaNumber() != null)
         {
@@ -126,17 +111,14 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
             tfExtNumber.setEditable(true);
             dpExpiryDate.setDisable(false);
 
-            bSelectScan.setDisable(false);
-            tfPsptPageNumber.setEditable(true);
             bRegister.setDisable(false);
-        } else
+        }
+        else
         {
             tfParentVisaNumber.setText("");
             tfExtNumber.setEditable(false);
             dpExpiryDate.setDisable(true);
 
-            bSelectScan.setDisable(true);
-            tfPsptPageNumber.setEditable(false);
             bRegister.setDisable(true);
         }
 
@@ -146,36 +128,16 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
         tvExtensions.getItems().clear();
         tvExtensions.getItems().addAll(alVisaExtensions);
 
-        if (psExt != null)
-        {
-            bArchive.setDisable(false);
-            bSelectScan.setDisable(true);
-            bRegister.setDisable(true);
-        } else
-        {
-            bArchive.setDisable(true);
-            bSelectScan.setDisable(false);
-            bRegister.setDisable(false);
-        }
-
         //pre-set the expiry date for the extension as 1 year after the original visa expiry date
         if (p.getVisaExpiryDate() != null)
         {
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
             dpExpiryDate.setValue(ldVisaExpiry.plusYears(1));
-        } else
+        }
+        else
         {
             dpExpiryDate.setValue(null);
         }
-        loadIMGScan(p, psExt);
-    }
-
-    private void loadIMGScan(MonasticProfile p, PassportScan psExt)
-    {
-        File fExtScan;
-
-        fExtScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psExt);
-        ImgUtil.loadImageView(ivPreview, ImgUtil.IMG_TYPE_PASSPORT, fExtScan);
     }
 
     @FXML
@@ -183,122 +145,29 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     {
         MonasticProfile p;
         VisaExtension vExt;
-        int operationStatus1, operationStatus2;
-        PassportScan psExtScan;
-
-        //TODO test this function
-        if (validateFields() && resultSelectScan != null)
+        int operationStatus;
+        
+        if (validateFields())
         {
-            /*
-             * For proper consistency 2 operations need to be successful
-             * 1.1 - If the user select a new scan file
-             * need to copy it to the app folder
-             * OR
-             * 1.2 - If the user select an existing scan file
-             * need to rename the scan file
-             *
-             * 2 - update the Database information
-             *
-             * Implementation:
-             * 1) Process the scan file
-             * 2) If the copy is successful, then update the DB info
-             * 3) If the db update fails undo the operation 1
-             *
-             */
-
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-            operationStatus1 = super.processSelectedScan(p, AbstractFormSelectExtraScan.SCAN_TYPE_VISA_EXT);
-            psExtScan = super.getPassportScan();
+            vExt = new VisaExtension();
+            vExt.setExtNumber(tfExtNumber.getText());
+            vExt.setExpiryDate(Util.convertLocalDateToDate(dpExpiryDate.getValue()));
+            vExt.setMonasticProfile(p);
 
-            //if the copy/rename operation was successfull
-            if (operationStatus1 == 0)
+            operationStatus = ctrGUIMain.getCtrMain().getCtrVisa().addVisaExt(vExt);
+
+            //if the DB update is successful
+            if (operationStatus == 0)
             {
-                //if the scan copy is sucessful
-                vExt = new VisaExtension();
-                vExt.setExtNumber(tfExtNumber.getText());
-                vExt.setExpiryDate(Util.convertLocalDateToDate(dpExpiryDate.getValue()));
-
-                vExt.setMonasticProfile(p);
-
-                operationStatus2 = ctrGUIMain.getCtrMain().getCtrVisa().addVisaExt(vExt, psExtScan);
-
-                //if the DB update is successful
-                if (operationStatus2 == 0)
-                {
-                    CtrAlertDialog.infoDialog("Extension info registered", "The visa extension was successfully registered.");
-                    resultSelectScan = null;
-                    ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-                    fillData(p);
-                } else
-                {
-                    //if the DB update fails has to undo the Operation 1
-                    super.undoProcessingSelectedScan(p);
-                }
-            }
-        } else
-        {
-            CtrAlertDialog.errorDialog("Please fill out ALL the visa extension fields before registering");
-        }
-    }
-
-    @FXML
-    void actionArchive()
-    {
-        PassportScan psLastVisaExt;
-        File fScanAfterUpdate, fScanVExt;
-        MonasticProfile p;
-        int opStatus1, opStatus2, opStatus3;
-
-        /*
-         * For proper consistency 2 operations need to be successful
-         * 1 - move the scan files to the archive
-         * 2 - update the Database information
-         *
-         * Implementation:
-         * 1) Copy the scan file to the archive
-         * 2) If the copy is successful, then update the DB info
-         * 3) If the db update is successful then deletes the original scan file
-         *
-         */
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-        psLastVisaExt = ctrGUIMain.getCtrMain().getCtrPassportScan().getScanLastVisaExt(p.getIdProfile());
-        fScanVExt = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
-
-        //copy the file to the archive folder
-        opStatus1 = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScanVExt);
-
-        // if the file copy was successful
-        if (opStatus1 == 0)
-        {
-            //if the extension scan is shared with the visa or arrive stamp scan
-            if (psLastVisaExt.isContentArriveStamp() || psLastVisaExt.isContentVisaScan())
-            {
-                //unmark the flag for VisaExtScan
-                psLastVisaExt.setContentLastVisaExt(false);
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(null);
-            } else
-            {
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPassportScan().updateAndRemoveScan(psLastVisaExt);
-            }
-            //if the DB update was successful
-            if (opStatus2 == 0)
-            {
-                // if the extension scan is shared
-                if (psLastVisaExt.isContentArriveStamp() || psLastVisaExt.isContentVisaScan())
-                {
-                    //rename the scan file
-                    fScanAfterUpdate = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), psLastVisaExt);
-                    CtrFileOperation.renameFile(fScanVExt, fScanAfterUpdate);
-                } else //if the file is not shared, it can be deleted
-                {
-                    //remove the original scan file
-                    CtrFileOperation.deleteFile(fScanVExt);
-                }
+                CtrAlertDialog.infoDialog("Extension info registered", "The visa extension was successfully registered.");
                 ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
                 fillData(p);
-                CtrAlertDialog.infoDialog("Archived successfully", "The previous visa extension scan was archived successfully.");
             }
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog("Please fill out ALL the visa extension fields before registering");
         }
     }
 
@@ -331,9 +200,8 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
 
     public boolean validateFields()
     {
-        return ((!tfExtNumber.getText().isEmpty())
-                && (dpExpiryDate.getValue() != null)
-                && (!tfPsptPageNumber.getText().isEmpty()));
+        return (!tfExtNumber.getText().isEmpty())
+                && (dpExpiryDate.getValue() != null);
     }
 
     @FXML
@@ -372,17 +240,18 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        Date dNotifDate;
         LocalDate ldNotifDate;
+        PrintoutTm30 objTM30;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        dNotifDate = p.getTm30NotifDate();
+        objTM30 = p.getPrintoutTm30();
 
-        if (dNotifDate != null)
+        if (objTM30.getNotifDate() != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(dNotifDate);
+            ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
             ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PREVIEW_FORM);
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
         }
@@ -440,17 +309,18 @@ public class CtrPaneVisaExt extends AbstractFormSelectExtraScan implements IForm
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        Date dNotifDate;
         LocalDate ldNotifDate;
+        PrintoutTm30 objTM30;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        dNotifDate = p.getTm30NotifDate();
+        objTM30 = p.getPrintoutTm30();
 
-        if (dNotifDate != null)
+        if (objTM30.getNotifDate() != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(dNotifDate);
+            ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
             ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PRINT_FORM);
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
         }
