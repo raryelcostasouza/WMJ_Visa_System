@@ -138,6 +138,10 @@ public class AppFiles
     {
         return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();
     }
+    public static File getFormTM8Reentry()
+    {
+        return AppPaths.getPathToForms().resolve("TM8-Reentry.pdf").toFile();
+    }
 
     public static File getFormOverstay()
     {
