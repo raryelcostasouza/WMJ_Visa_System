@@ -21,22 +21,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author WMJ_user
+ * @author wmj_user
  */
 @Entity
 @Table(name = "PASSPORT_SCAN")
 @XmlRootElement
 @NamedQueries(
-        {
-            @NamedQuery(name = "PassportScan.findAll", query = "SELECT p FROM PassportScan p"),
-            @NamedQuery(name = "PassportScan.findByIdPassportScan", query = "SELECT p FROM PassportScan p WHERE p.idPassportScan = :idPassportScan"),
-            @NamedQuery(name = "PassportScan.findByContentArriveStamp", query = "SELECT p FROM PassportScan p WHERE p.contentArriveStamp = :contentArriveStamp"),
-            @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt"),
-            @NamedQuery(name = "PassportScan.findByContentVisaScan", query = "SELECT p FROM PassportScan p WHERE p.contentVisaScan = :contentVisaScan"),
-            @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber")
-        })
-public class PassportScan implements Serializable
 {
+    @NamedQuery(name = "PassportScan.findAll", query = "SELECT p FROM PassportScan p"),
+    @NamedQuery(name = "PassportScan.findByIdPassportScan", query = "SELECT p FROM PassportScan p WHERE p.idPassportScan = :idPassportScan"),
+    @NamedQuery(name = "PassportScan.findByContentArriveStamp", query = "SELECT p FROM PassportScan p WHERE p.contentArriveStamp = :contentArriveStamp"),
+    @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt"),
+    @NamedQuery(name = "PassportScan.findByContentVisaScan", query = "SELECT p FROM PassportScan p WHERE p.contentVisaScan = :contentVisaScan"),
+    @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber")
+})
+public class PassportScan implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -176,5 +175,5 @@ public class PassportScan implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.PassportScan[ idPassportScan=" + idPassportScan + " ]";
     }
-
+    
 }

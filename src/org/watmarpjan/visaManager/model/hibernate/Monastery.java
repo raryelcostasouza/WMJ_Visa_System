@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author WMJ_user
+ * @author wmj_user
  */
 @Entity
 @XmlRootElement
@@ -39,8 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monastery.findByMonasteryName", query = "SELECT m FROM Monastery m WHERE m.monasteryName = :monasteryName"),
     @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber")
 })
-public class Monastery implements Serializable
-{
+public class Monastery implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -264,5 +263,5 @@ public class Monastery implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.Monastery[ idMonastery=" + idMonastery + " ]";
     }
-
+    
 }

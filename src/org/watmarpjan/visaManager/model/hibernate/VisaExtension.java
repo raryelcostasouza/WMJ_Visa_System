@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author WMJ_user
+ * @author wmj_user
  */
 @Entity
 @Table(name = "VISA_EXTENSION")
@@ -36,8 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VisaExtension.findByExpiryDate", query = "SELECT v FROM VisaExtension v WHERE v.expiryDate = :expiryDate"),
     @NamedQuery(name = "VisaExtension.findByExtNumber", query = "SELECT v FROM VisaExtension v WHERE v.extNumber = :extNumber")
 })
-public class VisaExtension implements Serializable
-{
+public class VisaExtension implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,5 +140,5 @@ public class VisaExtension implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.VisaExtension[ idVisaExtension=" + idVisaExtension + " ]";
     }
-
+    
 }

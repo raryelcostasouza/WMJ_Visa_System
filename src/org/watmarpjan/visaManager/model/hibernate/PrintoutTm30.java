@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.model.hibernate;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,11 +14,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,66 +28,62 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author wmj_user
  */
 @Entity
+@Table(name = "PRINTOUT_TM30")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u"),
-    @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya"),
-    @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
+    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p"),
+    @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout"),
+    @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
 })
-public class Upajjhaya implements Serializable {
+public class PrintoutTm30 implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_UPAJJHAYA")
-    private Integer idUpajjhaya;
-    @Column(name = "UPAJJHAYA_NAME")
-    private String upajjhayaName;
-    @JoinColumn(name = "MONASTERY", referencedColumnName = "ID_MONASTERY")
-    @ManyToOne
-    private Monastery monastery;
-    @OneToMany(mappedBy = "upajjhaya")
+    @Column(name = "ID_PRINTOUT")
+    private Integer idPrintout;
+    @Basic(optional = false)
+    @Column(name = "NOTIF_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date notifDate;
+    @OneToMany(mappedBy = "printoutTm30")
     private Set<MonasticProfile> monasticProfileSet;
 
-    public Upajjhaya()
+    public PrintoutTm30()
     {
     }
 
-    public Upajjhaya(Integer idUpajjhaya)
+    public PrintoutTm30(Integer idPrintout)
     {
-        this.idUpajjhaya = idUpajjhaya;
+        this.idPrintout = idPrintout;
     }
 
-    public Integer getIdUpajjhaya()
+    public PrintoutTm30(Integer idPrintout, Date notifDate)
     {
-        return idUpajjhaya;
+        this.idPrintout = idPrintout;
+        this.notifDate = notifDate;
     }
 
-    public void setIdUpajjhaya(Integer idUpajjhaya)
+    public Integer getIdPrintout()
     {
-        this.idUpajjhaya = idUpajjhaya;
+        return idPrintout;
     }
 
-    public String getUpajjhayaName()
+    public void setIdPrintout(Integer idPrintout)
     {
-        return upajjhayaName;
+        this.idPrintout = idPrintout;
     }
 
-    public void setUpajjhayaName(String upajjhayaName)
+    public Date getNotifDate()
     {
-        this.upajjhayaName = upajjhayaName;
+        return notifDate;
     }
 
-    public Monastery getMonastery()
+    public void setNotifDate(Date notifDate)
     {
-        return monastery;
-    }
-
-    public void setMonastery(Monastery monastery)
-    {
-        this.monastery = monastery;
+        this.notifDate = notifDate;
     }
 
     @XmlTransient
@@ -103,7 +101,7 @@ public class Upajjhaya implements Serializable {
     public int hashCode()
     {
         int hash = 0;
-        hash += (idUpajjhaya != null ? idUpajjhaya.hashCode() : 0);
+        hash += (idPrintout != null ? idPrintout.hashCode() : 0);
         return hash;
     }
 
@@ -111,12 +109,12 @@ public class Upajjhaya implements Serializable {
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Upajjhaya))
+        if (!(object instanceof PrintoutTm30))
         {
             return false;
         }
-        Upajjhaya other = (Upajjhaya) object;
-        if ((this.idUpajjhaya == null && other.idUpajjhaya != null) || (this.idUpajjhaya != null && !this.idUpajjhaya.equals(other.idUpajjhaya)))
+        PrintoutTm30 other = (PrintoutTm30) object;
+        if ((this.idPrintout == null && other.idPrintout != null) || (this.idPrintout != null && !this.idPrintout.equals(other.idPrintout)))
         {
             return false;
         }
@@ -126,7 +124,7 @@ public class Upajjhaya implements Serializable {
     @Override
     public String toString()
     {
-        return "org.watmarpjan.visaManager.model.hibernate.Upajjhaya[ idUpajjhaya=" + idUpajjhaya + " ]";
+        return "org.watmarpjan.visaManager.model.hibernate.PrintoutTm30[ idPrintout=" + idPrintout + " ]";
     }
     
 }
