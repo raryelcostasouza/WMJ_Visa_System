@@ -31,8 +31,12 @@
                                                         <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
                                                         <TableColumn minWidth="-Infinity" text="Weekday" />
                                                         <TableColumn minWidth="-Infinity" prefWidth="111.0" text="Remaining Time" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="133.0" text="First Day" />
-                                          <TableColumn prefWidth="101.0" text="Last Day Online" />
+                                          <TableColumn prefWidth="75.0" text="Acceptable Dates">
+                                             <columns>
+                                                              <TableColumn minWidth="-Infinity" prefWidth="133.0" text="First Day" />
+                                                <TableColumn prefWidth="101.0" text="Last Day Online" />
+                                             </columns>
+                                          </TableColumn>
                                                     </columns>
                                                 </TableView>
                                             </children>
@@ -53,9 +57,13 @@
                                                         <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
                                                         <TableColumn minWidth="-Infinity" text="Weekday" />
                                                         <TableColumn minWidth="-1.0" prefWidth="104.0" text="Remaining Time" />
-                                          <TableColumn prefWidth="75.0" text="Prawat" />
-                                          <TableColumn prefWidth="84.0" text="Samnakput" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                          <TableColumn prefWidth="75.0" text="Begin processing">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="Prawat" />
+                                                <TableColumn prefWidth="84.0" text="Samnakput" />
+                                                              <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                             </columns>
+                                          </TableColumn>
                                                     </columns>
                                                 </TableView>
                                             </children>
@@ -122,9 +130,13 @@
                                     <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
                                     <TableColumn minWidth="-Infinity" text="Weekday" />
                                     <TableColumn minWidth="-1.0" prefWidth="104.0" text="Remaining Time" />
-                                    <TableColumn prefWidth="75.0" text="Prawat" />
-                                    <TableColumn prefWidth="84.0" text="Samnakput" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                    <TableColumn prefWidth="75.0" text="Begin processing">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Prawat" />
+                                          <TableColumn prefWidth="84.0" text="Samnakput" />
+                                          <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                       </columns>
+                                    </TableColumn>
                                  </columns>
                               </TableView>
                            </children>

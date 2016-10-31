@@ -129,16 +129,18 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private void initTable90Day(TableView<EntryDueTask> tv)
     {
         initTableGeneric(tv);
-        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
-        tv.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
+        
+        tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
+        tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
     }
 
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
     {
         initTableGeneric(tv);
-        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("prawat"));
-        tv.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
-        tv.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("immigration"));
+        
+        tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("prawat"));
+        tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
+        tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("immigration"));
     }
 
     private void initTablePassportRenew(TableView<EntryDueTask> tv)
