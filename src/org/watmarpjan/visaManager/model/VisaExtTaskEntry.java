@@ -17,13 +17,39 @@ import org.watmarpjan.visaManager.util.Util;
 public class VisaExtTaskEntry extends EntryDueTask
 {
 
+    private final SimpleStringProperty prawat;
+    private final SimpleStringProperty samnakput;
+    private final SimpleStringProperty immigration;
+    
     public VisaExtTaskEntry(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
-        LocalDate ldBeginProcessing;
+        LocalDate ldPrawat, ldSamnakput, ldImmigration;
 
-        ldBeginProcessing = ldDueDate.minusDays(50);
-        beginProcessingBy = new SimpleStringProperty(ldBeginProcessing.format(Util.DEFAULT_DATE_FORMAT));
+        ldPrawat = ldDueDate.minusMonths(6);
+        ldSamnakput = ldDueDate.minusMonths(3);
+        ldImmigration = ldDueDate.minusMonths(1);
+        
+        prawat = new SimpleStringProperty(ldPrawat.format(Util.DEFAULT_DATE_FORMAT));
+        samnakput = new SimpleStringProperty(ldSamnakput.format(Util.DEFAULT_DATE_FORMAT));
+        immigration = new SimpleStringProperty(ldImmigration.format(Util.DEFAULT_DATE_FORMAT));
     }
+
+    public String getPrawat()
+    {
+        return prawat.get();
+    }
+
+    public String getSamnakput()
+    {
+        return samnakput.get();
+    }
+
+    public String getImmigration()
+    {
+        return immigration.get();
+    }
+    
+    
 
 }

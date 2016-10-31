@@ -44,8 +44,6 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     @Override
     public void init()
     {
-        TableColumn<EntryDueTask, String> tcAction;
-
         alTV = new ArrayList<>();
         alTV.add(tvTH90DayNotice);
         alTV.add(tvTHVisaExtension);
@@ -54,8 +52,20 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         alTV.add(tvAbroadVisaExtension);
         alTV.add(tvAbroadPassportRenewal);
 
-        Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>> actionCellFactory =
-                new Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>>()
+        initTable90Day(tvTH90DayNotice);
+        initTableVisaExtension(tvTHVisaExtension);
+        initTableVisaExtension(tvAbroadVisaExtension);
+        
+        initTablePassportRenew(tvTHPassportRenewal);
+        initTablePassportRenew(tvAbroadPassportRenewal);
+    }
+
+    private void initTableGeneric(TableView<EntryDueTask> tv)
+    {
+        TableColumn<EntryDueTask, String> tcAction;
+
+        Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>> actionCellFactory
+                = new Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>>()
         {
             @Override
             public TableCell call(final TableColumn<EntryDueTask, String> param)
@@ -73,28 +83,29 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
                         {
                             setGraphic(null);
                             setText(null);
-                        } else
+                        }
+                        else
                         {
                             btn.setGraphic(ivActionIcon);
                             btn.setOnAction((ActionEvent event)
-                                    -> 
-                                    {
-                                        EntryDueTask objEntry;
-                                        
-                                        objEntry = getTableView().getItems().get(getIndex());
-                                        ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
-                                        if (objEntry instanceof Notice90DayTaskEntry)
-                                        {
-                                            ctrGUIMain.actionButton90DayNotice(null);
-                                        }
-                                        else if (objEntry instanceof VisaExtTaskEntry)
-                                        {
-                                            ctrGUIMain.actionButtonVisaExt(null);
-                                        }
-                                        else
-                                        {
-                                            ctrGUIMain.actionButtonAddRenewPassport(null);
-                                        }
+                                    ->
+                            {
+                                EntryDueTask objEntry;
+
+                                objEntry = getTableView().getItems().get(getIndex());
+                                ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
+                                if (objEntry instanceof Notice90DayTaskEntry)
+                                {
+                                    ctrGUIMain.actionButton90DayNotice(null);
+                                }
+                                else if (objEntry instanceof VisaExtTaskEntry)
+                                {
+                                    ctrGUIMain.actionButtonVisaExt(null);
+                                }
+                                else
+                                {
+                                    ctrGUIMain.actionButtonAddRenewPassport(null);
+                                }
                             });
                             setGraphic(btn);
                             setText(null);
@@ -105,20 +116,35 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
             }
         };
 
-        for (TableView<EntryDueTask> tv : alTV)
-        {
-            tv.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
-            tv.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-            tv.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("weekDayDueDate"));
-            tv.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
-            tv.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
+        tv.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
+        tv.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        tv.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("weekDayDueDate"));
+        tv.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
 
-            tcAction = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5);
-            tcAction.setCellValueFactory(new PropertyValueFactory<>(""));
-            tcAction.setCellFactory(actionCellFactory);
+        tcAction = (TableColumn<EntryDueTask, String>) tv.getColumns().get(0);
+        tcAction.setCellValueFactory(new PropertyValueFactory<>(""));
+        tcAction.setCellFactory(actionCellFactory);
+    }
 
-        }
+    private void initTable90Day(TableView<EntryDueTask> tv)
+    {
+        initTableGeneric(tv);
+        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
+        tv.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
+    }
 
+    private void initTableVisaExtension(TableView<EntryDueTask> tv)
+    {
+        initTableGeneric(tv);
+        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("prawat"));
+        tv.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
+        tv.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("immigration"));
+    }
+
+    private void initTablePassportRenew(TableView<EntryDueTask> tv)
+    {
+        initTableGeneric(tv);
+        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
     }
 
     public void fillData()

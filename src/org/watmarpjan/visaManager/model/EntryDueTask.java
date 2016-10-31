@@ -8,7 +8,6 @@ package org.watmarpjan.visaManager.model;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import javafx.beans.property.SimpleStringProperty;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -23,7 +22,7 @@ public abstract class EntryDueTask
     private final SimpleStringProperty strDueDate;
     private final SimpleStringProperty weekDayDueDate;
     private final SimpleStringProperty remainingTime;
-    protected SimpleStringProperty beginProcessingBy;
+    
     protected LocalDate ldDueDate;
 
     public EntryDueTask(String profileNickname, Date dueDate)
@@ -79,8 +78,4 @@ public abstract class EntryDueTask
         return remainingTime.get();
     }
 
-    public String getBeginProcessingBy()
-    {
-        return beginProcessingBy.get();
-    }
 }

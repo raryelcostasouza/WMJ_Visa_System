@@ -16,7 +16,8 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public class PassportRenewTaskEntry extends EntryDueTask
 {
-
+    private SimpleStringProperty beginProcessingBy;
+    
     public PassportRenewTaskEntry(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
@@ -25,6 +26,11 @@ public class PassportRenewTaskEntry extends EntryDueTask
 
         ldBeginProcessing = ldDueDate.minusDays(30);
         beginProcessingBy = new SimpleStringProperty(ldBeginProcessing.format(Util.DEFAULT_DATE_FORMAT));
+    }
+    
+    public String getBeginProcessingBy()
+    {
+        return beginProcessingBy.get();
     }
 
 }

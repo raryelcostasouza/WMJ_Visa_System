@@ -16,14 +16,28 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public class Notice90DayTaskEntry extends EntryDueTask
 {
-
+    private SimpleStringProperty firstDay;
+    private final SimpleStringProperty lastDayOnline;
+    
     public Notice90DayTaskEntry(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
-        LocalDate ldBeginProcessing;
+        LocalDate ldFirstDay, ldLastDayOnline;
 
-        ldBeginProcessing = ldDueDate.minusDays(14);
-        beginProcessingBy = new SimpleStringProperty(ldBeginProcessing.format(Util.DEFAULT_DATE_FORMAT));
+        ldFirstDay = ldDueDate.minusDays(14);
+        ldLastDayOnline =  ldDueDate.minusDays(7);
+        firstDay = new SimpleStringProperty(ldFirstDay.format(Util.DEFAULT_DATE_FORMAT));
+        lastDayOnline = new SimpleStringProperty(ldLastDayOnline.format(Util.DEFAULT_DATE_FORMAT));
+    }
+    
+    public String getFirstDay()
+    {
+        return firstDay.get();
+    }
+    
+    public String getLastDayOnline()
+    {
+        return lastDayOnline.get();
     }
 
 }
