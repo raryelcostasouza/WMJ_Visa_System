@@ -261,9 +261,9 @@
                                                         <HBox alignment="CENTER">
                                                             <children>
                                                                 <Label text="Page number:" />
-                                                                <TextField fx:id="tfScan1PageNumber" editable="false" prefWidth="50.0" />
+                                                                <TextField fx:id="tfScan1LeftPageNumber" editable="false" prefWidth="50.0" />
                                                 <Label text="-" />
-                                                <TextField editable="false" prefWidth="50.0" />
+                                                <TextField fx:id="tfScan1RightPageNumber" editable="false" prefWidth="50.0" />
                                                             </children>
                                                         </HBox>
                                                         <RadioButton fx:id="rbScan1ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp">
@@ -318,9 +318,9 @@
                                                         <HBox alignment="CENTER">
                                                             <children>
                                                                 <Label text="Page number:" />
-                                                                <TextField fx:id="tfScan2PageNumber" editable="false" prefWidth="50.0" />
+                                                                <TextField fx:id="tfScan2LeftPageNumber" editable="false" prefWidth="50.0" />
                                                 <Label text="-" />
-                                                <TextField editable="false" prefWidth="50.0" />
+                                                <TextField fx:id="tfScan2RightPageNumber" editable="false" prefWidth="50.0" />
                                                             </children>
                                                         </HBox>
                                                         <RadioButton fx:id="rbScan2ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />
@@ -363,9 +363,9 @@
                                                         <HBox alignment="CENTER">
                                                             <children>
                                                                 <Label text="Page number:" />
-                                                                <TextField fx:id="tfScan3PageNumber" editable="false" prefWidth="50.0" />
+                                                                <TextField fx:id="tfScan3LeftPageNumber" editable="false" prefWidth="50.0" />
                                                 <Label text="-" />
-                                                <TextField editable="false" prefWidth="50.0" />
+                                                <TextField fx:id="tfScan3RightPageNumber" editable="false" prefWidth="50.0" />
                                                             </children>
                                                         </HBox>
                                                         <RadioButton fx:id="rbScan3ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />

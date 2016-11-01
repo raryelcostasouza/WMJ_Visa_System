@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.gui;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -19,16 +18,18 @@ public class FieldsPaneScanContent
 
     private final Button bSelectFile;
     private final Button bArchive;
-    private final TextField tfPageNumber;
+    private final TextField tfLeftPageNumber;
+    private final TextField tfRightPageNumber;
     private final RadioButton rbArriveStamp;
     private final RadioButton rbVisa;
     private final RadioButton rbLastVisaExt;
 
-    public FieldsPaneScanContent(Button bSelectFile, Button bArchive, TextField tfPageNumber, RadioButton rbArriveStamp, RadioButton rbVisa, RadioButton rbLastVisaExt)
+    public FieldsPaneScanContent(Button bSelectFile, Button bArchive, TextField tfLeftPageNumber, TextField tfRightPageNumber, RadioButton rbArriveStamp, RadioButton rbVisa, RadioButton rbLastVisaExt)
     {
         this.bSelectFile = bSelectFile;
         this.bArchive = bArchive;
-        this.tfPageNumber = tfPageNumber;
+        this.tfLeftPageNumber = tfLeftPageNumber;
+        this.tfRightPageNumber = tfRightPageNumber;
         this.rbArriveStamp = rbArriveStamp;
         this.rbVisa = rbVisa;
         this.rbLastVisaExt = rbLastVisaExt;
@@ -44,9 +45,9 @@ public class FieldsPaneScanContent
         return bArchive;
     }
 
-    public TextField getTfPageNumber()
+    public TextField getTfPLeftPageNumber()
     {
-        return tfPageNumber;
+        return tfLeftPageNumber;
     }
 
     public RadioButton getRbArriveStamp()
@@ -66,12 +67,13 @@ public class FieldsPaneScanContent
 
     public void reset()
     {
-        tfPageNumber.setEditable(true);
+        tfLeftPageNumber.setEditable(true);
         rbArriveStamp.setDisable(false);
         rbVisa.setDisable(false);
         rbLastVisaExt.setDisable(false);
 
-        tfPageNumber.setText("");
+        tfLeftPageNumber.setText("");
+        tfRightPageNumber.setText("");
 
         rbArriveStamp.setSelected(false);
         rbVisa.setSelected(false);
@@ -93,7 +95,7 @@ public class FieldsPaneScanContent
             rbVisa.setDisable(true);
             rbLastVisaExt.setDisable(true);
 
-            tfPageNumber.setEditable(false);
+            tfLeftPageNumber.setEditable(false);
 
         } else
         {

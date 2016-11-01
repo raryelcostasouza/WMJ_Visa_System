@@ -29,6 +29,8 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.AppConstants;
 import static java.lang.Integer.parseInt;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 /**
  *
@@ -112,7 +114,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private ToggleGroup tgLastVisaExt;
 
     @FXML
-    private TextField tfScan1PageNumber;
+    private TextField tfScan1LeftPageNumber;
+    @FXML
+    private TextField tfScan1RightPageNumber;
     @FXML
     private RadioButton rbScan1ArriveStamp;
     @FXML
@@ -121,7 +125,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private RadioButton rbScan1LastVisaExt;
 
     @FXML
-    private TextField tfScan2PageNumber;
+    private TextField tfScan2LeftPageNumber;
+    @FXML
+    private TextField tfScan2RightPageNumber;
     @FXML
     private RadioButton rbScan2ArriveStamp;
     @FXML
@@ -130,7 +136,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private RadioButton rbScan2LastVisaExt;
 
     @FXML
-    private TextField tfScan3PageNumber;
+    private TextField tfScan3LeftPageNumber;
+    @FXML
+    private TextField tfScan3RightPageNumber;
     @FXML
     private RadioButton rbScan3ArriveStamp;
     @FXML
@@ -170,9 +178,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
 
-        fieldsScan1 = new FieldsPaneScanContent(bScan1, bArchive1, tfScan1PageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
-        fieldsScan2 = new FieldsPaneScanContent(bScan2, bArchive2, tfScan2PageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
-        fieldsScan3 = new FieldsPaneScanContent(bScan3, bArchive3, tfScan3PageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
+        fieldsScan1 = new FieldsPaneScanContent(bScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
+        fieldsScan2 = new FieldsPaneScanContent(bScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
+        fieldsScan3 = new FieldsPaneScanContent(bScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
 
         initChangeListener();
     }
@@ -187,6 +195,69 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         listFields.add(dpFirstEntryDate);
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
+
+        tfScan1LeftPageNumber.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                int parsedPageNumberValue;
+                if (newValue != null)
+                {
+                    try
+                    {
+                        parsedPageNumberValue = parseInt(tfScan1LeftPageNumber.getText());
+                        tfScan1RightPageNumber.setText(parsedPageNumberValue + 1 + "");
+
+                    } catch (NumberFormatException nfe)
+                    {
+                        tfScan1RightPageNumber.setText("");
+                    }
+                }
+            }
+        });
+        tfScan2LeftPageNumber.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                int parsedPageNumberValue;
+                if (newValue != null)
+                {
+                    try
+                    {
+                        parsedPageNumberValue = parseInt(tfScan2LeftPageNumber.getText());
+                        tfScan2RightPageNumber.setText(parsedPageNumberValue + 1 + "");
+
+                    } catch (NumberFormatException nfe)
+                    {
+                         tfScan2RightPageNumber.setText("");
+                    }
+                }
+            }
+        });
+        tfScan3LeftPageNumber.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                int parsedPageNumberValue;
+                if (newValue != null)
+                {
+                    try
+                    {
+                        parsedPageNumberValue = parseInt(tfScan3LeftPageNumber.getText());
+                        tfScan3RightPageNumber.setText(parsedPageNumberValue + 1 + "");
+
+                    } catch (NumberFormatException nfe)
+                    {
+                        tfScan3RightPageNumber.setText("");
+                    }
+                }
+            }
+        }
+        );
+
     }
 
     @Override
@@ -314,7 +385,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             ps1 = listPassportScans.get(0);
             fieldsScan1.setStatusScan(true);
 
-            tfScan1PageNumber.setText(ps1.getPageNumber() + "");
+            tfScan1LeftPageNumber.setText(ps1.getPageNumber() + "");
             if (ps1.isContentArriveStamp())
             {
                 /*
@@ -355,7 +426,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             ps2 = listPassportScans.get(1);
             fieldsScan2.setStatusScan(true);
 
-            tfScan2PageNumber.setText(ps2.getPageNumber() + "");
+            tfScan2LeftPageNumber.setText(ps2.getPageNumber() + "");
             if (ps2.isContentArriveStamp())
             {
                 rbScan2ArriveStamp.setSelected(true);
@@ -384,7 +455,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             ps3 = listPassportScans.get(2);
             fieldsScan3.setStatusScan(true);
 
-            tfScan3PageNumber.setText(ps3.getPageNumber() + "");
+            tfScan3LeftPageNumber.setText(ps3.getPageNumber() + "");
             if (ps3.isContentArriveStamp())
             {
                 rbScan3ArriveStamp.setSelected(true);
@@ -625,20 +696,20 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             {
                 if (ae.getSource().equals(bScan1))
                 {
-                    ps = new PassportScan(p, parseInt(tfScan1PageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
+                    ps = new PassportScan(p, parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
 
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
 
                 }
                 else if (ae.getSource().equals(bScan2))
                 {
-                    ps = new PassportScan(p, parseInt(tfScan2PageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
+                    ps = new PassportScan(p, parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
 
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
                 }
                 else
                 {
-                    ps = new PassportScan(p, parseInt(tfScan3PageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
+                    ps = new PassportScan(p, parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
 
                     ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
                 }
@@ -681,21 +752,21 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         //returns true
         if (sourceButton.equals(bScan1))
         {
-            return validatePageNumber(tfScan1PageNumber.getText())
+            return validatePageNumber(tfScan1LeftPageNumber.getText())
                     && (rbScan1ArriveStamp.isSelected()
                     || rbScan1LastVisaExt.isSelected()
                     || rbScan1Visa.isSelected());
         }
         else if (sourceButton.equals(bScan2))
         {
-            return validatePageNumber(tfScan2PageNumber.getText())
+            return validatePageNumber(tfScan2LeftPageNumber.getText())
                     && (rbScan2ArriveStamp.isSelected()
                     || rbScan2LastVisaExt.isSelected()
                     || rbScan2Visa.isSelected());
         }
         else
         {
-            return validatePageNumber(tfScan3PageNumber.getText())
+            return validatePageNumber(tfScan3LeftPageNumber.getText())
                     && (rbScan3ArriveStamp.isSelected()
                     || rbScan3LastVisaExt.isSelected()
                     || rbScan3Visa.isSelected());
