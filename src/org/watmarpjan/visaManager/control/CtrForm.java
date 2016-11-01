@@ -648,7 +648,7 @@ public class CtrForm
         contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
 
         //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getHeight(), 0, 0, pdImage.getWidth(), 600, 500);
+        AffineTransform at = new AffineTransform(pdImage.getHeight()*0.4, 0, 0, pdImage.getWidth()*0.4, 565, 450);
 
         //rotates the image overlay 90 degree because the document is landscape
         at.rotate(Math.toRadians(90));
