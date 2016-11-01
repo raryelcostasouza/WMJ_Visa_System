@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneDueTasks">
+<TabPane prefHeight="850.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneDueTasks">
     <tabs>
         <Tab closable="false" text="Thailand">
             <content>
@@ -26,15 +26,16 @@
                                             <children>
                                                 <TableView fx:id="tvTH90DayNotice">
                                                     <columns>
-                                                        <TableColumn minWidth="-Infinity" prefWidth="89.0" text="Action" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="117.0" text="Monastic" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
-                                                        <TableColumn minWidth="-Infinity" text="Weekday" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="111.0" text="Remaining Time" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
                                           <TableColumn prefWidth="75.0" text="Acceptable Dates">
                                              <columns>
-                                                              <TableColumn minWidth="-Infinity" prefWidth="133.0" text="First Day" />
-                                                <TableColumn prefWidth="101.0" text="Last Day Online" />
+                                                              <TableColumn minWidth="-Infinity" prefWidth="110.0" text="First Day" />
+                                                <TableColumn prefWidth="110.0" text="Last Day Online" />
+                                                <TableColumn prefWidth="110.0" text="Last Day Office" />
                                              </columns>
                                           </TableColumn>
                                                     </columns>
@@ -52,16 +53,16 @@
                                             <children>
                                                 <TableView fx:id="tvTHVisaExtension">
                                                     <columns>
-                                                        <TableColumn minWidth="-Infinity" prefWidth="82.0" text="Action" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="117.0" text="Monastic" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
-                                                        <TableColumn minWidth="-Infinity" text="Weekday" />
-                                                        <TableColumn minWidth="-1.0" prefWidth="104.0" text="Remaining Time" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
+                                                        <TableColumn minWidth="-1.0" prefWidth="150.0" text="Remaining Time" />
                                           <TableColumn prefWidth="75.0" text="Begin processing">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="Prawat" />
-                                                <TableColumn prefWidth="84.0" text="Samnakput" />
-                                                              <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                                <TableColumn prefWidth="85.0" text="Prawat" />
+                                                <TableColumn prefWidth="85.0" text="Samnakput" />
+                                                              <TableColumn minWidth="-Infinity" prefWidth="85.0" text="Immigration" />
                                              </columns>
                                           </TableColumn>
                                                     </columns>
@@ -79,11 +80,11 @@
                                             <children>
                                                 <TableView fx:id="tvTHPassportRenewal">
                                                     <columns>
-                                                        <TableColumn minWidth="-Infinity" prefWidth="82.0" text="Action" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="117.0" text="Monastic" />
-                                                        <TableColumn minWidth="-1.0" prefWidth="133.0" text="Due Date" />
-                                                        <TableColumn minWidth="-Infinity" text="Weekday" />
-                                                        <TableColumn minWidth="-Infinity" prefWidth="187.0" text="Remaining Time" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                        <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
+                                                        <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
                                                         <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                                     </columns>
                                                 </TableView>
@@ -125,16 +126,16 @@
                            <children>
                               <TableView fx:id="tvAbroadVisaExtension">
                                  <columns>
-                                    <TableColumn minWidth="-Infinity" prefWidth="82.0" text="Action" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="117.0" text="Monastic" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="133.0" text="Due Date" />
-                                    <TableColumn minWidth="-Infinity" text="Weekday" />
-                                    <TableColumn minWidth="-1.0" prefWidth="104.0" text="Remaining Time" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
+                                    <TableColumn minWidth="-1.0" prefWidth="150.0" text="Remaining Time" />
                                     <TableColumn prefWidth="75.0" text="Begin processing">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Prawat" />
-                                          <TableColumn prefWidth="84.0" text="Samnakput" />
-                                          <TableColumn minWidth="-Infinity" prefWidth="92.0" text="Immigration" />
+                                          <TableColumn prefWidth="85.0" text="Prawat" />
+                                          <TableColumn prefWidth="85.0" text="Samnakput" />
+                                          <TableColumn minWidth="-Infinity" prefWidth="85.0" text="Immigration" />
                                        </columns>
                                     </TableColumn>
                                  </columns>
@@ -152,11 +153,11 @@
                            <children>
                               <TableView fx:id="tvAbroadPassportRenewal">
                                  <columns>
-                                    <TableColumn minWidth="-Infinity" prefWidth="82.0" text="Action" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="117.0" text="Monastic" />
-                                    <TableColumn minWidth="-1.0" prefWidth="133.0" text="Due Date" />
-                                    <TableColumn minWidth="-Infinity" text="Weekday" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="187.0" text="Remaining Time" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                    <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
+                                    <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
                                     <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                  </columns>
                               </TableView>

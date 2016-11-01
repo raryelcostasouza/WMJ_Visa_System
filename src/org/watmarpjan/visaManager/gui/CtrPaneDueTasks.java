@@ -132,6 +132,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
+        tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
     }
 
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
