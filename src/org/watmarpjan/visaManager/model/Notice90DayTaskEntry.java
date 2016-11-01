@@ -18,16 +18,19 @@ public class Notice90DayTaskEntry extends EntryDueTask
 {
     private SimpleStringProperty firstDay;
     private final SimpleStringProperty lastDayOnline;
+    private final SimpleStringProperty lastDayOffice;
     
     public Notice90DayTaskEntry(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
-        LocalDate ldFirstDay, ldLastDayOnline;
+        LocalDate ldFirstDay, ldLastDayOnline, ldLastDayOffice;
 
         ldFirstDay = ldDueDate.minusDays(14);
         ldLastDayOnline =  ldDueDate.minusDays(7);
+        ldLastDayOffice = ldDueDate.plusDays(7);
         firstDay = new SimpleStringProperty(ldFirstDay.format(Util.DEFAULT_DATE_FORMAT));
         lastDayOnline = new SimpleStringProperty(ldLastDayOnline.format(Util.DEFAULT_DATE_FORMAT));
+        lastDayOffice = new SimpleStringProperty(ldLastDayOffice.format(Util.DEFAULT_DATE_FORMAT));
     }
     
     public String getFirstDay()
@@ -38,6 +41,11 @@ public class Notice90DayTaskEntry extends EntryDueTask
     public String getLastDayOnline()
     {
         return lastDayOnline.get();
+    }
+    
+    public String getLastDayOffice()
+    {
+        return lastDayOffice.get();
     }
 
 }
