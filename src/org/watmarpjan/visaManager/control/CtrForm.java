@@ -356,7 +356,7 @@ public class CtrForm
 
     }
 
-    public void fillFormTM8Reentry(PDAcroForm acroForm, MonasticProfile p) throws IOException
+    public void fillFormTM8Reentry(PDAcroForm acroForm, MonasticProfile p, boolean reentryTogetherExtension) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
         Monastery mResidingAt;
@@ -365,6 +365,7 @@ public class CtrForm
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("thaiNameWatResidingAt"));
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
@@ -386,13 +387,10 @@ public class CtrForm
         acroForm.getField("birthPlace").setValue(p.getBirthPlace());
         acroForm.getField("birthCountry").setValue(p.getBirthCountry());
 
-        alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
-
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
-            acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
+            acroForm.getField("thaiNameWatResidingAt").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
@@ -445,11 +443,19 @@ public class CtrForm
         {
             acroForm.getField("visaExpiryDateDay").setValue(ldVisaExpiry.getDayOfMonth() + "");
             acroForm.getField("visaExpiryDateMonth").setValue(ldVisaExpiry.getMonthValue() + "");
-            acroForm.getField("visaExpiryDateYear").setValue(Util.convertYearToThai(ldVisaExpiry.getYear()) + "");
+            if (reentryTogetherExtension)
+            {
+                acroForm.getField("visaExpiryDateYear").setValue(Util.convertYearToThai(ldVisaExpiry.plusYears(1).getYear()) + "");
+            }
+            else
+            {
+                acroForm.getField("visaExpiryDateYear").setValue(Util.convertYearToThai(ldVisaExpiry.getYear()) + "");
+            }
+            
         }   
     }
 
-    public void fillForm(File sourceFile, MonasticProfile p, int option)
+    public void fillForm(File sourceFile, MonasticProfile p, int option, boolean extraOption)
     {
         PDDocument pdfDocument;
         PDAcroForm acroForm;
@@ -504,7 +510,7 @@ public class CtrForm
             }
             else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry().getName()))
             {
-                fillFormTM8Reentry(acroForm, p);
+                fillFormTM8Reentry(acroForm, p, extraOption);
             }
             else if (sourceFile.getName().contains("TM30-"))
             {

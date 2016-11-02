@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -25,7 +26,8 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
     @FXML
     private TextField tfTM6Number;
-
+    @FXML
+    private CheckBox cbReentryTogetherExtension;
     @FXML
     private DatePicker dpLastEntry;
 
@@ -152,7 +154,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
     }
     
     @FXML
@@ -160,7 +162,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PRINT_FORM, cbReentryTogetherExtension.isSelected());
     }
 
 }

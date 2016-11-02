@@ -296,7 +296,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -304,7 +304,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrForm.OPTION_PRINT_FORM, false);
     }
 
     @FXML
