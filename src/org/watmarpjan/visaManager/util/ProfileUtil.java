@@ -36,10 +36,12 @@ public class ProfileUtil
         if (p.getBhikkhuOrdDate() != null)
         {
             return "พระภิกษุ";
-        } else if (p.getSamaneraOrdDate() != null)
+        }
+        else if (p.getSamaneraOrdDate() != null)
         {
             return "สามเณร";
-        } else
+        }
+        else
         {
             return "นาด";
         }
@@ -65,10 +67,12 @@ public class ProfileUtil
         if (p.getBhikkhuOrdDate() != null)
         {
             return "อุปสมบท";
-        } else if (p.getSamaneraOrdDate() != null)
+        }
+        else if (p.getSamaneraOrdDate() != null)
         {
             return "บรรพชา";
-        } else
+        }
+        else
         {
             return "";
         }
@@ -79,10 +83,12 @@ public class ProfileUtil
         if (p.getBhikkhuOrdDate() != null)
         {
             return Util.toStringThaiDateFormat(p.getBhikkhuOrdDate());
-        } else if (p.getSamaneraOrdDate() != null)
+        }
+        else if (p.getSamaneraOrdDate() != null)
         {
             return Util.toStringThaiDateFormat(p.getSamaneraOrdDate());
-        } else
+        }
+        else
         {
             return null;
         }
@@ -99,11 +105,27 @@ public class ProfileUtil
             ldBirth = Util.convertDateToLocalDate(birthDate);
             age = Period.between(ldBirth, ldToday);
             return age.getYears() + "";
-        } else
+        }
+        else
         {
             return "";
         }
 
+    }
+
+    public static LocalDate getLastExtensionExpiryDate(MonasticProfile p)
+    {
+        ArrayList<VisaExtension> listExt;
+        VisaExtension lastExt;
+                
+        if ((p.getVisaExtensionSet() != null) && (!p.getVisaExtensionSet().isEmpty()))
+        {
+            listExt = new ArrayList<>();
+            listExt.addAll(p.getVisaExtensionSet());
+            lastExt = listExt.get(listExt.size() - 1);
+            return Util.convertDateToLocalDate(lastExt.getExpiryDate());
+        }
+        return null;
     }
 
     public static LocalDate getVisaExpiryDateDesired(MonasticProfile p)
@@ -128,7 +150,8 @@ public class ProfileUtil
                 //the desired expiry date is one year from the last extension
                 ldNewExpiryDate = ldExtensionExpiry.plusYears(1);
 
-            } else
+            }
+            else
             {
                 //if there are no extensions
                 //the desired expiry date is one year from the visa expiry
