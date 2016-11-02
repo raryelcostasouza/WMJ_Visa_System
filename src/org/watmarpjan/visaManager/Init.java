@@ -39,7 +39,8 @@ public class Init extends Application
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setTitle("WMJ Visa Manager");
-
+            primaryStage.setWidth(1300);
+            primaryStage.setHeight(1050);
             primaryStage.show();
         } catch (Exception ex)
         {

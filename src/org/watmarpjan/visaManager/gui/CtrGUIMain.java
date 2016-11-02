@@ -440,7 +440,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneDueTasks);
         currentPaneController = ctrPaneDueTasks;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneDueTasks.fillData();
 
     }
@@ -455,7 +455,7 @@ public class CtrGUIMain
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonasticProfile);
         currentPaneController = ctrPaneMonasticProfile;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
     }
@@ -470,7 +470,7 @@ public class CtrGUIMain
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonastery);
         currentPaneController = ctrPaneMonastery;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
         ctrPaneMonastery.fillMonasteryData(null);
     }
@@ -485,7 +485,7 @@ public class CtrGUIMain
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneUpajjhaya);
         currentPaneController = ctrPaneUpajjhaya;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
         ctrPaneUpajjhaya.fillUpajjhayaData(null);
     }
@@ -500,8 +500,9 @@ public class CtrGUIMain
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(panePassport);
         currentPaneController = ctrPanePassport;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
+        System.out.println("W: " + Init.MAIN_STAGE.getWidth()+ "| H: " + Init.MAIN_STAGE.getHeight());
         fillMonasticProfileData();
     }
 
@@ -515,7 +516,7 @@ public class CtrGUIMain
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneBysuddhi);
         currentPaneController = ctrPaneBysuddhi;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
     }
@@ -529,7 +530,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(pane90DayNotice);
         currentPaneController = ctrPane90DayNotice;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
 
     }
@@ -543,7 +544,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneVisaExt);
         currentPaneController = ctrPaneVisaExt;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
 
@@ -556,7 +557,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneReEntry);
         currentPaneController = ctrPaneReEntry;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
 
@@ -569,7 +570,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneAddRenewPassport);
         currentPaneController = ctrPaneAddRenewPassport;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
 
@@ -582,7 +583,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneAddChangeVisa);
         currentPaneController = ctrPaneAddChangeVisa;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         fillMonasticProfileData();
     }
 
@@ -595,7 +596,7 @@ public class CtrGUIMain
         topPane.setLeft(null);
         centerPane.setCenter(paneTM30NotifResidence);
         currentPaneController = ctrPaneTM30NotifResidence;
-        Init.MAIN_STAGE.sizeToScene();
+//        Init.MAIN_STAGE.sizeToScene();
         ctrPaneTM30NotifResidence.fillData();
     }
 
