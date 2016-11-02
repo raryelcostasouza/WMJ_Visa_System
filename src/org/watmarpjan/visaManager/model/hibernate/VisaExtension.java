@@ -31,12 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "VisaExtension.findAll", query = "SELECT v FROM VisaExtension v"),
-    @NamedQuery(name = "VisaExtension.findByIdVisaExtension", query = "SELECT v FROM VisaExtension v WHERE v.idVisaExtension = :idVisaExtension"),
-    @NamedQuery(name = "VisaExtension.findByExpiryDate", query = "SELECT v FROM VisaExtension v WHERE v.expiryDate = :expiryDate"),
-    @NamedQuery(name = "VisaExtension.findByExtNumber", query = "SELECT v FROM VisaExtension v WHERE v.extNumber = :extNumber")
+    @NamedQuery(name = "VisaExtension.findAll", query = "SELECT v FROM VisaExtension v")
+    , @NamedQuery(name = "VisaExtension.findByIdVisaExtension", query = "SELECT v FROM VisaExtension v WHERE v.idVisaExtension = :idVisaExtension")
+    , @NamedQuery(name = "VisaExtension.findByExpiryDate", query = "SELECT v FROM VisaExtension v WHERE v.expiryDate = :expiryDate")
+    , @NamedQuery(name = "VisaExtension.findByExtNumber", query = "SELECT v FROM VisaExtension v WHERE v.extNumber = :extNumber")
 })
-public class VisaExtension implements Serializable {
+public class VisaExtension implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id

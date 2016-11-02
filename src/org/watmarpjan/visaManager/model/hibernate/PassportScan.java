@@ -28,14 +28,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "PassportScan.findAll", query = "SELECT p FROM PassportScan p"),
-    @NamedQuery(name = "PassportScan.findByIdPassportScan", query = "SELECT p FROM PassportScan p WHERE p.idPassportScan = :idPassportScan"),
-    @NamedQuery(name = "PassportScan.findByContentArriveStamp", query = "SELECT p FROM PassportScan p WHERE p.contentArriveStamp = :contentArriveStamp"),
-    @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt"),
-    @NamedQuery(name = "PassportScan.findByContentVisaScan", query = "SELECT p FROM PassportScan p WHERE p.contentVisaScan = :contentVisaScan"),
-    @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber")
+    @NamedQuery(name = "PassportScan.findAll", query = "SELECT p FROM PassportScan p")
+    , @NamedQuery(name = "PassportScan.findByIdPassportScan", query = "SELECT p FROM PassportScan p WHERE p.idPassportScan = :idPassportScan")
+    , @NamedQuery(name = "PassportScan.findByContentArriveStamp", query = "SELECT p FROM PassportScan p WHERE p.contentArriveStamp = :contentArriveStamp")
+    , @NamedQuery(name = "PassportScan.findByContentLastVisaExt", query = "SELECT p FROM PassportScan p WHERE p.contentLastVisaExt = :contentLastVisaExt")
+    , @NamedQuery(name = "PassportScan.findByContentVisaScan", query = "SELECT p FROM PassportScan p WHERE p.contentVisaScan = :contentVisaScan")
+    , @NamedQuery(name = "PassportScan.findByPageNumber", query = "SELECT p FROM PassportScan p WHERE p.pageNumber = :pageNumber")
 })
-public class PassportScan implements Serializable {
+public class PassportScan implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id

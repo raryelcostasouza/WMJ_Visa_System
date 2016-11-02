@@ -32,11 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p"),
-    @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout"),
-    @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
+    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p")
+    , @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout")
+    , @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
 })
-public class PrintoutTm30 implements Serializable {
+public class PrintoutTm30 implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id

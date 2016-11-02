@@ -29,11 +29,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u"),
-    @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya"),
-    @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
+    @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u")
+    , @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya")
+    , @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
 })
-public class Upajjhaya implements Serializable {
+public class Upajjhaya implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
     @Id
