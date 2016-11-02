@@ -73,6 +73,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @FXML
     private TextField tfpassportNumber;
     @FXML
+    private TextField tfpassportCountry;
+    @FXML
     private TextField tfpassportIssuedAt;
     @FXML
     private DatePicker dpPassportIssueDate;
@@ -231,7 +233,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
                     } catch (NumberFormatException nfe)
                     {
-                         tfScan2RightPageNumber.setText("");
+                        tfScan2RightPageNumber.setText("");
                     }
                 }
             }
@@ -267,6 +269,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
 
         tfpassportNumber.setText(p.getPassportNumber());
+        tfpassportCountry.setText(p.getPassportCountry());
         tfpassportIssuedAt.setText(p.getPassportIssuedAt());
 
         fillDataContentScans(p);
@@ -355,127 +358,130 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         fieldsScan2.reset();
         fieldsScan3.reset();
 
-        listPassportScans = new ArrayList<>();
-        listPassportScans.addAll(p.getPassportScanSet());
+        if (p.getPassportScanSet() != null)
+        {
+            listPassportScans = new ArrayList<>();
+            listPassportScans.addAll(p.getPassportScanSet());
 
-        if (AppFiles.getScanDepartureCard(p.getNickname()).exists())
-        {
-            bArchiveDepartureCard.setDisable(false);
-            bScanDepartureCard.setDisable(true);
-        }
-        else
-        {
-            bArchiveDepartureCard.setDisable(true);
-            bScanDepartureCard.setDisable(false);
-        }
-
-        if (AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).exists())
-        {
-            bArchivePassport.setDisable(false);
-            bScanPassport.setDisable(true);
-        }
-        else
-        {
-            bArchivePassport.setDisable(true);
-            bScanPassport.setDisable(false);
-        }
-
-        if (listPassportScans.size() >= 1)
-        {
-            ps1 = listPassportScans.get(0);
-            fieldsScan1.setStatusScan(true);
-
-            tfScan1LeftPageNumber.setText(ps1.getPageNumber() + "");
-            if (ps1.isContentArriveStamp())
+            if (AppFiles.getScanDepartureCard(p.getNickname()).exists())
             {
-                /*
+                bArchiveDepartureCard.setDisable(false);
+                bScanDepartureCard.setDisable(true);
+            }
+            else
+            {
+                bArchiveDepartureCard.setDisable(true);
+                bScanDepartureCard.setDisable(false);
+            }
+
+            if (AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).exists())
+            {
+                bArchivePassport.setDisable(false);
+                bScanPassport.setDisable(true);
+            }
+            else
+            {
+                bArchivePassport.setDisable(true);
+                bScanPassport.setDisable(false);
+            }
+
+            if (listPassportScans.size() >= 1)
+            {
+                ps1 = listPassportScans.get(0);
+                fieldsScan1.setStatusScan(true);
+
+                tfScan1LeftPageNumber.setText(ps1.getPageNumber() + "");
+                if (ps1.isContentArriveStamp())
+                {
+                    /*
                  * if this scan contains the Arrive Stamp blocks the
                  * selection of ArriveStamp option for other scans
-                 */
-                rbScan1ArriveStamp.setSelected(true);
+                     */
+                    rbScan1ArriveStamp.setSelected(true);
 
-                rbScan2ArriveStamp.setDisable(true);
-                rbScan3ArriveStamp.setDisable(true);
-            }
-            if (ps1.isContentVisaScan())
-            {
-                /*
+                    rbScan2ArriveStamp.setDisable(true);
+                    rbScan3ArriveStamp.setDisable(true);
+                }
+                if (ps1.isContentVisaScan())
+                {
+                    /*
                  * if this scan contains the Visa page blocks the selection
                  * of Visa option for other scans
-                 */
-                rbScan1Visa.setSelected(true);
+                     */
+                    rbScan1Visa.setSelected(true);
 
-                rbScan2Visa.setDisable(true);
-                rbScan3Visa.setDisable(true);
-            }
-            if (ps1.isContentLastVisaExt())
-            {
-                /*
+                    rbScan2Visa.setDisable(true);
+                    rbScan3Visa.setDisable(true);
+                }
+                if (ps1.isContentLastVisaExt())
+                {
+                    /*
                  * if this scan contains the Last Visa Ext blocks the
                  * selection of Last Visa Ext option for other scans
-                 */
-                rbScan1LastVisaExt.setSelected(true);
+                     */
+                    rbScan1LastVisaExt.setSelected(true);
 
-                rbScan2LastVisaExt.setDisable(true);
-                rbScan3LastVisaExt.setDisable(true);
+                    rbScan2LastVisaExt.setDisable(true);
+                    rbScan3LastVisaExt.setDisable(true);
+                }
             }
-        }
 
-        if (listPassportScans.size() >= 2)
-        {
-            ps2 = listPassportScans.get(1);
-            fieldsScan2.setStatusScan(true);
-
-            tfScan2LeftPageNumber.setText(ps2.getPageNumber() + "");
-            if (ps2.isContentArriveStamp())
+            if (listPassportScans.size() >= 2)
             {
-                rbScan2ArriveStamp.setSelected(true);
+                ps2 = listPassportScans.get(1);
+                fieldsScan2.setStatusScan(true);
 
-                rbScan1ArriveStamp.setDisable(true);
-                rbScan3ArriveStamp.setDisable(true);
+                tfScan2LeftPageNumber.setText(ps2.getPageNumber() + "");
+                if (ps2.isContentArriveStamp())
+                {
+                    rbScan2ArriveStamp.setSelected(true);
+
+                    rbScan1ArriveStamp.setDisable(true);
+                    rbScan3ArriveStamp.setDisable(true);
+                }
+                if (ps2.isContentVisaScan())
+                {
+                    rbScan2Visa.setSelected(true);
+
+                    rbScan1Visa.setDisable(true);
+                    rbScan3Visa.setDisable(true);
+                }
+                if (ps2.isContentLastVisaExt())
+                {
+                    rbScan2LastVisaExt.setSelected(true);
+
+                    rbScan1LastVisaExt.setDisable(true);
+                    rbScan3LastVisaExt.setDisable(true);
+                }
             }
-            if (ps2.isContentVisaScan())
+
+            if (listPassportScans.size() >= 3)
             {
-                rbScan2Visa.setSelected(true);
+                ps3 = listPassportScans.get(2);
+                fieldsScan3.setStatusScan(true);
 
-                rbScan1Visa.setDisable(true);
-                rbScan3Visa.setDisable(true);
-            }
-            if (ps2.isContentLastVisaExt())
-            {
-                rbScan2LastVisaExt.setSelected(true);
+                tfScan3LeftPageNumber.setText(ps3.getPageNumber() + "");
+                if (ps3.isContentArriveStamp())
+                {
+                    rbScan3ArriveStamp.setSelected(true);
 
-                rbScan1LastVisaExt.setDisable(true);
-                rbScan3LastVisaExt.setDisable(true);
-            }
-        }
+                    rbScan1ArriveStamp.setDisable(true);
+                    rbScan2ArriveStamp.setDisable(true);
+                }
+                if (ps3.isContentVisaScan())
+                {
+                    rbScan3Visa.setSelected(true);
 
-        if (listPassportScans.size() >= 3)
-        {
-            ps3 = listPassportScans.get(2);
-            fieldsScan3.setStatusScan(true);
+                    rbScan1Visa.setDisable(true);
+                    rbScan2Visa.setDisable(true);
+                }
+                if (ps3.isContentLastVisaExt())
+                {
+                    rbScan3LastVisaExt.setSelected(true);
 
-            tfScan3LeftPageNumber.setText(ps3.getPageNumber() + "");
-            if (ps3.isContentArriveStamp())
-            {
-                rbScan3ArriveStamp.setSelected(true);
-
-                rbScan1ArriveStamp.setDisable(true);
-                rbScan2ArriveStamp.setDisable(true);
-            }
-            if (ps3.isContentVisaScan())
-            {
-                rbScan3Visa.setSelected(true);
-
-                rbScan1Visa.setDisable(true);
-                rbScan2Visa.setDisable(true);
-            }
-            if (ps3.isContentLastVisaExt())
-            {
-                rbScan3LastVisaExt.setSelected(true);
-
-                rbScan1LastVisaExt.setDisable(true);
-                rbScan2LastVisaExt.setDisable(true);
+                    rbScan1LastVisaExt.setDisable(true);
+                    rbScan2LastVisaExt.setDisable(true);
+                }
             }
         }
 

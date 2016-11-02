@@ -175,7 +175,6 @@ public class CtrForm
         acroForm.getField("certificateThai").setValue(p.getCertificateThai());
         acroForm.getField("certificateGradYear").setValue("" + Util.convertYearToThai(p.getCertificateGradYear()));
 
-        //acroForm.getField("nameAbbotWatResidingAtThai").setValue(mResidingAt.get
         if (!p.getDhammaStudies().equals(AppConstants.STUDIES_REGULAR))
         {
             ((PDCheckBox) acroForm.getField("buddhistStudiesDhammaPDF")).check();
@@ -400,7 +399,7 @@ public class CtrForm
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
         }
 
-        //acroForm.getField("passportCountry").setValue();
+        acroForm.getField("passportCountry").setValue(p.getPassportCountry());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
         acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
         

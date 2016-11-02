@@ -23,6 +23,8 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @FXML
     private TextField tfpassportNumber;
     @FXML
+    private TextField tfpassportCountry;
+    @FXML
     private TextField tfpassportIssuedAt;
     @FXML
     private DatePicker dpPassportExpiryDate;
@@ -45,6 +47,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     public void fillData(MonasticProfile p)
     {
         tfpassportNumber.setText(p.getPassportNumber());
+        tfpassportCountry.setText(p.getPassportCountry());
         tfpassportIssuedAt.setText(p.getPassportIssuedAt());
         dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
         dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
@@ -57,6 +60,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             bRegister.setDisable(true);
 
             tfpassportNumber.setEditable(false);
+            tfpassportCountry.setEditable(false);
             tfpassportIssuedAt.setEditable(false);
             dpPassportExpiryDate.setDisable(true);
             dpPassportIssueDate.setDisable(true);
@@ -68,6 +72,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             bRegister.setDisable(false);
 
             tfpassportNumber.setEditable(true);
+            tfpassportCountry.setEditable(true);
             tfpassportIssuedAt.setEditable(true);
             dpPassportExpiryDate.setDisable(false);
             dpPassportIssueDate.setDisable(false);
@@ -87,6 +92,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             p.setPassportNumber(null);
+            p.setPassportCountry(null);
             p.setPassportIssuedAt(null);
             p.setPassportExpiryDate(null);
             p.setPassportIssueDate(null);
@@ -119,6 +125,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             p.setPassportNumber(tfpassportNumber.getText());
+            p.setPassportCountry(tfpassportCountry.getText());
             p.setPassportIssuedAt(tfpassportIssuedAt.getText());
             p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
             p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
@@ -141,6 +148,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         return ((dpPassportExpiryDate.getValue() != null)
                 && (dpPassportIssueDate.getValue() != null)
                 && (!tfpassportNumber.getText().isEmpty())
+                && (!tfpassportCountry.getText().isEmpty())
                 && (!tfpassportIssuedAt.getText().isEmpty()));
     }
 }
