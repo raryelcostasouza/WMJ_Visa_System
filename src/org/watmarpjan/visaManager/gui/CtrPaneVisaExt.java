@@ -30,7 +30,8 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneVisaExt extends AbstractChildPaneController implements IFormMonasticProfile {
+public class CtrPaneVisaExt extends AbstractChildPaneController implements IFormMonasticProfile
+{
 
     @FXML
     private TextField tfParentVisaNumber;
@@ -55,11 +56,13 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
 
         //code for inserting a remove button on the last column
         Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> actionCellFactory
-                = new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>() {
+                = new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>()
+        {
             @Override
             public TableCell call(final TableColumn<EntryVisaExt, String> param)
             {
-                final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>() {
+                final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>()
+                {
 
                     final Button btn = new Button("Remove");
 
@@ -74,7 +77,8 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
                         }
                         else
                         {
-                            btn.setOnAction(new EventHandler<ActionEvent>() {
+                            btn.setOnAction(new EventHandler<ActionEvent>()
+                            {
                                 @Override
                                 public void handle(ActionEvent event)
                                 {
@@ -104,40 +108,44 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldVisaExpiry;
 
-        if (p.getVisaNumber() != null)
+        if (p != null)
         {
-            tfParentVisaNumber.setText(p.getVisaNumber());
+            if (p.getVisaNumber() != null)
+            {
+                tfParentVisaNumber.setText(p.getVisaNumber());
 
-            tfExtNumber.setEditable(true);
-            dpExpiryDate.setDisable(false);
+                tfExtNumber.setEditable(true);
+                dpExpiryDate.setDisable(false);
 
-            bRegister.setDisable(false);
+                bRegister.setDisable(false);
+            }
+            else
+            {
+                tfParentVisaNumber.setText("");
+                tfExtNumber.setEditable(false);
+                dpExpiryDate.setDisable(true);
+
+                bRegister.setDisable(true);
+            }
+
+            tfExtNumber.setText("");
+
+            alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdProfile());
+            tvExtensions.getItems().clear();
+            tvExtensions.getItems().addAll(alVisaExtensions);
+
+            //pre-set the expiry date for the extension as 1 year after the original visa expiry date
+            if (p.getVisaExpiryDate() != null)
+            {
+                ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+                dpExpiryDate.setValue(ldVisaExpiry.plusYears(1));
+            }
+            else
+            {
+                dpExpiryDate.setValue(null);
+            }
         }
-        else
-        {
-            tfParentVisaNumber.setText("");
-            tfExtNumber.setEditable(false);
-            dpExpiryDate.setDisable(true);
 
-            bRegister.setDisable(true);
-        }
-
-        tfExtNumber.setText("");
-
-        alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdProfile());
-        tvExtensions.getItems().clear();
-        tvExtensions.getItems().addAll(alVisaExtensions);
-
-        //pre-set the expiry date for the extension as 1 year after the original visa expiry date
-        if (p.getVisaExpiryDate() != null)
-        {
-            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-            dpExpiryDate.setValue(ldVisaExpiry.plusYears(1));
-        }
-        else
-        {
-            dpExpiryDate.setValue(null);
-        }
     }
 
     @FXML
@@ -146,7 +154,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
         MonasticProfile p;
         VisaExtension vExt;
         int operationStatus;
-        
+
         if (validateFields())
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();

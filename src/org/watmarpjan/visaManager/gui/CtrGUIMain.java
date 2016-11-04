@@ -404,14 +404,14 @@ public class CtrGUIMain
         return ctrMain;
     }
 
-
     @FXML
     void actionChangeDateFormat(ActionEvent ae)
     {
         if (ae.getSource().equals(rbDateFormatWestern))
         {
             ctrDatePicker.setISOChronology();
-        } else
+        }
+        else
         {
             ctrDatePicker.setThaiChronology();
         }
@@ -502,7 +502,6 @@ public class CtrGUIMain
         currentPaneController = ctrPanePassport;
 //        Init.MAIN_STAGE.sizeToScene();
         ctrPaneEditSave.actionLock();
-        System.out.println("W: " + Init.MAIN_STAGE.getWidth()+ "| H: " + Init.MAIN_STAGE.getHeight());
         fillMonasticProfileData();
     }
 
@@ -632,10 +631,7 @@ public class CtrGUIMain
 
         if ((currentPaneController != null) && currentPaneController instanceof IFormMonasticProfile)
         {
-            if (p != null)
-            {
-                ((IFormMonasticProfile) currentPaneController).fillData(p);
-            }
+            ((IFormMonasticProfile) currentPaneController).fillData(p);
         }
     }
 
@@ -644,7 +640,8 @@ public class CtrGUIMain
         if (currentPaneController instanceof IEditableGUIForm)
         {
             return (IEditableGUIForm) currentPaneController;
-        } else
+        }
+        else
         {
             return null;
         }

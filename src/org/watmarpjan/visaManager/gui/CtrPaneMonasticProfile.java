@@ -189,110 +189,120 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         loadContentsCBCertificate();
         loadContentsCBWat();
 
-        tfNickname.setText(p.getNickname());
-
-        loadProfilePhoto(p.getNickname());
-
-        tfName.setText(p.getMonasticName());
-        tfMiddleName.setText(p.getMiddleName());
-        tfLastName.setText(p.getLastName());
-
-        tfMother.setText(p.getMotherName());
-        tfFather.setText(p.getFatherName());
-
-        tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
-        tfBirthCountry.setText(p.getBirthCountry());
-        tfBirthPlace.setText(p.getBirthPlace());
-
-        dpBirthDate.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
-        tfAge.setText(ProfileUtil.getStrAge(p.getBirthDate()) + "");
-        tfBirthWeekday.setText(ProfileUtil.getShortenedBirthWeekDay(p.getBirthDate()));
-
-        tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
-        tfNationality.setText(p.getNationality());
-        tfEthnicity.setText(p.getEthnicity());
-
-        cbOccupation.setValue(p.getOccupationEnglish());
-        cbOccupationThai.setValue(p.getOccupationThai());
-        tfSchool.setText(p.getSchool());
-        cbCertificate.setValue(p.getCertificateEnglish());
-        cbCertificateThai.setValue(p.getCertificateThai());
-        if (p.getCertificateDuration() != null)
+        loadProfilePhoto(p);
+        if (p != null)
         {
-            tfDuration.setText(p.getCertificateDuration() + "");
-        }
-        else
-        {
-            tfDuration.setText("");
-        }
-        
-        if (p.getCertificateGradYear() != null)
-        {
-            tfGraduationYear.setText(p.getCertificateGradYear() + "");
-        }
-        else
-        {
-            tfGraduationYear.setText("");
-        }
-        
+            tfNickname.setText(p.getNickname());
 
-        if (p.getMonasteryResidingAt() != null)
-        {
-            cbResidingAt.setValue(p.getMonasteryResidingAt().getMonasteryName());
-        }
-        else
-        {
-            cbResidingAt.setValue(null);
+            tfName.setText(p.getMonasticName());
+            tfMiddleName.setText(p.getMiddleName());
+            tfLastName.setText(p.getLastName());
+
+            tfMother.setText(p.getMotherName());
+            tfFather.setText(p.getFatherName());
+
+            tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
+            tfBirthCountry.setText(p.getBirthCountry());
+            tfBirthPlace.setText(p.getBirthPlace());
+
+            dpBirthDate.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
+            tfAge.setText(ProfileUtil.getStrAge(p.getBirthDate()) + "");
+            tfBirthWeekday.setText(ProfileUtil.getShortenedBirthWeekDay(p.getBirthDate()));
+
+            tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
+            tfNationality.setText(p.getNationality());
+            tfEthnicity.setText(p.getEthnicity());
+
+            cbOccupation.setValue(p.getOccupationEnglish());
+            cbOccupationThai.setValue(p.getOccupationThai());
+            tfSchool.setText(p.getSchool());
+            cbCertificate.setValue(p.getCertificateEnglish());
+            cbCertificateThai.setValue(p.getCertificateThai());
+            if (p.getCertificateDuration() != null)
+            {
+                tfDuration.setText(p.getCertificateDuration() + "");
+            }
+            else
+            {
+                tfDuration.setText("");
+            }
+
+            if (p.getCertificateGradYear() != null)
+            {
+                tfGraduationYear.setText(p.getCertificateGradYear() + "");
+            }
+            else
+            {
+                tfGraduationYear.setText("");
+            }
+
+            if (p.getMonasteryResidingAt() != null)
+            {
+                cbResidingAt.setValue(p.getMonasteryResidingAt().getMonasteryName());
+            }
+            else
+            {
+                cbResidingAt.setValue(null);
+            }
+
+            if (p.getMonasteryAdviserToCome() != null)
+            {
+                cbAdvisorWat.setValue(p.getMonasteryAdviserToCome().getMonasteryName());
+            }
+            else
+            {
+                cbAdvisorWat.setValue(null);
+            }
+
+            tfAdviserToCome.setText(p.getNameAdviserToCome());
+
+            switch (p.getDhammaStudies())
+            {
+                case AppConstants.STUDIES_NAKTAM_TRI:
+                    rbDhammaStudiesNaktamTri.setSelected(true);
+                    break;
+                case AppConstants.STUDIES_NAKTAM_TOH:
+                    rbDhammaStudiesNaktamToh.setSelected(true);
+                    break;
+                case AppConstants.STUDIES_NAKTAM_EK:
+                    rbDhammaStudiesNaktamEk.setSelected(true);
+                    break;
+                default:
+                    rbDhammaStudiesRegular.setSelected(true);
+                    break;
+            }
+
+            tfEmail.setText(p.getEmail());
+            taEmergencyContact.setText(p.getEmergencyContact());
+            switch (p.getStatus())
+            {
+                case AppConstants.STATUS_THAILAND:
+                    rbInThailand.setSelected(true);
+                    break;
+                case AppConstants.STATUS_ABROAD:
+                    rbAbroad.setSelected(true);
+                    break;
+                default:
+                    rbInactive.setSelected(true);
+                    break;
+            }
         }
 
-        if (p.getMonasteryAdviserToCome() != null)
-        {
-            cbAdvisorWat.setValue(p.getMonasteryAdviserToCome().getMonasteryName());
-        }
-        else
-        {
-            cbAdvisorWat.setValue(null);
-        }
-
-        tfAdviserToCome.setText(p.getNameAdviserToCome());
-
-        switch (p.getDhammaStudies())
-        {
-            case AppConstants.STUDIES_NAKTAM_TRI:
-                rbDhammaStudiesNaktamTri.setSelected(true);
-                break;
-            case AppConstants.STUDIES_NAKTAM_TOH:
-                rbDhammaStudiesNaktamToh.setSelected(true);
-                break;
-            case AppConstants.STUDIES_NAKTAM_EK:
-                rbDhammaStudiesNaktamEk.setSelected(true);
-                break;
-            default:
-                rbDhammaStudiesRegular.setSelected(true);
-                break;
-        }
-
-        tfEmail.setText(p.getEmail());
-        taEmergencyContact.setText(p.getEmergencyContact());
-        switch (p.getStatus())
-        {
-            case AppConstants.STATUS_THAILAND:
-                rbInThailand.setSelected(true);
-                break;
-            case AppConstants.STATUS_ABROAD:
-                rbAbroad.setSelected(true);
-                break;
-            default:
-                rbInactive.setSelected(true);
-                break;
-        }
     }
 
-    private void loadProfilePhoto(String nickName)
+    private void loadProfilePhoto(MonasticProfile p)
     {
         File fileProfilePhoto;
 
-        fileProfilePhoto = AppFiles.getProfilePhoto(nickName);
+        if (p != null)
+        {
+            fileProfilePhoto = AppFiles.getProfilePhoto(p.getNickname());
+        }
+        else
+        {
+            fileProfilePhoto = null;
+        }
+        
 
         ImgUtil.loadImageView(ivProfilePhoto, ImgUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
     }
@@ -311,7 +321,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if (fSource != null)
         {
             CtrFileOperation.copyOperation(fSource, fDestination);
-            loadProfilePhoto(p.getNickname());
+            loadProfilePhoto(p);
         }
 
     }
@@ -384,6 +394,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public void actionLockEdit()
     {
+        bChangeProfilePhoto.setDisable(true);
         tfNickname.setEditable(false);
         tfName.setEditable(false);
         tfMiddleName.setEditable(false);
@@ -430,6 +441,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public void actionUnlockEdit()
     {
+        bChangeProfilePhoto.setDisable(false);
         tfNickname.setEditable(true);
         tfName.setEditable(true);
         tfMiddleName.setEditable(true);
@@ -512,8 +524,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         p.setCertificateThai(cbCertificateThai.getValue());
 
         //if the duration changed and the text field is not empty
-        if ((!tfDuration.getText().equals(p.getCertificateDuration()) && 
-                (!tfDuration.getText().equals(""))))
+        if ((!tfDuration.getText().equals(p.getCertificateDuration())
+                && (!tfDuration.getText().equals(""))))
         {
             try
             {
@@ -529,8 +541,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         }
 
         //if the graduation year changed and the text field is not empty
-        if ((!tfGraduationYear.getText().equals(p.getCertificateGradYear()))&&
-                (!tfGraduationYear.getText().equals("")))
+        if ((!tfGraduationYear.getText().equals(p.getCertificateGradYear()))
+                && (!tfGraduationYear.getText().equals("")))
         {
             try
             {

@@ -244,36 +244,38 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         Monastery monastery;
 
         fillData();
-        fillDataReceipts(p);
-
-        //dpValidDatesNoticeOnline.setValue(Util.convertDateToLocalDate(p.getNext90dayNotice()));
-        tfPassportNumber.setText(p.getPassportNumber());
-        tfSurname.setText(p.getLastName());
-        tfMiddleName.setText(p.getMiddleName());
-        tfGivenName.setText(p.getMonasticName());
-        dpDateOfBirth.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
-        tfNationality.setText(p.getNationality());
-
-        tfArrivalTm6Number.setText(p.getArrivalCardNumber());
-        dpArrivalDate.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
-        rbTravelBy.setText(p.getArrivalTravelBy());
-
-        if (p.getMonasteryResidingAt() != null)
+        if (p != null)
         {
-            monastery = p.getMonasteryResidingAt();
-            tfBuildingName.setText(monastery.getMonasteryName());
-            tfAddrNumber.setText(monastery.getAddrNumber());
-            tfAddrSoiRoad.setText(monastery.getAddrRoad());
-            tfAddrStateProvince.setText(monastery.getAddrJangwat());
-            tfAddrCityAmphur.setText(monastery.getAddrAmpher());
-            tfAddrDistrictTambon.setText(monastery.getAddrTambon());
-        }
+            fillDataReceipts(p);
 
-        for (TextField tf : alTextFields)
-        {
-            if (tf.getText() != null)
+            tfPassportNumber.setText(p.getPassportNumber());
+            tfSurname.setText(p.getLastName());
+            tfMiddleName.setText(p.getMiddleName());
+            tfGivenName.setText(p.getMonasticName());
+            dpDateOfBirth.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
+            tfNationality.setText(p.getNationality());
+
+            tfArrivalTm6Number.setText(p.getArrivalCardNumber());
+            dpArrivalDate.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
+            rbTravelBy.setText(p.getArrivalTravelBy());
+
+            if (p.getMonasteryResidingAt() != null)
             {
-                tf.setText(tf.getText().toUpperCase(Locale.ENGLISH));
+                monastery = p.getMonasteryResidingAt();
+                tfBuildingName.setText(monastery.getMonasteryName());
+                tfAddrNumber.setText(monastery.getAddrNumber());
+                tfAddrSoiRoad.setText(monastery.getAddrRoad());
+                tfAddrStateProvince.setText(monastery.getAddrJangwat());
+                tfAddrCityAmphur.setText(monastery.getAddrAmpher());
+                tfAddrDistrictTambon.setText(monastery.getAddrTambon());
+            }
+
+            for (TextField tf : alTextFields)
+            {
+                if (tf.getText() != null)
+                {
+                    tf.setText(tf.getText().toUpperCase(Locale.ENGLISH));
+                }
             }
         }
     }

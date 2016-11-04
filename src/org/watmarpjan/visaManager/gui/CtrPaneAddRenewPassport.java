@@ -18,7 +18,8 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile {
+public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile
+{
 
     @FXML
     private TextField tfpassportNumber;
@@ -46,37 +47,41 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @Override
     public void fillData(MonasticProfile p)
     {
-        tfpassportNumber.setText(p.getPassportNumber());
-        tfpassportCountry.setText(p.getPassportCountry());
-        tfpassportIssuedAt.setText(p.getPassportIssuedAt());
-        dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
-        dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
-
-        //if there is a passport registered already
-        if (p.getPassportNumber() != null)
+        if (p != null)
         {
-            //blocks edition and enables archive button
-            bClear.setDisable(false);
-            bRegister.setDisable(true);
+            tfpassportNumber.setText(p.getPassportNumber());
+            tfpassportCountry.setText(p.getPassportCountry());
+            tfpassportIssuedAt.setText(p.getPassportIssuedAt());
+            dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
+            dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
 
-            tfpassportNumber.setEditable(false);
-            tfpassportCountry.setEditable(false);
-            tfpassportIssuedAt.setEditable(false);
-            dpPassportExpiryDate.setDisable(true);
-            dpPassportIssueDate.setDisable(true);
-        }
-        else
-        {
-            //unlocks edition and enables select scan button
-            bClear.setDisable(true);
-            bRegister.setDisable(false);
+            //if there is a passport registered already
+            if (p.getPassportNumber() != null)
+            {
+                //blocks edition and enables archive button
+                bClear.setDisable(false);
+                bRegister.setDisable(true);
 
-            tfpassportNumber.setEditable(true);
-            tfpassportCountry.setEditable(true);
-            tfpassportIssuedAt.setEditable(true);
-            dpPassportExpiryDate.setDisable(false);
-            dpPassportIssueDate.setDisable(false);
+                tfpassportNumber.setEditable(false);
+                tfpassportCountry.setEditable(false);
+                tfpassportIssuedAt.setEditable(false);
+                dpPassportExpiryDate.setDisable(true);
+                dpPassportIssueDate.setDisable(true);
+            }
+            else
+            {
+                //unlocks edition and enables select scan button
+                bClear.setDisable(true);
+                bRegister.setDisable(false);
+
+                tfpassportNumber.setEditable(true);
+                tfpassportCountry.setEditable(true);
+                tfpassportIssuedAt.setEditable(true);
+                dpPassportExpiryDate.setDisable(false);
+                dpPassportIssueDate.setDisable(false);
+            }
         }
+
     }
 
     @FXML
@@ -96,7 +101,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             p.setPassportIssuedAt(null);
             p.setPassportExpiryDate(null);
             p.setPassportIssueDate(null);
-            
+
             //archive passport scans
             if (p.getPassportScanSet() != null)
             {
@@ -105,11 +110,11 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 //clears the DB entries for the Extra Scans
                 ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
             }
-            
+
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (opStatus == 0)
             {
-                 CtrAlertDialog.infoDialog("Cleared successfully", "The previous passport info was cleared successfully.");
+                CtrAlertDialog.infoDialog("Cleared successfully", "The previous passport info was cleared successfully.");
             }
         }
     }

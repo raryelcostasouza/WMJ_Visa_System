@@ -268,79 +268,82 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
 
-        tfpassportNumber.setText(p.getPassportNumber());
-        tfpassportCountry.setText(p.getPassportCountry());
-        tfpassportIssuedAt.setText(p.getPassportIssuedAt());
-
-        fillDataContentScans(p);
         loadIMGPreviews(p);
-
-        if (p.getPassportExpiryDate() != null)
+        if (p != null)
         {
-            ldPassportExp = Util.convertDateToLocalDate(p.getPassportExpiryDate());
-            dpPassportExpiryDate.setValue(ldPassportExp);
-        }
-        else
-        {
-            dpPassportExpiryDate.setValue(null);
-        }
+            tfpassportNumber.setText(p.getPassportNumber());
+            tfpassportCountry.setText(p.getPassportCountry());
+            tfpassportIssuedAt.setText(p.getPassportIssuedAt());
 
-        if (p.getPassportIssueDate() != null)
-        {
-            ldPassptIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
-            dpPassportIssueDate.setValue(ldPassptIssue);
-        }
-        else
-        {
-            dpPassportIssueDate.setValue(null);
-        }
+            fillDataContentScans(p);
 
-        if (p.getFirstEntryDate() != null)
-        {
-            ldFirstEntry = Util.convertDateToLocalDate(p.getFirstEntryDate());
-            dpFirstEntryDate.setValue(ldFirstEntry);
+            if (p.getPassportExpiryDate() != null)
+            {
+                ldPassportExp = Util.convertDateToLocalDate(p.getPassportExpiryDate());
+                dpPassportExpiryDate.setValue(ldPassportExp);
+            }
+            else
+            {
+                dpPassportExpiryDate.setValue(null);
+            }
+
+            if (p.getPassportIssueDate() != null)
+            {
+                ldPassptIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
+                dpPassportIssueDate.setValue(ldPassptIssue);
+            }
+            else
+            {
+                dpPassportIssueDate.setValue(null);
+            }
+
+            if (p.getFirstEntryDate() != null)
+            {
+                ldFirstEntry = Util.convertDateToLocalDate(p.getFirstEntryDate());
+                dpFirstEntryDate.setValue(ldFirstEntry);
+            }
+            else
+            {
+                dpFirstEntryDate.setValue(null);
+            }
+
+            tfVisaNumber.setText(p.getVisaNumber());
+            cbVisaType.setValue(p.getVisaType());
+
+            if (p.getVisaExpiryDate() != null)
+            {
+                ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+                dpVisaExpiryDate.setValue(ldVisaExp);
+            }
+            else
+            {
+                dpVisaExpiryDate.setValue(null);
+            }
+
+            if (p.getNext90DayNotice() != null)
+            {
+                ldNext90day = Util.convertDateToLocalDate(p.getNext90DayNotice());
+                dpNext90dayNotice.setValue(ldNext90day);
+            }
+            else
+            {
+                dpNext90dayNotice.setValue(null);
+            }
+
+            tfArrivalTMNumber.setText(p.getArrivalCardNumber());
+            tfPortOfEntry.setText(p.getArrivalPortOfEntry());
+            tfTravelFrom.setText(p.getArrivalTravelFrom());
+            cbTravelBy.setValue(p.getArrivalTravelBy());
+
+            ldLastEntry = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
+            dpLastEntry.setValue(ldLastEntry);
+
+            alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdProfile());
+            tvExtensions.getItems().clear();
+            tvExtensions.getItems().addAll(alVisaExtensions);
+
+            tfNVisaExt.setText("" + alVisaExtensions.size());
         }
-        else
-        {
-            dpFirstEntryDate.setValue(null);
-        }
-
-        tfVisaNumber.setText(p.getVisaNumber());
-        cbVisaType.setValue(p.getVisaType());
-
-        if (p.getVisaExpiryDate() != null)
-        {
-            ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-            dpVisaExpiryDate.setValue(ldVisaExp);
-        }
-        else
-        {
-            dpVisaExpiryDate.setValue(null);
-        }
-
-        if (p.getNext90DayNotice() != null)
-        {
-            ldNext90day = Util.convertDateToLocalDate(p.getNext90DayNotice());
-            dpNext90dayNotice.setValue(ldNext90day);
-        }
-        else
-        {
-            dpNext90dayNotice.setValue(null);
-        }
-
-        tfArrivalTMNumber.setText(p.getArrivalCardNumber());
-        tfPortOfEntry.setText(p.getArrivalPortOfEntry());
-        tfTravelFrom.setText(p.getArrivalTravelFrom());
-        cbTravelBy.setValue(p.getArrivalTravelBy());
-
-        ldLastEntry = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
-        dpLastEntry.setValue(ldLastEntry);
-
-        alVisaExtensions = ctrGUIMain.getCtrMain().getCtrVisa().loadListExtensions(p.getIdProfile());
-        tvExtensions.getItems().clear();
-        tvExtensions.getItems().addAll(alVisaExtensions);
-
-        tfNVisaExt.setText("" + alVisaExtensions.size());
 
     }
 
@@ -493,33 +496,49 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         PassportScan ps1 = null, ps2 = null, ps3 = null;
         ArrayList<PassportScan> listPassportScans;
 
-        fPassportScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
-        fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
+        if (p != null)
+        {
+            fPassportScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
+            fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
 
-        listPassportScans = new ArrayList();
-        listPassportScans.addAll(p.getPassportScanSet());
-        if (listPassportScans.size() >= 1)
-        {
-            ps1 = listPassportScans.get(0);
-        }
-        if (listPassportScans.size() >= 2)
-        {
-            ps2 = listPassportScans.get(1);
-        }
-        if (listPassportScans.size() >= 3)
-        {
-            ps3 = listPassportScans.get(2);
-        }
+            if (p.getPassportScanSet() != null)
+            {
+                listPassportScans = new ArrayList();
+                listPassportScans.addAll(p.getPassportScanSet());
+                if (listPassportScans.size() >= 1)
+                {
+                    ps1 = listPassportScans.get(0);
+                }
+                if (listPassportScans.size() >= 2)
+                {
+                    ps2 = listPassportScans.get(1);
+                }
+                if (listPassportScans.size() >= 3)
+                {
+                    ps3 = listPassportScans.get(2);
+                }
 
-        fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
-        fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
-        fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
+                fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
+                fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
+                fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
+
+            }
+            else
+            {
+                fScan1 = fScan2 = fScan3 = null;
+            }
+        }
+        else
+        {
+            fPassportScan = fDepartureCard = fScan1 = fScan2 = fScan3 = null;
+        }
 
         ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
         ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fDepartureCard);
         ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_PASSPORT, fScan1);
         ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_PASSPORT, fScan2);
         ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_PASSPORT, fScan3);
+
     }
 
     @FXML
@@ -797,14 +816,12 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     public void actionLockEdit()
     {
         dpFirstEntryDate.setDisable(true);
-        dpNext90dayNotice.setDisable(true);
     }
 
     @Override
     public void actionUnlockEdit()
     {
         dpFirstEntryDate.setDisable(false);
-        dpNext90dayNotice.setDisable(false);
     }
 
     @Override
@@ -816,19 +833,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        //if the passport number changed need to update the filenames for the scans
-        //if (!p.getPassportNumber().equals(tfpassportNumber.getText()))
-        //{
-        //    renamePassportScanFiles(p.getIdprofile(), p.getPassportNumber(), tfpassportNumber.getText());
-        //}
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
-        p.setVisaNumber(tfVisaNumber.getText());
-        p.setVisaType(cbVisaType.getValue());
-
-        p.setVisaExpiryDate(Util.convertLocalDateToDate(dpVisaExpiryDate.getValue()));
-        p.setNext90DayNotice(Util.convertLocalDateToDate(dpNext90dayNotice.getValue()));
-        p.setArrivalLastEntryDate(Util.convertLocalDateToDate(dpLastEntry.getValue()));
-
         operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
 
         if (operationStatus == 0)

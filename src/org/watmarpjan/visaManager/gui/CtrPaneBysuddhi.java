@@ -184,9 +184,9 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         loadContentsCBWat();
         loadContentsCBUpajjhaya();
 
+        loadIMGPreviews(p);
         if (p != null)
         {
-            loadIMGPreviews(p.getNickname());
             tfPaliName.setText(p.getPaliNameEnglish());
             tfPaliNameThai.setText(p.getPaliNameThai());
 
@@ -199,7 +199,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (issueDate != null)
             {
                 dpIssueDate.setValue(issueDate);
-            } else
+            }
+            else
             {
                 dpIssueDate.setValue(null);
             }
@@ -207,7 +208,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (pahkahwOrd != null)
             {
                 dpPahkahwOrd.setValue(pahkahwOrd);
-            } else
+            }
+            else
             {
                 dpPahkahwOrd.setValue(null);
             }
@@ -215,7 +217,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (samaneraOrd != null)
             {
                 dpSamaneraOrd.setValue(samaneraOrd);
-            } else
+            }
+            else
             {
                 dpSamaneraOrd.setValue(null);
             }
@@ -223,7 +226,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (monkOrd != null)
             {
                 dpBhikkhuOrd.setValue(monkOrd);
-            } else
+            }
+            else
             {
                 dpBhikkhuOrd.setValue(null);
             }
@@ -231,7 +235,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (p.getUpajjhaya() != null)
             {
                 cbUpajjhaya.setValue(p.getUpajjhaya().getUpajjhayaName());
-            } else
+            }
+            else
             {
                 cbUpajjhaya.setValue(null);
             }
@@ -239,7 +244,8 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             if (p.getMonasteryOrdainedAt() != null)
             {
                 cbOrdainedAt.setValue(p.getMonasteryOrdainedAt().getMonasteryName());
-            } else
+            }
+            else
             {
                 cbOrdainedAt.setValue(null);
             }
@@ -253,14 +259,23 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
 
-    private void loadIMGPreviews(String nickName)
+    private void loadIMGPreviews(MonasticProfile p)
     {
         File f1, f2, f3, f4;
+        String nickname;
 
-        f1 = AppFiles.getScanBysuddhi(nickName, 1);
-        f2 = AppFiles.getScanBysuddhi(nickName, 2);
-        f3 = AppFiles.getScanBysuddhi(nickName, 3);
-        f4 = AppFiles.getScanBysuddhi(nickName, 4);
+        if (p != null)
+        {
+            nickname = p.getNickname();
+            f1 = AppFiles.getScanBysuddhi(nickname, 1);
+            f2 = AppFiles.getScanBysuddhi(nickname, 2);
+            f3 = AppFiles.getScanBysuddhi(nickname, 3);
+            f4 = AppFiles.getScanBysuddhi(nickname, 4);
+        }
+        else
+        {
+            f1 = f2 = f3 = f4 = null;
+        }
 
         ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_BYSUDDHI, f1);
         ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_BYSUDDHI, f2);
@@ -279,13 +294,16 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         if (ae.getSource().equals(b1))
         {
             fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 1);
-        } else if (ae.getSource().equals(b2))
+        }
+        else if (ae.getSource().equals(b2))
         {
             fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 2);
-        } else if (ae.getSource().equals(b3))
+        }
+        else if (ae.getSource().equals(b3))
         {
             fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 3);
-        } else
+        }
+        else
         {
             fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 4);
         }
@@ -294,7 +312,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         if (fSource != null)
         {
             CtrFileOperation.copyOperation(fSource, fDestination);
-            loadIMGPreviews(p.getNickname());
+            loadIMGPreviews(p);
         }
 
     }
@@ -309,15 +327,18 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         if (me.getSource().equals(ivScan1))
         {
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 1);
-        } else if (me.getSource().equals(ivScan2))
+        }
+        else if (me.getSource().equals(ivScan2))
         {
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 2);
 
-        } else if (me.getSource().equals(ivScan3))
+        }
+        else if (me.getSource().equals(ivScan3))
         {
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 3);
 
-        } else
+        }
+        else
         {
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 4);
         }

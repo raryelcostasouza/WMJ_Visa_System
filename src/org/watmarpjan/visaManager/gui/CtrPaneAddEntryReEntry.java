@@ -22,7 +22,8 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implements IFormMonasticProfile {
+public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implements IFormMonasticProfile
+{
 
     @FXML
     private TextField tfTM6Number;
@@ -55,36 +56,38 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     @Override
     public void fillData(MonasticProfile p)
     {
-        tfTM6Number.setText(p.getArrivalCardNumber());
-        dpLastEntry.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
-        tfTravelFrom.setText(p.getArrivalTravelFrom());
-        cbTravelBy.setValue(p.getArrivalTravelBy());
-        tfPortOfEntry.setText(p.getArrivalPortOfEntry());
-
-        if (p.getArrivalCardNumber() != null)
+        if (p != null)
         {
-            //blocks edition and enables archive button
-            bClear.setDisable(false);
-            bRegister.setDisable(true);
+            tfTM6Number.setText(p.getArrivalCardNumber());
+            dpLastEntry.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
+            tfTravelFrom.setText(p.getArrivalTravelFrom());
+            cbTravelBy.setValue(p.getArrivalTravelBy());
+            tfPortOfEntry.setText(p.getArrivalPortOfEntry());
 
-            tfTM6Number.setEditable(false);
-            dpLastEntry.setDisable(true);
-            tfTravelFrom.setEditable(false);
-            cbTravelBy.setDisable(true);
-            tfPortOfEntry.setEditable(false);
+            if (p.getArrivalCardNumber() != null)
+            {
+                //blocks edition and enables archive button
+                bClear.setDisable(false);
+                bRegister.setDisable(true);
+
+                tfTM6Number.setEditable(false);
+                dpLastEntry.setDisable(true);
+                tfTravelFrom.setEditable(false);
+                cbTravelBy.setDisable(true);
+                tfPortOfEntry.setEditable(false);
+            }
+            else
+            {
+                bClear.setDisable(true);
+                bRegister.setDisable(false);
+
+                tfTM6Number.setEditable(true);
+                dpLastEntry.setDisable(false);
+                tfTravelFrom.setEditable(true);
+                cbTravelBy.setDisable(false);
+                tfPortOfEntry.setEditable(true);
+            }
         }
-        else
-        {
-            bClear.setDisable(true);
-            bRegister.setDisable(false);
-
-            tfTM6Number.setEditable(true);
-            dpLastEntry.setDisable(false);
-            tfTravelFrom.setEditable(true);
-            cbTravelBy.setDisable(false);
-            tfPortOfEntry.setEditable(true);
-        }
-
     }
 
     @FXML
@@ -148,7 +151,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
                 && (!tfTravelFrom.getText().isEmpty())
                 && (cbTravelBy.getValue() != null);
     }
-    
+
     @FXML
     void actionPreviewFormTM8Reentry(ActionEvent ae)
     {
@@ -156,7 +159,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
     }
-    
+
     @FXML
     void actionPrintFormTM8Reentry(ActionEvent ae)
     {

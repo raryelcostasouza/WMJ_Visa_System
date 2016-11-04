@@ -19,7 +19,8 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements IFormMonasticProfile {
+public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements IFormMonasticProfile
+{
 
     @FXML
     private TextField tfVisaNumber;
@@ -99,31 +100,34 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     @Override
     public void fillData(MonasticProfile p)
     {
-        tfVisaNumber.setText(p.getVisaNumber());
-        cbVisaType.setValue(p.getVisaType());
-        dpVisaExpiryDate.setValue(Util.convertDateToLocalDate(p.getVisaExpiryDate()));
-        dpNext90DayNotice.setValue(Util.convertDateToLocalDate(p.getNext90DayNotice()));
-
-        if (p.getVisaNumber() != null)
+        if (p != null)
         {
-            bClear.setDisable(false);
-            bRegister.setDisable(true);
+            tfVisaNumber.setText(p.getVisaNumber());
+            cbVisaType.setValue(p.getVisaType());
+            dpVisaExpiryDate.setValue(Util.convertDateToLocalDate(p.getVisaExpiryDate()));
+            dpNext90DayNotice.setValue(Util.convertDateToLocalDate(p.getNext90DayNotice()));
 
-            tfVisaNumber.setEditable(false);
-            cbVisaType.setDisable(true);
-            dpVisaExpiryDate.setDisable(true);
-            dpNext90DayNotice.setDisable(true);
+            if (p.getVisaNumber() != null)
+            {
+                bClear.setDisable(false);
+                bRegister.setDisable(true);
 
-        }
-        else
-        {
-            bClear.setDisable(true);
-            bRegister.setDisable(false);
+                tfVisaNumber.setEditable(false);
+                cbVisaType.setDisable(true);
+                dpVisaExpiryDate.setDisable(true);
+                dpNext90DayNotice.setDisable(true);
 
-            tfVisaNumber.setEditable(true);
-            cbVisaType.setDisable(false);
-            dpVisaExpiryDate.setDisable(false);
-            dpNext90DayNotice.setDisable(false);
+            }
+            else
+            {
+                bClear.setDisable(true);
+                bRegister.setDisable(false);
+
+                tfVisaNumber.setEditable(true);
+                cbVisaType.setDisable(false);
+                dpVisaExpiryDate.setDisable(false);
+                dpNext90DayNotice.setDisable(false);
+            }
         }
     }
 
