@@ -29,7 +29,7 @@
                                 <Image url="@../../../../../appData/img/default/profile.png" />
                             </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" onAction="#actionChooseProfilePhoto" text="Change profile photo" />
+                        <Button fx:id="bChangeProfilePhoto" disable="true" mnemonicParsing="false" onAction="#actionChooseProfilePhoto" text="Change profile photo" />
                     </children>
                 </VBox>
                 <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Name/Family" HBox.hgrow="ALWAYS">
@@ -149,14 +149,14 @@
                   <content>
                       <HBox alignment="CENTER">
                           <children>
-                              <RadioButton fx:id="rbDhammaStudiesRegular" mnemonicParsing="false" selected="true" text="Regular">
+                              <RadioButton fx:id="rbDhammaStudiesRegular" disable="true" mnemonicParsing="false" selected="true" text="Regular">
                                   <toggleGroup>
                                       <ToggleGroup fx:id="tgPrawatAnswers" />
                                   </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="rbDhammaStudiesNaktamTri" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
-                              <RadioButton fx:id="rbDhammaStudiesNaktamToh" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
-                              <RadioButton fx:id="rbDhammaStudiesNaktamEk" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
+                              <RadioButton fx:id="rbDhammaStudiesNaktamTri" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
+                              <RadioButton fx:id="rbDhammaStudiesNaktamToh" disable="true" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
+                              <RadioButton fx:id="rbDhammaStudiesNaktamEk" disable="true" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
                           </children>
                       </HBox>
                   </content>
