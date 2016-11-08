@@ -5,11 +5,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-
-<HBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneMonasticSelection">
+<HBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneMonasticSelection">
     <children>
         <Label text="Selected Monastic: " />
         <ComboBox fx:id="cbSelectedMonastic" onAction="#listenerCbSelectedMonastic" prefHeight="25.0" prefWidth="209.0" />
-        <CheckBox fx:id="cbShowOnlyActive" mnemonicParsing="false" onAction="#listenerCBShowOnlyActive" text="Show only active" />
+        <CheckBox fx:id="cbShowOnlyActive" mnemonicParsing="false" onAction="#listenerCBShowOnlyActive" selected="true" text="Show only active" />
     </children>
 </HBox>
