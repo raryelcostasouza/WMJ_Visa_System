@@ -65,22 +65,43 @@ public class FieldsPaneScanContent
         return rbLastVisaExt;
     }
 
-    public void reset()
+    public void reset(boolean lockStatus)
     {
-        tfLeftPageNumber.setEditable(true);
-        rbArriveStamp.setDisable(false);
-        rbVisa.setDisable(false);
-        rbLastVisaExt.setDisable(false);
+        if (!lockStatus)
+        {
+            tfLeftPageNumber.setEditable(true);
+            rbArriveStamp.setDisable(false);
+            rbVisa.setDisable(false);
+            rbLastVisaExt.setDisable(false);
 
-        tfLeftPageNumber.setText("");
-        tfRightPageNumber.setText("");
+            tfLeftPageNumber.setText("");
+            tfRightPageNumber.setText("");
 
-        rbArriveStamp.setSelected(false);
-        rbVisa.setSelected(false);
-        rbLastVisaExt.setSelected(false);
+            rbArriveStamp.setSelected(false);
+            rbVisa.setSelected(false);
+            rbLastVisaExt.setSelected(false);
 
-        bSelectFile.setDisable(false);
-        bArchive.setDisable(true);
+            bSelectFile.setDisable(false);
+            bArchive.setDisable(true);
+        }
+        else
+        {
+            tfLeftPageNumber.setEditable(false);
+            rbArriveStamp.setDisable(true);
+            rbVisa.setDisable(true);
+            rbLastVisaExt.setDisable(true);
+
+            tfLeftPageNumber.setText("");
+            tfRightPageNumber.setText("");
+
+            rbArriveStamp.setDisable(true);
+            rbVisa.setDisable(true);
+            rbLastVisaExt.setDisable(true);
+
+            bSelectFile.setDisable(true);
+            bArchive.setDisable(true);
+        }
+
     }
 
     public void setStatusScan(boolean haveContent)
@@ -97,7 +118,8 @@ public class FieldsPaneScanContent
 
             tfLeftPageNumber.setEditable(false);
 
-        } else
+        }
+        else
         {
 
         }
