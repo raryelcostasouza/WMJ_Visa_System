@@ -18,12 +18,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -47,10 +50,37 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     @FXML
     private Button bRegister;
 
+    
+    @FXML
+    private Button bPreview1;
+    @FXML
+    private Button bPreview2;
+    @FXML
+    private Button bPreview3;
+    @FXML
+    private Button bPreview4;
+    @FXML
+    private Button bPreview5;
+    @FXML
+    private Button bPreview6;
+    @FXML
+    private Button bPreview7;
+
+    
     @Override
     public void init()
     {
         TableColumn<EntryVisaExt, String> tc;
+        String strPathIconPDF;
+        
+        strPathIconPDF = AppPaths.getPathToIconSubfolder().resolve("pdf.png").toUri().toString();
+        bPreview1.setGraphic(new ImageView(strPathIconPDF));
+        bPreview2.setGraphic(new ImageView(strPathIconPDF));
+        bPreview3.setGraphic(new ImageView(strPathIconPDF));
+        bPreview4.setGraphic(new ImageView(strPathIconPDF));
+        bPreview5.setGraphic(new ImageView(strPathIconPDF));
+        bPreview6.setGraphic(new ImageView(strPathIconPDF));
+        bPreview7.setGraphic(new ImageView(strPathIconPDF));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 
@@ -106,7 +136,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     public void fillData(MonasticProfile p)
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
-        LocalDate ldVisaExpiry;
+        LocalDate ldExpVisa, ldExpLastExtension;
 
         if (p != null)
         {
@@ -134,15 +164,18 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
             tvExtensions.getItems().clear();
             tvExtensions.getItems().addAll(alVisaExtensions);
 
-            //pre-set the expiry date for the extension as 1 year after the original visa expiry date
-            if (p.getVisaExpiryDate() != null)
+            //pre-set the expiry date for the next extension
+            //1) If the visa has extensions -> 1 Year after the last extension expiry date
+            ldExpLastExtension = ProfileUtil.getLastExtensionExpiryDate(p);
+            if (ldExpLastExtension != null)
             {
-                ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-                dpExpiryDate.setValue(ldVisaExpiry.plusYears(1));
+                dpExpiryDate.setValue(ldExpLastExtension.plusYears(1));
             }
+            //2) If the visa has not been extended yet -> 1 Year after the visa expiry
             else
             {
-                dpExpiryDate.setValue(null);
+                ldExpVisa = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+                dpExpiryDate.setValue(ldExpVisa.plusYears(1));
             }
         }
 
