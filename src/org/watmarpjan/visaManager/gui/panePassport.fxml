@@ -21,6 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPanePassport">
     <left>
@@ -109,11 +110,6 @@
                                     </GridPane.margin>
                                 </Label>
                                 <ComboBox fx:id="cbTravelBy" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="First Entry:" GridPane.rowIndex="5">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
                                 <DatePicker fx:id="dpFirstEntryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <Label text="Last Entry:" GridPane.rowIndex="1">
                                     <GridPane.margin>
@@ -127,6 +123,16 @@
                                     </GridPane.margin>
                                 </Label>
                                 <TextField fx:id="tfPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <HBox alignment="CENTER" spacing="10.0" GridPane.rowIndex="5">
+                           <children>
+                              <Label fx:id="labelLock" />
+                                      <Label text="First Entry:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                      </Label>
+                           </children>
+                        </HBox>
                             </children>
                         </GridPane>
                     </content>
