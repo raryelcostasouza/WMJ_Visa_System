@@ -59,13 +59,15 @@ public class CtrForm
         this.ctrMain = pCtrMain;
     }
 
-    private void fillPrawat(PDAcroForm acroForm, MonasticProfile p) throws IOException
+    private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
         Upajjhaya u;
         LocalDate ldVisaExpiryDateDesired;
-
+        
+        addProfilePhotoPrawat(pdfDoc, p);
+        
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("paliNameThai"));
         alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
@@ -80,14 +82,12 @@ public class CtrForm
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatAdviserToComeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatAdviserToComeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("sponsorThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
 
         alThaiFields.add((PDTextField) acroForm.getField("certificateThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThai"));
 
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaAmpherThai"));
@@ -207,6 +207,24 @@ public class CtrForm
             acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getMonasteryName());
         }
 
+    }
+    
+    private void addProfilePhotoPrawat(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    {
+        PDImageXObject pdImage;
+        PDPageContentStream contentStream;
+
+        pdImage = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(p.getNickname()).toString(), pdfDoc);
+        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
+
+        //translation, rotation and scale for the image
+        AffineTransform at = new AffineTransform(pdImage.getWidth()*0.24, 0, 0, pdImage.getHeight()*0.24, 418, 645);
+
+        //rotates the image overlay 90 degree because the document is landscape
+        Matrix tMatrix = new Matrix(at);
+
+        contentStream.drawImage(pdImage, tMatrix);
+        contentStream.close();
     }
 
     private void fillTM7ReqExtension(PDAcroForm acroForm, MonasticProfile p) throws IOException
@@ -506,7 +524,7 @@ public class CtrForm
             }
             else if (sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
             {
-                fillPrawat(acroForm, p);
+                fillPrawat(pdfDocument, acroForm, p);
             }
             else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry().getName()))
             {
