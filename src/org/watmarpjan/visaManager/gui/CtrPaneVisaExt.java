@@ -67,13 +67,30 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     private Button bPreview7;
 
     
+    @FXML
+    private Button bPrint1;
+    @FXML
+    private Button bPrint2;
+    @FXML
+    private Button bPrint3;
+    @FXML
+    private Button bPrint4;
+    @FXML
+    private Button bPrint5;
+    @FXML
+    private Button bPrint6;
+    @FXML
+    private Button bPrint7;
+    
+    
     @Override
     public void init()
     {
         TableColumn<EntryVisaExt, String> tc;
-        String strPathIconPDF;
+        String strPathIconPDF, strPathIconPrint;
         
         strPathIconPDF = AppPaths.getPathToIconSubfolder().resolve("pdf.png").toUri().toString();
+        strPathIconPrint = AppPaths.getPathToIconSubfolder().resolve("print.png").toUri().toString();
         bPreview1.setGraphic(new ImageView(strPathIconPDF));
         bPreview2.setGraphic(new ImageView(strPathIconPDF));
         bPreview3.setGraphic(new ImageView(strPathIconPDF));
@@ -81,6 +98,14 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
         bPreview5.setGraphic(new ImageView(strPathIconPDF));
         bPreview6.setGraphic(new ImageView(strPathIconPDF));
         bPreview7.setGraphic(new ImageView(strPathIconPDF));
+        
+        bPrint1.setGraphic(new ImageView(strPathIconPrint));
+        bPrint2.setGraphic(new ImageView(strPathIconPrint));
+        bPrint3.setGraphic(new ImageView(strPathIconPrint));
+        bPrint4.setGraphic(new ImageView(strPathIconPrint));
+        bPrint5.setGraphic(new ImageView(strPathIconPrint));
+        bPrint6.setGraphic(new ImageView(strPathIconPrint));
+        bPrint7.setGraphic(new ImageView(strPathIconPrint));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 

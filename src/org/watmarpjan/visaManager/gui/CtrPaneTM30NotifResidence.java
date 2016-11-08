@@ -61,8 +61,6 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     @Override
     public void init()
     {
-        ImageView ivPDFIcon;
-
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
         listItemTMonastics = new ArrayList<>();
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
