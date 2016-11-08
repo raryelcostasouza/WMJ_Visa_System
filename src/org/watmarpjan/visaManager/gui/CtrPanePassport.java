@@ -31,6 +31,8 @@ import org.watmarpjan.visaManager.AppConstants;
 import static java.lang.Integer.parseInt;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
+import org.watmarpjan.visaManager.AppPaths;
 
 /**
  *
@@ -38,6 +40,9 @@ import javafx.beans.value.ObservableValue;
  */
 public class CtrPanePassport extends AbstractChildPaneController implements IFormMonasticProfile, IEditableGUIForm
 {
+
+    @FXML
+    private Label labelLock;
 
     @FXML
     private ImageView ivPassportScan;
@@ -165,6 +170,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     public void init()
     {
         TableColumn tc1;
+
+        labelLock.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
+
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpFirstEntryDate);
@@ -275,7 +283,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             tfpassportCountry.setText(p.getPassportCountry());
             tfpassportIssuedAt.setText(p.getPassportIssuedAt());
 
-            fillDataContentScans(p);
+            fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
 
             if (p.getPassportExpiryDate() != null)
             {
@@ -353,39 +361,52 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
 
-    private void fillDataContentScans(MonasticProfile p)
+    private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
     {
         ArrayList<PassportScan> listPassportScans;
         PassportScan ps1, ps2, ps3;
-        fieldsScan1.reset();
-        fieldsScan2.reset();
-        fieldsScan3.reset();
+        fieldsScan1.reset(lockStatus);
+        fieldsScan2.reset(lockStatus);
+        fieldsScan3.reset(lockStatus);
 
         if (p.getPassportScanSet() != null)
         {
             listPassportScans = new ArrayList<>();
             listPassportScans.addAll(p.getPassportScanSet());
 
-            if (AppFiles.getScanDepartureCard(p.getNickname()).exists())
+            //if the system is on edit mode
+            if (!lockStatus)
             {
-                bArchiveDepartureCard.setDisable(false);
-                bScanDepartureCard.setDisable(true);
+                if (AppFiles.getScanDepartureCard(p.getNickname()).exists())
+                {
+                    bArchiveDepartureCard.setDisable(false);
+                    bScanDepartureCard.setDisable(true);
+                }
+                else
+                {
+                    bArchiveDepartureCard.setDisable(true);
+                    bScanDepartureCard.setDisable(false);
+                }
+
+                if (AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).exists())
+                {
+                    bArchivePassport.setDisable(false);
+                    bScanPassport.setDisable(true);
+                }
+                else
+                {
+                    bArchivePassport.setDisable(true);
+                    bScanPassport.setDisable(false);
+                }
             }
+            //system on view mode
             else
             {
                 bArchiveDepartureCard.setDisable(true);
-                bScanDepartureCard.setDisable(false);
-            }
+                bScanDepartureCard.setDisable(true);
 
-            if (AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).exists())
-            {
-                bArchivePassport.setDisable(false);
-                bScanPassport.setDisable(true);
-            }
-            else
-            {
                 bArchivePassport.setDisable(true);
-                bScanPassport.setDisable(false);
+                bScanPassport.setDisable(true);
             }
 
             if (listPassportScans.size() >= 1)
@@ -569,7 +590,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
         ctrGUIMain.getCtrMain().getCtrPassportScan().remove(ps);
 
-        fillDataContentScans(p);
+        fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
         loadIMGPreviews(p);
     }
 
@@ -700,7 +721,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 //refresh the profile because the passportScan list was updated
                 ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(profile);
                 loadIMGPreviews(profile);
-                fillDataContentScans(profile);
+                fillDataContentScans(profile, ctrGUIMain.getPaneEditSaveController().getLockStatus());
             }
         }
     }
@@ -754,7 +775,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                         //refresh the profile because the passportScan list was updated
                         ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
                         loadIMGPreviews(p);
-                        fillDataContentScans(p);
+                        fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
                     }
                 }
 
@@ -815,13 +836,35 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @Override
     public void actionLockEdit()
     {
+        MonasticProfile p;
         dpFirstEntryDate.setDisable(true);
+
+        bScanPassport.setDisable(true);
+        bScanDepartureCard.setDisable(true);
+
+        bScan1.setDisable(true);
+        bScan2.setDisable(true);
+        bScan3.setDisable(true);
+
+        bArchive1.setDisable(true);
+        bArchive2.setDisable(true);
+        bArchive3.setDisable(true);
+        bArchivePassport.setDisable(true);
+        bArchiveDepartureCard.setDisable(true);
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        fillDataContentScans(p, true);
     }
 
     @Override
     public void actionUnlockEdit()
     {
+        MonasticProfile p;
+
         dpFirstEntryDate.setDisable(false);
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        fillDataContentScans(p, false);
     }
 
     @Override
