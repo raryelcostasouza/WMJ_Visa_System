@@ -38,11 +38,11 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="bPreview1" contentDisplay="TOP" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1">
+                        <Button fx:id="bPreview1" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button mnemonicParsing="false" onAction="#actionPrintPrawat" text="Print" GridPane.columnIndex="2">
+                        <Button fx:id="bPrint1" mnemonicParsing="false" onAction="#actionPrintPrawat" text="Print" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
@@ -53,48 +53,48 @@
                         <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="4" />
                         <Label text="Acknowledgments Penalties Overstay:" GridPane.rowIndex="5" />
                         <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="6" />
-                        <Button fx:id="bPreview2" contentDisplay="TOP" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button fx:id="bPreview2" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview3" contentDisplay="TOP" layoutX="266.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="bPreview3" layoutX="266.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview4" contentDisplay="TOP" layoutX="266.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="bPreview4" layoutX="266.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview5" contentDisplay="TOP" layoutX="266.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="bPreview5" layoutX="266.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview6" contentDisplay="TOP" layoutX="266.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Button fx:id="bPreview6" layoutX="266.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview7" contentDisplay="TOP" layoutX="266.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Button layoutX="340.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPrintLetterSamnakput" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Button fx:id="bPreview7" layoutX="266.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button fx:id="bPrint2" layoutX="340.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPrintLetterSamnakput" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button layoutX="340.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPrintLetterImmigration" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Button fx:id="bPrint3" layoutX="340.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPrintLetterImmigration" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button layoutX="340.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPrintTM7ExtRequest" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <Button fx:id="bPrint4" layoutX="340.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPrintTM7ExtRequest" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button layoutX="340.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPrintTM30NotifResidence" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <Button fx:id="bPrint5" layoutX="340.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPrintTM30NotifResidence" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button layoutX="340.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPrintAckOverstayPenalties" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <Button fx:id="bPrint6" layoutX="340.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPrintAckOverstayPenalties" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button layoutX="340.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPrintSTM2AckConditions" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <Button fx:id="bPrint7" layoutX="340.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPrintSTM2AckConditions" text="Print" GridPane.columnIndex="2" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>

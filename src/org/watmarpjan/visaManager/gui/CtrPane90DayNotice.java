@@ -118,10 +118,19 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     private TableColumn tcOpenPDF;
 
     private ArrayList<TextField> alTextFields;
+    
+     @FXML
+    private Button bPreview;
+    
+    @FXML
+    private Button bPrint;
 
     @Override
     public void init()
     {
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpDateOfBirth);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpArrivalDate);

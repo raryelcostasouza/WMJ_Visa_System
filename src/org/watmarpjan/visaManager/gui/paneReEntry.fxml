@@ -24,8 +24,8 @@
                   <HBox alignment="CENTER" prefWidth="400.0" spacing="10.0">
                      <children>
                         <Label text="TM8 - Application for re-entry:" />
-                        <Button mnemonicParsing="false" onAction="#actionPreviewFormTM8Reentry" text="Preview" />
-                        <Button mnemonicParsing="false" onAction="#actionPrintFormTM8Reentry" text="Print" />
+                        <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewFormTM8Reentry" text="Preview" />
+                        <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintFormTM8Reentry" text="Print" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">

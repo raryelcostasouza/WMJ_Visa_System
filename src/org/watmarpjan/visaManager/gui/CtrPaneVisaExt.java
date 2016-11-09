@@ -87,25 +87,22 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     public void init()
     {
         TableColumn<EntryVisaExt, String> tc;
-        String strPathIconPDF, strPathIconPrint;
         
-        strPathIconPDF = AppPaths.getPathToIconSubfolder().resolve("pdf.png").toUri().toString();
-        strPathIconPrint = AppPaths.getPathToIconSubfolder().resolve("print.png").toUri().toString();
-        bPreview1.setGraphic(new ImageView(strPathIconPDF));
-        bPreview2.setGraphic(new ImageView(strPathIconPDF));
-        bPreview3.setGraphic(new ImageView(strPathIconPDF));
-        bPreview4.setGraphic(new ImageView(strPathIconPDF));
-        bPreview5.setGraphic(new ImageView(strPathIconPDF));
-        bPreview6.setGraphic(new ImageView(strPathIconPDF));
-        bPreview7.setGraphic(new ImageView(strPathIconPDF));
+        bPreview1.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview3.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview4.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview5.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         
-        bPrint1.setGraphic(new ImageView(strPathIconPrint));
-        bPrint2.setGraphic(new ImageView(strPathIconPrint));
-        bPrint3.setGraphic(new ImageView(strPathIconPrint));
-        bPrint4.setGraphic(new ImageView(strPathIconPrint));
-        bPrint5.setGraphic(new ImageView(strPathIconPrint));
-        bPrint6.setGraphic(new ImageView(strPathIconPrint));
-        bPrint7.setGraphic(new ImageView(strPathIconPrint));
+        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint2.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint3.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint4.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint5.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint6.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPrint7.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 

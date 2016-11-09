@@ -12,8 +12,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
@@ -45,10 +47,19 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     private Button bClear;
     @FXML
     private Button bRegister;
+    
+    @FXML
+    private Button bPreview;
+    
+    @FXML
+    private Button bPrint;
 
     @Override
     public void init()
     {
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
     }
