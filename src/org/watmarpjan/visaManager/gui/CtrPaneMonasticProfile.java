@@ -343,6 +343,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         alWatList = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryList();
 
+        cbResidingAt.getItems().clear();
+        cbAdvisorWat.getItems().clear();
         cbResidingAt.getItems().addAll(alWatList);
         cbAdvisorWat.getItems().addAll(alWatList);
     }
