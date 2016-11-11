@@ -38,7 +38,7 @@ public class Init extends Application
             VBox page = (VBox) FXMLLoader.load(Init.class.getResource("gui/mainPane.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("WMJ Visa Manager");
+            primaryStage.setTitle("WMJ Visa System");
             primaryStage.setWidth(1300);
             primaryStage.setHeight(1050);
             primaryStage.show();
