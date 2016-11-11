@@ -16,7 +16,9 @@ import java.util.Date;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -30,6 +32,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.ProfileUtil;
@@ -54,6 +57,21 @@ public class CtrForm
 
     private COSName loadedThaiFontName = null;
 
+    //Passport Scan Real size 170mm x 125mm
+    //Converts the passport scan width to pixels
+    //Passport Scan real Width  170mm
+    //A4 Width pixel size: PDRectangle.A4.getWidth() 
+    //A4 Width real size 210mm
+    private final float DEFAULT_HEIGHT_PASSPORT_SCAN_PX = (PDRectangle.A4.getHeight() * 125) / 297.0f;
+
+    //Converts the passport scan width to pixels
+    //Passport Scan real Width  125mm
+    //A4 Height pixel size: PDRectangle.A4.getWidth() 
+    //A4 Height real size 297mm
+    private final float DEFAULT_WIDTH_PASSPORT_SCAN_PX = (PDRectangle.A4.getWidth() * 170) / 210.0f;
+
+    private final float PAGE_A4_HEIGHT_PX = PDRectangle.A4.getHeight();
+
     public CtrForm(CtrMain pCtrMain)
     {
         this.ctrMain = pCtrMain;
@@ -65,9 +83,9 @@ public class CtrForm
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
         Upajjhaya u;
         LocalDate ldVisaExpiryDateDesired;
-        
+
         addProfilePhotoPrawat(pdfDoc, p);
-        
+
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("paliNameThai"));
         alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
@@ -208,7 +226,7 @@ public class CtrForm
         }
 
     }
-    
+
     private void addProfilePhotoPrawat(PDDocument pdfDoc, MonasticProfile p) throws IOException
     {
         PDImageXObject pdImage;
@@ -218,7 +236,7 @@ public class CtrForm
         contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
 
         //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getWidth()*0.24, 0, 0, pdImage.getHeight()*0.24, 418, 645);
+        AffineTransform at = new AffineTransform(pdImage.getWidth() * 0.24, 0, 0, pdImage.getHeight() * 0.24, 418, 645);
 
         //rotates the image overlay 90 degree because the document is landscape
         Matrix tMatrix = new Matrix(at);
@@ -379,7 +397,7 @@ public class CtrForm
         ArrayList<PDTextField> alThaiFields;
         Monastery mResidingAt;
         LocalDate ldBirthDate, ldLastEntry, ldVisaExpiry, ldPassportIssue,
-                   ldPassportExpiry;
+                ldPassportExpiry;
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
@@ -418,20 +436,20 @@ public class CtrForm
         acroForm.getField("passportCountry").setValue(p.getPassportCountry());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
         acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
-        
+
         ldPassportIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
         if (ldPassportIssue != null)
         {
-            acroForm.getField("passportIssueDateDay").setValue(ldPassportIssue.getDayOfMonth()+"");
+            acroForm.getField("passportIssueDateDay").setValue(ldPassportIssue.getDayOfMonth() + "");
             acroForm.getField("passportIssueDateMonth").setValue(ldPassportIssue.getMonthValue() + "");
             acroForm.getField("passportIssueDateYear").setValue(Util.convertYearToThai(ldPassportIssue.getYear()) + "");
-            
+
         }
-        
+
         ldPassportExpiry = Util.convertDateToLocalDate(p.getPassportExpiryDate());
         if (ldPassportExpiry != null)
         {
-            acroForm.getField("passportExpiryDateDay").setValue(ldPassportExpiry.getDayOfMonth()+"");
+            acroForm.getField("passportExpiryDateDay").setValue(ldPassportExpiry.getDayOfMonth() + "");
             acroForm.getField("passportExpiryDateMonth").setValue(ldPassportExpiry.getMonthValue() + "");
             acroForm.getField("passportExpiryDateYear").setValue(Util.convertYearToThai(ldPassportExpiry.getYear()) + "");
         }
@@ -444,10 +462,9 @@ public class CtrForm
             acroForm.getField("arrivalLastEntryDateYear").setValue(Util.convertYearToThai(ldLastEntry.getYear()) + "");
         }
 
-        
         //if the visa for this monastic has already been extended
         //retrieves the expiry date of the most recent extension
-        if (p.getVisaExtensionSet()!= null && !p.getVisaExtensionSet().isEmpty())
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
         {
             ldVisaExpiry = ProfileUtil.getLastExtensionExpiryDate(p);
         }
@@ -456,7 +473,7 @@ public class CtrForm
         {
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
         }
-        
+
         if (ldVisaExpiry != null)
         {
             acroForm.getField("visaExpiryDateDay").setValue(ldVisaExpiry.getDayOfMonth() + "");
@@ -469,8 +486,8 @@ public class CtrForm
             {
                 acroForm.getField("visaExpiryDateYear").setValue(Util.convertYearToThai(ldVisaExpiry.getYear()) + "");
             }
-            
-        }   
+
+        }
     }
 
     public void fillForm(File sourceFile, MonasticProfile p, int option, boolean extraOption)
@@ -671,7 +688,7 @@ public class CtrForm
         contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
 
         //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getHeight()*0.3, 0, 0, pdImage.getWidth()*0.3, 565, 450);
+        AffineTransform at = new AffineTransform(pdImage.getHeight() * 0.3, 0, 0, pdImage.getWidth() * 0.3, 565, 450);
 
         //rotates the image overlay 90 degree because the document is landscape
         at.rotate(Math.toRadians(90));
@@ -680,6 +697,240 @@ public class CtrForm
         contentStream.drawImage(pdImage, tMatrix);
         contentStream.close();
 
+    }
+
+    public void generatePDFBysuddhiScans(MonasticProfile p, int option)
+    {
+        //bysuddhi size 18.5 cm X 12.5 cm
+        File fScan1, fScan2, fScan3, fScan4;
+        PDPageContentStream contentStream;
+        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4;
+        PDPage page1;
+        float bysuddhiScanWidth, bysuddhiScanHeight;
+        float landscape_A4_width_px, landscape_A4_height_px;
+
+        PDDocument pdfDoc;
+        File outputFile;
+
+        outputFile = AppFiles.getFormTMPOutputPDF(p.getNickname() + "-BysuddhiScans");
+
+        pdfDoc = new PDDocument();
+        page1 = new PDPage(PDRectangle.A4);
+        
+        //landscape PDF
+        page1.setRotation(90);
+        pdfDoc.addPage(page1);
+        
+        //on a landscape PDF the width and the height of the page are switched
+        landscape_A4_width_px = page1.getMediaBox().getHeight();
+        landscape_A4_height_px = page1.getMediaBox().getWidth();
+        
+
+        //Bysuddhi Real size 185mm x 125mm
+        //Converts the Bysuddhi width to pixels
+        //Bysuddhi real Width  185mm
+        //A4 Width pixel size: PDRectangle.A4.getWidth() 
+        //A4 Width real size 210mm
+        bysuddhiScanWidth = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+
+        //Converts the Bysuddhi to pixels
+        //Bysuddhi real Height 125mm
+        //A4 Height pixel size: PDRectangle.A4.getHeight() 
+        //A4 Height real size 297mm
+        bysuddhiScanHeight = (PDRectangle.A4.getHeight() * 125) / 297.0f;
+
+        bysuddhiScanHeight/=1.5f;
+        bysuddhiScanWidth/=1.5f;
+        fScan1 = AppFiles.getScanBysuddhi(p.getNickname(), 1);
+        fScan2 = AppFiles.getScanBysuddhi(p.getNickname(), 2);
+        fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
+        fScan4 = AppFiles.getScanBysuddhi(p.getNickname(), 4);
+
+        try
+        {
+            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+             // add the rotation using the current transformation matrix
+            // including a translation of pageWidth to use the lower left corner as 0,0 reference
+            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+
+            imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
+            contentStream.drawImage(imgScan1, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+
+            imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
+            contentStream.drawImage(imgScan2, landscape_A4_width_px-bysuddhiScanWidth-50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+
+            imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
+            contentStream.drawImage(imgScan3, 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
+
+            if (fScan4.exists())
+            {
+                imgScan4 = PDImageXObject.createFromFile(fScan4.toString(), pdfDoc);
+                contentStream.drawImage(imgScan4, landscape_A4_width_px-bysuddhiScanWidth -50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
+            }
+
+            contentStream.close();
+            pdfDoc.save(outputFile);
+            pdfDoc.close();
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDoc);
+            }
+            else
+            {
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+            }
+
+        } catch (IOException ex)
+        {
+            CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
+        }
+    }
+
+    public void generatePDFPassportScans(MonasticProfile p, int option)
+    {
+        //passport size 17cm X 12.5 cm
+
+        PDDocument pdfDoc;
+        File outputFile;
+
+        outputFile = AppFiles.getFormTMPOutputPDF(p.getNickname() + "-PassportScans");
+
+        pdfDoc = new PDDocument();
+
+        try
+        {
+            generateScansPage1(pdfDoc, p);
+            generateScansPage2(pdfDoc, p);
+            generateScansPage3(pdfDoc, p);
+
+            pdfDoc.save(outputFile);
+            pdfDoc.close();
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDoc);
+            }
+            else
+            {
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+            }
+
+        } catch (IOException ex)
+        {
+            CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
+        }
+    }
+
+    private void generateScansPage1(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    {
+        File fScanPassportFirstPage, fScanDepartureCard;
+        PDPageContentStream contentStream;
+        PDImageXObject imgPassportScan, imgDepartureCardScan;
+        PDPage page1;
+        float departureCardScanWidth, departureCardScanHeight;
+
+        //Departure Card Real size 185mm x 80mm
+        //Converts the departure card width to pixels
+        //Departure card real Width  185mm
+        //A4 Width pixel size: PDRectangle.A4.getWidth() 
+        //A4 Width real size 210mm
+        departureCardScanWidth = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+
+        //Converts the departure card height to pixels
+        //Departure card real Height 80mm
+        //A4 Height pixel size: PDRectangle.A4.getHeight() 
+        //A4 Height real size 297mm
+        departureCardScanHeight = (PDRectangle.A4.getHeight() * 80) / 297.0f;
+
+        fScanPassportFirstPage = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
+        fScanDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
+
+        if (fScanPassportFirstPage != null || fScanDepartureCard != null)
+        {
+            page1 = new PDPage(PDRectangle.A4);
+            pdfDoc.addPage(page1);
+
+            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+            if (fScanPassportFirstPage != null)
+            {
+                imgPassportScan = PDImageXObject.createFromFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).toString(), pdfDoc);
+                contentStream.drawImage(imgPassportScan, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+            }
+
+            if (fScanDepartureCard != null)
+            {
+                imgDepartureCardScan = PDImageXObject.createFromFile(AppFiles.getScanDepartureCard(p.getNickname()).toString(), pdfDoc);
+                contentStream.drawImage(imgDepartureCardScan, 40, 50, departureCardScanWidth, departureCardScanHeight);
+            }
+
+            contentStream.close();
+        }
+
+    }
+
+    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    {
+        File fScan1, fScan2;
+        PassportScan ps1, ps2;
+        PDPageContentStream contentStream;
+        ArrayList<PassportScan> listPassportScan;
+        PDImageXObject imgScan1, imgScan2;
+        PDPage page2;
+
+        if (p.getPassportScanSet().size() >= 1)
+        {
+            page2 = new PDPage(PDRectangle.A4);
+            pdfDoc.addPage(page2);
+
+            listPassportScan = new ArrayList<>();
+            listPassportScan.addAll(p.getPassportScanSet());
+
+            contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+
+            ps1 = listPassportScan.get(0);
+            fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
+            imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
+            contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+
+            if (listPassportScan.size() >= 2)
+            {
+                ps2 = listPassportScan.get(1);
+                fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
+                imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
+                contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+            }
+
+            contentStream.close();
+        }
+
+    }
+
+    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    {
+        File fScan3;
+        PassportScan ps3;
+        PDPageContentStream contentStream;
+        ArrayList<PassportScan> listPassportScan;
+        PDImageXObject imgScan3;
+        PDPage page3;
+
+        if (p.getPassportScanSet().size() == 3)
+        {
+            page3 = new PDPage(PDRectangle.A4);
+            pdfDoc.addPage(page3);
+
+            listPassportScan = new ArrayList<>();
+            listPassportScan.addAll(p.getPassportScanSet());
+            ps3 = listPassportScan.get(2);
+
+            fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
+            imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
+
+            contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
+            contentStream.drawImage(imgScan3, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+            contentStream.close();
+        }
     }
 
     private void printPDF(PDDocument p)

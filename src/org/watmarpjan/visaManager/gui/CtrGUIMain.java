@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
@@ -76,7 +75,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneBysuddhi ctrPaneBysuddhi;
     @FXML
-    private SplitPane paneBysuddhi;
+    private VBox paneBysuddhi;
 
     @FXML
     private CtrPaneDueTasks ctrPaneDueTasks;

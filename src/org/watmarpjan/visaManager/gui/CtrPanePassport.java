@@ -33,6 +33,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrForm;
 
 /**
  *
@@ -163,6 +164,12 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private FieldsPaneScanContent fieldsScan1;
     private FieldsPaneScanContent fieldsScan2;
     private FieldsPaneScanContent fieldsScan3;
+    
+    @FXML
+    private Button bPreview;
+    
+    @FXML
+    private Button bPrint;
 
     private final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
 
@@ -171,6 +178,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     {
         TableColumn tc1;
 
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         labelLock.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
@@ -884,5 +893,20 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
             CtrAlertDialog.infoDialog("Passport update", "The passport information was successfully updated.");
         }
+    }
+    
+    @FXML
+    void actionPreviewScansPDF(ActionEvent ae)
+    {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPassportScans(p, CtrForm.OPTION_PREVIEW_FORM);
+    }
+    
+    @FXML
+    void actionPrintScans(ActionEvent ae)
+    {
+        
     }
 }

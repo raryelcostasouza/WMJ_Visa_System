@@ -18,7 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -68,10 +70,19 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     private Button b3;
     @FXML
     private Button b4;
+    
+    @FXML
+    private Button bPreview;
+    
+    @FXML
+    private Button bPrint;
 
     @Override
     public void init()
     {
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPahkahwOrd);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpSamaneraOrd);
@@ -174,6 +185,24 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
             CtrAlertDialog.infoDialog("Bysuddhi update", "The bysuddhi information was successfully updated.");
         }
+    }
+    
+    @FXML
+    void actionPreviewScansPDF(ActionEvent ae)
+    {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFBysuddhiScans(p, CtrForm.OPTION_PREVIEW_FORM);
+    }
+    
+    @FXML
+    void actionPrintScans(ActionEvent ae)
+    {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFBysuddhiScans(p, CtrForm.OPTION_PRINT_FORM);
     }
 
     @Override

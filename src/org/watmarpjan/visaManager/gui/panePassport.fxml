@@ -403,4 +403,12 @@
             </content>
         </ScrollPane>
     </right>
+   <top>
+      <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
+            <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintScans" text="Print Scans" />
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
