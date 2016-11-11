@@ -8,15 +8,26 @@ package org.watmarpjan.visaManager.gui;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.model.EntryDueTask;
 import org.watmarpjan.visaManager.model.Notice90DayTaskEntry;
 import org.watmarpjan.visaManager.model.VisaExtTaskEntry;
@@ -41,9 +52,20 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
     private ArrayList<TableView<EntryDueTask>> alTV;
 
+    @FXML
+    private BorderPane bPaneDueTasksTH;
+
+    @FXML
+    private GridPane bPaneDueTasksAbroad;
+
+    @FXML
+    private Button bPrint;
+
     @Override
     public void init()
     {
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+
         alTV = new ArrayList<>();
         alTV.add(tvTH90DayNotice);
         alTV.add(tvTHVisaExtension);
@@ -55,7 +77,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         initTable90Day(tvTH90DayNotice);
         initTableVisaExtension(tvTHVisaExtension);
         initTableVisaExtension(tvAbroadVisaExtension);
-        
+
         initTablePassportRenew(tvTHPassportRenewal);
         initTablePassportRenew(tvAbroadPassportRenewal);
     }
@@ -129,7 +151,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private void initTable90Day(TableView<EntryDueTask> tv)
     {
         initTableGeneric(tv);
-        
+
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
@@ -138,7 +160,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
     {
         initTableGeneric(tv);
-        
+
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("prawat"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("immigration"));
@@ -173,6 +195,46 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
         tvAbroadVisaExtension.getItems().addAll(alAbroadDueVisaExtension);
         tvAbroadPassportRenewal.getItems().addAll(alAbroadPassportRenewal);
+    }
+
+    @FXML
+    void actionPrintDueTasks(ActionEvent ae)
+    {
+        PrinterJob pj = PrinterJob.createPrinterJob();
+        boolean success;
+        Rectangle rect;
+        WritableImage writableImage;
+        ImageView imgView;
+        Printer printer;
+        PageLayout pageLayout;
+        boolean showDialog;
+
+        rect = new Rectangle(0, 0, bPaneDueTasksTH.getWidth(), bPaneDueTasksTH.getHeight());
+        bPaneDueTasksTH.setClip(rect);
+        writableImage = new WritableImage((int) bPaneDueTasksTH.getWidth(), (int) bPaneDueTasksTH.getHeight());
+        bPaneDueTasksTH.snapshot(null, writableImage);
+
+        imgView = new ImageView(writableImage);
+        printer = Printer.getDefaultPrinter();
+        pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
+        double scaleX = pageLayout.getPrintableWidth() / imgView.getBoundsInParent().getWidth();
+        double scaleY = pageLayout.getPrintableHeight() / imgView.getBoundsInParent().getHeight();
+        imgView.getTransforms().add(new Scale(scaleX, scaleY));
+
+        if (pj != null)
+        {
+           showDialog = pj.showPrintDialog(Init.MAIN_STAGE);
+            if (showDialog)
+            {
+                success = pj.printPage(pageLayout, imgView);
+                if (success)
+                {
+                    pj.endJob();
+                }
+            }
+
+        }
+
     }
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,7 +17,7 @@
     <tabs>
         <Tab closable="false" text="Thailand">
             <content>
-                <BorderPane>
+                <BorderPane fx:id="bPaneDueTasksTH">
                     <center>
                         <GridPane BorderPane.alignment="CENTER">
                             <children>
@@ -106,12 +107,15 @@
                             </rowConstraints>
                         </GridPane>
                     </center>
+               <top>
+                  <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintDueTasks" text="Print" BorderPane.alignment="CENTER" />
+               </top>
                 </BorderPane>
             </content>
         </Tab>
         <Tab closable="false" text="Abroad">
             <content>
-                <GridPane>
+                <GridPane fx:id="bPaneDueTasksAbroad">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
