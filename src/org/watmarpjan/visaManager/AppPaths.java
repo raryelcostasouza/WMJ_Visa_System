@@ -59,6 +59,16 @@ public class AppPaths
     {
         return Paths.get(System.getProperty("user.dir")).resolve("icons");
     }
+    
+    public static Path getPathIconPrint()
+    {
+        return getPathToIconSubfolder().resolve("print.png");
+    }
+    
+    public static Path getPathIconPDF()
+    {
+        return getPathToIconSubfolder().resolve("pdf.png");
+    }
 
     public static Path getPathToReceiptsOnline90dNotice(String nickName)
     {
