@@ -23,9 +23,17 @@ public class Util
 
     public final static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public static int convertYearToThai(int iso_year)
+    public static Integer convertYearToThai(Integer iso_year)
     {
-        return iso_year + 543;
+        if (iso_year != null)
+        {
+            return iso_year + 543;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
 
     public static LocalDate convertDateToLocalDate(Date d)
