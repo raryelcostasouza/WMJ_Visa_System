@@ -229,20 +229,25 @@ public class CtrForm
 
     private void addProfilePhotoPrawat(PDDocument pdfDoc, MonasticProfile p) throws IOException
     {
+        File fPhoto;
         PDImageXObject pdImage;
         PDPageContentStream contentStream;
 
-        pdImage = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(p.getNickname()).toString(), pdfDoc);
-        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
+        fPhoto = AppFiles.getProfilePhoto(p.getNickname());
+        if (fPhoto.exists())
+        {
+            pdImage = PDImageXObject.createFromFile(fPhoto.toString(), pdfDoc);
+            contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
 
-        //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getWidth() * 0.24, 0, 0, pdImage.getHeight() * 0.24, 418, 645);
+            //translation, rotation and scale for the image
+            AffineTransform at = new AffineTransform(pdImage.getWidth() * 0.24, 0, 0, pdImage.getHeight() * 0.24, 418, 645);
 
-        //rotates the image overlay 90 degree because the document is landscape
-        Matrix tMatrix = new Matrix(at);
+            //rotates the image overlay 90 degree because the document is landscape
+            Matrix tMatrix = new Matrix(at);
 
-        contentStream.drawImage(pdImage, tMatrix);
-        contentStream.close();
+            contentStream.drawImage(pdImage, tMatrix);
+            contentStream.close();
+        }
     }
 
     private void fillTM7ReqExtension(PDAcroForm acroForm, MonasticProfile p) throws IOException
@@ -716,15 +721,14 @@ public class CtrForm
 
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
-        
+
         //landscape PDF
         page1.setRotation(90);
         pdfDoc.addPage(page1);
-        
+
         //on a landscape PDF the width and the height of the page are switched
         landscape_A4_width_px = page1.getMediaBox().getHeight();
         landscape_A4_height_px = page1.getMediaBox().getWidth();
-        
 
         //Bysuddhi Real size 185mm x 125mm
         //Converts the Bysuddhi width to pixels
@@ -739,8 +743,8 @@ public class CtrForm
         //A4 Height real size 297mm
         bysuddhiScanHeight = (PDRectangle.A4.getHeight() * 125) / 297.0f;
 
-        bysuddhiScanHeight/=1.5f;
-        bysuddhiScanWidth/=1.5f;
+        bysuddhiScanHeight /= 1.5f;
+        bysuddhiScanWidth /= 1.5f;
         fScan1 = AppFiles.getScanBysuddhi(p.getNickname(), 1);
         fScan2 = AppFiles.getScanBysuddhi(p.getNickname(), 2);
         fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
@@ -749,7 +753,7 @@ public class CtrForm
         try
         {
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-             // add the rotation using the current transformation matrix
+            // add the rotation using the current transformation matrix
             // including a translation of pageWidth to use the lower left corner as 0,0 reference
             contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
 
@@ -757,7 +761,7 @@ public class CtrForm
             contentStream.drawImage(imgScan1, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
 
             imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
-            contentStream.drawImage(imgScan2, landscape_A4_width_px-bysuddhiScanWidth-50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+            contentStream.drawImage(imgScan2, landscape_A4_width_px - bysuddhiScanWidth - 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
 
             imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
             contentStream.drawImage(imgScan3, 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
@@ -765,7 +769,7 @@ public class CtrForm
             if (fScan4.exists())
             {
                 imgScan4 = PDImageXObject.createFromFile(fScan4.toString(), pdfDoc);
-                contentStream.drawImage(imgScan4, landscape_A4_width_px-bysuddhiScanWidth -50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
+                contentStream.drawImage(imgScan4, landscape_A4_width_px - bysuddhiScanWidth - 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
             }
 
             contentStream.close();
