@@ -56,7 +56,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
             if (he instanceof ConstraintViolationException)
             {
                 CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, errorMessage);
-            } else
+            }
+            else
             {
                 CtrAlertDialog.exceptionDialog(he, errorMessage);
             }
@@ -82,7 +83,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
             {
                 cve = (ConstraintViolationException) he;
                 CtrAlertDialog.databaseExceptionDialog(cve, "Error when saving profile info.");
-            } else
+            }
+            else
             {
                 CtrAlertDialog.exceptionDialog(he, "Error when saving profile info.");
             }
@@ -105,7 +107,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
                     + " p.samaneraOrdDate asc nulls last,"
                     + " p.pahkahwOrdDate asc nulls last";
 
-        } else
+        }
+        else
         {
             hql = "select p "
                     + "from MonasticProfile p "
@@ -141,7 +144,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         if (!alProfile.isEmpty())
         {
             return alProfile.get(index);
-        } else
+        }
+        else
         {
             return null;
         }
@@ -226,6 +230,30 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return queryStringField(hql);
     }
 
+    public ArrayList<String> loadListPortOfEntry()
+    {
+        String hql;
+
+        hql = "select p.arrivalPortOfEntry"
+                + " from MonasticProfile p "
+                + " where p.arrivalPortOfEntry is not null"
+                + " group by p.arrivalPortOfEntry"
+                + " order by p.arrivalPortOfEntry";
+        return queryStringField(hql);
+    }
+    
+    public ArrayList<String> loadListTravelFrom()
+    {
+        String hql;
+
+        hql = "select p.arrivalTravelFrom"
+                + " from MonasticProfile p "
+                + " where p.arrivalTravelFrom is not null"
+                + " group by p.arrivalTravelFrom"
+                + " order by p.arrivalTravelFrom";
+        return queryStringField(hql);
+    }
+
     public ArrayList<EntryDueTask> loadListDue90DayNotice()
     {
         String hql;
@@ -277,8 +305,6 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return queryDueTaskEntry(hql);
     }
 
-    
-
     private MonasticProfile queryProfile(String hql)
     {
         ArrayList<MonasticProfile> alProfile;
@@ -288,7 +314,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         if (!alProfile.isEmpty())
         {
             return alProfile.get(0);
-        } else
+        }
+        else
         {
             return null;
         }
