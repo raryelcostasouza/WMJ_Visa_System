@@ -87,9 +87,9 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
                 tfTM6Number.setEditable(false);
                 dpLastEntry.setDisable(true);
-                cbTravelFrom.setEditable(false);
+                cbTravelFrom.setDisable(true);
                 cbTravelBy.setDisable(true);
-                cbPortOfEntry.setEditable(false);
+                cbPortOfEntry.setDisable(true);
             }
             else
             {
@@ -98,9 +98,9 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
                 tfTM6Number.setEditable(true);
                 dpLastEntry.setDisable(false);
-                cbTravelFrom.setEditable(true);
+                cbTravelFrom.setDisable(false);
                 cbTravelBy.setDisable(false);
-                cbPortOfEntry.setEditable(true);
+                cbPortOfEntry.setDisable(false);
             }
         }
     }
