@@ -194,10 +194,14 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
                 dpExpiryDate.setValue(ldExpLastExtension.plusYears(1));
             }
             //2) If the visa has not been extended yet -> 1 Year after the visa expiry
-            else
+            else if (p.getVisaExpiryDate() != null)
             {
                 ldExpVisa = Util.convertDateToLocalDate(p.getVisaExpiryDate());
                 dpExpiryDate.setValue(ldExpVisa.plusYears(1));
+            }
+            else
+            {
+                dpExpiryDate.setValue(null);
             }
         }
 
