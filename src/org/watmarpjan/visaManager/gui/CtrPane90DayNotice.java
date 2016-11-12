@@ -55,9 +55,6 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     private TableColumn tcSelected;
 
     @FXML
-    private DatePicker dpValidDatesNoticeOnline;
-
-    @FXML
     private TextField tfPassportNumber;
     @FXML
     private TextField tfSurname;
@@ -134,6 +131,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpDateOfBirth);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpArrivalDate);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpReceiptDate);
 
         tcSelected.setCellValueFactory(new PropertyValueFactory<EntryUpdate90DayNotice, Boolean>("selected"));
         final Callback<TableColumn<EntryUpdate90DayNotice, Boolean>, TableCell<EntryUpdate90DayNotice, Boolean>> defaultCellFactory = CheckBoxTableCell.forTableColumn(tcSelected);
