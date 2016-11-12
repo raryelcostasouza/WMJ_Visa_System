@@ -97,6 +97,10 @@ public class FieldsPaneScanContent
             rbArriveStamp.setDisable(true);
             rbVisa.setDisable(true);
             rbLastVisaExt.setDisable(true);
+            
+            rbArriveStamp.setSelected(false);
+            rbVisa.setSelected(false);
+            rbLastVisaExt.setSelected(false);
 
             bSelectFile.setDisable(true);
             bArchive.setDisable(true);

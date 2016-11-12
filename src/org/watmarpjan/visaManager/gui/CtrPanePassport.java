@@ -70,11 +70,18 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private Button bScanDepartureCard;
 
     @FXML
-    private Button bScan1;
+    private Button bSelectScan1;
     @FXML
-    private Button bScan2;
+    private Button bSelectScan2;
     @FXML
-    private Button bScan3;
+    private Button bSelectScan3;
+
+    @FXML
+    private Button bAddScan1;
+    @FXML
+    private Button bAddScan2;
+    @FXML
+    private Button bAddScan3;
 
     @FXML
     private TextField tfpassportNumber;
@@ -161,13 +168,17 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @FXML
     private Button bArchive3;
 
+    private File fScan1Selected;
+    private File fScan2Selected;
+    private File fScan3Selected;
+
     private FieldsPaneScanContent fieldsScan1;
     private FieldsPaneScanContent fieldsScan2;
     private FieldsPaneScanContent fieldsScan3;
-    
+
     @FXML
     private Button bPreview;
-    
+
     @FXML
     private Button bPrint;
 
@@ -197,9 +208,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
 
-        fieldsScan1 = new FieldsPaneScanContent(bScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
-        fieldsScan2 = new FieldsPaneScanContent(bScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
-        fieldsScan3 = new FieldsPaneScanContent(bScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
+        fieldsScan1 = new FieldsPaneScanContent(bSelectScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
+        fieldsScan2 = new FieldsPaneScanContent(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
+        fieldsScan3 = new FieldsPaneScanContent(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
 
         initChangeListener();
     }
@@ -736,7 +747,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     }
 
     @FXML
-    void actionChooseExtraScan(ActionEvent ae)
+    void actionAddExtraScan(ActionEvent ae)
     {
         MonasticProfile p;
         PassportScan ps;
@@ -745,74 +756,116 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         //if there is a passport registered allows the user to add other scans
-        if (p.getPassportNumber() != null)
+        if (validateExtraScanContent((Button) ae.getSource()))
         {
-            if (validateExtraScanContent((Button) ae.getSource()))
+            if (ae.getSource().equals(bAddScan1))
             {
-                if (ae.getSource().equals(bScan1))
-                {
-                    ps = new PassportScan(p, parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
+                ps = new PassportScan(p, parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
+                fSelected = fScan1Selected;
+                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
 
-                    ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
-
-                }
-                else if (ae.getSource().equals(bScan2))
-                {
-                    ps = new PassportScan(p, parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
-
-                    ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
-                }
-                else
-                {
-                    ps = new PassportScan(p, parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
-
-                    ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
-                }
-                fScanDestination = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
-
-                fSelected = CtrFileOperation.selectFile("Extra Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
-
-                if (fSelected != null)
-                {
-                    statusCopyOperation = CtrFileOperation.copyOperation(fSelected, fScanDestination);
-
-                    //if the operation was successful
-                    //saves the scan content information as well
-                    if (statusCopyOperation == 0)
-                    {
-                        loadIMGPreviews(p);
-                        //refresh the profile because the passportScan list was updated
-                        ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
-                        loadIMGPreviews(p);
-                        fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-                    }
-                }
-
+            }
+            else if (ae.getSource().equals(bAddScan2))
+            {
+                ps = new PassportScan(p, parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
+                fSelected = fScan2Selected;
+                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
             }
             else
             {
-                CtrAlertDialog.errorDialog("Please fill the scan contents information before selecting the file");
+                ps = new PassportScan(p, parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
+                fSelected = fScan3Selected;
+                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
+            }
+            fScanDestination = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+
+            if (fSelected != null)
+            {
+                statusCopyOperation = CtrFileOperation.copyOperation(fSelected, fScanDestination);
+
+                //if the operation was successful
+                //saves the scan content information as well
+                if (statusCopyOperation == 0)
+                {
+                    //disables the add button
+                    if (ae.getSource().equals(bAddScan1))
+                    {
+                        bAddScan1.setDisable(true);
+                    }
+                    else if (ae.getSource().equals(bAddScan2))
+                    {
+                        bAddScan2.setDisable(true);
+                    }
+                    else
+                    {
+                         bAddScan3.setDisable(true);
+                    }
+                        
+                    //refresh the profile because the passportScan list was updated
+                    ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                    loadIMGPreviews(p);
+                    fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+                }
+            }
+
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog("Please fill the scan contents information before selecting the file");
+        }
+    }
+
+    @FXML
+    void actionSelectExtraScan(ActionEvent ae)
+    {
+        File fSelected;
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        //if there is a passport registered allows the user to add other scans
+        if (p.getPassportNumber() != null)
+        {
+            fSelected = CtrFileOperation.selectFile("Extra Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
+            if (fSelected != null)
+            {
+                if (ae.getSource().equals(bSelectScan1))
+                {
+                    fScan1Selected = fSelected;
+                    ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    bAddScan1.setDisable(false);
+                }
+                else if (ae.getSource().equals(bSelectScan2))
+                {
+                    fScan2Selected = fSelected;
+                    ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    bAddScan2.setDisable(false);
+                }
+                else
+                {
+                    fScan3Selected = fSelected;
+                    ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    bAddScan3.setDisable(false);
+                }
             }
         }
         else
         {
             CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
         }
-
     }
 
     private boolean validateExtraScanContent(Button sourceButton)
     {
         //if the page number is not empty and at least one of the options is selected
         //returns true
-        if (sourceButton.equals(bScan1))
+        if (sourceButton.equals(bAddScan1))
         {
             return validatePageNumber(tfScan1LeftPageNumber.getText())
                     && (rbScan1ArriveStamp.isSelected()
                     || rbScan1LastVisaExt.isSelected()
                     || rbScan1Visa.isSelected());
         }
-        else if (sourceButton.equals(bScan2))
+        else if (sourceButton.equals(bAddScan2))
         {
             return validatePageNumber(tfScan2LeftPageNumber.getText())
                     && (rbScan2ArriveStamp.isSelected()
@@ -851,9 +904,9 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         bScanPassport.setDisable(true);
         bScanDepartureCard.setDisable(true);
 
-        bScan1.setDisable(true);
-        bScan2.setDisable(true);
-        bScan3.setDisable(true);
+        bSelectScan1.setDisable(true);
+        bSelectScan2.setDisable(true);
+        bSelectScan3.setDisable(true);
 
         bArchive1.setDisable(true);
         bArchive2.setDisable(true);
@@ -894,19 +947,19 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             CtrAlertDialog.infoDialog("Passport update", "The passport information was successfully updated.");
         }
     }
-    
+
     @FXML
     void actionPreviewScansPDF(ActionEvent ae)
     {
         MonasticProfile p;
-        
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrForm().generatePDFPassportScans(p, CtrForm.OPTION_PREVIEW_FORM);
     }
-    
+
     @FXML
     void actionPrintScans(ActionEvent ae)
     {
-        
+
     }
 }

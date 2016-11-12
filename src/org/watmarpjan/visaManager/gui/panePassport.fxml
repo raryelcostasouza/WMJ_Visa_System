@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPanePassport">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPanePassport">
     <left>
         <VBox>
             <children>
@@ -297,7 +297,8 @@
                                                         <HBox alignment="CENTER" spacing="10.0">
                                                             <children>
                                                                 <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
-                                                                <Button fx:id="bScan1" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
+                                                <Button fx:id="bAddScan1" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -342,7 +343,8 @@
                                                         <HBox alignment="CENTER" spacing="10.0">
                                                             <children>
                                                                 <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
-                                                                <Button fx:id="bScan2" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
+                                                <Button fx:id="bAddScan2" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -387,7 +389,8 @@
                                                         <HBox alignment="CENTER" spacing="10.0">
                                                             <children>
                                                                 <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
-                                                                <Button fx:id="bScan3" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
+                                                <Button fx:id="bAddScan3" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                             </children>
                                                         </HBox>
                                                     </children>
