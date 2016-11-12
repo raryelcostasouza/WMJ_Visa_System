@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui;
 
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,22 +36,22 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     private DatePicker dpLastEntry;
 
     @FXML
-    private TextField tfTravelFrom;
+    private ComboBox<String> cbTravelFrom;
 
     @FXML
     private ComboBox<String> cbTravelBy;
 
     @FXML
-    private TextField tfPortOfEntry;
+    private ComboBox<String> cbPortOfEntry;
 
     @FXML
     private Button bClear;
     @FXML
     private Button bRegister;
-    
+
     @FXML
     private Button bPreview;
-    
+
     @FXML
     private Button bPrint;
 
@@ -59,7 +60,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        
+
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
     }
@@ -67,13 +68,16 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     @Override
     public void fillData(MonasticProfile p)
     {
+        loadContentsCBPortOfEntry();
+        loadContentsCBTravelFrom();
+        
         if (p != null)
         {
             tfTM6Number.setText(p.getArrivalCardNumber());
             dpLastEntry.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
-            tfTravelFrom.setText(p.getArrivalTravelFrom());
+            cbTravelFrom.setValue(p.getArrivalTravelFrom());
             cbTravelBy.setValue(p.getArrivalTravelBy());
-            tfPortOfEntry.setText(p.getArrivalPortOfEntry());
+            cbPortOfEntry.setValue(p.getArrivalPortOfEntry());
 
             if (p.getArrivalCardNumber() != null)
             {
@@ -83,9 +87,9 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
                 tfTM6Number.setEditable(false);
                 dpLastEntry.setDisable(true);
-                tfTravelFrom.setEditable(false);
+                cbTravelFrom.setEditable(false);
                 cbTravelBy.setDisable(true);
-                tfPortOfEntry.setEditable(false);
+                cbPortOfEntry.setEditable(false);
             }
             else
             {
@@ -94,11 +98,31 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
                 tfTM6Number.setEditable(true);
                 dpLastEntry.setDisable(false);
-                tfTravelFrom.setEditable(true);
+                cbTravelFrom.setEditable(true);
                 cbTravelBy.setDisable(false);
-                tfPortOfEntry.setEditable(true);
+                cbPortOfEntry.setEditable(true);
             }
         }
+    }
+
+    private void loadContentsCBPortOfEntry()
+    {
+        ArrayList<String> alPortOfEntry;
+
+        alPortOfEntry = ctrGUIMain.getCtrMain().getCtrProfile().loadListPortOfEntry();
+
+        cbPortOfEntry.getItems().clear();
+        cbPortOfEntry.getItems().addAll(alPortOfEntry);
+    }
+    
+    private void loadContentsCBTravelFrom()
+    {
+        ArrayList<String> alTravelFrom;
+
+        alTravelFrom = ctrGUIMain.getCtrMain().getCtrProfile().loadListTravelFrom();
+
+        cbTravelFrom.getItems().clear();
+        cbTravelFrom.getItems().addAll(alTravelFrom);
     }
 
     @FXML
@@ -138,9 +162,9 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             p.setArrivalCardNumber(tfTM6Number.getText());
             p.setArrivalLastEntryDate(Util.convertLocalDateToDate(dpLastEntry.getValue()));
-            p.setArrivalTravelFrom(tfTravelFrom.getText());
+            p.setArrivalTravelFrom(cbTravelFrom.getValue());
             p.setArrivalTravelBy(cbTravelBy.getValue());
-            p.setArrivalPortOfEntry(tfPortOfEntry.getText());
+            p.setArrivalPortOfEntry(cbPortOfEntry.getValue());
 
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (opStatus == 0)
@@ -158,8 +182,8 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         return (!tfTM6Number.getText().isEmpty())
                 && (dpLastEntry.getValue() != null)
-                && (!tfPortOfEntry.getText().isEmpty())
-                && (!tfTravelFrom.getText().isEmpty())
+                && (cbPortOfEntry.getValue() != null)
+                && (cbTravelFrom.getValue() != null)
                 && (cbTravelBy.getValue() != null);
     }
 

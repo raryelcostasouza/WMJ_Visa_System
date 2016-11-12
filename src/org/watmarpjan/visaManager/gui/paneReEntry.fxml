@@ -67,7 +67,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="tfTravelFrom" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="cbTravelFrom" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Travel by:" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
@@ -85,7 +85,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="tfPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="cbPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
