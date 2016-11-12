@@ -668,18 +668,46 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         }
         else if (me.getSource().equals(ivScan1))
         {
-            ps = listPassportScan.get(0);
-            fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            //if there is a scan selected, but not yet added
+            if (fScan1Selected != null)
+            {
+                fImgScan = fScan1Selected;
+            }
+            //for a registered scan
+            else
+            {
+                ps = listPassportScan.get(0);
+                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            }
+
         }
         else if (me.getSource().equals(ivScan2))
         {
-            ps = listPassportScan.get(1);
-            fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            //if there is a scan selected, but not yet added
+            if (fScan2Selected != null)
+            {
+                fImgScan = fScan2Selected;
+            }
+            //for a registered scan
+            else
+            {
+                ps = listPassportScan.get(1);
+                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            }
         }
         else
         {
-            ps = listPassportScan.get(2);
-            fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            //if there is a scan selected, but not yet added
+           if (fScan3Selected != null)
+            {
+                fImgScan = fScan3Selected;
+            }
+           //for a registered scan
+            else
+            {
+                ps = listPassportScan.get(2);
+                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+            }
         }
 
         ImgUtil.openClickedIMG(fImgScan);
@@ -791,16 +819,19 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     if (ae.getSource().equals(bAddScan1))
                     {
                         bAddScan1.setDisable(true);
+                        fScan1Selected = null;
                     }
                     else if (ae.getSource().equals(bAddScan2))
                     {
                         bAddScan2.setDisable(true);
+                        fScan2Selected = null;
                     }
                     else
                     {
-                         bAddScan3.setDisable(true);
+                        bAddScan3.setDisable(true);
+                        fScan3Selected = null;
                     }
-                        
+
                     //refresh the profile because the passportScan list was updated
                     ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
                     loadIMGPreviews(p);
