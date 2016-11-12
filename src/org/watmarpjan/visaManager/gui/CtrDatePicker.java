@@ -23,7 +23,7 @@ public class CtrDatePicker
     public CtrDatePicker()
     {
         //english locale for the months name appear in english
-        //Locale.setDefault(Locale.US);
+        Locale.setDefault(Locale.UK);
         alDatePicker = new ArrayList<>();
     }
 
@@ -34,6 +34,7 @@ public class CtrDatePicker
 
     public void setThaiChronology()
     {
+        Locale.setDefault(new Locale("th"));
         for (DatePicker dp : alDatePicker)
         {
             dp.setChronology(ThaiBuddhistChronology.INSTANCE);
@@ -42,6 +43,7 @@ public class CtrDatePicker
 
     public void setISOChronology()
     {
+        Locale.setDefault(Locale.UK);
         for (DatePicker dp : alDatePicker)
         {
             dp.setChronology(IsoChronology.INSTANCE);
