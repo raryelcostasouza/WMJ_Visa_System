@@ -98,7 +98,7 @@ public class CtrVisa extends AbstractControllerDB
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where p.idProfile = " + idProfile
-                + " order by vext.expiryDate";
+                + " order by vext.expiryDate desc";
         
         result = ctrDB.getSession().createQuery(hql);
         alVisaExtensions = (ArrayList<EntryVisaExt>) result.getResultList();
@@ -106,20 +106,32 @@ public class CtrVisa extends AbstractControllerDB
         return alVisaExtensions;
     }
     
-    private ArrayList<VisaExtension> loadListVisaExtForProfile(Integer idProfile)
+    private ArrayList<VisaExtension> loadListVisaExtForProfile(MonasticProfile p)
     {
         ArrayList<VisaExtension> listVisaExt;
         String hql;
         Query result;
-        int status;
         
         hql = "from VisaExtension vext"
-                + " where vext.profile.idProfile = " + idProfile + "";
+                + " where vext.monasticProfile.idProfile = " + p.getIdProfile()
+                + " order by vext.expiryDate";
         
         result = ctrDB.getSession().createQuery(hql);
         listVisaExt = (ArrayList<VisaExtension>) result.getResultList();
         
         return listVisaExt;
+    }
+    
+    public VisaExtension getLastExtension(MonasticProfile p)
+    {
+        ArrayList<VisaExtension> listVisaExt;
+        VisaExtension lastVext;
+        
+        listVisaExt = loadListVisaExtForProfile(p);
+        
+        lastVext = listVisaExt.get(listVisaExt.size()-1);
+        return lastVext;
+        
     }
     
     public int addNewVisaForProfile(MonasticProfile p)
