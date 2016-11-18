@@ -43,7 +43,7 @@ public class ProfileUtil
         }
         else
         {
-            return "นาด";
+            return "นาค";
         }
     }
 
@@ -111,21 +111,6 @@ public class ProfileUtil
             return "";
         }
 
-    }
-
-    public static LocalDate getLastExtensionExpiryDate(MonasticProfile p)
-    {
-        ArrayList<VisaExtension> listExt;
-        VisaExtension lastExt;
-                
-        if ((p.getVisaExtensionSet() != null) && (!p.getVisaExtensionSet().isEmpty()))
-        {
-            listExt = new ArrayList<>();
-            listExt.addAll(p.getVisaExtensionSet());
-            lastExt = listExt.get(listExt.size() - 1);
-            return Util.convertDateToLocalDate(lastExt.getExpiryDate());
-        }
-        return null;
     }
 
     public static LocalDate getVisaExpiryDateDesired(MonasticProfile p)
