@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.control;
 
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -13,6 +14,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.scene.control.TitledPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -21,6 +32,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
@@ -82,7 +94,8 @@ public class CtrForm
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
         Upajjhaya u;
-        LocalDate ldVisaExpiryDateDesired;
+        LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
+        Date dVisaExpiry;
 
         addProfilePhotoPrawat(pdfDoc, p);
 
@@ -101,6 +114,7 @@ public class CtrForm
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatAdviserToComeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
+
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
@@ -163,23 +177,34 @@ public class CtrForm
             acroForm.getField("addrRoadWatAdviserToComeThai").setValue(mAdviserToCome.getAddrRoad());
             acroForm.getField("addrTambonWatAdviserToComeThai").setValue(mAdviserToCome.getAddrTambon());
             acroForm.getField("addrAmpherWatAdviserToComeThai").setValue(mAdviserToCome.getAddrAmpher());
-            acroForm.getField("addrJangwatWatResidingAtThai").setValue(mAdviserToCome.getAddrJangwat());
+            acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(mAdviserToCome.getAddrJangwat());
         }
 
-        acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(p.getVisaExpiryDate()));
-        ldVisaExpiryDateDesired = ProfileUtil.getVisaExpiryDateDesired(p);
-
-        if (ldVisaExpiryDateDesired != null)
+        //if the visa for this monastic has already been extended
+        //retrieves the expiry date of the most recent extension
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
         {
+            dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
+            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
+        }
+        //otherwise retrieves the expiry date of the original visa
+        else
+        {
+            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        }
+
+        acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
+
+        if (ldVisaExpiry != null)
+        {
+            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
             acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
         }
 
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("sponsorThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
-            acroForm.getField("addrNumberWatAdviserToComeThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
@@ -403,6 +428,7 @@ public class CtrForm
         Monastery mResidingAt;
         LocalDate ldBirthDate, ldLastEntry, ldVisaExpiry, ldPassportIssue,
                 ldPassportExpiry;
+        Date dVisaExpiry;
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
@@ -471,7 +497,8 @@ public class CtrForm
         //retrieves the expiry date of the most recent extension
         if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
         {
-            ldVisaExpiry = ProfileUtil.getLastExtensionExpiryDate(p);
+            dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
+            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
         }
         //otherwise retrieves the expiry date of the original visa
         else
@@ -604,7 +631,7 @@ public class CtrForm
         String strFullName, strTitle, strMOrdainedAt;
         Monastery mOrdainedAt, mResidingAt;
         Date dVisaExpiry, dArrivalLastEntry;
-        LocalDate ldVisaExpiry, ldNewExpiryDate, ldExtensionExpiry;
+        LocalDate ldVisaExpiry, ldVisaExpiryDateDesired;
         VisaExtension lastExt;
         int extensionsCount;
 
@@ -634,15 +661,26 @@ public class CtrForm
         {
             acroForm.getField("arrivalLastEntryDate").setValue(Util.toStringThaiDateFormat(dArrivalLastEntry));
         }
-
-        dVisaExpiry = p.getVisaExpiryDate();
-        if (dVisaExpiry != null)
+        
+        //if the visa for this monastic has already been extended
+        //retrieves the expiry date of the most recent extension
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
         {
+            dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
             ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-            acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
+        }
+        //otherwise retrieves the expiry date of the original visa
+        else
+        {
+            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        }
 
-            ldNewExpiryDate = ProfileUtil.getVisaExpiryDateDesired(p);
-            acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldNewExpiryDate));
+        acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
+
+        if (ldVisaExpiry != null)
+        {
+            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
+            acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
         }
 
         if (mOrdainedAt != null)
@@ -702,6 +740,82 @@ public class CtrForm
         contentStream.drawImage(pdImage, tMatrix);
         contentStream.close();
 
+    }
+
+    public void generatePDFDueTasks(TitledPane tp90DayTH, TitledPane tpVisaExtTH, TitledPane tpPsptTH, int option)
+    {
+        PDDocument pdfDoc;
+        PDPage page1, page2;
+        PDPageContentStream contentStream;
+        File outputFile;
+        BufferedImage img90DayTH, imgVisaExtTH;
+        PDImageXObject pdfImg90DayTH, pdfImgVisaExtTH;
+
+        outputFile = AppFiles.getFormTMPOutputPDF("DueTasks");
+        pdfDoc = new PDDocument();
+        page1 = new PDPage(PDRectangle.A4);
+        page2 = new PDPage(PDRectangle.A4);
+        pdfDoc.addPage(page1);
+        pdfDoc.addPage(page2);
+
+        img90DayTH = snapshotGUIComponent(tp90DayTH);
+        imgVisaExtTH = snapshotGUIComponent(tpVisaExtTH);
+
+        try
+        {
+            pdfImg90DayTH = LosslessFactory.createFromImage(pdfDoc, img90DayTH);
+            pdfImgVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgVisaExtTH);
+
+            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() - 50, page1.getMediaBox().getWidth() - 100, pdfImg90DayTH.getHeight());
+            contentStream.close();
+
+            contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+            contentStream.drawImage(pdfImgVisaExtTH, 50, PAGE_A4_HEIGHT_PX - pdfImgVisaExtTH.getHeight() - 50, page2.getMediaBox().getWidth() - 100, pdfImgVisaExtTH.getHeight());
+            contentStream.close();
+            pdfDoc.save(outputFile);
+            pdfDoc.close();
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDoc);
+            }
+            else
+            {
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+            }
+
+        } catch (IOException e)
+        {
+            CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
+        }
+
+    }
+
+    private BufferedImage snapshotGUIComponent(TitledPane pGUIComponent)
+    {
+        Rectangle rect;
+        WritableImage writableImage;
+        ImageView imgView;
+        Printer printer;
+        PageLayout pageLayout;
+
+        printer = Printer.getDefaultPrinter();
+        pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
+        rect = new Rectangle(0, 0, pGUIComponent.getWidth(), pGUIComponent.getHeight());
+        pGUIComponent.setClip(rect);
+        writableImage = new WritableImage((int) pGUIComponent.getWidth(), (int) pGUIComponent.getHeight());
+        pGUIComponent.snapshot(null, writableImage);
+
+        imgView = new ImageView(writableImage);
+
+        double scaleX = pageLayout.getPrintableWidth() / imgView.getBoundsInParent().getWidth();
+        //double scaleY = pageLayout.getPrintableHeight() / imgView.getBoundsInParent().getHeight();
+        imgView.getTransforms().add(new Scale(scaleX, 1));
+
+        pGUIComponent.setClip(null);
+
+        return SwingFXUtils.fromFXImage(imgView.getImage(), null);
     }
 
     public void generatePDFBysuddhiScans(MonasticProfile p, int option)
