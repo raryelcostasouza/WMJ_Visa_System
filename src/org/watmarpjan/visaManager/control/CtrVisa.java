@@ -128,8 +128,15 @@ public class CtrVisa extends AbstractControllerDB
         VisaExtension lastVext;
         
         listVisaExt = loadListVisaExtForProfile(p);
+        if (!listVisaExt.isEmpty())
+        {
+            lastVext = listVisaExt.get(listVisaExt.size()-1);
+        }
+        else
+        {
+            lastVext = null;
+        }
         
-        lastVext = listVisaExt.get(listVisaExt.size()-1);
         return lastVext;
         
     }
