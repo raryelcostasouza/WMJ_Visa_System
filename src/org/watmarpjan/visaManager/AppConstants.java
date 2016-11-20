@@ -31,4 +31,6 @@ public class AppConstants
     public static final String STUDIES_NAKTAM_TOH = "Naktam Toh";
     public static final String STUDIES_NAKTAM_EK = "Naktam Ek";
 
+    public static final String COUNTRY_THAILAND = "THAILAND";
+    
 }
