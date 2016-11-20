@@ -8,11 +8,11 @@ package org.watmarpjan.visaManager.gui;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
@@ -69,8 +69,6 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
     private static final String JAOKANA_AMPHER = "AMPHER";
     private static final String JAOKANA_JANGWAT = "JANGWAT";
 
-    private static final String COUNTRY_THAILAND = "THAILAND";
-
     public void init()
     {
         ArrayList listFields;
@@ -79,6 +77,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         listFields.add(tfName);
         listFields.add(tfAddrCountry);
         listFields.add(tfAddrProvince);
+        listFields.add(tfAddrAmpher);
         listFields.add(tfAddrTambol);
         listFields.add(tfAddrRoad);
         listFields.add(tfAddrNumber);
@@ -145,7 +144,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
 
             if (rbCountryThailand.isSelected())
             {
-                m.setAddrCountry(COUNTRY_THAILAND);
+                m.setAddrCountry(AppConstants.COUNTRY_THAILAND);
             } else
             {
                 m.setAddrCountry(tfAddrCountry.getText());
@@ -234,7 +233,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             tfName.setText(m.getMonasteryName());
             tfPhoneNumber.setText(m.getPhoneNumber());
 
-            if (m.getAddrCountry() != null && m.getAddrCountry().equals(COUNTRY_THAILAND))
+            if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
                 rbCountryThailand.setSelected(true);
                 tfAddrCountry.setText("");
