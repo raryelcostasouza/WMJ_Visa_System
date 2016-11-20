@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
+   <children>
+      <TitledPane animated="false" collapsible="false" text="Monastery List">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <ComboBox fx:id="cbMonasteryList" onAction="#actionSelectMonastery" />
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" text="Basic information">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Name:" />
+                        <Label text="Phone Number:" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfName" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfPhoneNumber" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="108.0" text="Wat of JaoKana:" GridPane.rowIndex="2" />
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <RadioButton fx:id="rbNo" mnemonicParsing="false" selected="true" text="No">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgJaokana" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="rbJkJangwat" mnemonicParsing="false" text="Jaokana Jangwat" toggleGroup="$tgJaokana" />
+                              <RadioButton fx:id="rbJKAmpher" mnemonicParsing="false" text="Jaokana Ampher" toggleGroup="$tgJaokana" />
+                              <RadioButton fx:id="rbJKTambol" mnemonicParsing="false" text="Jaokana Tambol" toggleGroup="$tgJaokana" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" text="Address">
+         <content>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Province/State:" GridPane.rowIndex="1" />
+                              <Label layoutX="10.0" layoutY="20.0" text="District/Ampher:" GridPane.rowIndex="2" />
+                              <Label layoutX="10.0" layoutY="54.0" text="Subdistrict/Tambol:" GridPane.rowIndex="3" />
+                              <Label layoutX="10.0" layoutY="53.0" text="Road:" GridPane.rowIndex="4" />
+                              <Label layoutX="10.0" layoutY="73.0" text="Number:" GridPane.rowIndex="5" />
+                              <TextField fx:id="tfAddrProvince" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfAddrAmpher" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfAddrTambol" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfAddrRoad" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="tfAddrNumber" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Country:" />
+                              <GridPane GridPane.columnIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <RadioButton fx:id="rbCountryThailand" mnemonicParsing="false" text="Thailand">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="tgCountry" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <HBox alignment="CENTER" GridPane.rowIndex="1">
+                                       <children>
+                                          <RadioButton fx:id="rbCountryOther" mnemonicParsing="false" text="Other:" toggleGroup="$tgCountry" />
+                                          <TextField fx:id="tfAddrCountry" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>

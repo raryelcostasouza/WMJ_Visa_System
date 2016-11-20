@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneUpajjhaya">
+   <children>
+      <TitledPane animated="false" collapsible="false" text="Upajjhaya List">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <ComboBox fx:id="cbUpajjhayaList" onAction="#actionSelectUpajjhaya" />
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Basic information">
+         <content>
+            <HBox alignment="CENTER" fillHeight="false">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Name:" />
+                        <Label text="Monastery:" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cbMonasteryList" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfName" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>
