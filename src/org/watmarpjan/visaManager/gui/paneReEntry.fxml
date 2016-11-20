@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneAddEntryReEntry">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.CtrPaneAddEntryReEntry">
    <children>
       <TitledPane collapsible="false" text="Forms">
          <content>
@@ -67,7 +67,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="cbTravelFrom" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="cbTravelFrom" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Travel by:" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
@@ -85,7 +85,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="cbPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="cbPortOfEntry" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
