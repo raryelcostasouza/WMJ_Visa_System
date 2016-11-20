@@ -1,64 +1,71 @@
 ------------------------------------------------------------------------------
 Questions
-        -Form TM7 -> Extension period 365 days on template
-        -Current Date on TM Forms
-        -Form STM2 -> reason extension need to be included on template
+       Months conversion combobox?
+       Dates on Tables need to be converted to Thai?
+
+         Passport Panel  
+            -spinner for page number
+
+        -Prawat -> review thai fields
+                    --add patimokkha chanting
+                    --review list of extensions
+        -Prawat -> abbot name -> PDF
+        -Prawat -> sponsor Thai -> fill on the form or the same as WatResidingAt
+
         - Form SNP Request 
             -Full Name -> order of the names
-            -need to give warnings if main fields are missing data
 
        -When change visa does the number change as well??
        -Does the limit of extensions reset?
 
-       -If the new scan is of the same page number of an existing passportScan???
-            -Replace passportScanData and replace file
-
 ------------------------------------------------------------------------------
 Changes/Fixes
-    -DatePicker format dd/mm/yyyy on thai format not always working
-    -datepicker reentry,change visa, extension, change passport, not registered
+    -Validation of numeric fields
+    
+    -Increase Font Size
 
-    -***BUG - if change nickname profile need to rename the data folder as well
-    -Panel Visa extension 
-        ->When there are extensions registered the new expiry date should be counted from the extension and not the visa
-        ->If remove the last extension, need to archive the scan as well
-    -Monastery
-        -Redesign country selection. 
-    -Review cleanup of tmp files
-
-    -block edition when there is no profile, monastery etc on the list
-    -Optimize loading
     -Connection pool not use hibernate native one
     --Check about Hibernate session use
         --leave open directly
         -- or open only when have transaction
-    -MonasticProfile Panel -> DhammaStudies and Status change to Combobox
-------------------------------------------------------------------------------
-Current Working
-    
-    Form Letter SamnakPut
-        - add function to detect the thai fields automatically?
+
+    90 Day
+        -> Online 15-7 days before due date 
+    Extension 
+        1) prawat 6 months before due date. For someone with new visa (3 month duration) 3 months before due date
+        2) sending to samnakput - 3 months. For someone with new visa 2 months
+        3) immigration - 1 month before
+        -> 1 month before due date
 
     Project -> use local libraries on project folder
-
-    
-        
-        
-
-    -Add unique and other constraints on Derby via script sql
     -review update functionality on JPA
-
     
-   
--Receipts 90 day online
-    -Implement table showing saved receipts
+   Sort Receipts 90 Day by date desc
+------------------------------------------------------------------------------
+Current Working
+    Prawat 
+        
 
-    -used for checking pending notifications
-    -check people for who 90 day online works
-    -options
-        -by person
-        -all together
-   
+
+    VisaExtension query need to merge and sort
+
+    Print Due Tasks
+        Duplicated TableViews with visible false
+        Line size
+
+    Prawat - request. Visa expiry and desired
+        Nathan - last ext is on first position
+    Graduation year check western year
+    Passport Scan - Rotate first page scan.
+
+    Change listener on DatePicker
+    Print Due Tasks - generate csv file?
+    Prawat - ordination date - month written in Thai
+            -Address adviser to come - jangwat. Add the country when not Thailand. Add comma
+            -Birth Country and birth place - add comma
+    TM8 - field name watResidingAtThai
+            -show name nameWatResidingAtThai
+
 ------------------------------------------------------------------------------
 Validation/errors
     -test scenario where there is no profile registered
@@ -72,11 +79,8 @@ Essential features
 
 
 Generate printable page 
-    -passport/bysuddhi scans
     -photo
     -due tasks
-
-Tm30 - store report date - together entry - store pdf file
 
 
 ------------------------------------------------------------------------------
@@ -90,24 +94,13 @@ Desirable features
     Login timeout to close DB connection
     -Entry/re-entry travel from and port of entry should be comboboxes with db data for selection
 
-Pending 
     
-    
-Entry-Reentry
-    -add arrive stamp scan selection
-
-Pending
-    -consistency - when archiving BOTH operations neeed to succeed (archiving file and erasing DB info)
-
 Number of signed copies 90 day notice
     -show merged possible dates on calendar for multiple monastics
-
-forms - check for thai characters and apply special font automatically
 
 quick update - only view mode
             
             
-check if there is undeleted tmp files on start and delete them
 
 90 day
     -e-mail and phone number for online notice -> get from user profile
@@ -115,11 +108,6 @@ check if there is undeleted tmp files on start and delete them
 
 DB
     -proper error messages for common SQL error - primary key, unique key etc
-
-
-getSelectedProfileID()
-    -if no profiles available returns -1
-    -need to implement how to handle this situation on the functions that use getSelectedProfileID()
 
 Profile
     -spinner for number of years certificate
@@ -134,20 +122,9 @@ Directory Structure
 Due tasks page
         -option to print due tasks
         -if sunday or saturday need to have special mark
-        90day notice flag mark if works online or not
-        Button for related operation (update 90 day notice, etc)
         NDays for processing should be changeable or stored in a table - yes
 http://docs.oracle.com/javafx/2/ui_controls/table-view.htm
 
 
 Profile panel 
-    -personal contact info (phone, email)
-    -Handle invalid number fields
     -Thai field need increase font size
-
-Pdf Forms
-    -implement other forms
-
-Dialog
-	-Dialog for saving success and error messages
-	-Confirmation dialog for changing profile or screen when have unsaved changes 
