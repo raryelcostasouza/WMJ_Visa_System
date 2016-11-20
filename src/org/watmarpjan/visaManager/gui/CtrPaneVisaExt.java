@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.gui;
 import java.time.LocalDate;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import java.util.ArrayList;
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,7 +27,6 @@ import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
-import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -159,6 +159,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldExpVisa, ldExpLastExtension;
+        Date dLastExt;
 
         if (p != null)
         {
@@ -188,7 +189,8 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
 
             //pre-set the expiry date for the next extension
             //1) If the visa has extensions -> 1 Year after the last extension expiry date
-            ldExpLastExtension = ProfileUtil.getLastExtensionExpiryDate(p);
+            dLastExt = ctrGUIMain.getCtrMain().getCtrVisa().getLastExtension(p).getExpiryDate();
+            ldExpLastExtension = Util.convertDateToLocalDate(dLastExt);
             if (ldExpLastExtension != null)
             {
                 dpExpiryDate.setValue(ldExpLastExtension.plusYears(1));
