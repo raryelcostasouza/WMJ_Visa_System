@@ -26,7 +26,7 @@ public class EntryVisaExt
         this.extNumber = new SimpleStringProperty(extNumber);
 
         ldExpiryDate = Util.convertDateToLocalDate(dExpiryDate);
-        this.expiryDate = new SimpleStringProperty(ldExpiryDate.toString());
+        this.expiryDate = new SimpleStringProperty(ldExpiryDate.format(Util.DEFAULT_DATE_FORMAT));
     }
 
     public String getExtNumber()
