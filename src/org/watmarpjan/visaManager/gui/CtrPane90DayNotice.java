@@ -242,7 +242,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         tvDueNotice90Day.getItems().clear();
         tvDueNotice90Day.getItems().addAll(al);
 
-        dpNext90DayNotice.setValue(LocalDate.now().plusDays(90));
+        dpNext90DayNotice.setValue(LocalDate.now().plusDays(89));
     }
 
     @Override
