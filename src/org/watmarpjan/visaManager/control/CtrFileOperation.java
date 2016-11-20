@@ -20,7 +20,7 @@ import javafx.stage.FileChooser;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryReceipt90Day;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;

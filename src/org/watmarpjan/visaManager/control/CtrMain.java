@@ -5,7 +5,7 @@
  */
 package org.watmarpjan.visaManager.control;
 
-import org.watmarpjan.visaManager.gui.CtrGUIMain;
+import org.watmarpjan.visaManager.gui.panel.CtrGUIMain;
 
 /**
  *

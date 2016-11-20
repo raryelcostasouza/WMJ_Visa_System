@@ -41,7 +41,7 @@ import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.util.Matrix;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;

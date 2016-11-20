@@ -18,7 +18,7 @@ import javax.persistence.PersistenceException;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 
 /**
  *

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 
 /**
  *

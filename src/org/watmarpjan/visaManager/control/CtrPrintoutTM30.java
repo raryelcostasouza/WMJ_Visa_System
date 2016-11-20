@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;

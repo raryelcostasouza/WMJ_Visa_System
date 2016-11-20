@@ -10,8 +10,8 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.EntryDueTask;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -241,7 +241,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.arrivalPortOfEntry";
         return queryStringField(hql);
     }
-    
+
     public ArrayList<String> loadListTravelFrom()
     {
         String hql;
@@ -258,7 +258,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.Notice90DayTaskEntry(p.nickname, p.next90DayNotice)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry(p.nickname, p.next90DayNotice)"
                 + " from MonasticProfile p "
                 + " where p.status = 'THAILAND' and"
                 + " p.next90DayNotice is not null "
@@ -281,22 +281,40 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
     public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
     {
-        String hql;
+        String hql1, hql2;
+        ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
-        hql = "select new org.watmarpjan.visaManager.model.VisaExtTaskEntry(p.nickname, p.visaExpiryDate)"
-                + " from MonasticProfile p "
-                + " where p.status = '" + currentLocation + "' and"
-                + " p.visaExpiryDate is not null "
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry(p.nickname, max(vext.expiryDate))"
+                + " from MonasticProfile p"
+                + " inner join p.visaExtensionSet vext"
+                + " where p.status = '" + currentLocation + "'"
+                + " and size(p.visaExtensionSet) > 0"
+                + " group by p.nickname"
+                + " order by max(vext.expiryDate)";
+         listVisaExtended = queryDueTaskEntry(hql1);
+
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry(p.nickname, p.visaExpiryDate)"
+                + " from MonasticProfile p"
+                + " where p.status = '" + currentLocation + "'"
+                + " and p.visaExpiryDate is not null"
+                + " and size(p.visaExtensionSet) = 0"
                 + " order by p.visaExpiryDate";
-
-        return queryDueTaskEntry(hql);
+        listVisaNotExtended = queryDueTaskEntry(hql2);
+        
+        listMerged = new ArrayList<>();
+        
+        listMerged.addAll(listVisaNotExtended);
+        listMerged.addAll(listVisaExtended);
+        listMerged.sort(null);
+        
+        return listMerged;
     }
 
     public ArrayList<EntryDueTask> loadListDuePassportRenewal(String currentLocation)
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.PassportRenewTaskEntry(p.nickname, p.passportExpiryDate)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.PassportRenewTaskEntry(p.nickname, p.passportExpiryDate)"
                 + " from MonasticProfile p "
                 + " where p.status = '" + currentLocation + "' and"
                 + " p.passportExpiryDate is not null "
@@ -338,5 +356,4 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         return (ArrayList<EntryDueTask>) qResult.getResultList();
     }
-
 }
