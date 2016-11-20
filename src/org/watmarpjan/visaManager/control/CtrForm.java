@@ -966,6 +966,8 @@ public class CtrForm
         PDImageXObject imgPassportScan, imgDepartureCardScan;
         PDPage page1;
         float departureCardScanWidth, departureCardScanHeight;
+        Matrix tMatrix;
+        AffineTransform at;
 
         //Departure Card Real size 185mm x 80mm
         //Converts the departure card width to pixels
@@ -992,7 +994,13 @@ public class CtrForm
             if (fScanPassportFirstPage != null)
             {
                 imgPassportScan = PDImageXObject.createFromFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).toString(), pdfDoc);
-                contentStream.drawImage(imgPassportScan, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+                
+                at = new AffineTransform(DEFAULT_WIDTH_PASSPORT_SCAN_PX, 0, 0, DEFAULT_HEIGHT_PASSPORT_SCAN_PX, 50, PAGE_A4_HEIGHT_PX-50);
+                //rotates the image 90 degree
+                at.rotate(Math.toRadians(-90));
+                tMatrix = new Matrix(at);
+
+                contentStream.drawImage(imgPassportScan, tMatrix);
             }
 
             if (fScanDepartureCard != null)
