@@ -96,6 +96,7 @@ public class CtrForm
         Upajjhaya u;
         LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
         Date dVisaExpiry;
+        String str_jangwat_country;
 
         addProfilePhotoPrawat(pdfDoc, p);
 
@@ -126,6 +127,10 @@ public class CtrForm
 
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatJaoKanaJangwatThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaJangwatThai"));
+
+        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF1"));
+        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
+        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
@@ -177,7 +182,17 @@ public class CtrForm
             acroForm.getField("addrRoadWatAdviserToComeThai").setValue(mAdviserToCome.getAddrRoad());
             acroForm.getField("addrTambonWatAdviserToComeThai").setValue(mAdviserToCome.getAddrTambon());
             acroForm.getField("addrAmpherWatAdviserToComeThai").setValue(mAdviserToCome.getAddrAmpher());
-            acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(mAdviserToCome.getAddrJangwat());
+
+            if (mAdviserToCome.getAddrCountry() != null
+                    && !mAdviserToCome.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
+            {
+                str_jangwat_country = mAdviserToCome.getAddrJangwat() + ", " + mAdviserToCome.getAddrCountry();
+            }
+            else
+            {
+                str_jangwat_country = mAdviserToCome.getAddrJangwat();
+            }
+            acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(str_jangwat_country);
         }
 
         //if the visa for this monastic has already been extended
@@ -432,7 +447,11 @@ public class CtrForm
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("thaiNameWatResidingAt"));
+        alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
@@ -457,7 +476,7 @@ public class CtrForm
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("thaiNameWatResidingAt").setValue(mResidingAt.getMonasteryName());
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
@@ -661,7 +680,7 @@ public class CtrForm
         {
             acroForm.getField("arrivalLastEntryDate").setValue(Util.toStringThaiDateFormat(dArrivalLastEntry));
         }
-        
+
         //if the visa for this monastic has already been extended
         //retrieves the expiry date of the most recent extension
         if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
