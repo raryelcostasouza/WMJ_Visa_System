@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.watmarpjan.visaManager.gui.CtrAlertDialog;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 
 /**
  *
@@ -35,12 +35,12 @@ public class Init extends Application
         {
             MAIN_STAGE = primaryStage;
             HOST_SERVICES = getHostServices();
-            VBox page = (VBox) FXMLLoader.load(Init.class.getResource("gui/mainPane.fxml"));
+            VBox page = (VBox) FXMLLoader.load(Init.class.getResource("gui/panel/mainPane.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
             primaryStage.setTitle("WMJ Visa System");
-            primaryStage.setWidth(1300);
-            primaryStage.setHeight(1050);
+            primaryStage.setWidth(1600);
+            primaryStage.setHeight(900);
             primaryStage.show();
         } catch (Exception ex)
         {
