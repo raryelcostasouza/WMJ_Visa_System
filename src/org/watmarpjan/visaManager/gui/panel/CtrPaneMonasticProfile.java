@@ -306,7 +306,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             fileProfilePhoto = null;
         }
-        
 
         ImgUtil.loadImageView(ivProfilePhoto, ImgUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
     }
@@ -495,11 +494,13 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     public void actionSave()
     {
         MonasticProfile p;
-        int operationStatus;
+        int operationStatus, gradYear;
+        boolean error;
         Monastery wResidingAt, wAdviserToCome;
         Date birthDate;
         String previousNickName, newNickName;
 
+        error = false;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         previousNickName = p.getNickname();
         newNickName = tfNickname.getText();
@@ -539,6 +540,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             } catch (NumberFormatException nfe)
             {
                 CtrAlertDialog.errorDialog("Invalid number for 'Certificate Duration'");
+                error = true;
             }
         }
         else
@@ -552,12 +554,22 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             try
             {
-                p.setCertificateGradYear(parseInt(tfGraduationYear.getText()));
+                gradYear = parseInt(tfGraduationYear.getText());
+                if (gradYear < 2400)
+                {
+                    p.setCertificateGradYear(gradYear);
+                }
+                else
+                {
+                    CtrAlertDialog.errorDialog("The graduation Year should be on Western format.");
+                    error = true;
+                }
 
             } catch (NumberFormatException nfe)
             {
 
                 CtrAlertDialog.errorDialog("Invalid number for 'Graduation Year'");
+                error = true;
             }
         }
         else
@@ -612,19 +624,22 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }
 
-        //if the update operation was successful
-        operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
-        if (operationStatus == 0)
+        //if no field caused errors
+        if (!error)
         {
-            //if the nickname was changed refresh nickname list
-            if (!previousNickName.equals(newNickName))
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            //if the update operation was successful
+            if (operationStatus == 0)
             {
-                ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
-                CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
+                //if the nickname was changed refresh nickname list
+                if (!previousNickName.equals(newNickName))
+                {
+                    ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
+                    CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
+                }
+                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+                CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
-            ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
-            CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
-
         }
     }
 
