@@ -7,10 +7,8 @@ package org.watmarpjan.visaManager.util;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.Date;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
  *
@@ -110,42 +108,6 @@ public class ProfileUtil
         {
             return "";
         }
-
-    }
-
-    public static LocalDate getVisaExpiryDateDesired(MonasticProfile p)
-    {
-        LocalDate ldVisaExpiry, ldExtensionExpiry, ldNewExpiryDate;
-        Date dVisaExpiry;
-        VisaExtension lastExt;
-
-        dVisaExpiry = p.getVisaExpiryDate();
-        if (dVisaExpiry != null)
-        {
-            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-
-            //if there are visa extensions 
-            if ((p.getVisaExtensionSet() != null) && (!p.getVisaExtensionSet().isEmpty()))
-            {
-                ArrayList<VisaExtension> listExt = new ArrayList<>();
-                listExt.addAll(p.getVisaExtensionSet());
-                lastExt = listExt.get(listExt.size() - 1);
-                ldExtensionExpiry = Util.convertDateToLocalDate(lastExt.getExpiryDate());
-
-                //the desired expiry date is one year from the last extension
-                ldNewExpiryDate = ldExtensionExpiry.plusYears(1);
-
-            }
-            else
-            {
-                //if there are no extensions
-                //the desired expiry date is one year from the visa expiry
-                ldNewExpiryDate = ldVisaExpiry.plusYears(1);
-
-            }
-            return ldNewExpiryDate;
-        }
-        return null;
 
     }
 }
