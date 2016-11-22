@@ -98,11 +98,6 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         if (confirmation)
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-            p.setPassportNumber(null);
-            p.setPassportCountry(null);
-            p.setPassportIssuedAt(null);
-            p.setPassportExpiryDate(null);
-            p.setPassportIssueDate(null);
 
             //archive passport scans
             if (p.getPassportScanSet() != null)
@@ -112,6 +107,12 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 //clears the DB entries for the Extra Scans
                 ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
             }
+
+            p.setPassportNumber(null);
+            p.setPassportCountry(null);
+            p.setPassportIssuedAt(null);
+            p.setPassportExpiryDate(null);
+            p.setPassportIssueDate(null);
 
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (opStatus == 0)
