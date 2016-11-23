@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.gui.panel;
 
 import java.util.ArrayList;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -75,6 +76,18 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
         initTablePassportRenew(tvTHPassportRenewal);
         initTablePassportRenew(tvAbroadPassportRenewal);
+
+        for (TableView<EntryDueTask> tv : alTV)
+        {
+            tv.setFixedCellSize(30);
+        }
+    }
+    
+    private void initAutoHeightResize(TableView<EntryDueTask> tv, double headerAdjust)
+    {
+        tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(2.5)));
+        tv.minHeightProperty().bind(tv.prefHeightProperty());
+        tv.maxHeightProperty().bind(tv.prefHeightProperty());
     }
 
     private void initTableGeneric(TableView<EntryDueTask> tv)
@@ -104,6 +117,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
                         else
                         {
                             btn.setGraphic(ivActionIcon);
+                            btn.setScaleY(0.5);
                             btn.setOnAction((ActionEvent event)
                                     ->
                             {
@@ -150,6 +164,8 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
+        
+        initAutoHeightResize(tv, 2.5);
     }
 
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
@@ -159,12 +175,16 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("prawat"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("immigration"));
+        
+        initAutoHeightResize(tv, 2.5);
     }
 
     private void initTablePassportRenew(TableView<EntryDueTask> tv)
     {
         initTableGeneric(tv);
         tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
+        
+        initAutoHeightResize(tv, 1.01);
     }
 
     public void fillData()
