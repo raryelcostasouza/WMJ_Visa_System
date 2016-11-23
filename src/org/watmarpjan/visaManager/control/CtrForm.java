@@ -83,6 +83,7 @@ public class CtrForm
     private final float DEFAULT_WIDTH_PASSPORT_SCAN_PX = (PDRectangle.A4.getWidth() * 170) / 210.0f;
 
     private final float PAGE_A4_HEIGHT_PX = PDRectangle.A4.getHeight();
+    private final float PAGE_A4_WIDTH_PX = PDRectangle.A4.getWidth();
 
     public CtrForm(CtrMain pCtrMain)
     {
@@ -325,7 +326,7 @@ public class CtrForm
             acroForm.getField("birthDateYear").setValue(Util.convertYearToThai(ldBirthDate.getYear()) + "");
         }
 
-        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + " " + p.getBirthCountry());
+        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + ", " + p.getBirthCountry());
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
 
@@ -767,30 +768,36 @@ public class CtrForm
         PDPage page1, page2;
         PDPageContentStream contentStream;
         File outputFile;
-        BufferedImage img90DayTH, imgVisaExtTH;
-        PDImageXObject pdfImg90DayTH, pdfImgVisaExtTH;
+        BufferedImage img90DayTH, imgVisaExtTH, imgPassptRenew;
+        PDImageXObject pdfImg90DayTH, pdfImgVisaExtTH, pdfImgPassptRenew;
 
         outputFile = AppFiles.getFormTMPOutputPDF("DueTasks");
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
+        //page1.setRotation(90);
         page2 = new PDPage(PDRectangle.A4);
         pdfDoc.addPage(page1);
         pdfDoc.addPage(page2);
 
         img90DayTH = snapshotGUIComponent(tp90DayTH);
         imgVisaExtTH = snapshotGUIComponent(tpVisaExtTH);
+        imgPassptRenew = snapshotGUIComponent(tpPsptTH);
 
         try
         {
             pdfImg90DayTH = LosslessFactory.createFromImage(pdfDoc, img90DayTH);
             pdfImgVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgVisaExtTH);
+            pdfImgPassptRenew = LosslessFactory.createFromImage(pdfDoc, imgPassptRenew);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() - 50, page1.getMediaBox().getWidth() - 100, pdfImg90DayTH.getHeight());
-            contentStream.close();
+            contentStream.drawImage(pdfImg90DayTH, 50,  PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight()*0.6f - 50, pdfImg90DayTH.getWidth()*0.6f, pdfImg90DayTH.getHeight()*0.6f);
 
+            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImg90DayTH.getWidth()*0.6f, pdfImgVisaExtTH.getHeight()*0.6f);
+            contentStream.close();
+            
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(pdfImgVisaExtTH, 50, PAGE_A4_HEIGHT_PX - pdfImgVisaExtTH.getHeight() - 50, page2.getMediaBox().getWidth() - 100, pdfImgVisaExtTH.getHeight());
+            contentStream.drawImage(pdfImgPassptRenew, 100,  PAGE_A4_HEIGHT_PX - pdfImgPassptRenew.getHeight()*0.6f - 50, pdfImgPassptRenew.getWidth()*0.6f, pdfImgPassptRenew.getHeight()*0.6f);
+            
             contentStream.close();
             pdfDoc.save(outputFile);
             pdfDoc.close();
