@@ -52,15 +52,23 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private ArrayList<TableView<EntryDueTask>> alTV;
 
     @FXML
-    private Button bPrint;
+    private Button bPrintTH;
     @FXML
-    private Button bPreview;
+    private Button bPreviewTH;
+    
+    @FXML
+    private Button bPrintAbroad;
+    @FXML
+    private Button bPreviewAbroad;
 
     @Override
     public void init()
     {
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrintTH.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPreviewTH.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        
+        bPrintAbroad.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        bPreviewAbroad.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
         alTV = new ArrayList<>();
         alTV.add(tvTH90DayNotice);
@@ -213,14 +221,26 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     }
 
     @FXML
-    void actionPrintDueTasks(ActionEvent ae)
+    void actionPrintDueTasksTH(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasks(tPAuxVisaExtTH, tPAux90DayTH, tPAuxPsptTH, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrForm.OPTION_PRINT_FORM);
     }
 
     @FXML
-    void actionPreviewDueTasks(ActionEvent ae)
+    void actionPreviewDueTasksTH(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasks(tPAux90DayTH, tPAuxVisaExtTH, tPAuxPsptTH, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrForm.OPTION_PREVIEW_FORM);
+    }
+    
+    @FXML
+    void actionPrintDueTasksAbroad(ActionEvent ae)
+    {
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrForm.OPTION_PRINT_FORM);
+    }
+
+    @FXML
+    void actionPreviewDueTasksAbroad(ActionEvent ae)
+    {
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrForm.OPTION_PREVIEW_FORM);
     }
 }

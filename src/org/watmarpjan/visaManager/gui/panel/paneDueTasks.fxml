@@ -2,16 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -23,21 +19,21 @@
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewDueTasks" text="Preview" />
-                        <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintDueTasks" text="Print" />
+                        <Button fx:id="bPreviewTH" mnemonicParsing="false" onAction="#actionPreviewDueTasksTH" text="Preview" />
+                        <Button fx:id="bPrintTH" mnemonicParsing="false" onAction="#actionPrintDueTasksTH" text="Print" />
                      </children>
                   </HBox>
                   <ScrollPane fitToWidth="true">
                      <content>
                         <VBox fx:id="vPaneDueTasksTH">
                            <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TitledPane fx:id="tPAux90DayTH" animated="false" collapsible="false" text="90 Day Notice">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                       <content>
+                              <TitledPane fx:id="tPAux90DayTH" animated="false" collapsible="false" text="90 Day Notice">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <content>
+                                    <HBox alignment="CENTER">
+                                       <children>
                                           <TableView fx:id="tvTH90DayNotice">
                                              <columns>
                                                 <TableColumn minWidth="-1.0" prefWidth="53.0" text="Action" />
@@ -54,18 +50,17 @@
                                                 </TableColumn>
                                              </columns>
                                           </TableView>
-                                       </content>
-                                    </TitledPane>
-                                 </children>
-                              </HBox>
-                              <Separator />
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TitledPane fx:id="tPAuxVisaExtTH" animated="false" collapsible="false" text="Visa Extension">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                       <content>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tPAuxVisaExtTH" animated="false" collapsible="false" text="Visa Extension">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <content>
+                                    <HBox alignment="CENTER">
+                                       <children>
                                           <TableView fx:id="tvTHVisaExtension">
                                              <columns>
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Action" />
@@ -82,18 +77,17 @@
                                                 </TableColumn>
                                              </columns>
                                           </TableView>
-                                       </content>
-                                    </TitledPane>
-                                 </children>
-                              </HBox>
-                              <Separator />
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TitledPane fx:id="tPAuxPsptTH" animated="false" collapsible="false" text="Passport Renewal">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                       <content>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tPAuxPsptTH" animated="false" collapsible="false" text="Passport Renewal">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <content>
+                                    <HBox alignment="CENTER">
+                                       <children>
                                           <TableView fx:id="tvTHPassportRenewal">
                                              <columns>
                                                 <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
@@ -104,10 +98,10 @@
                                                 <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                              </columns>
                                           </TableView>
-                                       </content>
-                                    </TitledPane>
-                                 </children>
-                              </HBox>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
                            </children>
                         </VBox>
                      </content>
@@ -117,67 +111,74 @@
          </content>
         </Tab>
         <Tab closable="false" text="Abroad">
-            <content>
-                <GridPane fx:id="bPaneDueTasksAbroad">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                  <TitledPane collapsible="false" text="Visa Extension">
+         <content>
+            <VBox alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Button fx:id="bPreviewAbroad" mnemonicParsing="false" onAction="#actionPreviewDueTasksAbroad" text="Preview" />
+                        <Button fx:id="bPrintAbroad" mnemonicParsing="false" onAction="#actionPrintDueTasksAbroad" text="Print" />
+                     </children>
+                  </HBox>
+                  <ScrollPane fitToWidth="true">
                      <content>
-                                <HBox alignment="TOP_CENTER">
+                        <VBox alignment="CENTER">
                            <children>
-                              <TableView fx:id="tvAbroadVisaExtension">
-                                 <columns>
-                                    <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
-                                    <TableColumn minWidth="-1.0" prefWidth="150.0" text="Remaining Time" />
-                                    <TableColumn prefWidth="75.0" text="Begin processing">
-                                       <columns>
-                                          <TableColumn prefWidth="85.0" text="Prawat" />
-                                          <TableColumn prefWidth="85.0" text="Samnakput" />
-                                          <TableColumn minWidth="-Infinity" prefWidth="85.0" text="Immigration" />
-                                       </columns>
-                                    </TableColumn>
-                                 </columns>
-                              </TableView>
+                              <TitledPane collapsible="false" text="Visa Extension">
+                                 <content>
+                                            <HBox alignment="TOP_CENTER">
+                                       <children>
+                                          <TableView fx:id="tvAbroadVisaExtension">
+                                             <columns>
+                                                <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
+                                                <TableColumn minWidth="-1.0" prefWidth="150.0" text="Remaining Time" />
+                                                <TableColumn prefWidth="260.0" text="Begin processing">
+                                                   <columns>
+                                                      <TableColumn prefWidth="85.0" text="Prawat" />
+                                                      <TableColumn prefWidth="85.0" text="Samnakput" />
+                                                      <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Immigration" />
+                                                   </columns>
+                                                </TableColumn>
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                            </HBox>
+                                 </content>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Passport Renewal">
+                                 <content>
+                                            <HBox alignment="TOP_CENTER">
+                                       <children>
+                                          <TableView fx:id="tvAbroadPassportRenewal">
+                                             <columns>
+                                                <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
+                                                <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                            </HBox>
+                                 </content>
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TitledPane>
                            </children>
-                                </HBox>
+                        </VBox>
                      </content>
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </TitledPane>
-                  <TitledPane animated="false" collapsible="false" text="Passport Renewal" GridPane.rowIndex="1">
-                     <content>
-                                <HBox alignment="TOP_CENTER">
-                           <children>
-                              <TableView fx:id="tvAbroadPassportRenewal">
-                                 <columns>
-                                    <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                    <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="62.0" text="Weekday" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
-                                    <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                                </HBox>
-                     </content>
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </TitledPane>
-                    </children>
-                </GridPane>
-            </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </content>
         </Tab>
     </tabs>
 </TabPane>
