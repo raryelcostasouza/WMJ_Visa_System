@@ -164,7 +164,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         MonasticProfile p;
         try
         {
-            p = (MonasticProfile) ctrDB.getSession().getReference(MonasticProfile.class, id);
+            p = (MonasticProfile) ctrDB.getSession().find(MonasticProfile.class, id);
             return p;
         } catch (PersistenceException he)
         {
