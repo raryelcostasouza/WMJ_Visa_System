@@ -24,6 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.PageRanges;
 import org.apache.pdfbox.cos.COSName;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -792,34 +795,32 @@ public class CtrForm
             pdfImgVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgVisaExtTH);
             pdfImgPassptRenew = LosslessFactory.createFromImage(pdfDoc, imgPassptRenew);
 
-            
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(font, fontSize );
+            contentStream.setFont(font, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("90 Day Notice");
             contentStream.endText();
-            contentStream.drawImage(pdfImg90DayTH, 50,  PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight()*0.6f - 50, pdfImg90DayTH.getWidth()*0.6f, pdfImg90DayTH.getHeight()*0.6f);
-            
+            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * 0.6f - 50, pdfImg90DayTH.getWidth() * 0.6f, pdfImg90DayTH.getHeight() * 0.6f);
+
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, 60 + pdfImgVisaExtTH.getHeight()*0.6f);
+            contentStream.newLineAtOffset(50, 60 + pdfImgVisaExtTH.getHeight() * 0.6f);
             contentStream.showText("Visa Extension");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImg90DayTH.getWidth()*0.6f, pdfImgVisaExtTH.getHeight()*0.6f);
+            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImg90DayTH.getWidth() * 0.6f, pdfImgVisaExtTH.getHeight() * 0.6f);
             contentStream.close();
-            
+
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.setFont(font, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Passport Renewal");
             contentStream.endText();
-            
-            contentStream.drawImage(pdfImgPassptRenew, 100,  PAGE_A4_HEIGHT_PX - pdfImgPassptRenew.getHeight()*0.6f - 50, pdfImgPassptRenew.getWidth()*0.6f, pdfImgPassptRenew.getHeight()*0.6f);
-            
+
+            contentStream.drawImage(pdfImgPassptRenew, 100, PAGE_A4_HEIGHT_PX - pdfImgPassptRenew.getHeight() * 0.6f - 50, pdfImgPassptRenew.getWidth() * 0.6f, pdfImgPassptRenew.getHeight() * 0.6f);
+
             contentStream.close();
             pdfDoc.save(outputFile);
-            pdfDoc.close();
 
             if (option == OPTION_PRINT_FORM)
             {
@@ -829,6 +830,7 @@ public class CtrForm
             {
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
+            pdfDoc.close();
 
         } catch (IOException e)
         {
@@ -836,6 +838,7 @@ public class CtrForm
         }
 
     }
+
     public void generatePDFDueTasksAbroad(TableView<EntryDueTask> tvVisaExtAbroad, TableView<EntryDueTask> tvPsptAbroad, int option)
     {
         PDDocument pdfDoc;
@@ -860,24 +863,22 @@ public class CtrForm
             pdfImgVisaExtAbroad = LosslessFactory.createFromImage(pdfDoc, imgVisaExtAbroad);
             pdfImgPassptAbroad = LosslessFactory.createFromImage(pdfDoc, imgPassptAbroad);
 
-            
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(font, fontSize );
+            contentStream.setFont(font, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Visa Extension - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtAbroad, 50,  PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight(), pdfImgVisaExtAbroad.getWidth()*0.6f, pdfImgVisaExtAbroad.getHeight()*0.6f);
-            
+            contentStream.drawImage(pdfImgVisaExtAbroad, 50, PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight(), pdfImgVisaExtAbroad.getWidth() * 0.6f, pdfImgVisaExtAbroad.getHeight() * 0.6f);
+
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX/2.0f + 10);
+            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX / 2.0f + 10);
             contentStream.showText("Passport Renewal - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgPassptAbroad, 50, PAGE_A4_HEIGHT_PX/2.0f - pdfImgPassptAbroad.getHeight() * 0.6f , pdfImgPassptAbroad.getWidth()*0.6f, pdfImgPassptAbroad.getHeight()*0.6f);
+            contentStream.drawImage(pdfImgPassptAbroad, 50, PAGE_A4_HEIGHT_PX / 2.0f - pdfImgPassptAbroad.getHeight() * 0.6f, pdfImgPassptAbroad.getWidth() * 0.6f, pdfImgPassptAbroad.getHeight() * 0.6f);
             contentStream.close();
-            
+
             pdfDoc.save(outputFile);
-            pdfDoc.close();
 
             if (option == OPTION_PRINT_FORM)
             {
@@ -887,6 +888,7 @@ public class CtrForm
             {
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
+            pdfDoc.close();
 
         } catch (IOException e)
         {
@@ -991,7 +993,6 @@ public class CtrForm
 
             contentStream.close();
             pdfDoc.save(outputFile);
-            pdfDoc.close();
 
             if (option == OPTION_PRINT_FORM)
             {
@@ -1001,6 +1002,7 @@ public class CtrForm
             {
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
+            pdfDoc.close();
 
         } catch (IOException ex)
         {
@@ -1026,7 +1028,6 @@ public class CtrForm
             generateScansPage3(pdfDoc, p);
 
             pdfDoc.save(outputFile);
-            pdfDoc.close();
 
             if (option == OPTION_PRINT_FORM)
             {
@@ -1036,6 +1037,7 @@ public class CtrForm
             {
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
+            pdfDoc.close();
 
         } catch (IOException ex)
         {
@@ -1078,8 +1080,8 @@ public class CtrForm
             if (fScanPassportFirstPage != null)
             {
                 imgPassportScan = PDImageXObject.createFromFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).toString(), pdfDoc);
-                
-                at = new AffineTransform(DEFAULT_WIDTH_PASSPORT_SCAN_PX, 0, 0, DEFAULT_HEIGHT_PASSPORT_SCAN_PX, 50, PAGE_A4_HEIGHT_PX-50);
+
+                at = new AffineTransform(DEFAULT_WIDTH_PASSPORT_SCAN_PX, 0, 0, DEFAULT_HEIGHT_PASSPORT_SCAN_PX, 50, PAGE_A4_HEIGHT_PX - 50);
                 //rotates the image 90 degree
                 at.rotate(Math.toRadians(-90));
                 tMatrix = new Matrix(at);
@@ -1166,12 +1168,15 @@ public class CtrForm
     {
         //shows the print dialog
         PrinterJob pj = PrinterJob.getPrinterJob();
+        PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
+        
         pj.setPrintable(new PDFPrintable(p));
-        if (pj.printDialog())
+        attr.add(new PageRanges(1, p.getNumberOfPages()));
+        if (pj.printDialog(attr))
         {
             try
             {
-                pj.print();
+                pj.print(attr);
             } catch (PrinterException ex)
             {
                 CtrAlertDialog.exceptionDialog(ex, "Error to print form.");
