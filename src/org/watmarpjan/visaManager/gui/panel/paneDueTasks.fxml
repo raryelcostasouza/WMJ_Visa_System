@@ -15,7 +15,7 @@
     <tabs>
         <Tab closable="false" text="Thailand">
          <content>
-            <VBox alignment="CENTER">
+            <VBox alignment="TOP_CENTER">
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
@@ -112,7 +112,7 @@
         </Tab>
         <Tab closable="false" text="Abroad">
          <content>
-            <VBox alignment="CENTER">
+            <VBox alignment="TOP_CENTER">
                <children>
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>

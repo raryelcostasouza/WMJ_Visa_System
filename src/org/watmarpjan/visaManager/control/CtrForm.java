@@ -867,13 +867,13 @@ public class CtrForm
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Visa Extension - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtAbroad, 50,  PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight()*0.6f - 50, pdfImgVisaExtAbroad.getWidth()*0.6f, pdfImgVisaExtAbroad.getHeight()*0.6f);
+            contentStream.drawImage(pdfImgVisaExtAbroad, 50,  PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight(), pdfImgVisaExtAbroad.getWidth()*0.6f, pdfImgVisaExtAbroad.getHeight()*0.6f);
             
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, 60 + pdfImgPassptAbroad.getHeight()*0.6f);
+            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX/2.0f + 10);
             contentStream.showText("Passport Renewal - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgPassptAbroad, 50, 50, pdfImgPassptAbroad.getWidth()*0.6f, pdfImgPassptAbroad.getHeight()*0.6f);
+            contentStream.drawImage(pdfImgPassptAbroad, 50, PAGE_A4_HEIGHT_PX/2.0f - pdfImgPassptAbroad.getHeight() * 0.6f , pdfImgPassptAbroad.getWidth()*0.6f, pdfImgPassptAbroad.getHeight()*0.6f);
             contentStream.close();
             
             pdfDoc.save(outputFile);
