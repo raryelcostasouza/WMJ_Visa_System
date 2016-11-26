@@ -147,8 +147,8 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
             operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (operationStatus == 0)
             {
-                CtrAlertDialog.infoDialog("Cleared successfully", "The previous arrival info scan was cleared.");
                 fillData(p);
+                CtrAlertDialog.infoDialog("Cleared successfully", "The previous arrival info scan was cleared.");
             }
         }
     }

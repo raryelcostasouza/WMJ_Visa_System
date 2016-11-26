@@ -117,6 +117,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             if (opStatus == 0)
             {
+                fillData(p);
                 CtrAlertDialog.infoDialog("Cleared successfully", "The previous passport info was cleared successfully.");
             }
         }
@@ -141,8 +142,8 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
 
             if (operationStatus == 0)
             {
-                CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
                 fillData(p);
+                CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
             }
         }
         else

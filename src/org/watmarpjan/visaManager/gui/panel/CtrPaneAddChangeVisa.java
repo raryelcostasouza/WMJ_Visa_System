@@ -63,6 +63,7 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
             opStatus = ctrGUIMain.getCtrMain().getCtrVisa().clearVisaInfoForProfile(p);
             if (opStatus == 0)
             {
+                fillData(p);
                 CtrAlertDialog.infoDialog("Cleared successfully", "The previous departure scan was cleareds successfully.");
             }
         }
