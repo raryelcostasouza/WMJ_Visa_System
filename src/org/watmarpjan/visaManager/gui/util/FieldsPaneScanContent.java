@@ -97,7 +97,7 @@ public class FieldsPaneScanContent
             rbArriveStamp.setDisable(true);
             rbVisa.setDisable(true);
             rbLastVisaExt.setDisable(true);
-            
+
             rbArriveStamp.setSelected(false);
             rbVisa.setSelected(false);
             rbLastVisaExt.setSelected(false);
@@ -108,25 +108,25 @@ public class FieldsPaneScanContent
 
     }
 
-    public void setStatusScan(boolean haveContent)
+    //if there is scan content to show on this pane
+    public void setContentTrue(boolean lockStatus)
     {
-        //if there is scan content to show on this pane
-        if (haveContent)
+        rbArriveStamp.setDisable(true);
+        rbVisa.setDisable(true);
+        rbLastVisaExt.setDisable(true);
+
+        tfLeftPageNumber.setEditable(false);
+        bSelectFile.setDisable(true);
+        
+        if (lockStatus)
         {
-            bSelectFile.setDisable(true);
-            bArchive.setDisable(false);
-
-            rbArriveStamp.setDisable(true);
-            rbVisa.setDisable(true);
-            rbLastVisaExt.setDisable(true);
-
-            tfLeftPageNumber.setEditable(false);
-
+            bArchive.setDisable(true);
         }
         else
         {
-
+            bArchive.setDisable(false);
         }
+
     }
 
 }

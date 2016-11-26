@@ -437,7 +437,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             if (listPassportScans.size() >= 1)
             {
                 ps1 = listPassportScans.get(0);
-                fieldsScan1.setStatusScan(true);
+                fieldsScan1.setContentTrue(lockStatus);
 
                 tfScan1LeftPageNumber.setText(ps1.getPageNumber() + "");
                 if (ps1.isContentArriveStamp())
@@ -478,7 +478,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             if (listPassportScans.size() >= 2)
             {
                 ps2 = listPassportScans.get(1);
-                fieldsScan2.setStatusScan(true);
+                fieldsScan2.setContentTrue(lockStatus);
 
                 tfScan2LeftPageNumber.setText(ps2.getPageNumber() + "");
                 if (ps2.isContentArriveStamp())
@@ -507,7 +507,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             if (listPassportScans.size() >= 3)
             {
                 ps3 = listPassportScans.get(2);
-                fieldsScan3.setStatusScan(true);
+                fieldsScan3.setContentTrue(lockStatus);
 
                 tfScan3LeftPageNumber.setText(ps3.getPageNumber() + "");
                 if (ps3.isContentArriveStamp())
