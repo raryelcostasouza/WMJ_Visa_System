@@ -703,11 +703,11 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         else
         {
             //if there is a scan selected, but not yet added
-           if (fScan3Selected != null)
+            if (fScan3Selected != null)
             {
                 fImgScan = fScan3Selected;
             }
-           //for a registered scan
+            //for a registered scan
             else
             {
                 ps = listPassportScan.get(2);
@@ -996,6 +996,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     @FXML
     void actionPrintScans(ActionEvent ae)
     {
-
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPassportScans(p, CtrForm.OPTION_PRINT_FORM);
     }
 }
