@@ -109,7 +109,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneAddChangeVisa ctrPaneAddChangeVisa;
     @FXML
-    private TabPane paneAddChangeVisa;
+    private VBox paneAddChangeVisa;
 
     @FXML
     private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
