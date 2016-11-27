@@ -439,7 +439,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(null);
+        topPane.setCenter(null);
         topPane.setLeft(null);
         centerPane.setCenter(paneDueTasks);
         currentPaneController = ctrPaneDueTasks;
@@ -454,7 +454,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonasticProfile);
         currentPaneController = ctrPaneMonasticProfile;
@@ -469,7 +469,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setRight(null);
+        topPane.setCenter(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneMonastery);
         currentPaneController = ctrPaneMonastery;
@@ -484,7 +484,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setRight(null);
+        topPane.setCenter(null);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneUpajjhaya);
         currentPaneController = ctrPaneUpajjhaya;
@@ -499,7 +499,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(panePassport);
         currentPaneController = ctrPanePassport;
@@ -514,7 +514,7 @@ public class CtrGUIMain
         checkUnsavedChanges();
 
         ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(paneEditSave);
         centerPane.setCenter(paneBysuddhi);
         currentPaneController = ctrPaneBysuddhi;
@@ -528,7 +528,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(pane90DayNotice);
         currentPaneController = ctrPane90DayNotice;
@@ -542,7 +542,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneVisaExt);
         currentPaneController = ctrPaneVisaExt;
@@ -555,7 +555,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneReEntry);
         currentPaneController = ctrPaneReEntry;
@@ -568,7 +568,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneAddRenewPassport);
         currentPaneController = ctrPaneAddRenewPassport;
@@ -581,7 +581,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(paneMonasticSelection);
+        topPane.setCenter(paneMonasticSelection);
         topPane.setLeft(null);
         centerPane.setCenter(paneAddChangeVisa);
         currentPaneController = ctrPaneAddChangeVisa;
@@ -594,7 +594,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        topPane.setRight(null);
+        topPane.setCenter(null);
         topPane.setLeft(null);
         centerPane.setCenter(paneTM30NotifResidence);
         currentPaneController = ctrPaneTM30NotifResidence;
