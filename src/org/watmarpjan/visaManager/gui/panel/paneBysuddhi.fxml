@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -119,54 +120,57 @@
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
-      <GridPane gridLinesVisible="true">
+      <GridPane alignment="CENTER" gridLinesVisible="true">
          <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <StackPane GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="ivScan2" fitHeight="299.0" fitWidth="287.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan2" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../img/bysuddhi/default.png.png" />
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="b2" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 2" StackPane.alignment="TOP_LEFT" />
                </children>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane>
                <children>
-                  <ImageView fx:id="ivScan1" fitHeight="299.0" fitWidth="287.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan1" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../img/bysuddhi/default.png.png" />
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
                   </ImageView>
                   <Button fx:id="b1" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 1" StackPane.alignment="TOP_LEFT" />
                </children>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fx:id="ivScan4" fitHeight="299.0" fitWidth="287.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan4" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../img/bysuddhi/default.png.png" />
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="b4" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 4" StackPane.alignment="TOP_LEFT" />
                </children>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <StackPane GridPane.rowIndex="1">
                <children>
-                  <ImageView fx:id="ivScan3" fitHeight="299.0" fitWidth="287.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" StackPane.alignment="TOP_LEFT" />
+                  <ImageView fx:id="ivScan3" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../img/bysuddhi/default.png.png" />
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" StackPane.alignment="TOP_LEFT" />
                </children>
             </StackPane>
          </children>
