@@ -13,7 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -40,10 +44,19 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     private Button bClear;
     @FXML
     private Button bRegister;
+    
+     @FXML
+    private Button bPreview;
+
+    @FXML
+    private Button bPrint;
 
     @Override
     public void init()
     {
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
@@ -140,6 +153,22 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
                 && (dpVisaExpiryDate.getValue() != null)
                 && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null));
+    }
+    
+    @FXML
+    void actionPreviewFormTM86VisaChange(ActionEvent ae)
+    {
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+    }
+
+    @FXML
+    void actionPrintFormTM86VisaChange(ActionEvent ae)
+    {
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrForm.OPTION_PRINT_FORM, false);
     }
 
 }

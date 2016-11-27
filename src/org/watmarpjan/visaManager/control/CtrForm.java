@@ -146,7 +146,7 @@ public class CtrForm
         acroForm.getField("ethnicity").setValue(p.getEthnicity());
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("previousResidenceCountry").setValue(p.getPreviousResidenceCountry());
-        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + " " + p.getBirthCountry());
+        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + ", " + p.getBirthCountry());
         acroForm.getField("occupationThai").setValue(p.getOccupationThai());
         acroForm.getField("fatherName").setValue(p.getFatherName());
         acroForm.getField("motherName").setValue(p.getMotherName());
@@ -443,6 +443,84 @@ public class CtrForm
 
     }
 
+    public void fillFormTM86VisaChange(PDAcroForm acroForm, MonasticProfile p) throws IOException
+    {
+        ArrayList<PDTextField> alThaiFields;
+        Monastery mResidingAt;
+        LocalDate ldBirthDate, ldPassportIssue, ldPassportExpiry, ldLastEntry;
+
+        alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
+        adjustFontThaiField(alThaiFields);
+
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("lastName").setValue(p.getLastName());
+        acroForm.getField("name").setValue(p.getMonasticName());
+        acroForm.getField("middleName").setValue(p.getMiddleName());
+
+        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
+
+        ldBirthDate = Util.convertDateToLocalDate(p.getBirthDate());
+        if (ldBirthDate != null)
+        {
+            acroForm.getField("birthDateDay").setValue(ldBirthDate.getDayOfMonth() + "");
+            acroForm.getField("birthDateMonth").setValue(ldBirthDate.getMonthValue() + "");
+            acroForm.getField("birthDateYear").setValue(Util.convertYearToThai(ldBirthDate.getYear()) + "");
+        }
+
+        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + ", " + p.getBirthCountry());
+        acroForm.getField("nationality").setValue(p.getNationality());
+        acroForm.getField("passportNumber").setValue(p.getPassportNumber());
+
+        ldPassportIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
+        if (ldPassportIssue != null)
+        {
+            acroForm.getField("passportIssueDateDay").setValue(ldPassportIssue.getDayOfMonth() + "");
+            acroForm.getField("passportIssueDateMonth").setValue(ldPassportIssue.getMonthValue() + "");
+            acroForm.getField("passportIssueDateYear").setValue(Util.convertYearToThai(ldPassportIssue.getYear()) + "");
+        }
+        acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
+
+        ldPassportExpiry = Util.convertDateToLocalDate(p.getPassportExpiryDate());
+        if (ldPassportExpiry != null)
+        {
+            acroForm.getField("passportExpiryDateDay").setValue(ldPassportExpiry.getDayOfMonth() + "");
+            acroForm.getField("passportExpiryDateMonth").setValue(ldPassportExpiry.getMonthValue() + "");
+            acroForm.getField("passportExpiryDateYear").setValue(Util.convertYearToThai(ldPassportExpiry.getYear()) + "");
+        }
+
+        acroForm.getField("visaType").setValue(p.getVisaType());
+        acroForm.getField("arrivalTravelBy").setValue(p.getArrivalTravelBy());
+        acroForm.getField("arrivalTravelFrom").setValue(p.getArrivalTravelFrom());
+        acroForm.getField("arrivalPortOfEntry").setValue(p.getArrivalPortOfEntry());
+
+        ldLastEntry = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
+        if (ldLastEntry != null)
+        {
+            acroForm.getField("arrivalLastEntryDateDay").setValue(ldLastEntry.getDayOfMonth() + "");
+            acroForm.getField("arrivalLastEntryDateMonth").setValue(ldLastEntry.getMonthValue() + "");
+            acroForm.getField("arrivalLastEntryDateYear").setValue(Util.convertYearToThai(ldLastEntry.getYear()) + "");
+        }
+        acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
+        
+        mResidingAt = p.getMonasteryResidingAt();
+        if (mResidingAt != null)
+        {
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
+            acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
+            acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
+            acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
+            acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
+            acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
+        }
+    }
+
     public void fillFormTM8Reentry(PDAcroForm acroForm, MonasticProfile p, boolean reentryTogetherExtension) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
@@ -603,6 +681,10 @@ public class CtrForm
             else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry().getName()))
             {
                 fillFormTM8Reentry(acroForm, p, extraOption);
+            }
+            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange().getName()))
+            {
+                fillFormTM86VisaChange(acroForm, p);
             }
             else if (sourceFile.getName().contains("TM30-"))
             {
@@ -1169,7 +1251,7 @@ public class CtrForm
         //shows the print dialog
         PrinterJob pj = PrinterJob.getPrinterJob();
         PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-        
+
         pj.setPrintable(new PDFPrintable(p));
         attr.add(new PageRanges(1, p.getNumberOfPages()));
         if (pj.printDialog(attr))
