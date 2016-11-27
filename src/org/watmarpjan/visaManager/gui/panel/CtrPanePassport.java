@@ -440,7 +440,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 fieldsScan1.setContentTrue(lockStatus);
 
                 tfScan1LeftPageNumber.setText(ps1.getPageNumber() + "");
-                if (ps1.isContentArriveStamp())
+                if (ps1.getContentArriveStamp())
                 {
                     /*
                  * if this scan contains the Arrive Stamp blocks the
@@ -451,7 +451,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     rbScan2ArriveStamp.setDisable(true);
                     rbScan3ArriveStamp.setDisable(true);
                 }
-                if (ps1.isContentVisaScan())
+                if (ps1.getContentVisaScan())
                 {
                     /*
                  * if this scan contains the Visa page blocks the selection
@@ -462,7 +462,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                     rbScan2Visa.setDisable(true);
                     rbScan3Visa.setDisable(true);
                 }
-                if (ps1.isContentLastVisaExt())
+                if (ps1.getContentLastVisaExt())
                 {
                     /*
                  * if this scan contains the Last Visa Ext blocks the
@@ -481,21 +481,21 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 fieldsScan2.setContentTrue(lockStatus);
 
                 tfScan2LeftPageNumber.setText(ps2.getPageNumber() + "");
-                if (ps2.isContentArriveStamp())
+                if (ps2.getContentArriveStamp())
                 {
                     rbScan2ArriveStamp.setSelected(true);
 
                     rbScan1ArriveStamp.setDisable(true);
                     rbScan3ArriveStamp.setDisable(true);
                 }
-                if (ps2.isContentVisaScan())
+                if (ps2.getContentVisaScan())
                 {
                     rbScan2Visa.setSelected(true);
 
                     rbScan1Visa.setDisable(true);
                     rbScan3Visa.setDisable(true);
                 }
-                if (ps2.isContentLastVisaExt())
+                if (ps2.getContentLastVisaExt())
                 {
                     rbScan2LastVisaExt.setSelected(true);
 
@@ -510,21 +510,21 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 fieldsScan3.setContentTrue(lockStatus);
 
                 tfScan3LeftPageNumber.setText(ps3.getPageNumber() + "");
-                if (ps3.isContentArriveStamp())
+                if (ps3.getContentArriveStamp())
                 {
                     rbScan3ArriveStamp.setSelected(true);
 
                     rbScan1ArriveStamp.setDisable(true);
                     rbScan2ArriveStamp.setDisable(true);
                 }
-                if (ps3.isContentVisaScan())
+                if (ps3.getContentVisaScan())
                 {
                     rbScan3Visa.setSelected(true);
 
                     rbScan1Visa.setDisable(true);
                     rbScan2Visa.setDisable(true);
                 }
-                if (ps3.isContentLastVisaExt())
+                if (ps3.getContentLastVisaExt())
                 {
                     rbScan3LastVisaExt.setSelected(true);
 

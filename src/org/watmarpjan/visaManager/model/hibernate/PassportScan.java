@@ -97,7 +97,7 @@ public class PassportScan implements Serializable
         this.idPassportScan = idPassportScan;
     }
 
-    public Boolean isContentArriveStamp()
+    public Boolean getContentArriveStamp()
     {
         return contentArriveStamp;
     }
@@ -107,7 +107,7 @@ public class PassportScan implements Serializable
         this.contentArriveStamp = contentArriveStamp;
     }
 
-    public Boolean isContentLastVisaExt()
+    public Boolean getContentLastVisaExt()
     {
         return contentLastVisaExt;
     }
@@ -117,7 +117,7 @@ public class PassportScan implements Serializable
         this.contentLastVisaExt = contentLastVisaExt;
     }
 
-    public Boolean isContentVisaScan()
+    public Boolean getContentVisaScan()
     {
         return contentVisaScan;
     }

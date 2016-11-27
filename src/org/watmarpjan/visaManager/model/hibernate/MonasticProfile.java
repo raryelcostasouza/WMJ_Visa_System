@@ -82,6 +82,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MonasticProfile.findByVisaType", query = "SELECT m FROM MonasticProfile m WHERE m.visaType = :visaType")
     , @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate")
     , @NamedQuery(name = "MonasticProfile.findByPassportCountry", query = "SELECT m FROM MonasticProfile m WHERE m.passportCountry = :passportCountry")
+    , @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter")
 })
 public class MonasticProfile implements Serializable
 {
@@ -190,6 +191,13 @@ public class MonasticProfile implements Serializable
     private Date passportIssueDate;
     @Column(name = "PASSPORT_COUNTRY")
     private String passportCountry;
+    @Lob
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+    @Column(name = "PATIMOKKHA_CHANTER")
+    private Boolean patimokkhaChanter;
+    @Lob
+    private String remark;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -684,6 +692,36 @@ public class MonasticProfile implements Serializable
     public void setPassportCountry(String passportCountry)
     {
         this.passportCountry = passportCountry;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getPatimokkhaChanter()
+    {
+        return patimokkhaChanter;
+    }
+
+    public void setPatimokkhaChanter(Boolean patimokkhaChanter)
+    {
+        this.patimokkhaChanter = patimokkhaChanter;
+    }
+
+    public String getRemark()
+    {
+        return remark;
+    }
+
+    public void setRemark(String remark)
+    {
+        this.remark = remark;
     }
 
     @XmlTransient
