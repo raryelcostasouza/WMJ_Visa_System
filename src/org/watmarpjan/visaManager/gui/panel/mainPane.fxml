@@ -5,13 +5,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
   
     <children>
         <MenuBar VBox.vgrow="NEVER">
@@ -99,9 +98,6 @@
                         <BorderPane fx:id="topPane" BorderPane.alignment="CENTER">
                             <right>
                             </right>
-                            <center>
-                                <Separator orientation="VERTICAL" BorderPane.alignment="CENTER_RIGHT" />
-                            </center>
                         </BorderPane>
                     </top>
                 </BorderPane>
