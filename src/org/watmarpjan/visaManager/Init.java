@@ -40,7 +40,7 @@ public class Init extends Application
             primaryStage.setScene(scene);
             primaryStage.setTitle("WMJ Visa System");
             primaryStage.setWidth(1600);
-            primaryStage.setHeight(900);
+            primaryStage.setHeight(990);
             primaryStage.show();
         } catch (Exception ex)
         {
