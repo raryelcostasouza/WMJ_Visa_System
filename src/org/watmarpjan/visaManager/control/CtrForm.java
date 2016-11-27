@@ -244,15 +244,15 @@ public class CtrForm
             ((PDCheckBox) acroForm.getField("buddhistStudiesDhammaPDF")).check();
             if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_TRI))
             {
-                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นกธรรมตรี");
+                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมตรี");
             }
             if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_TOH))
             {
-                acroForm.getField("dhammaStudiesThaiPDF2").setValue("นกธรรมตโท");
+                acroForm.getField("dhammaStudiesThaiPDF2").setValue("นักธรรมตโท");
             }
             if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_EK))
             {
-                acroForm.getField("dhammaStudiesThaiPDF3").setValue("นกธรรมตเอก");
+                acroForm.getField("dhammaStudiesThaiPDF3").setValue("นักธรรมตเอก");
             }
 
         }
