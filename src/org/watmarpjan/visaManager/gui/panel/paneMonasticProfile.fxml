@@ -253,20 +253,26 @@
       </HBox>
       <HBox VBox.vgrow="NEVER">
          <children>
-              <TitledPane animated="false" collapsible="false" text="Contact" HBox.hgrow="NEVER">
+              <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefWidth="413.0" text="Contact" HBox.hgrow="NEVER">
                   <content>
                       <VBox>
                           <children>
-                              <HBox>
+                        <VBox VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label text="Personal Phone Number(s):" />
+                              <TextArea fx:id="taPhoneNumber" prefHeight="50.0" />
+                           </children>
+                        </VBox>
+                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                                   <children>
                                       <Label text="Personal e-mail:" />
-                                      <TextField fx:id="tfEmail" prefHeight="25.0" prefWidth="232.0" />
+                                      <TextField fx:id="tfEmail" HBox.hgrow="ALWAYS" />
                                   </children>
                               </HBox>
-                              <VBox prefWidth="100.0">
+                              <VBox VBox.vgrow="ALWAYS">
                                   <children>
                                       <Label text="Emergency Contact:" />
-                                      <TextArea fx:id="taEmergencyContact" editable="false" prefHeight="67.0" prefWidth="710.0" />
+                                      <TextArea fx:id="taEmergencyContact" editable="false" prefHeight="70.0" />
                                   </children>
                               </VBox>
                           </children>
@@ -275,9 +281,9 @@
               </TitledPane>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                    <TitledPane animated="false" collapsible="false" text="Status">
+                    <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Status">
                         <content>
-                            <HBox>
+                            <HBox alignment="CENTER_LEFT">
                                 <children>
                                     <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
                                         <toggleGroup>
@@ -290,9 +296,9 @@
                             </HBox>
                         </content>
                     </TitledPane>
-                    <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Dhamma Studies" VBox.vgrow="ALWAYS">
+                    <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Dhamma Studies">
                         <content>
-                            <HBox>
+                            <HBox alignment="CENTER_LEFT">
                                 <children>
                                     <RadioButton fx:id="rbDhammaStudiesRegular" disable="true" mnemonicParsing="false" selected="true" text="Regular">
                                         <toggleGroup>
@@ -306,6 +312,15 @@
                             </HBox>
                         </content>
                     </TitledPane>
+                  <TitledPane collapsible="false" text="Remark">
+                     <content>
+                        <HBox prefWidth="100.0">
+                           <children>
+                              <TextArea fx:id="taRemark" prefHeight="50.0" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </TitledPane>
                </children>
             </VBox>
          </children>

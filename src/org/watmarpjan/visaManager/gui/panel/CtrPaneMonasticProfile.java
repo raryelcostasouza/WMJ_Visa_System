@@ -123,6 +123,13 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextField tfEmail;
     @FXML
     private TextArea taEmergencyContact;
+    
+    @FXML
+    private TextArea taPhoneNumber;
+    
+    @FXML
+    private TextArea taRemark;
+    
 
     @FXML
     private Button bChangeProfilePhoto;
@@ -163,6 +170,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(tgDhammaStudies);
         listFields.add(tfEmail);
         listFields.add(taEmergencyContact);
+        listFields.add(taPhoneNumber);
+        listFields.add(taRemark);
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
         loadContentsCBWat();
@@ -276,8 +285,11 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
                     break;
             }
 
+            taPhoneNumber.setText(p.getPhoneNumber());
             tfEmail.setText(p.getEmail());
             taEmergencyContact.setText(p.getEmergencyContact());
+            
+            taRemark.setText(p.getRemark());
             switch (p.getStatus())
             {
                 case AppConstants.STATUS_THAILAND:
@@ -441,6 +453,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(false);
         taEmergencyContact.setEditable(false);
+        taPhoneNumber.setEditable(false);
+        taRemark.setEditable(false);
     }
 
     @Override
@@ -488,6 +502,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(true);
         taEmergencyContact.setEditable(true);
+        
+        taPhoneNumber.setEditable(true);
+        taRemark.setEditable(true);
     }
 
     @Override
@@ -607,7 +624,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setDhammaStudies(AppConstants.STUDIES_REGULAR);
         }
-
+        
+        p.setPhoneNumber(taPhoneNumber.getText());
         p.setEmail(tfEmail.getText());
         p.setEmergencyContact(taEmergencyContact.getText());
 
@@ -623,6 +641,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }
+        
+        p.setRemark(taRemark.getText());
 
         //if no field caused errors
         if (!error)
