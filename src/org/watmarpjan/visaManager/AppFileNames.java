@@ -48,15 +48,15 @@ public class AppFileNames
     {
         String suffix = "";
 
-        if (ps.isContentArriveStamp())
+        if (ps.getContentArriveStamp())
         {
             suffix += "-ArriveStamp";
         }
-        if (ps.isContentVisaScan())
+        if (ps.getContentVisaScan())
         {
             suffix += "-Visa";
         }
-        if (ps.isContentLastVisaExt())
+        if (ps.getContentLastVisaExt())
         {
             suffix += "-VisaExt";
         }
