@@ -9,7 +9,7 @@ import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.FieldsPaneScanContent;
-import org.watmarpjan.visaManager.gui.util.ImgUtil;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -579,11 +579,11 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             fPassportScan = fDepartureCard = fScan1 = fScan2 = fScan3 = null;
         }
 
-        ImgUtil.loadImageView(ivPassportScan, ImgUtil.IMG_TYPE_PASSPORT, fPassportScan);
-        ImgUtil.loadImageView(ivDepartureCardScan, ImgUtil.IMG_TYPE_PASSPORT, fDepartureCard);
-        ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_PASSPORT, fScan1);
-        ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_PASSPORT, fScan2);
-        ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_PASSPORT, fScan3);
+        GUIUtil.loadImageView(ivPassportScan, GUIUtil.IMG_TYPE_PASSPORT, fPassportScan);
+        GUIUtil.loadImageView(ivDepartureCardScan, GUIUtil.IMG_TYPE_PASSPORT, fDepartureCard);
+        GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_PASSPORT, fScan1);
+        GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_PASSPORT, fScan2);
+        GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_PASSPORT, fScan3);
 
     }
 
@@ -715,7 +715,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
             }
         }
 
-        ImgUtil.openClickedIMG(fImgScan);
+        GUIUtil.openClickedIMG(fImgScan);
     }
 
     @FXML
@@ -867,19 +867,19 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 if (ae.getSource().equals(bSelectScan1))
                 {
                     fScan1Selected = fSelected;
-                    ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
                     bAddScan1.setDisable(false);
                 }
                 else if (ae.getSource().equals(bSelectScan2))
                 {
                     fScan2Selected = fSelected;
-                    ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
                     bAddScan2.setDisable(false);
                 }
                 else
                 {
                     fScan3Selected = fSelected;
-                    ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_PASSPORT, fSelected);
+                    GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
                     bAddScan3.setDisable(false);
                 }
             }

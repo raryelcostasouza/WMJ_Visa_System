@@ -8,7 +8,7 @@ package org.watmarpjan.visaManager.gui.panel;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.gui.util.ImgUtil;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -64,16 +64,16 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextField tfAge;
 
     @FXML
-    private TextField tfPreviousResidenceCountry;
+    private ComboBox<String> cbPreviousResidenceCountry;
 
     @FXML
-    private TextField tfBirthCountry;
+    private ComboBox<String> cbBirthCountry;
     @FXML
     private TextField tfBirthPlace;
     @FXML
-    private TextField tfNationality;
+    private ComboBox<String> cbNationality;
     @FXML
-    private TextField tfEthnicity;
+    private ComboBox<String> cbEthnicity;
 
     @FXML
     private ComboBox<String> cbOccupation;
@@ -123,13 +123,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextField tfEmail;
     @FXML
     private TextArea taEmergencyContact;
-    
+
     @FXML
     private TextArea taPhoneNumber;
-    
+
     @FXML
     private TextArea taRemark;
-    
 
     @FXML
     private Button bChangeProfilePhoto;
@@ -152,10 +151,10 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(tfFather);
         listFields.add(tgStatus);
         listFields.add(dpBirthDate);
-        listFields.add(tfBirthCountry);
+        listFields.add(cbBirthCountry);
         listFields.add(tfBirthPlace);
-        listFields.add(tfEthnicity);
-        listFields.add(tfNationality);
+        listFields.add(cbEthnicity);
+        listFields.add(cbNationality);
         listFields.add(cbOccupation);
         listFields.add(cbOccupationThai);
         listFields.add(cbCertificate);
@@ -163,7 +162,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(tfSchool);
         listFields.add(tfGraduationYear);
         listFields.add(tfDuration);
-        listFields.add(tfPreviousResidenceCountry);
+        listFields.add(cbPreviousResidenceCountry);
         listFields.add(cbResidingAt);
         listFields.add(tfAdviserToCome);
         listFields.add(cbAdvisorWat);
@@ -174,7 +173,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(taRemark);
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
-        loadContentsCBWat();
         dpBirthDate.valueProperty().addListener(new ChangeListener<LocalDate>()
         {
             @Override
@@ -198,9 +196,25 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     @Override
     public void fillData(MonasticProfile p)
     {
-        loadContentsCBOccupation();
-        loadContentsCBCertificate();
-        loadContentsCBWat();
+        ArrayList<String> listCountry, listWat;
+        
+        listCountry = ctrGUIMain.getCtrMain().loadListCountry();
+        listWat = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryList();
+        
+        GUIUtil.loadContentComboboxGeneric(cbEthnicity, ctrGUIMain.getCtrMain().getCtrProfile().loadListEthnicity());
+        GUIUtil.loadContentComboboxGeneric(cbNationality, ctrGUIMain.getCtrMain().getCtrProfile().loadListNationality());
+       
+        GUIUtil.loadContentComboboxGeneric(cbBirthCountry, listCountry);
+        GUIUtil.loadContentComboboxGeneric(cbPreviousResidenceCountry, listCountry);
+        
+        GUIUtil.loadContentComboboxGeneric(cbOccupation, ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationEnglishList());
+        GUIUtil.loadContentComboboxGeneric(cbOccupationThai, ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationThaiList());
+        
+        GUIUtil.loadContentComboboxGeneric(cbCertificate, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateEngList());
+        GUIUtil.loadContentComboboxGeneric(cbCertificateThai, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateThaiList());
+        
+        GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
+        GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
 
         loadProfilePhoto(p);
         if (p != null)
@@ -214,17 +228,16 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             tfMother.setText(p.getMotherName());
             tfFather.setText(p.getFatherName());
 
-            tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
-            tfBirthCountry.setText(p.getBirthCountry());
+            cbPreviousResidenceCountry.setValue(p.getPreviousResidenceCountry());
+            cbBirthCountry.setValue(p.getBirthCountry());
             tfBirthPlace.setText(p.getBirthPlace());
 
             dpBirthDate.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
             tfAge.setText(ProfileUtil.getStrAge(p.getBirthDate()) + "");
             tfBirthWeekday.setText(ProfileUtil.getShortenedBirthWeekDay(p.getBirthDate()));
 
-            tfPreviousResidenceCountry.setText(p.getPreviousResidenceCountry());
-            tfNationality.setText(p.getNationality());
-            tfEthnicity.setText(p.getEthnicity());
+            cbNationality.setValue(p.getNationality());
+            cbEthnicity.setValue(p.getEthnicity());
 
             cbOccupation.setValue(p.getOccupationEnglish());
             cbOccupationThai.setValue(p.getOccupationThai());
@@ -288,7 +301,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             taPhoneNumber.setText(p.getPhoneNumber());
             tfEmail.setText(p.getEmail());
             taEmergencyContact.setText(p.getEmergencyContact());
-            
+
             taRemark.setText(p.getRemark());
             switch (p.getStatus())
             {
@@ -319,7 +332,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             fileProfilePhoto = null;
         }
 
-        ImgUtil.loadImageView(ivProfilePhoto, ImgUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
+        GUIUtil.loadImageView(ivProfilePhoto, GUIUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
     }
 
     @FXML
@@ -352,62 +365,6 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         }
     }
 
-    private void loadContentsCBWat()
-    {
-        ArrayList<String> alWatList;
-
-        alWatList = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryList();
-
-        cbResidingAt.getItems().clear();
-        cbAdvisorWat.getItems().clear();
-        cbResidingAt.getItems().addAll(alWatList);
-        cbAdvisorWat.getItems().addAll(alWatList);
-    }
-
-    private void loadContentsCBOccupation()
-    {
-        ArrayList<String> alOccupationEnglish, alOccupationThai;
-
-        alOccupationEnglish = ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationEnglishList();
-        alOccupationThai = ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationThaiList();
-
-        //if the list is not empty clear before re-adding items
-        if (!cbOccupation.getItems().isEmpty())
-        {
-            cbOccupation.getItems().clear();
-        }
-
-        if (!cbOccupationThai.getItems().isEmpty())
-        {
-            cbOccupationThai.getItems().clear();
-        }
-
-        cbOccupation.getItems().addAll(alOccupationEnglish);
-        cbOccupationThai.getItems().addAll(alOccupationThai);
-    }
-
-    private void loadContentsCBCertificate()
-    {
-        ArrayList<String> alCertificateEnglish, alCertificateThai;
-        alCertificateEnglish = ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateEngList();
-        alCertificateThai = ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateThaiList();
-
-        //if the list is not empty clear before re-adding items
-        if (!cbCertificate.getItems().isEmpty())
-        {
-            cbCertificate.getItems().clear();
-        }
-
-        if (!cbCertificateThai.getItems().isEmpty())
-        {
-            cbCertificateThai.getItems().clear();
-        }
-
-        cbCertificate.getItems().addAll(alCertificateEnglish);
-        cbCertificateThai.getItems().addAll(alCertificateThai);
-
-    }
-
     @Override
     public void actionLockEdit()
     {
@@ -421,12 +378,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         dpBirthDate.setDisable(true);
 
-        tfPreviousResidenceCountry.setEditable(false);
-        tfBirthCountry.setEditable(false);
+        cbPreviousResidenceCountry.setDisable(true);
+        cbBirthCountry.setDisable(true);
         tfBirthPlace.setEditable(false);
 
-        tfNationality.setEditable(false);
-        tfEthnicity.setEditable(false);
+        cbNationality.setDisable(true);
+        cbEthnicity.setDisable(true);
 
         cbOccupation.setDisable(true);
         cbOccupationThai.setDisable(true);
@@ -470,12 +427,12 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         dpBirthDate.setDisable(false);
 
-        tfPreviousResidenceCountry.setEditable(true);
-        tfBirthCountry.setEditable(true);
+        cbPreviousResidenceCountry.setDisable(false);
+        cbBirthCountry.setDisable(false);
         tfBirthPlace.setEditable(true);
 
-        tfNationality.setEditable(true);
-        tfEthnicity.setEditable(true);
+        cbNationality.setDisable(false);
+        cbEthnicity.setDisable(false);
 
         cbOccupation.setDisable(false);
         cbOccupationThai.setDisable(false);
@@ -502,7 +459,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(true);
         taEmergencyContact.setEditable(true);
-        
+
         taPhoneNumber.setEditable(true);
         taRemark.setEditable(true);
     }
@@ -533,12 +490,11 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         birthDate = Util.convertLocalDateToDate(dpBirthDate.getValue());
 
         p.setBirthDate(birthDate);
-        p.setPreviousResidenceCountry(tfPreviousResidenceCountry.getText());
-        p.setBirthCountry(tfBirthCountry.getText());
+        p.setPreviousResidenceCountry(cbPreviousResidenceCountry.getValue());
+        p.setBirthCountry(cbBirthCountry.getValue());
         p.setBirthPlace(tfBirthPlace.getText());
-        p.setNationality(tfNationality.getText());
-        p.setNationality(tfNationality.getText());
-        p.setEthnicity(tfEthnicity.getText());
+        p.setNationality(cbNationality.getValue());
+        p.setEthnicity(cbEthnicity.getValue());
 
         p.setOccupationEnglish(cbOccupation.getValue());
         p.setOccupationThai(cbOccupationThai.getValue());
@@ -624,7 +580,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setDhammaStudies(AppConstants.STUDIES_REGULAR);
         }
-        
+
         p.setPhoneNumber(taPhoneNumber.getText());
         p.setEmail(tfEmail.getText());
         p.setEmergencyContact(taEmergencyContact.getText());
@@ -641,7 +597,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }
-        
+
         p.setRemark(taRemark.getText());
 
         //if no field caused errors

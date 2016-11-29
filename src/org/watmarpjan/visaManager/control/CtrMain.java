@@ -5,7 +5,9 @@
  */
 package org.watmarpjan.visaManager.control;
 
+import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.panel.CtrGUIMain;
+import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -17,7 +19,7 @@ public class CtrMain
 
     private final CtrDatabase ctrDB;
     private final CtrMonasticProfile ctrProfile;
-    private final CtrMonastery ctrWat;
+    private final CtrMonastery ctrMonastery;
     private final CtrForm ctrForm;
     private final CtrVisa ctrVisa;
     private final CtrPassportScan ctrPassportScan;
@@ -28,12 +30,29 @@ public class CtrMain
     {
         ctrDB = new CtrDatabase();
         ctrProfile = new CtrMonasticProfile(ctrDB);
-        ctrWat = new CtrMonastery(ctrDB);
+        ctrMonastery = new CtrMonastery(ctrDB);
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
         ctrForm = new CtrForm(this);
         ctrPrintoutTM30 = new CtrPrintoutTM30(ctrDB, ctrProfile);
+    }
+    
+    public ArrayList<String> loadListCountry()
+    {
+        ArrayList<String> listCountryMerged, listCountryDistinct;
+        
+        listCountryMerged = new ArrayList<>();
+        listCountryMerged.addAll(ctrProfile.loadListBirthCountry());
+        listCountryMerged.addAll(ctrProfile.loadListPassportCountry());
+        listCountryMerged.addAll(ctrProfile.loadListPreviousResidenceCountry());
+        listCountryMerged.addAll(ctrMonastery.loadListMonasteryCountry());
+
+        listCountryMerged.sort(null);
+        
+        listCountryDistinct = Util.filterDistinctElement(listCountryMerged);
+        
+        return listCountryDistinct;
     }
 
     public CtrPrintoutTM30 getCtrPrintoutTM30()
@@ -58,7 +77,7 @@ public class CtrMain
 
     public CtrMonastery getCtrMonastery()
     {
-        return ctrWat;
+        return ctrMonastery;
     }
 
     public CtrVisa getCtrVisa()

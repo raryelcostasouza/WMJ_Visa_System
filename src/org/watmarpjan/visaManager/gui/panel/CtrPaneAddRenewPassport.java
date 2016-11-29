@@ -10,9 +10,11 @@ import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -26,7 +28,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @FXML
     private TextField tfpassportNumber;
     @FXML
-    private TextField tfpassportCountry;
+    private ComboBox<String> cbPassportCountry;
     @FXML
     private TextField tfpassportIssuedAt;
     @FXML
@@ -49,10 +51,12 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     @Override
     public void fillData(MonasticProfile p)
     {
+        GUIUtil.loadContentComboboxGeneric(cbPassportCountry, ctrGUIMain.getCtrMain().loadListCountry());
+        
         if (p != null)
         {
             tfpassportNumber.setText(p.getPassportNumber());
-            tfpassportCountry.setText(p.getPassportCountry());
+            cbPassportCountry.setValue(p.getPassportCountry());
             tfpassportIssuedAt.setText(p.getPassportIssuedAt());
             dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
             dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
@@ -65,7 +69,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 bRegister.setDisable(true);
 
                 tfpassportNumber.setEditable(false);
-                tfpassportCountry.setEditable(false);
+                cbPassportCountry.setDisable(true);
                 tfpassportIssuedAt.setEditable(false);
                 dpPassportExpiryDate.setDisable(true);
                 dpPassportIssueDate.setDisable(true);
@@ -77,13 +81,12 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 bRegister.setDisable(false);
 
                 tfpassportNumber.setEditable(true);
-                tfpassportCountry.setEditable(true);
+                cbPassportCountry.setDisable(false);
                 tfpassportIssuedAt.setEditable(true);
                 dpPassportExpiryDate.setDisable(false);
                 dpPassportIssueDate.setDisable(false);
             }
         }
-
     }
 
     @FXML
@@ -134,7 +137,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             p.setPassportNumber(tfpassportNumber.getText());
-            p.setPassportCountry(tfpassportCountry.getText());
+            p.setPassportCountry(cbPassportCountry.getValue());
             p.setPassportIssuedAt(tfpassportIssuedAt.getText());
             p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
             p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
@@ -157,7 +160,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         return ((dpPassportExpiryDate.getValue() != null)
                 && (dpPassportIssueDate.getValue() != null)
                 && (!tfpassportNumber.getText().isEmpty())
-                && (!tfpassportCountry.getText().isEmpty())
+                && (cbPassportCountry.getValue() != null)
                 && (!tfpassportIssuedAt.getText().isEmpty()));
     }
 }

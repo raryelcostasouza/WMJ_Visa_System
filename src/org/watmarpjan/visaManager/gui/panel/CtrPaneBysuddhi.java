@@ -8,7 +8,7 @@ package org.watmarpjan.visaManager.gui.panel;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.gui.util.ImgUtil;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -310,10 +310,10 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             f1 = f2 = f3 = f4 = null;
         }
 
-        ImgUtil.loadImageView(ivScan1, ImgUtil.IMG_TYPE_BYSUDDHI, f1);
-        ImgUtil.loadImageView(ivScan2, ImgUtil.IMG_TYPE_BYSUDDHI, f2);
-        ImgUtil.loadImageView(ivScan3, ImgUtil.IMG_TYPE_BYSUDDHI, f3);
-        ImgUtil.loadImageView(ivScan4, ImgUtil.IMG_TYPE_BYSUDDHI, f4);
+        GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_BYSUDDHI, f1);
+        GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_BYSUDDHI, f2);
+        GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_BYSUDDHI, f3);
+        GUIUtil.loadImageView(ivScan4, GUIUtil.IMG_TYPE_BYSUDDHI, f4);
     }
 
     @FXML
@@ -376,7 +376,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 4);
         }
 
-        ImgUtil.openClickedIMG(fImg);
+        GUIUtil.openClickedIMG(fImg);
     }
 
     private void loadContentsCBWat()

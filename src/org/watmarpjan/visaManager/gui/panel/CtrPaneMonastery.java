@@ -15,6 +15,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
@@ -46,7 +47,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
     private ToggleGroup tgJaokana;
 
     @FXML
-    private TextField tfAddrCountry;
+    private ComboBox<String> cbAddrCountry;
     @FXML
     private TextField tfAddrProvince;
     @FXML
@@ -77,7 +78,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         listFields = new ArrayList();
 
         listFields.add(tfName);
-        listFields.add(tfAddrCountry);
+        listFields.add(cbAddrCountry);
         listFields.add(tfAddrProvince);
         listFields.add(tfAddrAmpher);
         listFields.add(tfAddrTambol);
@@ -100,7 +101,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
 
         rbCountryOther.setDisable(true);
         rbCountryThailand.setDisable(true);
-        tfAddrCountry.setEditable(false);
+        cbAddrCountry.setDisable(true);
         tfAddrProvince.setEditable(false);
         tfAddrAmpher.setEditable(false);
         tfAddrTambol.setEditable(false);
@@ -149,7 +150,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
                 m.setAddrCountry(AppConstants.COUNTRY_THAILAND);
             } else
             {
-                m.setAddrCountry(tfAddrCountry.getText());
+                m.setAddrCountry(cbAddrCountry.getValue());
             }
             m.setAddrJangwat(tfAddrProvince.getText());
             m.setAddrAmpher(tfAddrAmpher.getText());
@@ -207,7 +208,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
 
         rbCountryOther.setDisable(false);
         rbCountryThailand.setDisable(false);
-        tfAddrCountry.setEditable(true);
+        cbAddrCountry.setDisable(false);
         tfAddrProvince.setEditable(true);
         tfAddrAmpher.setEditable(true);
         tfAddrTambol.setEditable(true);
@@ -222,6 +223,8 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
 
     public void fillMonasteryData(Monastery m)
     {
+        GUIUtil.loadContentComboboxGeneric(cbAddrCountry, ctrGUIMain.getCtrMain().loadListCountry());
+        
         //if no monastery is passed as parameter,
         //shows the last selected
         if (m == null && !cbMonasteryList.getItems().isEmpty())
@@ -238,11 +241,11 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
                 rbCountryThailand.setSelected(true);
-                tfAddrCountry.setText("");
+                cbAddrCountry.setValue("");
             } else
             {
                 rbCountryOther.setSelected(true);
-                tfAddrCountry.setText(m.getAddrCountry());
+                cbAddrCountry.setValue(m.getAddrCountry());
             }
             tfAddrProvince.setText(m.getAddrJangwat());
             tfAddrAmpher.setText(m.getAddrAmpher());

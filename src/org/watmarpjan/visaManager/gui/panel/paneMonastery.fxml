@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
    <children>
       <TitledPane animated="false" collapsible="false" text="Monastery List">
          <content>
@@ -29,7 +29,7 @@
                <children>
                   <GridPane>
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -109,7 +109,7 @@
                                     <HBox alignment="CENTER" GridPane.rowIndex="1">
                                        <children>
                                           <RadioButton fx:id="rbCountryOther" mnemonicParsing="false" text="Other:" toggleGroup="$tgCountry" />
-                                          <TextField fx:id="tfAddrCountry" />
+                                          <ComboBox fx:id="cbAddrCountry" editable="true" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                  </children>

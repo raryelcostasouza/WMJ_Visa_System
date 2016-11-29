@@ -242,6 +242,66 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return queryStringField(hql);
     }
 
+    public ArrayList<String> loadListBirthCountry()
+    {
+        String hql;
+
+        hql = "select p.birthCountry"
+                + " from MonasticProfile p "
+                + " where p.birthCountry is not null"
+                + " group by p.birthCountry"
+                + " order by p.birthCountry";
+        return queryStringField(hql);
+    }
+
+    public ArrayList<String> loadListPassportCountry()
+    {
+        String hql;
+
+        hql = "select p.passportCountry"
+                + " from MonasticProfile p "
+                + " where p.passportCountry is not null"
+                + " group by p.passportCountry"
+                + " order by p.passportCountry";
+        return queryStringField(hql);
+    }
+
+    public ArrayList<String> loadListPreviousResidenceCountry()
+    {
+        String hql;
+
+        hql = "select p.previousResidenceCountry"
+                + " from MonasticProfile p "
+                + " where p.previousResidenceCountry is not null"
+                + " group by p.previousResidenceCountry"
+                + " order by p.previousResidenceCountry";
+        return queryStringField(hql);
+    }
+
+    public ArrayList<String> loadListNationality()
+    {
+        String hql;
+
+        hql = "select p.nationality"
+                + " from MonasticProfile p "
+                + " where p.nationality is not null"
+                + " group by p.nationality"
+                + " order by p.nationality";
+        return queryStringField(hql);
+    }
+
+    public ArrayList<String> loadListEthnicity()
+    {
+        String hql;
+
+        hql = "select p.ethnicity"
+                + " from MonasticProfile p "
+                + " where p.ethnicity is not null"
+                + " group by p.ethnicity"
+                + " order by p.ethnicity";
+        return queryStringField(hql);
+    }
+
     public ArrayList<String> loadListTravelFrom()
     {
         String hql;
@@ -291,7 +351,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " and size(p.visaExtensionSet) > 0"
                 + " group by p.nickname"
                 + " order by max(vext.expiryDate)";
-         listVisaExtended = queryDueTaskEntry(hql1);
+        listVisaExtended = queryDueTaskEntry(hql1);
 
         hql2 = "select new org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
@@ -300,13 +360,13 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " and size(p.visaExtensionSet) = 0"
                 + " order by p.visaExpiryDate";
         listVisaNotExtended = queryDueTaskEntry(hql2);
-        
+
         listMerged = new ArrayList<>();
-        
+
         listMerged.addAll(listVisaNotExtended);
         listMerged.addAll(listVisaExtended);
         listMerged.sort(null);
-        
+
         return listMerged;
     }
 

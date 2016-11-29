@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.control;
 import java.util.ArrayList;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -135,6 +136,22 @@ public class CtrMonastery extends AbstractControllerDB
             return null;
         }
 
+    }
+    
+    public ArrayList<String> loadListMonasteryCountry()
+    {
+        Query qResult;
+        String hql;
+        
+         hql = "select m.addrCountry"
+                + " from Monastery m "
+                + " where m.addrCountry <> 'THAILAND'"
+                + " group by m.addrCountry"
+                + " order by m.addrCountry";
+        
+        qResult = ctrDB.getSession().createQuery(hql);
+
+        return (ArrayList<String>) qResult.getResultList();
     }
 
 }

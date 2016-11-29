@@ -111,8 +111,8 @@
                            <children>
                                         <Label text="Birth Country:" />
                                         <Label text="Ethnicity: " GridPane.rowIndex="1" />
-                                        <TextField fx:id="tfBirthCountry" editable="false" GridPane.columnIndex="1" />
-                                        <TextField fx:id="tfEthnicity" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbBirthCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="cbEthnicity" disable="true" editable="true" layoutX="101.0" layoutY="13.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                                 <GridPane>
@@ -128,7 +128,7 @@
                                                 <Insets />
                                             </GridPane.margin>
                                         </Label>
-                                        <TextField fx:id="tfNationality" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbNationality" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                     <columnConstraints>
                                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -216,9 +216,9 @@
                           </rowConstraints>
                            <children>
                                     <Label text="Previous Residence Country:" />
-                                    <TextField fx:id="tfPreviousResidenceCountry" editable="false" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
                                     <Label text="Residence Wat:" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cbResidingAt" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbPreviousResidenceCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                           </children>
