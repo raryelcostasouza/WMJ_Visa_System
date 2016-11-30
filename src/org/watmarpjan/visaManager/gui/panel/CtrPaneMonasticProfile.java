@@ -95,7 +95,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private ComboBox<String> cbResidingAt;
 
     @FXML
-    private TextField tfAdviserToCome;
+    private ComboBox<String> cbAdviserToCome;
     @FXML
     private ComboBox<String> cbAdvisorWat;
 
@@ -164,7 +164,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(tfDuration);
         listFields.add(cbPreviousResidenceCountry);
         listFields.add(cbResidingAt);
-        listFields.add(tfAdviserToCome);
+        listFields.add(cbAdviserToCome);
         listFields.add(cbAdvisorWat);
         listFields.add(tgDhammaStudies);
         listFields.add(tfEmail);
@@ -203,6 +203,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         
         GUIUtil.loadContentComboboxGeneric(cbEthnicity, ctrGUIMain.getCtrMain().getCtrProfile().loadListEthnicity());
         GUIUtil.loadContentComboboxGeneric(cbNationality, ctrGUIMain.getCtrMain().getCtrProfile().loadListNationality());
+        
+        GUIUtil.loadContentComboboxGeneric(cbAdviserToCome, ctrGUIMain.getCtrMain().getCtrProfile().loadListAdviserToCome());
        
         GUIUtil.loadContentComboboxGeneric(cbBirthCountry, listCountry);
         GUIUtil.loadContentComboboxGeneric(cbPreviousResidenceCountry, listCountry);
@@ -280,7 +282,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
                 cbAdvisorWat.setValue(null);
             }
 
-            tfAdviserToCome.setText(p.getNameAdviserToCome());
+            cbAdviserToCome.setValue(p.getNameAdviserToCome());
 
             switch (p.getDhammaStudies())
             {
@@ -396,7 +398,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         cbResidingAt.setDisable(true);
 
-        tfAdviserToCome.setEditable(false);
+        cbAdviserToCome.setDisable(true);
         cbAdvisorWat.setDisable(true);
 
         rbInThailand.setDisable(true);
@@ -445,7 +447,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         cbResidingAt.setDisable(false);
 
-        tfAdviserToCome.setEditable(true);
+        cbAdviserToCome.setDisable(false);
         cbAdvisorWat.setDisable(false);
 
         rbInThailand.setDisable(false);
@@ -562,7 +564,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             p.setMonasteryAdviserToCome(wAdviserToCome);
         }
 
-        p.setNameAdviserToCome(tfAdviserToCome.getText());
+        p.setNameAdviserToCome(cbAdviserToCome.getValue());
 
         if (rbDhammaStudiesNaktamTri.isSelected())
         {

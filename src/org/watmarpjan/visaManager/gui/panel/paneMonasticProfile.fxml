@@ -240,9 +240,9 @@
                           </rowConstraints>
                            <children>
                                     <Label text="Adviser's name:" />
-                                    <TextField fx:id="tfAdviserToCome" editable="false" prefHeight="25.0" prefWidth="210.0" GridPane.columnIndex="1" />
                                     <Label text="Adviser's Wat:" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cbAdvisorWat" disable="true" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbAdviserToCome" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                           </children>

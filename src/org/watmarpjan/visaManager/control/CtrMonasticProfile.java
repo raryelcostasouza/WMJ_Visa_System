@@ -301,6 +301,18 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.ethnicity";
         return queryStringField(hql);
     }
+    
+    public ArrayList<String> loadListAdviserToCome()
+    {
+        String hql;
+
+        hql = "select p.nameAdviserToCome"
+                + " from MonasticProfile p "
+                + " where p.nameAdviserToCome is not null"
+                + " group by p.nameAdviserToCome"
+                + " order by p.nameAdviserToCome";
+        return queryStringField(hql);
+    }
 
     public ArrayList<String> loadListTravelFrom()
     {
