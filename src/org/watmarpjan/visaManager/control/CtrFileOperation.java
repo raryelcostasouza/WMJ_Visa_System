@@ -275,8 +275,9 @@ public class CtrFileOperation
             for (File f : fList)
             {
                 receiptDate = f.getName().substring(0, 10);
-
-                indexLastSeparator = f.getName().lastIndexOf("-");
+                
+                //get the index of the '-' before the 'TM47' prefix of the receipt 
+                indexLastSeparator = f.getName().lastIndexOf("TM47") -1;
                 receiptStatus = f.getName().substring(11, indexLastSeparator);
                 refNumber = f.getName().substring(indexLastSeparator + 1, f.getName().length() - 4);
 
