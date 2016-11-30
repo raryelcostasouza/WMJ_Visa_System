@@ -65,14 +65,23 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
 
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
+
+        tfTM6Number.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (newValue != null)
+            {
+                tfTM6Number.setText(newValue.toUpperCase());
+            }
+        });
     }
 
     @Override
-    public void fillData(MonasticProfile p)
+    public void fillData(MonasticProfile p
+    )
     {
         loadContentsCBPortOfEntry();
         loadContentsCBTravelFrom();
-        
+
         if (p != null)
         {
             tfTM6Number.setText(p.getArrivalCardNumber());
@@ -116,7 +125,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
         cbPortOfEntry.getItems().clear();
         cbPortOfEntry.getItems().addAll(alPortOfEntry);
     }
-    
+
     private void loadContentsCBTravelFrom()
     {
         ArrayList<String> alTravelFrom;

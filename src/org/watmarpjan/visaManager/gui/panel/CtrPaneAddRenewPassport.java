@@ -46,13 +46,21 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
     {
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
+
+        tfpassportNumber.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (newValue != null)
+            {
+                tfpassportNumber.setText(newValue.toUpperCase());
+            }
+        });
     }
 
     @Override
     public void fillData(MonasticProfile p)
     {
         GUIUtil.loadContentComboboxGeneric(cbPassportCountry, ctrGUIMain.getCtrMain().loadListCountry());
-        
+
         if (p != null)
         {
             tfpassportNumber.setText(p.getPassportNumber());

@@ -60,6 +60,14 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
+        
+        tfVisaNumber.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (newValue != null)
+            {
+            tfVisaNumber.setText(newValue.toUpperCase());
+            }
+        });
     }
 
     @FXML
