@@ -89,4 +89,9 @@ public class Init extends Application
             CtrAlertDialog.exceptionDialog(ex, "Error to init app.");
         }
     }
+    
+    public static void main(String[] args)
+    {
+        Application.launch(Init.class, (java.lang.String[]) null);
+    }
 }
