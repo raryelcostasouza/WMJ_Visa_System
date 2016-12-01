@@ -5,10 +5,11 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
-import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.io.File;
+import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -34,6 +35,7 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryReceipt90Day;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -208,6 +210,40 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
                 else
                 {
                     tfSelectionRefNumber.setText("");
+                }
+            }
+        });
+        
+        
+        
+        tfReceiptNumber.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                LocalDate parsedDate;
+                int indexLastDash;
+                String strReceiptNumber, strDate2Parse;
+                
+                if (newValue != null)
+                {
+                    //remove empty space from the field
+                    tfReceiptNumber.setText(newValue.replace(" ", ""));
+                    strReceiptNumber = tfReceiptNumber.getText();
+                    
+                    //parses the receipt date
+                    indexLastDash = strReceiptNumber.lastIndexOf("-");
+                    strDate2Parse = strReceiptNumber.substring(indexLastDash+1, indexLastDash+9);
+                    try
+                    {
+                        parsedDate = LocalDate.parse(strDate2Parse, DateTimeFormatter.ofPattern("yyyyMMdd"));
+                        dpReceiptDate.setValue(parsedDate);
+                    } catch (DateTimeParseException e)
+                    {
+                        //if it is not possible to parse the date
+                        dpReceiptDate.setValue(null);
+                    }
+                    
                 }
             }
         });
