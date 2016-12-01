@@ -7,7 +7,9 @@ package org.watmarpjan.visaManager.util;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.TextStyle;
 import java.util.Date;
+import java.util.Locale;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -78,20 +80,32 @@ public class ProfileUtil
 
     public static String getStrOrdinationDate(MonasticProfile p)
     {
+        LocalDate ldOrdDate;
+        String monthNameThai;
         if (p.getBhikkhuOrdDate() != null)
         {
-            return Util.toStringThaiDateFormat(p.getBhikkhuOrdDate());
+            ldOrdDate = Util.convertDateToLocalDate(p.getBhikkhuOrdDate());
         }
         else if (p.getSamaneraOrdDate() != null)
         {
-            return Util.toStringThaiDateFormat(p.getSamaneraOrdDate());
+            ldOrdDate = Util.convertDateToLocalDate(p.getSamaneraOrdDate());
+        }
+        else
+        {
+            ldOrdDate = null;
+        }
+        
+        if (ldOrdDate != null)
+        {
+            monthNameThai = ldOrdDate.getMonth().getDisplayName ( TextStyle.FULL , new Locale("th") );
+            return ldOrdDate.getDayOfMonth() + " "+ monthNameThai + " "+ Util.convertYearToThai(ldOrdDate.getYear());
         }
         else
         {
             return null;
         }
     }
-
+    
     public static String getStrAge(Date birthDate)
     {
         LocalDate ldBirth, ldToday;

@@ -109,6 +109,7 @@ public class CtrForm
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("paliNameThai"));
         alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("ordinationDateThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watOrdainedAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("upajjhayaThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watUpajjhayaThai"));
