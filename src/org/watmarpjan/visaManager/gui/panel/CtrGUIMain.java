@@ -5,15 +5,25 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.time.Duration;
+import java.time.Instant;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.CtrDatePicker;
 import java.util.ArrayList;
+import javafx.application.Platform;
+import javafx.application.Preloader;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
@@ -24,6 +34,7 @@ import org.watmarpjan.visaManager.control.CtrMain;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
@@ -39,6 +50,9 @@ public class CtrGUIMain
 
     private CtrMain ctrMain;
     private CtrDatePicker ctrDatePicker;
+
+    @FXML
+    private VBox rootPane;
 
     @FXML
     private RadioButton rbDateFormatWestern;
@@ -128,6 +142,8 @@ public class CtrGUIMain
 
     private CtrFieldChangeListener ctrFieldChangeListener;
 
+    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[14];
+
     public CtrFieldChangeListener getCtrFieldChangeListener()
     {
         return ctrFieldChangeListener;
@@ -136,6 +152,31 @@ public class CtrGUIMain
     @FXML
     void initialize()
     {
+        for (int i = 0; i < flagFXMLLoaded.length; i++)
+        {
+            flagFXMLLoaded[i] = new SimpleBooleanProperty(false);
+            flagFXMLLoaded[i].addListener(new ChangeListener<Boolean>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+                {
+                    boolean finished = true;
+                    for (int j = 0; j < flagFXMLLoaded.length; j++)
+                    {
+                        if (flagFXMLLoaded[j].getValue().equals(Boolean.FALSE))
+                        {
+                            finished = false;
+                        }
+                    }
+
+                    if (finished)
+                    {
+                        initGUIAfterFXMLLoad();
+                    }
+                }
+            });
+        }
+
         //starts cleaning tmp files
         //in case the app was forced to close
         CtrFileOperation.clearTMPFiles();
@@ -173,233 +214,414 @@ public class CtrGUIMain
         initPaneMonasticSelection();
         initPaneEditSave();
 
-        this.ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
-        initChildControllers();
-        actionDueTasksButton(null);
+    }
+
+    private void initGUIAfterFXMLLoad()
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Stage primaryStage;
+                Scene mainScene = new Scene(rootPane);
+                
+                ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
+                initChildControllers();
+                actionDueTasksButton(null);
+                
+                primaryStage = Init.MAIN_STAGE;
+                primaryStage.setScene(mainScene);
+                primaryStage.setTitle("WMJ Visa System");
+                primaryStage.setWidth(1600);
+                primaryStage.setHeight(990);
+                
+                primaryStage.show();
+                System.out.println("LoadTime: " +Duration.between(Init.INSTANT_INIT_START, Instant.now()));
+                
+                //closes the preloader splashscreen
+                Init.APP.notifyPreloader(new Preloader.StateChangeNotification(
+                        Preloader.StateChangeNotification.Type.BEFORE_START));
+            }
+        });
+
     }
 
     private void initPaneMonasticProfile()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneMonasticProfile.fxml"));
-            paneMonasticProfile = loader.load();
-            ctrPaneMonasticProfile = loader.getController();
-            listPaneControllers.add(ctrPaneMonasticProfile);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneMonasticProfile.fxml"));
+                    paneMonasticProfile = loader.load();
+                    ctrPaneMonasticProfile = loader.getController();
+                    listPaneControllers.add(ctrPaneMonasticProfile);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[0].setValue(Boolean.TRUE);
+
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
     }
 
     private void initPanePassport()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("panePassport.fxml"));
-            panePassport = loader.load();
-            ctrPanePassport = loader.getController();
-            listPaneControllers.add(ctrPanePassport);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("panePassport.fxml"));
+                    panePassport = loader.load();
+                    ctrPanePassport = loader.getController();
+                    listPaneControllers.add(ctrPanePassport);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[1].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
     }
 
     private void initPaneBysuddhi()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneBysuddhi.fxml"));
-            paneBysuddhi = loader.load();
-            ctrPaneBysuddhi = loader.getController();
-            listPaneControllers.add(ctrPaneBysuddhi);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneBysuddhi.fxml"));
+                    paneBysuddhi = loader.load();
+                    ctrPaneBysuddhi = loader.getController();
+                    listPaneControllers.add(ctrPaneBysuddhi);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[2].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneDueTasks()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneDueTasks.fxml"));
-            paneDueTasks = loader.load();
-            ctrPaneDueTasks = loader.getController();
-            listPaneControllers.add(ctrPaneDueTasks);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneDueTasks.fxml"));
+                    paneDueTasks = loader.load();
+                    ctrPaneDueTasks = loader.getController();
+                    listPaneControllers.add(ctrPaneDueTasks);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[3].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneMonastery()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneMonastery.fxml"));
-            paneMonastery = loader.load();
-            ctrPaneMonastery = loader.getController();
-            listPaneControllers.add(ctrPaneMonastery);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneMonastery.fxml"));
+                    paneMonastery = loader.load();
+                    ctrPaneMonastery = loader.getController();
+                    listPaneControllers.add(ctrPaneMonastery);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[4].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneUpajjhaya()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneUpajjhaya.fxml"));
-            paneUpajjhaya = loader.load();
-            ctrPaneUpajjhaya = loader.getController();
-            listPaneControllers.add(ctrPaneUpajjhaya);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneUpajjhaya.fxml"));
+                    paneUpajjhaya = loader.load();
+                    ctrPaneUpajjhaya = loader.getController();
+                    listPaneControllers.add(ctrPaneUpajjhaya);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[5].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneVisaExt()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneVisaExt.fxml"));
-            paneVisaExt = loader.load();
-            ctrPaneVisaExt = loader.getController();
-            listPaneControllers.add(ctrPaneVisaExt);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneVisaExt.fxml"));
+                    paneVisaExt = loader.load();
+                    ctrPaneVisaExt = loader.getController();
+                    listPaneControllers.add(ctrPaneVisaExt);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[6].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneReEntry()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneReEntry.fxml"));
-            paneReEntry = loader.load();
-            ctrPaneReEntry = loader.getController();
-            listPaneControllers.add(ctrPaneReEntry);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneReEntry.fxml"));
+                    paneReEntry = loader.load();
+                    ctrPaneReEntry = loader.getController();
+                    listPaneControllers.add(ctrPaneReEntry);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[7].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneAddRenewPassport()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneAddRenewPassport.fxml"));
-            paneAddRenewPassport = loader.load();
-            ctrPaneAddRenewPassport = loader.getController();
-            listPaneControllers.add(ctrPaneAddRenewPassport);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneAddRenewPassport.fxml"));
+                    paneAddRenewPassport = loader.load();
+                    ctrPaneAddRenewPassport = loader.getController();
+                    listPaneControllers.add(ctrPaneAddRenewPassport);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[8].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneAddChangeVisa()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneAddChangeVisa.fxml"));
-            paneAddChangeVisa = loader.load();
-            ctrPaneAddChangeVisa = loader.getController();
-            listPaneControllers.add(ctrPaneAddChangeVisa);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneAddChangeVisa.fxml"));
+                    paneAddChangeVisa = loader.load();
+                    ctrPaneAddChangeVisa = loader.getController();
+                    listPaneControllers.add(ctrPaneAddChangeVisa);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[9].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPane90DayNotice()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("pane90DayNotice.fxml"));
-            pane90DayNotice = loader.load();
-            ctrPane90DayNotice = loader.getController();
-            listPaneControllers.add(ctrPane90DayNotice);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("pane90DayNotice.fxml"));
+                    pane90DayNotice = loader.load();
+                    ctrPane90DayNotice = loader.getController();
+                    listPaneControllers.add(ctrPane90DayNotice);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[10].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneEditSave()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneEditSave.fxml"));
-            paneEditSave = loader.load();
-            ctrPaneEditSave = loader.getController();
-            listPaneControllers.add(ctrPaneEditSave);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneEditSave.fxml"));
+                    paneEditSave = loader.load();
+                    ctrPaneEditSave = loader.getController();
+                    listPaneControllers.add(ctrPaneEditSave);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[11].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneMonasticSelection()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneMonasticSelection.fxml"));
-            paneMonasticSelection = loader.load();
-            ctrPaneMonasticSelection = loader.getController();
-            listPaneControllers.add(ctrPaneMonasticSelection);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneMonasticSelection.fxml"));
+                    paneMonasticSelection = loader.load();
+                    ctrPaneMonasticSelection = loader.getController();
+                    listPaneControllers.add(ctrPaneMonasticSelection);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[12].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     private void initPaneTM30NotifResidence()
     {
-        FXMLLoader loader;
-        try
+        Task t = new Task<Void>()
         {
-            loader = new FXMLLoader(getClass().getResource("paneTM30NotifResidence.fxml"));
-            paneTM30NotifResidence = loader.load();
-            ctrPaneTM30NotifResidence = loader.getController();
-            listPaneControllers.add(ctrPaneTM30NotifResidence);
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneTM30NotifResidence.fxml"));
+                    paneTM30NotifResidence = loader.load();
+                    ctrPaneTM30NotifResidence = loader.getController();
+                    listPaneControllers.add(ctrPaneTM30NotifResidence);
 
-        } catch (Exception ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
-        }
+                    flagFXMLLoaded[13].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
     }
 
     public CtrMain getCtrMain()

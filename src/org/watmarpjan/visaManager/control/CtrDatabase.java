@@ -46,7 +46,7 @@ public class CtrDatabase
             entityManager = emFactory.createEntityManager();
             finish = Instant.now();
 
-            System.out.println("Hibernate load time: " + Duration.between(start, finish));
+            System.out.println("Hibernate Load: " + Duration.between(start, finish));
         } catch (PersistenceException he)
         {
             CtrAlertDialog.exceptionDialog(he, "Error when connecting to Database: \n" + he.getMessage());
