@@ -119,10 +119,10 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     private TableColumn tcOpenPDF;
 
     private ArrayList<TextField> alTextFields;
-    
-     @FXML
+
+    @FXML
     private Button bPreview;
-    
+
     @FXML
     private Button bPrint;
 
@@ -131,7 +131,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     {
         bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        
+
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpDateOfBirth);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpArrivalDate);
@@ -213,9 +213,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
                 }
             }
         });
-        
-        
-        
+
         tfReceiptNumber.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -224,16 +222,16 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
                 LocalDate parsedDate;
                 int indexLastDash;
                 String strReceiptNumber, strDate2Parse;
-                
+
                 if (newValue != null)
                 {
                     //remove empty space from the field
                     tfReceiptNumber.setText(newValue.replace(" ", ""));
                     strReceiptNumber = tfReceiptNumber.getText();
-                    
+
                     //parses the receipt date
                     indexLastDash = strReceiptNumber.lastIndexOf("-");
-                    strDate2Parse = strReceiptNumber.substring(indexLastDash+1, indexLastDash+9);
+                    strDate2Parse = strReceiptNumber.substring(indexLastDash + 1, indexLastDash + 9);
                     try
                     {
                         parsedDate = LocalDate.parse(strDate2Parse, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -243,7 +241,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
                         //if it is not possible to parse the date
                         dpReceiptDate.setValue(null);
                     }
-                    
+
                 }
             }
         });
