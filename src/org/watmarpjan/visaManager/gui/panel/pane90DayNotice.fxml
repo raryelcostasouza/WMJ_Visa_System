@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
   <tabs>
     <Tab text="Register 90 day Notice">
          <content>
@@ -86,11 +86,15 @@
          <content>
             <VBox>
                <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Hyperlink onAction="#actionLinkThaiImmigration" text="Thai Immigration - 90 Notification Online" />
-                     </children>
-                  </HBox>
+                  <TitledPane collapsible="false" text="Website Thai Immigration">
+                     <content>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Hyperlink onAction="#actionLinkThaiImmigration" text="Thai Immigration - 90 Notification Online" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </TitledPane>
                   <GridPane VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
