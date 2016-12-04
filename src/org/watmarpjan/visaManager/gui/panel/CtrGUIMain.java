@@ -142,7 +142,9 @@ public class CtrGUIMain
 
     private CtrFieldChangeListener ctrFieldChangeListener;
 
+    private CtrGUIMain ctrGUIMainSelfReference = this;
     private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[14];
+    private BooleanProperty flagInitCtrData = new SimpleBooleanProperty(Boolean.FALSE);
 
     public CtrFieldChangeListener getCtrFieldChangeListener()
     {
@@ -152,6 +154,10 @@ public class CtrGUIMain
     @FXML
     void initialize()
     {
+        //flags to control the threads that will load the FXML files in parallel
+
+        //the array value is false when the thread still didn`t finish its task
+        //the array value changes to true when the thread finish
         for (int i = 0; i < flagFXMLLoaded.length; i++)
         {
             flagFXMLLoaded[i] = new SimpleBooleanProperty(false);
@@ -160,27 +166,24 @@ public class CtrGUIMain
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
                 {
-                    boolean finished = true;
-                    for (int j = 0; j < flagFXMLLoaded.length; j++)
-                    {
-                        if (flagFXMLLoaded[j].getValue().equals(Boolean.FALSE))
-                        {
-                            finished = false;
-                        }
-                    }
-
-                    if (finished)
-                    {
-                        initGUIAfterFXMLLoad();
-                    }
+                    actionThreadFinishTask();
                 }
             });
         }
 
+        flagInitCtrData.addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            {
+                actionThreadFinishTask();
+            }
+        });
+
         //starts cleaning tmp files
         //in case the app was forced to close
         CtrFileOperation.clearTMPFiles();
-        this.ctrMain = new CtrMain(this);
+        initDataControllers();
         this.ctrDatePicker = new CtrDatePicker();
 
         Init.MAIN_STAGE.setOnCloseRequest(new EventHandler<WindowEvent>()
@@ -216,6 +219,55 @@ public class CtrGUIMain
 
     }
 
+    private void actionThreadFinishTask()
+    {
+        //whenever a thread finishes its task this section will be executed
+        boolean finished = true;
+        System.out.println("Thread X finish");
+        //if the Initialization of the data controllers finished
+        if (flagInitCtrData.getValue().equals(Boolean.TRUE))
+        {
+            //test if ALL the other threads finish their work
+            for (int j = 0; j < flagFXMLLoaded.length; j++)
+            {
+                //if any thread still didn`t finish its work
+                if (flagFXMLLoaded[j].getValue().equals(Boolean.FALSE))
+                {
+                    finished = false;
+                    break;
+                }
+            }
+            //if ALL the other threads finish their work
+            //then the GUI data can be initialized.
+            if (finished)
+            {
+                initGUIAfterFXMLLoad();
+            }
+        }
+    }
+
+    private void initDataControllers()
+    {
+        Task t = new Task<Void>()
+        {
+            @Override
+            protected Void call() throws Exception
+            {
+                try
+                {
+                    ctrMain = new CtrMain(ctrGUIMainSelfReference);
+                    flagInitCtrData.setValue(Boolean.TRUE);
+
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to init app.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+    }
+
     private void initGUIAfterFXMLLoad()
     {
         Platform.runLater(new Runnable()
@@ -225,20 +277,20 @@ public class CtrGUIMain
             {
                 Stage primaryStage;
                 Scene mainScene = new Scene(rootPane);
-                
+
                 ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
                 initChildControllers();
                 actionDueTasksButton(null);
-                
+
                 primaryStage = Init.MAIN_STAGE;
                 primaryStage.setScene(mainScene);
                 primaryStage.setTitle("WMJ Visa System");
                 primaryStage.setWidth(1600);
                 primaryStage.setHeight(990);
-                
+
                 primaryStage.show();
-                System.out.println("LoadTime: " +Duration.between(Init.INSTANT_INIT_START, Instant.now()));
-                
+                System.out.println("LoadTime: " + Duration.between(Init.INSTANT_INIT_START, Instant.now()));
+
                 //closes the preloader splashscreen
                 Init.APP.notifyPreloader(new Preloader.StateChangeNotification(
                         Preloader.StateChangeNotification.Type.BEFORE_START));
