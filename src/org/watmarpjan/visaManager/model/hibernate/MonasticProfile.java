@@ -83,6 +83,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate")
     , @NamedQuery(name = "MonasticProfile.findByPassportCountry", query = "SELECT m FROM MonasticProfile m WHERE m.passportCountry = :passportCountry")
     , @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter")
+    , @NamedQuery(name = "MonasticProfile.findByOnlineNoticeAccepted", query = "SELECT m FROM MonasticProfile m WHERE m.onlineNoticeAccepted = :onlineNoticeAccepted")
 })
 public class MonasticProfile implements Serializable
 {
@@ -198,6 +199,8 @@ public class MonasticProfile implements Serializable
     private Boolean patimokkhaChanter;
     @Lob
     private String remark;
+    @Column(name = "ONLINE_NOTICE_ACCEPTED")
+    private Boolean onlineNoticeAccepted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -722,6 +725,16 @@ public class MonasticProfile implements Serializable
     public void setRemark(String remark)
     {
         this.remark = remark;
+    }
+
+    public Boolean getOnlineNoticeAccepted()
+    {
+        return onlineNoticeAccepted;
+    }
+
+    public void setOnlineNoticeAccepted(Boolean onlineNoticeAccepted)
+    {
+        this.onlineNoticeAccepted = onlineNoticeAccepted;
     }
 
     @XmlTransient

@@ -281,21 +281,39 @@
               </TitledPane>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                    <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Status">
-                        <content>
-                            <HBox alignment="CENTER_LEFT">
-                                <children>
-                                    <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
-                                        <toggleGroup>
-                                            <ToggleGroup fx:id="tgStatus" />
-                                        </toggleGroup>
+                  <HBox>
+                     <children>
+                          <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Status">
+                              <content>
+                                  <HBox alignment="CENTER_LEFT">
+                                      <children>
+                                          <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
+                                              <toggleGroup>
+                                                  <ToggleGroup fx:id="tgStatus" />
+                                              </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
+                                          <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
+                                      </children>
+                                  </HBox>
+                              </content>
+                          </TitledPane>
+                        <TitledPane collapsible="false" text="Online 90 Day Notice Accepted?" HBox.hgrow="ALWAYS">
+                           <content>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <RadioButton fx:id="rbOnlineNoticeYes" disable="true" mnemonicParsing="false" text="Yes">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="tgOnlineNotice" />
+                                       </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
-                                    <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
-                                </children>
-                            </HBox>
-                        </content>
-                    </TitledPane>
+                                    <RadioButton fx:id="rbOnlineNoticeNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgOnlineNotice" />
+                                 </children>
+                              </HBox>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </HBox>
                     <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Dhamma Studies">
                         <content>
                             <HBox alignment="CENTER_LEFT">

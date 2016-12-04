@@ -330,13 +330,13 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry(p.nickname, p.next90DayNotice)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
                 + " from MonasticProfile p "
                 + " where p.status = 'THAILAND' and"
                 + " p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
-        return queryDueTaskEntry(hql);
+       return queryDueTaskEntry(hql);
     }
 
     public ArrayList<EntryUpdate90DayNotice> loadListUpdate90DayNotice()

@@ -109,6 +109,14 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private RadioButton rbInactive;
 
     @FXML
+    private RadioButton rbOnlineNoticeYes;
+    @FXML
+    private RadioButton rbOnlineNoticeNo;
+
+    @FXML
+    private ToggleGroup tgOnlineNotice;
+    
+    @FXML
     private ToggleGroup tgDhammaStudies;
     @FXML
     private RadioButton rbDhammaStudiesRegular;
@@ -167,6 +175,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(cbAdviserToCome);
         listFields.add(cbAdvisorWat);
         listFields.add(tgDhammaStudies);
+        listFields.add(tgOnlineNotice);
         listFields.add(tfEmail);
         listFields.add(taEmergencyContact);
         listFields.add(taPhoneNumber);
@@ -284,6 +293,22 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
             cbAdviserToCome.setValue(p.getNameAdviserToCome());
 
+            if (p.getOnlineNoticeAccepted() != null)
+            {
+                if (p.getOnlineNoticeAccepted())
+                {
+                    rbOnlineNoticeYes.setSelected(true);
+                }
+                else
+                {
+                    rbOnlineNoticeNo.setSelected(true);
+                }
+            }
+            else
+            {
+                rbOnlineNoticeNo.setSelected(true);
+            }
+            
             switch (p.getDhammaStudies())
             {
                 case AppConstants.STUDIES_NAKTAM_TRI:
@@ -400,6 +425,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         cbAdviserToCome.setDisable(true);
         cbAdvisorWat.setDisable(true);
+        
+        rbOnlineNoticeNo.setDisable(true);
+        rbOnlineNoticeYes.setDisable(true);
 
         rbInThailand.setDisable(true);
         rbAbroad.setDisable(true);
@@ -450,6 +478,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         cbAdviserToCome.setDisable(false);
         cbAdvisorWat.setDisable(false);
 
+        rbOnlineNoticeNo.setDisable(false);
+        rbOnlineNoticeYes.setDisable(false);
+        
         rbInThailand.setDisable(false);
         rbAbroad.setDisable(false);
         rbInactive.setDisable(false);
@@ -566,6 +597,15 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         p.setNameAdviserToCome(cbAdviserToCome.getValue());
 
+        if (rbOnlineNoticeYes.isSelected())
+        {
+            p.setOnlineNoticeAccepted(true);
+        }
+        else
+        {
+            p.setOnlineNoticeAccepted(false);
+        }
+        
         if (rbDhammaStudiesNaktamTri.isSelected())
         {
             p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TRI);

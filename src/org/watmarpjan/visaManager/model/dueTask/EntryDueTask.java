@@ -62,6 +62,11 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     {
         return profileNickname.get();
     }
+    
+    protected void setProfileNickname(String pNewNickname)
+    {
+        profileNickname.set(pNewNickname);
+    }
 
     public String getDueDate()
     {
