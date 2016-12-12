@@ -23,13 +23,14 @@ public class Util
 {
 
     public final static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     //creates a new arraylist with the distinct values from the input arraylist
     public static ArrayList<String> filterDistinctElement(ArrayList<String> list)
     {
         ArrayList<String> listDistinct;
         String previousElement, currentElement;
-        
+
         listDistinct = new ArrayList<>();
         for (int i = 0; i < list.size(); i++)
         {
@@ -37,30 +38,28 @@ public class Util
             if (i == 0)
             {
                 listDistinct.add(currentElement);
-            }
-            else
+            } else
             {
-               previousElement = list.get(i-1);
-               if (!currentElement.equals(previousElement))
-               {
-                   listDistinct.add(currentElement);
-               }
+                previousElement = list.get(i - 1);
+                if (!currentElement.equals(previousElement))
+                {
+                    listDistinct.add(currentElement);
+                }
             }
         }
         return listDistinct;
     }
-    
+
     public static Integer convertYearToThai(Integer iso_year)
     {
         if (iso_year != null)
         {
             return iso_year + 543;
-        }
-        else
+        } else
         {
             return null;
         }
-        
+
     }
 
     public static LocalDate convertDateToLocalDate(Date d)
