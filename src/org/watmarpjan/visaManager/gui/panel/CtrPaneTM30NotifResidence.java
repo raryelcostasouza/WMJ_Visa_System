@@ -18,7 +18,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +26,7 @@ import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.model.BlockMonasticSelection;
 import org.watmarpjan.visaManager.model.EntryPrintoutTM30;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -56,16 +56,17 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     @FXML
     private TextField tfPathPDF;
 
-    private ArrayList<CheckBoxTreeItem<String>> listItemTMonastics;
+    private BlockMonasticSelection bMonasticSelection;
     private File fSelected;
 
     @Override
     public void init()
     {
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNotification);
-        listItemTMonastics = new ArrayList<>();
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
 
+        bMonasticSelection = new BlockMonasticSelection(tvMonastics);
+        
         tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
         tvSavedNotifications.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
         tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
@@ -120,29 +121,12 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
     public void fillData()
     {
         loadTableNotifResidence();
-        loadMonasticTree();
+        ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(bMonasticSelection);
 
         dpNotification.setValue(null);
         tfPathPDF.setText("");
 
         tvMonastics.getSelectionModel().clearSelection();
-    }
-
-    private void loadMonasticTree()
-    {
-        ArrayList<String> monasticNickNameList;
-
-        monasticNickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
-        TreeItem<String> rootItem = new TreeItem<>("Monastics");
-        listItemTMonastics.clear();
-        for (String nickname : monasticNickNameList)
-        {
-            CheckBoxTreeItem<String> item = new CheckBoxTreeItem<>(nickname);
-            listItemTMonastics.add(item);
-        }
-        rootItem.getChildren().addAll(listItemTMonastics);
-        tvMonastics.setRoot(rootItem);
-
     }
 
     private void loadTableNotifResidence()
@@ -211,7 +195,7 @@ public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
         ArrayList<String> listSelectedMonastics;
 
         listSelectedMonastics = new ArrayList<>();
-        for (CheckBoxTreeItem<String> cbMonasticItem : listItemTMonastics)
+        for (CheckBoxTreeItem<String> cbMonasticItem : bMonasticSelection.getListCheckBoxMonastics())
         {
             if (cbMonasticItem.isSelected())
             {

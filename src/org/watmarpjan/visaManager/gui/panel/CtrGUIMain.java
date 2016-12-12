@@ -129,6 +129,11 @@ public class CtrGUIMain
     private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
     @FXML
     private TabPane paneTM30NotifResidence;
+    
+    @FXML
+    private CtrPaneChangelog ctrPaneChangelog;
+    @FXML
+    private TabPane paneChangelog;
 
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
@@ -141,9 +146,10 @@ public class CtrGUIMain
     private ArrayList<AbstractChildPaneController> listPaneControllers;
 
     private CtrFieldChangeListener ctrFieldChangeListener;
+    private CtrGUISharedUtil ctrGUISharedUtil;
 
     private CtrGUIMain ctrGUIMainSelfReference = this;
-    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[14];
+    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[15];
     private BooleanProperty flagInitCtrData = new SimpleBooleanProperty(Boolean.FALSE);
 
     public CtrFieldChangeListener getCtrFieldChangeListener()
@@ -185,6 +191,7 @@ public class CtrGUIMain
         CtrFileOperation.clearTMPFiles();
         initDataControllers();
         this.ctrDatePicker = new CtrDatePicker();
+        this.ctrGUISharedUtil = new CtrGUISharedUtil(this);
 
         Init.MAIN_STAGE.setOnCloseRequest(new EventHandler<WindowEvent>()
         {
@@ -213,6 +220,7 @@ public class CtrGUIMain
         initPaneReEntry();
         initPaneVisaExt();
         initPaneTM30NotifResidence();
+        initPaneChangelog();
 
         initPaneMonasticSelection();
         initPaneEditSave();
@@ -223,7 +231,6 @@ public class CtrGUIMain
     {
         //whenever a thread finishes its task this section will be executed
         boolean finished = true;
-        System.out.println("Thread X finish");
         //if the Initialization of the data controllers finished
         if (flagInitCtrData.getValue().equals(Boolean.TRUE))
         {
@@ -675,6 +682,34 @@ public class CtrGUIMain
         new Thread(t).start();
 
     }
+    private void initPaneChangelog()
+    {
+        Task t = new Task<Void>()
+        {
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneChangelog.fxml"));
+                    paneChangelog = loader.load();
+                    ctrPaneChangelog = loader.getController();
+                    listPaneControllers.add(ctrPaneChangelog);
+
+                    flagFXMLLoaded[14].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
+    }
+    
+    
 
     public CtrMain getCtrMain()
     {
@@ -875,6 +910,20 @@ public class CtrGUIMain
 //        Init.MAIN_STAGE.sizeToScene();
         ctrPaneTM30NotifResidence.fillData();
     }
+    @FXML
+    void actionButtonChangelog(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        topPane.setCenter(null);
+        topPane.setLeft(null);
+        centerPane.setCenter(paneChangelog);
+        currentPaneController = ctrPaneChangelog;
+//        Init.MAIN_STAGE.sizeToScene();
+        ctrPaneChangelog.fillData();
+    }
+    
+    
 
     public void initChildControllers()
     {
@@ -932,6 +981,11 @@ public class CtrGUIMain
     public CtrDatePicker getCtrDatePicker()
     {
         return ctrDatePicker;
+    }
+
+    public CtrGUISharedUtil getCtrGUISharedUtil()
+    {
+        return ctrGUISharedUtil;
     }
 
 }

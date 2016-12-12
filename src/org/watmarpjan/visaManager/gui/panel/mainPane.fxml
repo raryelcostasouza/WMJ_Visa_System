@@ -63,7 +63,7 @@
                             <content>
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ChangeLog" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonChangelog" text="ChangeLog" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Users" />
                                     </children>
                                 </VBox>

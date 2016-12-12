@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneChangelog">
+  <tabs>
+    <Tab text="Recent Changes">
+         <content>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <TextArea fx:id="taChangelogPreview" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content></Tab>
+    <Tab text="Add Changelog Entry">
+         <content>
+            <VBox>
+               <children>
+                  <TitledPane collapsible="false" text="User Visa Manager">
+                     <content>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Label text="User:" />
+                              <ComboBox fx:id="cbMonastic" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </TitledPane>
+                  <HBox>
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <TitledPane fx:id="tpEntryReentry" expanded="false" text="Registered Entry/Reentry">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvEntryReentry" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpRegister90D" expanded="false" text="Registered 90 Day Notice">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvRegister90D" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpVisaExtension" expanded="false" text="Registered Visa Extension">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvVisaExtension" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpAddRenewPassport" expanded="false" text="Added/Renewed Passport">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvAddRenewPassport" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpTM30" expanded="false" text="Registered TM30">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvTM30" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <TitledPane fx:id="tpAddNewMonastic" expanded="false" text="Added New Monastic">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvAddNewMonastic" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpUpdatedMonastic" expanded="false" text="Updated Monastic Profile Data">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvUpdatedMonastic" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpUpdatedPassport" expanded="false" text="Updated Passport Data">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvUpdatedPassport" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpUpdatedBysuddhi" expanded="false" text="Updated Bysuddhi Data">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvUpdatedBysuddhi" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpNewPassportScans" expanded="false" text="New Passport Scans">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvNewPassportScans" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpNewBysuddhiScans" expanded="false" text="New Bysuddhi Scans">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvNewBysuddhiScans" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="tpUpdateMonastery" expanded="false" layoutX="10.0" layoutY="318.0" text="Updated Monastery Data">
+                                 <content>
+                                    <HBox spacing="10.0">
+                                       <children>
+                                          <Label text="Monastic Selection:" />
+                                          <TreeView fx:id="tvUpdateMonastery" showRoot="false" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox>
+                     <children>
+                        <TitledPane expanded="false" text="Optional Comment">
+                           <content>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <TextArea fx:id="taOptionalComment" />
+                                 </children>
+                              </HBox>
+                           </content>
+                        </TitledPane>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="bAddEntry" mnemonicParsing="false" onAction="#actionAddNewEntry" text="Add Entry Changelog" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content></Tab>
+  </tabs>
+</TabPane>
