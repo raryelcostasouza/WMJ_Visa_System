@@ -160,7 +160,7 @@ public class CtrPaneChangelog extends AbstractChildPaneController
     {
         ArrayList<String> nickNameList;
 
-        nickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
+        nickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileVisaManager();
         cbMonastic.getItems().clear();
         cbMonastic.getItems().addAll(nickNameList);
         cbMonastic.setValue(null);

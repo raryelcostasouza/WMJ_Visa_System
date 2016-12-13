@@ -92,6 +92,29 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
     }
 
+    public ArrayList<String> loadProfileVisaManager()
+    {
+        String hql;
+        List<MonasticProfile> listProfile;
+        ArrayList<String> listNickname;
+
+        hql = "select p from MonasticProfile p"
+                + " where p.status <> 'INACTIVE'"
+                + " and p.visaManager = true"
+                + " order by"
+                + " p.bhikkhuOrdDate asc nulls last,"
+                + " p.samaneraOrdDate asc nulls last,"
+                + " p.pahkahwOrdDate asc nulls last";
+
+        listProfile = ctrDB.getSession().createQuery(hql, MonasticProfile.class).getResultList();
+        listNickname = new ArrayList<>();
+        for (MonasticProfile p : listProfile)
+        {
+            listNickname.add(p.getNickname());
+        }
+        return listNickname;
+    }
+
     public ArrayList<String> loadProfileNicknameList(boolean onlyActive)
     {
         String hql;
@@ -301,7 +324,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.ethnicity";
         return queryStringField(hql);
     }
-    
+
     public ArrayList<String> loadListAdviserToCome()
     {
         String hql;
@@ -336,7 +359,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
-       return queryDueTaskEntry(hql);
+        return queryDueTaskEntry(hql);
     }
 
     public ArrayList<EntryUpdate90DayNotice> loadListUpdate90DayNotice()

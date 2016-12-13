@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
+<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
@@ -314,22 +314,40 @@
                         </TitledPane>
                      </children>
                   </HBox>
-                    <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Dhamma Studies">
-                        <content>
-                            <HBox alignment="CENTER_LEFT">
-                                <children>
-                                    <RadioButton fx:id="rbDhammaStudiesRegular" disable="true" mnemonicParsing="false" selected="true" text="Regular">
-                                        <toggleGroup>
-                                            <ToggleGroup fx:id="tgPrawatAnswers" />
-                                        </toggleGroup>
+                  <HBox>
+                     <children>
+                          <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Dhamma Studies">
+                              <content>
+                                  <HBox alignment="CENTER_LEFT">
+                                      <children>
+                                          <RadioButton fx:id="rbDhammaStudiesRegular" disable="true" mnemonicParsing="false" selected="true" text="Regular">
+                                              <toggleGroup>
+                                                  <ToggleGroup fx:id="tgPrawatAnswers" />
+                                              </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamTri" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamToh" disable="true" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamEk" disable="true" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
+                                      </children>
+                                  </HBox>
+                              </content>
+                          </TitledPane>
+                        <TitledPane collapsible="false" text="Visa Manager?">
+                           <content>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <RadioButton fx:id="rbVisaManagerYes" disable="true" mnemonicParsing="false" text="Yes">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="tgVisaManager" />
+                                       </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="rbDhammaStudiesNaktamTri" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
-                                    <RadioButton fx:id="rbDhammaStudiesNaktamToh" disable="true" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
-                                    <RadioButton fx:id="rbDhammaStudiesNaktamEk" disable="true" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
-                                </children>
-                            </HBox>
-                        </content>
-                    </TitledPane>
+                                    <RadioButton fx:id="rbVisaManagerNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgVisaManager" />
+                                 </children>
+                              </HBox>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </HBox>
                   <TitledPane collapsible="false" text="Remark">
                      <content>
                         <HBox prefWidth="100.0">

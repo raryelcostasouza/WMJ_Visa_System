@@ -117,6 +117,14 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private ToggleGroup tgOnlineNotice;
     
     @FXML
+    private RadioButton rbVisaManagerYes;
+    @FXML
+    private RadioButton rbVisaManagerNo;
+
+    @FXML
+    private ToggleGroup tgVisaManager;
+    
+    @FXML
     private ToggleGroup tgDhammaStudies;
     @FXML
     private RadioButton rbDhammaStudiesRegular;
@@ -176,6 +184,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(cbAdvisorWat);
         listFields.add(tgDhammaStudies);
         listFields.add(tgOnlineNotice);
+        listFields.add(tgVisaManager);
         listFields.add(tfEmail);
         listFields.add(taEmergencyContact);
         listFields.add(taPhoneNumber);
@@ -309,6 +318,22 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
                 rbOnlineNoticeNo.setSelected(true);
             }
             
+            if (p.getVisaManager()!= null)
+            {
+                if (p.getVisaManager())
+                {
+                    rbVisaManagerYes.setSelected(true);
+                }
+                else
+                {
+                    rbVisaManagerNo.setSelected(true);
+                }
+            }
+            else
+            {
+                rbVisaManagerNo.setSelected(true);
+            }
+            
             switch (p.getDhammaStudies())
             {
                 case AppConstants.STUDIES_NAKTAM_TRI:
@@ -428,6 +453,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         
         rbOnlineNoticeNo.setDisable(true);
         rbOnlineNoticeYes.setDisable(true);
+        
+        rbVisaManagerNo.setDisable(true);
+        rbVisaManagerYes.setDisable(true);
 
         rbInThailand.setDisable(true);
         rbAbroad.setDisable(true);
@@ -480,6 +508,9 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         rbOnlineNoticeNo.setDisable(false);
         rbOnlineNoticeYes.setDisable(false);
+        
+        rbVisaManagerNo.setDisable(false);
+        rbVisaManagerYes.setDisable(false);
         
         rbInThailand.setDisable(false);
         rbAbroad.setDisable(false);
@@ -604,6 +635,15 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         else
         {
             p.setOnlineNoticeAccepted(false);
+        }
+        
+         if (rbVisaManagerYes.isSelected())
+        {
+            p.setVisaManager(true);
+        }
+        else
+        {
+            p.setVisaManager(false);
         }
         
         if (rbDhammaStudiesNaktamTri.isSelected())
