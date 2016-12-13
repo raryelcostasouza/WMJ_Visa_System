@@ -154,7 +154,6 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         listChangelogSections.add(csUpdatedMonastic);
         listChangelogSections.add(csUpdatedPassport);
         listChangelogSections.add(csVisaExtension);
-
     }
 
     public void fillData()
@@ -164,6 +163,8 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         nickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
         cbMonastic.getItems().clear();
         cbMonastic.getItems().addAll(nickNameList);
+        cbMonastic.setValue(null);
+        
 
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(cs90D);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csAddNewMonastic);
@@ -178,17 +179,18 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedPassport);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csVisaExtension);
 
+        taOptionalComment.clear();
         taChangelogPreview.setText(CtrFileOperation.loadChangelog());
     }
 
-    private String generateChangelogSection(BlockMonasticSelection objTVC)
+    private String generateChangelogSection(BlockMonasticSelection objBMS)
     {
         boolean haveCheckboxSelected;
         String logSection;
-        
+
         logSection = "";
         haveCheckboxSelected = false;
-        for (CheckBoxTreeItem<String> objCB : cs90D.getListCheckBoxMonastics())
+        for (CheckBoxTreeItem<String> objCB : objBMS.getListCheckBoxMonastics())
         {
             if (objCB.isSelected())
             {
@@ -196,15 +198,19 @@ public class CtrPaneChangelog extends AbstractChildPaneController
                 //the section need to generate the title of the section
                 if (!haveCheckboxSelected)
                 {
-                    logSection += objTVC.getParentTitledPane().getText() + " for ";
+                    logSection += "         " + objBMS.getParentTitledPane().getText() + " for ";
                     haveCheckboxSelected = true;
                 }
                 logSection += objCB.getValue() + ", ";
             }
         }
 
-        logSection = logSection.substring(0, logSection.length() - 2);
-        logSection += ". ";
+        //if the changelog section has output, removes the last comma and add a dot
+        if (haveCheckboxSelected)
+        {
+            logSection = logSection.substring(0, logSection.length() - 2);
+            logSection += ".";
+        }
 
         return logSection;
     }
@@ -212,26 +218,47 @@ public class CtrPaneChangelog extends AbstractChildPaneController
     @FXML
     void actionAddNewEntry(ActionEvent ae)
     {
-        String logLine;
+        String logLine, logSection;
 
         if (validateFields())
         {
             logLine = LocalDateTime.now().format(Util.DEFAULT_DATE_TIME_FORMAT) + " ";
-            logLine += cbMonastic.getValue() + ": ";
+            logLine += cbMonastic.getValue() + ":";
 
             for (BlockMonasticSelection objChangelogSection : listChangelogSections)
             {
-                logLine += generateChangelogSection(objChangelogSection);
+                logSection = generateChangelogSection(objChangelogSection);
+                if (!logSection.equals(""))
+                {
+                    logLine+="\n" +logSection;
+                }
             }
-            
-            logLine+= "Remark: " + taOptionalComment.getText();
 
-            System.out.println(logLine);
+            //if there is a optional comment
+            if (!taOptionalComment.getText().equals(""))
+            {
+                logLine += "\n         Remark: " + taOptionalComment.getText();
+            }
+
             CtrFileOperation.saveChangelog(logLine);
+            fillData();
         }
 
     }
 
+    @FXML
+    void actionSelectedVisaManagerUser(ActionEvent ae)
+    {
+        if (cbMonastic.getValue() != null)
+        {
+            bAddEntry.setDisable(false);
+        }        
+        else
+        {
+            bAddEntry.setDisable(true);
+        }
+    }
+    
     private boolean validateFields()
     {
         return (cbMonastic.getValue() != null);

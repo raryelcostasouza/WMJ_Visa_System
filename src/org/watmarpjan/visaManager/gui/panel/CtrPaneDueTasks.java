@@ -13,12 +13,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry;
@@ -51,6 +53,9 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
     private ArrayList<TableView<EntryDueTask>> alTV;
 
+    @FXML
+    private TextArea taRecentChanges;
+    
     @FXML
     private Button bPrintTH;
     @FXML
@@ -218,6 +223,8 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
         tvAbroadVisaExtension.getItems().addAll(alAbroadDueVisaExtension);
         tvAbroadPassportRenewal.getItems().addAll(alAbroadPassportRenewal);
+        
+        taRecentChanges.setText(CtrFileOperation.loadChangelog());
     }
 
     @FXML

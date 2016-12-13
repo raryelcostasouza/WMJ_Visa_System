@@ -16,6 +16,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.TitledPane;
 import javafx.stage.FileChooser;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
@@ -249,8 +254,7 @@ public class CtrFileOperation
                 CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
             }
 
-        }
-        else
+        } else
         {
             CtrAlertDialog.errorDialog("No support for opening files on this OS.");
         }
@@ -275,9 +279,9 @@ public class CtrFileOperation
             for (File f : fList)
             {
                 receiptDate = f.getName().substring(0, 10);
-                
+
                 //get the index of the '-' before the 'TM47' prefix of the receipt 
-                indexLastSeparator = f.getName().lastIndexOf("TM47") -1;
+                indexLastSeparator = f.getName().lastIndexOf("TM47") - 1;
                 receiptStatus = f.getName().substring(11, indexLastSeparator);
                 refNumber = f.getName().substring(indexLastSeparator + 1, f.getName().length() - 4);
 
@@ -287,10 +291,73 @@ public class CtrFileOperation
                 listReceipts90D.add(objEntryReceipt);
             }
             return listReceipts90D;
-        }
-        else
+        } else
         {
             return null;
+        }
+    }
+
+    public static void saveChangelog(String topLine)
+    {
+        List<String> listLinesBeforeUpdate;
+        ArrayList<String> listLinesUpdated;
+        LinkedList<String> lList;
+        Path pFileChangelog;
+        TitledPane tp = new TitledPane();
+        pFileChangelog = AppPaths.getPathChangelog();
+        try
+        {
+            listLinesUpdated = new ArrayList<>();
+
+            if (pFileChangelog.toFile().exists())
+            {
+                listLinesBeforeUpdate = Files.readAllLines(pFileChangelog);
+            } else
+            {
+                listLinesBeforeUpdate = null;
+            }
+
+            listLinesUpdated.add(topLine);
+            if (listLinesBeforeUpdate != null)
+            {
+                listLinesUpdated.addAll(listLinesBeforeUpdate);
+            }
+
+            Files.write(pFileChangelog, listLinesUpdated);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static String loadChangelog()
+    {
+        List<String> listLines;
+        Path pFileChangelog;
+        String strChangelog;
+
+        pFileChangelog = AppPaths.getPathChangelog();
+
+        try
+        {
+            if (pFileChangelog.toFile().exists())
+            {
+                listLines = Files.readAllLines(pFileChangelog);
+                strChangelog = "";
+                for (String line : listLines)
+                {
+                    strChangelog += line + "\n";
+                }
+                return strChangelog;
+            } else
+            {
+                return "";
+            }
+        } catch (IOException ex)
+        {
+            Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
         }
     }
 
