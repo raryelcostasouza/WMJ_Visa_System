@@ -98,7 +98,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneDueTasks ctrPaneDueTasks;
     @FXML
-    private TabPane paneDueTasks;
+    private BorderPane paneDueTasks;
 
     @FXML
     private CtrPane90DayNotice ctrPane90DayNotice;
