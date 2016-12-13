@@ -84,6 +84,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MonasticProfile.findByPassportCountry", query = "SELECT m FROM MonasticProfile m WHERE m.passportCountry = :passportCountry")
     , @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter")
     , @NamedQuery(name = "MonasticProfile.findByOnlineNoticeAccepted", query = "SELECT m FROM MonasticProfile m WHERE m.onlineNoticeAccepted = :onlineNoticeAccepted")
+    , @NamedQuery(name = "MonasticProfile.findByVisaManager", query = "SELECT m FROM MonasticProfile m WHERE m.visaManager = :visaManager")
 })
 public class MonasticProfile implements Serializable
 {
@@ -201,6 +202,8 @@ public class MonasticProfile implements Serializable
     private String remark;
     @Column(name = "ONLINE_NOTICE_ACCEPTED")
     private Boolean onlineNoticeAccepted;
+    @Column(name = "VISA_MANAGER")
+    private Boolean visaManager;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -735,6 +738,16 @@ public class MonasticProfile implements Serializable
     public void setOnlineNoticeAccepted(Boolean onlineNoticeAccepted)
     {
         this.onlineNoticeAccepted = onlineNoticeAccepted;
+    }
+
+    public Boolean getVisaManager()
+    {
+        return visaManager;
+    }
+
+    public void setVisaManager(Boolean visaManager)
+    {
+        this.visaManager = visaManager;
     }
 
     @XmlTransient
