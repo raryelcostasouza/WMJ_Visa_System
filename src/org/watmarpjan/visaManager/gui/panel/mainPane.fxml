@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
   
     <children>
         <MenuBar VBox.vgrow="NEVER">
@@ -64,29 +64,24 @@
                                 <VBox alignment="CENTER" spacing="10.0">
                                     <children>
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonChangelog" text="ChangeLog" />
-                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Users" />
                                     </children>
                                 </VBox>
                             </content>
                         </TitledPane>
-                        <VBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
-                            <children>
-                                <TitledPane animated="false" collapsible="false" text="Date Format">
-                                    <content>
-                                        <VBox>
-                                            <children>
-                                                <RadioButton fx:id="rbDateFormatWestern" mnemonicParsing="false" onAction="#actionChangeDateFormat" selected="true" text="Western">
-                                                    <toggleGroup>
-                                                        <ToggleGroup fx:id="tgDateFormat" />
-                                                    </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="rbDateFormatThai" mnemonicParsing="false" onAction="#actionChangeDateFormat" text="Thai" toggleGroup="$tgDateFormat" />
-                                            </children>
-                                        </VBox>
-                                    </content>
-                                </TitledPane>
-                            </children>
-                        </VBox>
+                          <TitledPane animated="false" collapsible="false" text="Date Format">
+                              <content>
+                                  <VBox>
+                                      <children>
+                                          <RadioButton fx:id="rbDateFormatWestern" mnemonicParsing="false" onAction="#actionChangeDateFormat" selected="true" text="Western">
+                                              <toggleGroup>
+                                                  <ToggleGroup fx:id="tgDateFormat" />
+                                              </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rbDateFormatThai" mnemonicParsing="false" onAction="#actionChangeDateFormat" text="Thai" toggleGroup="$tgDateFormat" />
+                                      </children>
+                                  </VBox>
+                              </content>
+                          </TitledPane>
                     </children>
                 </VBox>
             </left>
