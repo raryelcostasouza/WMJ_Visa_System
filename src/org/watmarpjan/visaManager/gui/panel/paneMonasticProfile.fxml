@@ -24,7 +24,7 @@
             <children>
                 <VBox alignment="CENTER">
                     <children>
-                        <ImageView fx:id="ivProfilePhoto" fitHeight="150.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="ivProfilePhoto" fitHeight="150.0" fitWidth="175.0" onMouseClicked="#actionIMGProfileClicked" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../../../appData/img/default/profile.png" />
                             </image>
