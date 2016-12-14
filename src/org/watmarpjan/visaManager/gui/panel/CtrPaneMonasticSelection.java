@@ -5,12 +5,16 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.io.File;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
+import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -27,6 +31,9 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
     @FXML
     private CheckBox cbShowOnlyActive;
 
+    @FXML
+    private ImageView ivProfile;
+
     private Integer IDSelectedProfile;
 
     @Override
@@ -41,7 +48,9 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         {
             cbSelectedMonastic.setValue(firstProfile.getNickname());
             IDSelectedProfile = firstProfile.getIdProfile();
-        } else
+            loadIMGProfile(firstProfile);
+        }
+        else
         {
             cbSelectedMonastic.setValue(null);
             IDSelectedProfile = -1;
@@ -59,7 +68,8 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         {
             //clear the list
             cbSelectedMonastic.getItems().clear();
-        } else
+        }
+        else
         {
             //initialize the list
             cbSelectedMonastic.setItems(FXCollections.observableArrayList());
@@ -89,7 +99,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         return null;
 
     }
-    
+
     public void setSelectedProfileByNickname(String nickname)
     {
         if (cbSelectedMonastic.getItems().contains(nickname))
@@ -103,6 +113,7 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
     {
         String selectedNickname = cbSelectedMonastic.getValue();
         MonasticProfile p;
+
         if (selectedNickname != null)
         {
             if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
@@ -111,9 +122,24 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
             }
 
             p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(selectedNickname);
+            loadIMGProfile(p);
             IDSelectedProfile = p.getIdProfile();
             ctrGUIMain.fillMonasticProfileData();
         }
+    }
+
+    private void loadIMGProfile(MonasticProfile p)
+    {
+        File fIMG;
+        if (p != null)
+        {
+            fIMG = AppFiles.getProfilePhoto(p.getNickname());
+        }
+        else
+        {
+            fIMG = null;
+        }
+        GUIUtil.loadImageView(ivProfile, GUIUtil.IMG_TYPE_PROFILE, fIMG);
     }
 
     @FXML
@@ -139,13 +165,15 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
                 IDSelectedProfile = firstProfile.getIdProfile();
                 fillNicknameList();
                 cbSelectedMonastic.setValue(firstProfile.getNickname());
-            } else
+            }
+            else
             {
                 IDSelectedProfile = -1;
                 cbSelectedMonastic.setValue(null);
             }
 
-        } else
+        }
+        else
         {
             /*
              * otherwise, just reloads the nickname list keeping the currently
@@ -161,7 +189,8 @@ public class CtrPaneMonasticSelection extends AbstractChildPaneController
         if (cbSelectedMonastic.getValue() == null)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
