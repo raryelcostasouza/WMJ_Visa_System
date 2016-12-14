@@ -455,7 +455,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
             pVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(cbVisaManager.getValue());
             tfVisaManagerEmail.setText(pVisaManager.getEmail());
             if ((pVisaManager.getPhoneNumber1() != null) && 
-                    (pVisaManager.getPhoneNumber1().length() >= 11))
+                    (pVisaManager.getPhoneNumber1().length() >= 10))
             {
                 tfVisaManagerPhoneSection1.setText(pVisaManager.getPhoneNumber1().substring(0, 3));
                 tfVisaManagerPhoneSection2.setText(pVisaManager.getPhoneNumber1().substring(3, 6));
