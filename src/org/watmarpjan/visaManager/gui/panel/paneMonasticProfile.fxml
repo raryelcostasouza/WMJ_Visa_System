@@ -257,18 +257,24 @@
                   <content>
                       <VBox>
                           <children>
-                        <VBox VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="Personal Phone Number(s):" />
-                              <TextArea fx:id="taPhoneNumber" prefHeight="50.0" />
-                           </children>
-                        </VBox>
                               <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                                   <children>
                                       <Label text="Personal e-mail:" />
                                       <TextField fx:id="tfEmail" HBox.hgrow="ALWAYS" />
                                   </children>
                               </HBox>
+                        <HBox alignment="CENTER" layoutX="22.0" layoutY="97.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label text="Phone Number 1:" />
+                              <TextField fx:id="tfPhoneNumber1" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="22.0" layoutY="215.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label text="Phone Number 2:" />
+                              <TextField fx:id="tfPhoneNumber2" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
                               <VBox VBox.vgrow="ALWAYS">
                                   <children>
                                       <Label text="Emergency Contact:" />
