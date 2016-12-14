@@ -141,8 +141,10 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextArea taEmergencyContact;
 
     @FXML
-    private TextArea taPhoneNumber;
-
+    private TextField tfPhoneNumber1;
+    @FXML
+    private TextField tfPhoneNumber2;
+    
     @FXML
     private TextArea taRemark;
 
@@ -187,7 +189,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(tgVisaManager);
         listFields.add(tfEmail);
         listFields.add(taEmergencyContact);
-        listFields.add(taPhoneNumber);
+        listFields.add(tfPhoneNumber1);
+        listFields.add(tfPhoneNumber2);
         listFields.add(taRemark);
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
@@ -350,7 +353,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
                     break;
             }
 
-            taPhoneNumber.setText(p.getPhoneNumber());
+            tfPhoneNumber1.setText(p.getPhoneNumber1());
+            tfPhoneNumber2.setText(p.getPhoneNumber2());
             tfEmail.setText(p.getEmail());
             taEmergencyContact.setText(p.getEmergencyContact());
 
@@ -468,7 +472,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         tfEmail.setEditable(false);
         taEmergencyContact.setEditable(false);
-        taPhoneNumber.setEditable(false);
+        tfPhoneNumber1.setEditable(false);
+        tfPhoneNumber2.setEditable(false);
         taRemark.setEditable(false);
     }
 
@@ -524,7 +529,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         tfEmail.setEditable(true);
         taEmergencyContact.setEditable(true);
 
-        taPhoneNumber.setEditable(true);
+        tfPhoneNumber1.setEditable(true);
+        tfPhoneNumber2.setEditable(true);
         taRemark.setEditable(true);
     }
 
@@ -663,7 +669,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             p.setDhammaStudies(AppConstants.STUDIES_REGULAR);
         }
 
-        p.setPhoneNumber(taPhoneNumber.getText());
+        p.setPhoneNumber1(tfPhoneNumber1.getText());
+        p.setPhoneNumber2(tfPhoneNumber2.getText());
         p.setEmail(tfEmail.getText());
         p.setEmergencyContact(taEmergencyContact.getText());
 

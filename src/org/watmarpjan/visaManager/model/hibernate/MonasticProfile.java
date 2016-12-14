@@ -85,6 +85,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter")
     , @NamedQuery(name = "MonasticProfile.findByOnlineNoticeAccepted", query = "SELECT m FROM MonasticProfile m WHERE m.onlineNoticeAccepted = :onlineNoticeAccepted")
     , @NamedQuery(name = "MonasticProfile.findByVisaManager", query = "SELECT m FROM MonasticProfile m WHERE m.visaManager = :visaManager")
+    , @NamedQuery(name = "MonasticProfile.findByPhoneNumber1", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber1 = :phoneNumber1")
+    , @NamedQuery(name = "MonasticProfile.findByPhoneNumber2", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber2 = :phoneNumber2")
 })
 public class MonasticProfile implements Serializable
 {
@@ -193,9 +195,6 @@ public class MonasticProfile implements Serializable
     private Date passportIssueDate;
     @Column(name = "PASSPORT_COUNTRY")
     private String passportCountry;
-    @Lob
-    @Column(name = "PHONE_NUMBER")
-    private String phoneNumber;
     @Column(name = "PATIMOKKHA_CHANTER")
     private Boolean patimokkhaChanter;
     @Lob
@@ -204,6 +203,10 @@ public class MonasticProfile implements Serializable
     private Boolean onlineNoticeAccepted;
     @Column(name = "VISA_MANAGER")
     private Boolean visaManager;
+    @Column(name = "PHONE_NUMBER1")
+    private String phoneNumber1;
+    @Column(name = "PHONE_NUMBER2")
+    private String phoneNumber2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -700,16 +703,6 @@ public class MonasticProfile implements Serializable
         this.passportCountry = passportCountry;
     }
 
-    public String getPhoneNumber()
-    {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber)
-    {
-        this.phoneNumber = phoneNumber;
-    }
-
     public Boolean getPatimokkhaChanter()
     {
         return patimokkhaChanter;
@@ -748,6 +741,26 @@ public class MonasticProfile implements Serializable
     public void setVisaManager(Boolean visaManager)
     {
         this.visaManager = visaManager;
+    }
+
+    public String getPhoneNumber1()
+    {
+        return phoneNumber1;
+    }
+
+    public void setPhoneNumber1(String phoneNumber1)
+    {
+        this.phoneNumber1 = phoneNumber1;
+    }
+
+    public String getPhoneNumber2()
+    {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2)
+    {
+        this.phoneNumber2 = phoneNumber2;
     }
 
     @XmlTransient
