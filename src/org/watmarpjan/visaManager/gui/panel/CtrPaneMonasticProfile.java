@@ -33,6 +33,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -115,7 +116,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
     @FXML
     private ToggleGroup tgOnlineNotice;
-    
+
     @FXML
     private RadioButton rbVisaManagerYes;
     @FXML
@@ -123,7 +124,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
     @FXML
     private ToggleGroup tgVisaManager;
-    
+
     @FXML
     private ToggleGroup tgDhammaStudies;
     @FXML
@@ -144,7 +145,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     private TextField tfPhoneNumber1;
     @FXML
     private TextField tfPhoneNumber2;
-    
+
     @FXML
     private TextArea taRemark;
 
@@ -218,24 +219,24 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
     public void fillData(MonasticProfile p)
     {
         ArrayList<String> listCountry, listWat;
-        
+
         listCountry = ctrGUIMain.getCtrMain().loadListCountry();
         listWat = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryList();
-        
+
         GUIUtil.loadContentComboboxGeneric(cbEthnicity, ctrGUIMain.getCtrMain().getCtrProfile().loadListEthnicity());
         GUIUtil.loadContentComboboxGeneric(cbNationality, ctrGUIMain.getCtrMain().getCtrProfile().loadListNationality());
-        
+
         GUIUtil.loadContentComboboxGeneric(cbAdviserToCome, ctrGUIMain.getCtrMain().getCtrProfile().loadListAdviserToCome());
-       
+
         GUIUtil.loadContentComboboxGeneric(cbBirthCountry, listCountry);
         GUIUtil.loadContentComboboxGeneric(cbPreviousResidenceCountry, listCountry);
-        
+
         GUIUtil.loadContentComboboxGeneric(cbOccupation, ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationEnglishList());
         GUIUtil.loadContentComboboxGeneric(cbOccupationThai, ctrGUIMain.getCtrMain().getCtrProfile().loadOccupationThaiList());
-        
+
         GUIUtil.loadContentComboboxGeneric(cbCertificate, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateEngList());
         GUIUtil.loadContentComboboxGeneric(cbCertificateThai, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateThaiList());
-        
+
         GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
         GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
 
@@ -320,8 +321,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             {
                 rbOnlineNoticeNo.setSelected(true);
             }
-            
-            if (p.getVisaManager()!= null)
+
+            if (p.getVisaManager() != null)
             {
                 if (p.getVisaManager())
                 {
@@ -336,7 +337,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
             {
                 rbVisaManagerNo.setSelected(true);
             }
-            
+
             switch (p.getDhammaStudies())
             {
                 case AppConstants.STUDIES_NAKTAM_TRI:
@@ -421,6 +422,24 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         }
     }
 
+    @FXML
+    void actionIMGProfileClicked(MouseEvent me)
+    {
+        File fIMG;
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        if (p != null)
+        {
+            fIMG = AppFiles.getProfilePhoto(p.getNickname());
+            if (fIMG != null)
+            {
+                GUIUtil.openClickedIMG(fIMG);
+            }
+        }
+
+    }
+
     @Override
     public void actionLockEdit()
     {
@@ -454,10 +473,10 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         cbAdviserToCome.setDisable(true);
         cbAdvisorWat.setDisable(true);
-        
+
         rbOnlineNoticeNo.setDisable(true);
         rbOnlineNoticeYes.setDisable(true);
-        
+
         rbVisaManagerNo.setDisable(true);
         rbVisaManagerYes.setDisable(true);
 
@@ -513,10 +532,10 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
 
         rbOnlineNoticeNo.setDisable(false);
         rbOnlineNoticeYes.setDisable(false);
-        
+
         rbVisaManagerNo.setDisable(false);
         rbVisaManagerYes.setDisable(false);
-        
+
         rbInThailand.setDisable(false);
         rbAbroad.setDisable(false);
         rbInactive.setDisable(false);
@@ -642,8 +661,8 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setOnlineNoticeAccepted(false);
         }
-        
-         if (rbVisaManagerYes.isSelected())
+
+        if (rbVisaManagerYes.isSelected())
         {
             p.setVisaManager(true);
         }
@@ -651,7 +670,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         {
             p.setVisaManager(false);
         }
-        
+
         if (rbDhammaStudiesNaktamTri.isSelected())
         {
             p.setDhammaStudies(AppConstants.STUDIES_NAKTAM_TRI);
