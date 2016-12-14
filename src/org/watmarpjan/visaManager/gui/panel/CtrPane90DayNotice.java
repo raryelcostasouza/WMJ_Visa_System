@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
@@ -119,6 +120,18 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     private TableColumn tcOpenPDF;
 
     private ArrayList<TextField> alTextFields;
+
+    @FXML
+    private TextField tfVisaManagerEmail;
+    @FXML
+    private TextField tfVisaManagerPhoneSection1;
+    @FXML
+    private TextField tfVisaManagerPhoneSection2;
+    @FXML
+    private TextField tfVisaManagerPhoneSection3;
+
+    @FXML
+    private ComboBox<String> cbVisaManager;
 
     @FXML
     private Button bPreview;
@@ -269,6 +282,15 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         Init.HOST_SERVICES.showDocument("https://extranet.immigration.go.th/fn90online");
     }
 
+    private void loadListVisaManager()
+    {
+        ArrayList<String> listVisaManager;
+
+        listVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileVisaManager();
+        cbVisaManager.getItems().clear();
+        cbVisaManager.getItems().addAll(listVisaManager);
+    }
+
     public void fillData()
     {
         ArrayList<EntryUpdate90DayNotice> al;
@@ -279,6 +301,8 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         tvDueNotice90Day.getItems().addAll(al);
 
         dpNext90DayNotice.setValue(LocalDate.now().plusDays(89));
+
+        loadListVisaManager();
     }
 
     @Override
@@ -419,6 +443,31 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         else
         {
             CtrAlertDialog.warningDialog("Please fill out all fields before adding a receipt.");
+        }
+    }
+
+    @FXML
+    void actionSelectVisaManager(ActionEvent ae)
+    {
+        MonasticProfile pVisaManager;
+        if (cbVisaManager.getValue() != null)
+        {
+            pVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(cbVisaManager.getValue());
+            tfVisaManagerEmail.setText(pVisaManager.getEmail());
+            if ((pVisaManager.getPhoneNumber1() != null) && 
+                    (pVisaManager.getPhoneNumber1().length() >= 11))
+            {
+                tfVisaManagerPhoneSection1.setText(pVisaManager.getPhoneNumber1().substring(0, 3));
+                tfVisaManagerPhoneSection2.setText(pVisaManager.getPhoneNumber1().substring(3, 6));
+                tfVisaManagerPhoneSection3.setText(pVisaManager.getPhoneNumber1().substring(6, 10));
+            }
+            else
+            {
+                tfVisaManagerPhoneSection1.clear();
+                tfVisaManagerPhoneSection2.clear();
+                tfVisaManagerPhoneSection3.clear();
+            }
+
         }
     }
 
