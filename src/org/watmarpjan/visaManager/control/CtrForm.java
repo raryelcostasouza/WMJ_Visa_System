@@ -12,18 +12,14 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.print.PageLayout;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
-import javafx.print.Printer;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
@@ -152,7 +148,7 @@ public class CtrForm
         acroForm.getField("fatherName").setValue(p.getFatherName());
         acroForm.getField("motherName").setValue(p.getMotherName());
 
-        acroForm.getField("ordinationDateThai").setValue(ProfileUtil.getStrOrdinationDate(p));
+        acroForm.getField("ordinationDateThai").setValue(ProfileUtil.getStrOrdinationDatePrawat(p));
         mOrdainedAt = p.getMonasteryOrdainedAt();
         if (mOrdainedAt != null)
         {
@@ -208,8 +204,7 @@ public class CtrForm
         {
             dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
             ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-        }
-        //otherwise retrieves the expiry date of the original visa
+        } //otherwise retrieves the expiry date of the original visa
         else
         {
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
@@ -509,7 +504,7 @@ public class CtrForm
             acroForm.getField("arrivalLastEntryDateYear").setValue(Util.convertYearToThai(ldLastEntry.getYear()) + "");
         }
         acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
-        
+
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
@@ -603,8 +598,7 @@ public class CtrForm
         {
             dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
             ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-        }
-        //otherwise retrieves the expiry date of the original visa
+        } //otherwise retrieves the expiry date of the original visa
         else
         {
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
@@ -776,8 +770,7 @@ public class CtrForm
         {
             dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
             ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-        }
-        //otherwise retrieves the expiry date of the original visa
+        } //otherwise retrieves the expiry date of the original visa
         else
         {
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
@@ -850,14 +843,24 @@ public class CtrForm
 
     }
 
+    private void fillPrintDate(PDPageContentStream objContentStream) throws IOException
+    {
+        objContentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+        objContentStream.beginText();
+        objContentStream.newLineAtOffset(PAGE_A4_WIDTH_PX - 210, PAGE_A4_HEIGHT_PX - 15);
+        objContentStream.showText("Print Date: " + LocalDateTime.now().format(Util.DEFAULT_DATE_TIME_FORMAT));
+        objContentStream.endText();
+    }
+
     public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpVisaExtTH, TableView<EntryDueTask> tpPsptTH, int option)
     {
         PDDocument pdfDoc;
         PDPage page1, page2;
         PDPageContentStream contentStream;
         File outputFile;
-        PDFont font = PDType1Font.HELVETICA_BOLD;
-        int fontSize = 18;
+        PDFont fontTitle = PDType1Font.HELVETICA_BOLD;
+
+        int fontSizeTitle = 18;
         BufferedImage img90DayTH, imgVisaExtTH, imgPassptRenew;
         PDImageXObject pdfImg90DayTH, pdfImgVisaExtTH, pdfImgPassptRenew;
 
@@ -879,7 +882,10 @@ public class CtrForm
             pdfImgPassptRenew = LosslessFactory.createFromImage(pdfDoc, imgPassptRenew);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(font, fontSize);
+
+            fillPrintDate(contentStream);
+
+            contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("90 Day Notice");
@@ -894,7 +900,7 @@ public class CtrForm
             contentStream.close();
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.setFont(font, fontSize);
+            contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Passport Renewal");
@@ -947,6 +953,9 @@ public class CtrForm
             pdfImgPassptAbroad = LosslessFactory.createFromImage(pdfDoc, imgPassptAbroad);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+
+            fillPrintDate(contentStream);
+
             contentStream.setFont(font, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
@@ -985,21 +994,13 @@ public class CtrForm
         Rectangle rect;
         WritableImage writableImage;
         ImageView imgView;
-        Printer printer;
-        PageLayout pageLayout;
 
-        printer = Printer.getDefaultPrinter();
-        pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
         rect = new Rectangle(0, 0, pGUIComponent.getWidth(), pGUIComponent.getHeight());
         pGUIComponent.setClip(rect);
         writableImage = new WritableImage((int) pGUIComponent.getWidth(), (int) pGUIComponent.getHeight());
         pGUIComponent.snapshot(null, writableImage);
 
         imgView = new ImageView(writableImage);
-
-        double scaleX = pageLayout.getPrintableWidth() / imgView.getBoundsInParent().getWidth();
-        //double scaleY = pageLayout.getPrintableHeight() / imgView.getBoundsInParent().getHeight();
-        imgView.getTransforms().add(new Scale(scaleX, 1));
 
         pGUIComponent.setClip(null);
 
