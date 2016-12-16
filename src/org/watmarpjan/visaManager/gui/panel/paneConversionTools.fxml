@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneConversionTools">
+   <children>
+      <TitledPane collapsible="false" text="Month Conversion">
+         <content>
+            <HBox alignment="CENTER" spacing="50.0">
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Western Month:" />
+                        <ComboBox fx:id="cbMonthWestern" editable="true" onAction="#actionSelectWesternMonth" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Thai Month:" />
+                        <ComboBox fx:id="cbMonthThai" editable="true" onAction="#actionSelectThaiMonth" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Year Conversion">
+         <content>
+            <HBox alignment="CENTER" spacing="50.0">
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Western Year:" />
+                        <TextField fx:id="tfYearWestern" onAction="#actionInputWesternYear" prefColumnCount="5" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Thai Year:" />
+                        <TextField fx:id="tfYearThai" onAction="#actionInputThaiYear" prefColumnCount="5" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>

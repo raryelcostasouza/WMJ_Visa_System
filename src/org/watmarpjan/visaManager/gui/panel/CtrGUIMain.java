@@ -135,6 +135,11 @@ public class CtrGUIMain
     @FXML
     private TabPane paneChangelog;
 
+    @FXML
+    private CtrPaneConversionTools ctrPaneConvert;
+    @FXML
+    private VBox paneConvert;
+    
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
     @FXML
@@ -149,7 +154,7 @@ public class CtrGUIMain
     private CtrGUISharedUtil ctrGUISharedUtil;
 
     private CtrGUIMain ctrGUIMainSelfReference = this;
-    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[15];
+    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[16];
     private BooleanProperty flagInitCtrData = new SimpleBooleanProperty(Boolean.FALSE);
 
     public CtrFieldChangeListener getCtrFieldChangeListener()
@@ -221,6 +226,7 @@ public class CtrGUIMain
         initPaneVisaExt();
         initPaneTM30NotifResidence();
         initPaneChangelog();
+        initPaneConvert();
 
         initPaneMonasticSelection();
         initPaneEditSave();
@@ -682,6 +688,7 @@ public class CtrGUIMain
         new Thread(t).start();
 
     }
+    
     private void initPaneChangelog()
     {
         Task t = new Task<Void>()
@@ -698,6 +705,33 @@ public class CtrGUIMain
                     listPaneControllers.add(ctrPaneChangelog);
 
                     flagFXMLLoaded[14].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+
+    }
+    
+    private void initPaneConvert()
+    {
+        Task t = new Task<Void>()
+        {
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("paneConversionTools.fxml"));
+                    paneConvert = loader.load();
+                    ctrPaneConvert = loader.getController();
+                    listPaneControllers.add(ctrPaneConvert);
+
+                    flagFXMLLoaded[15].setValue(Boolean.TRUE);
                 } catch (Exception ex)
                 {
                     CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
@@ -921,6 +955,17 @@ public class CtrGUIMain
         currentPaneController = ctrPaneChangelog;
 //        Init.MAIN_STAGE.sizeToScene();
         ctrPaneChangelog.fillData();
+    }
+    
+    @FXML
+    void actionButtonConversionTools(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        topPane.setCenter(null);
+        topPane.setLeft(null);
+        centerPane.setCenter(paneConvert);
+        currentPaneController = ctrPaneConvert;
     }
     
     
