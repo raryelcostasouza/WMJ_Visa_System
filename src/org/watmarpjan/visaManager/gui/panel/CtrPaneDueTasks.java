@@ -55,12 +55,12 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
     @FXML
     private TextArea taRecentChanges;
-    
+
     @FXML
     private Button bPrintTH;
     @FXML
     private Button bPreviewTH;
-    
+
     @FXML
     private Button bPrintAbroad;
     @FXML
@@ -71,7 +71,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     {
         bPrintTH.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         bPreviewTH.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        
+
         bPrintAbroad.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         bPreviewAbroad.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
@@ -95,10 +95,10 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
             tv.setFixedCellSize(30);
         }
     }
-    
+
     private void initAutoHeightResize(TableView<EntryDueTask> tv, double headerAdjust)
     {
-        tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(2.5)));
+        tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(headerAdjust)));
         tv.minHeightProperty().bind(tv.prefHeightProperty());
         tv.maxHeightProperty().bind(tv.prefHeightProperty());
     }
@@ -177,8 +177,8 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstDay"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
-        
-        initAutoHeightResize(tv, 2.5);
+
+        initAutoHeightResize(tv, 2.7);
     }
 
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
@@ -188,7 +188,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("prawat"));
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("immigration"));
-        
+
         initAutoHeightResize(tv, 2.5);
     }
 
@@ -196,7 +196,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     {
         initTableGeneric(tv);
         tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
-        
+
         initAutoHeightResize(tv, 1.01);
     }
 
@@ -223,7 +223,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
 
         tvAbroadVisaExtension.getItems().addAll(alAbroadDueVisaExtension);
         tvAbroadPassportRenewal.getItems().addAll(alAbroadPassportRenewal);
-        
+
         taRecentChanges.setText(CtrFileOperation.loadChangelog());
     }
 
@@ -238,7 +238,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     {
         ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrForm.OPTION_PREVIEW_FORM);
     }
-    
+
     @FXML
     void actionPrintDueTasksAbroad(ActionEvent ae)
     {
