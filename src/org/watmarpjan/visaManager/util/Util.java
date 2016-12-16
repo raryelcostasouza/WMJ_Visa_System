@@ -23,7 +23,8 @@ public class Util
 {
 
     public final static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public final static DateTimeFormatter CHANGELOG_DATE_TIME_FORMAT_ = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     //creates a new arraylist with the distinct values from the input arraylist
     public static ArrayList<String> filterDistinctElement(ArrayList<String> list)

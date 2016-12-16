@@ -222,7 +222,7 @@ public class CtrPaneChangelog extends AbstractChildPaneController
 
         if (validateFields())
         {
-            logLine = LocalDateTime.now().format(Util.DEFAULT_DATE_TIME_FORMAT) + " ";
+            logLine = LocalDateTime.now().format(Util.CHANGELOG_DATE_TIME_FORMAT_) + " ";
             logLine += cbMonastic.getValue() + ":";
 
             for (BlockMonasticSelection objChangelogSection : listChangelogSections)
