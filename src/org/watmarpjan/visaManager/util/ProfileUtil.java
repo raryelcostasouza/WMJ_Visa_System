@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.util;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.Locale;
@@ -78,7 +79,7 @@ public class ProfileUtil
         }
     }
 
-    public static String getStrOrdinationDate(MonasticProfile p)
+    public static String getStrOrdinationDatePrawat(MonasticProfile p)
     {
         LocalDate ldOrdDate;
         String monthNameThai;
@@ -94,18 +95,39 @@ public class ProfileUtil
         {
             ldOrdDate = null;
         }
-        
+
         if (ldOrdDate != null)
         {
-            monthNameThai = ldOrdDate.getMonth().getDisplayName ( TextStyle.FULL , new Locale("th") );
-            return ldOrdDate.getDayOfMonth() + " "+ monthNameThai + " "+ Util.convertYearToThai(ldOrdDate.getYear());
+            monthNameThai = ldOrdDate.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
+            return ldOrdDate.getDayOfMonth() + " " + monthNameThai + " " + Util.convertYearToThai(ldOrdDate.getYear());
         }
         else
         {
             return null;
         }
     }
-    
+
+    public static String getStrOrdinationDate(MonasticProfile p)
+    {
+        LocalDate ldOrdDate;
+        ThaiBuddhistDate tbd;
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            ldOrdDate = Util.convertDateToLocalDate(p.getBhikkhuOrdDate());
+        }
+        else if (p.getSamaneraOrdDate() != null)
+        {
+            ldOrdDate = Util.convertDateToLocalDate(p.getSamaneraOrdDate());
+        }
+        else
+        {
+            ldOrdDate = null;
+        }
+
+        tbd = ThaiBuddhistDate.from(ldOrdDate);
+        return tbd.format(Util.DEFAULT_DATE_FORMAT);
+    }
+
     public static String getStrAge(Date birthDate)
     {
         LocalDate ldBirth, ldToday;
