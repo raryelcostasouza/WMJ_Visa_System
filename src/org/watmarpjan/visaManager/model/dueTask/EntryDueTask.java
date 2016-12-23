@@ -95,11 +95,11 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
         {
             return 1;
         }
-        else if (this.getDueDate().compareTo(objEntryDueTask.getDueDate()) > 0)
+        else if (this.getLdDueDate().compareTo(objEntryDueTask.getLdDueDate()) > 0)
         {
             return 1;
         }
-        else if (this.getDueDate().compareTo(objEntryDueTask.getDueDate()) < 0)
+        else if (this.getLdDueDate().compareTo(objEntryDueTask.getLdDueDate()) < 0)
         {
             return -1;
         }
