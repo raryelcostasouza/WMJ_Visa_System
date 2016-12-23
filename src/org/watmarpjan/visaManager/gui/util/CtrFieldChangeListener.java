@@ -8,8 +8,10 @@ package org.watmarpjan.visaManager.gui.util;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -74,6 +76,12 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
             } else if (field instanceof ToggleGroup)
             {
                 ((ToggleGroup) field).selectedToggleProperty().addListener(this);
+            } else if (field instanceof CheckBox)
+            {
+                ((CheckBox) field).selectedProperty().addListener(this);
+            } else if (field instanceof Spinner)
+            {
+                ((Spinner<Integer>) field).valueProperty().addListener(this);
             }
         }
     }
