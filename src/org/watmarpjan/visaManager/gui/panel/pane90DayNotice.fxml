@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
   <tabs>
     <Tab text="Register 90 day Notice">
          <content>
@@ -267,8 +267,8 @@
                                     <TableView fx:id="tvReceipts" prefWidth="500.0">
                                        <columns>
                                           <TableColumn fx:id="tcOpenPDF" prefWidth="60.0" text="PDF" />
-                                          <TableColumn prefWidth="118.0" text="Receipt Date" />
-                                          <TableColumn prefWidth="66.0" text="Type" />
+                                          <TableColumn prefWidth="90.0" text="Receipt Date" />
+                                          <TableColumn prefWidth="100.0" text="Type" />
                                           <TableColumn prefWidth="230.0" text="Ref Number" />
                                        </columns>
                                     </TableView>
