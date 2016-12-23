@@ -129,7 +129,7 @@ public class CtrGUIMain
     private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
     @FXML
     private TabPane paneTM30NotifResidence;
-    
+
     @FXML
     private CtrPaneChangelog ctrPaneChangelog;
     @FXML
@@ -139,7 +139,17 @@ public class CtrGUIMain
     private CtrPaneConversionTools ctrPaneConvert;
     @FXML
     private VBox paneConvert;
-    
+
+    @FXML
+    private CtrPanePhotoPagePrinting ctrPanePhotoPagePrint;
+    @FXML
+    private VBox panePhotoPagePrint;
+
+    @FXML
+    private CtrPanePrintedDocStock ctrPanePrintedDocStock;
+    @FXML
+    private VBox panePrintedDocStock;
+
     private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
     @FXML
@@ -154,7 +164,7 @@ public class CtrGUIMain
     private CtrGUISharedUtil ctrGUISharedUtil;
 
     private CtrGUIMain ctrGUIMainSelfReference = this;
-    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[16];
+    private BooleanProperty[] flagFXMLLoaded = new BooleanProperty[18];
     private BooleanProperty flagInitCtrData = new SimpleBooleanProperty(Boolean.FALSE);
 
     public CtrFieldChangeListener getCtrFieldChangeListener()
@@ -225,8 +235,11 @@ public class CtrGUIMain
         initPaneReEntry();
         initPaneVisaExt();
         initPaneTM30NotifResidence();
+
         initPaneChangelog();
         initPaneConvert();
+        initPanePhotoPagePrinting();
+        initPanePrintedDocStock();
 
         initPaneMonasticSelection();
         initPaneEditSave();
@@ -688,7 +701,7 @@ public class CtrGUIMain
         new Thread(t).start();
 
     }
-    
+
     private void initPaneChangelog()
     {
         Task t = new Task<Void>()
@@ -715,7 +728,7 @@ public class CtrGUIMain
         new Thread(t).start();
 
     }
-    
+
     private void initPaneConvert()
     {
         Task t = new Task<Void>()
@@ -742,8 +755,58 @@ public class CtrGUIMain
         new Thread(t).start();
 
     }
-    
-    
+
+    private void initPanePhotoPagePrinting()
+    {
+        Task t = new Task<Void>()
+        {
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("panePhotoPagePrinting.fxml"));
+                    panePhotoPagePrint = loader.load();
+                    ctrPanePhotoPagePrint = loader.getController();
+                    listPaneControllers.add(ctrPanePhotoPagePrint);
+
+                    flagFXMLLoaded[16].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+    }
+
+    private void initPanePrintedDocStock()
+    {
+        Task t = new Task<Void>()
+        {
+            @Override
+            protected Void call() throws Exception
+            {
+                FXMLLoader loader;
+                try
+                {
+                    loader = new FXMLLoader(getClass().getResource("panePrintedDocStock.fxml"));
+                    panePrintedDocStock = loader.load();
+                    ctrPanePrintedDocStock = loader.getController();
+                    listPaneControllers.add(ctrPanePrintedDocStock);
+
+                    flagFXMLLoaded[17].setValue(Boolean.TRUE);
+                } catch (Exception ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
+    }
 
     public CtrMain getCtrMain()
     {
@@ -756,8 +819,7 @@ public class CtrGUIMain
         if (ae.getSource().equals(rbDateFormatWestern))
         {
             ctrDatePicker.setISOChronology();
-        }
-        else
+        } else
         {
             ctrDatePicker.setThaiChronology();
         }
@@ -944,6 +1006,7 @@ public class CtrGUIMain
 //        Init.MAIN_STAGE.sizeToScene();
         ctrPaneTM30NotifResidence.fillData();
     }
+
     @FXML
     void actionButtonChangelog(ActionEvent ae)
     {
@@ -956,7 +1019,7 @@ public class CtrGUIMain
 //        Init.MAIN_STAGE.sizeToScene();
         ctrPaneChangelog.fillData();
     }
-    
+
     @FXML
     void actionButtonConversionTools(ActionEvent ae)
     {
@@ -967,8 +1030,31 @@ public class CtrGUIMain
         centerPane.setCenter(paneConvert);
         currentPaneController = ctrPaneConvert;
     }
-    
-    
+
+    @FXML
+    void actionButtonPhotoPagePrint(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        topPane.setCenter(null);
+        topPane.setLeft(null);
+        centerPane.setCenter(panePhotoPagePrint);
+        currentPaneController = ctrPanePhotoPagePrint;
+        ctrPanePhotoPagePrint.fillData();
+    }
+
+    @FXML
+    void actionButtonPrintedDocStock(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        ctrPaneEditSave.setVisible_ButtonAddNew(false);
+        topPane.setCenter(paneMonasticSelection);
+        topPane.setLeft(paneEditSave);
+        centerPane.setCenter(panePrintedDocStock);
+        currentPaneController = ctrPanePrintedDocStock;
+        fillMonasticProfileData();
+    }
 
     public void initChildControllers()
     {
@@ -1011,8 +1097,7 @@ public class CtrGUIMain
         if (currentPaneController instanceof IEditableGUIForm)
         {
             return (IEditableGUIForm) currentPaneController;
-        }
-        else
+        } else
         {
             return null;
         }
