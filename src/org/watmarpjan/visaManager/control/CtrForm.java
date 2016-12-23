@@ -16,10 +16,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Transform;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
@@ -85,6 +87,8 @@ public class CtrForm
 
     private final float PAGE_A4_HEIGHT_PX = PDRectangle.A4.getHeight();
     private final float PAGE_A4_WIDTH_PX = PDRectangle.A4.getWidth();
+
+    private final float SCALE_DUE_TASKS_SNAPSHOT = 0.3f;
 
     public CtrForm(CtrMain pCtrMain)
     {
@@ -890,13 +894,13 @@ public class CtrForm
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("90 Day Notice");
             contentStream.endText();
-            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * 0.6f - 50, pdfImg90DayTH.getWidth() * 0.6f, pdfImg90DayTH.getHeight() * 0.6f);
+            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImg90DayTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, 60 + pdfImgVisaExtTH.getHeight() * 0.6f);
+            contentStream.newLineAtOffset(50, 60 + pdfImgVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
             contentStream.showText("Visa Extension");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImg90DayTH.getWidth() * 0.6f, pdfImgVisaExtTH.getHeight() * 0.6f);
+            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImgVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
             contentStream.close();
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
@@ -906,7 +910,7 @@ public class CtrForm
             contentStream.showText("Passport Renewal");
             contentStream.endText();
 
-            contentStream.drawImage(pdfImgPassptRenew, 100, PAGE_A4_HEIGHT_PX - pdfImgPassptRenew.getHeight() * 0.6f - 50, pdfImgPassptRenew.getWidth() * 0.6f, pdfImgPassptRenew.getHeight() * 0.6f);
+            contentStream.drawImage(pdfImgPassptRenew, 100, PAGE_A4_HEIGHT_PX - pdfImgPassptRenew.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImgPassptRenew.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgPassptRenew.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
 
             contentStream.close();
             pdfDoc.save(outputFile);
@@ -961,13 +965,13 @@ public class CtrForm
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Visa Extension - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtAbroad, 50, PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight(), pdfImgVisaExtAbroad.getWidth() * 0.6f, pdfImgVisaExtAbroad.getHeight() * 0.6f);
+            contentStream.drawImage(pdfImgVisaExtAbroad, 50, PAGE_A4_HEIGHT_PX - pdfImgVisaExtAbroad.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImgVisaExtAbroad.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgVisaExtAbroad.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
 
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX / 2.0f + 10);
             contentStream.showText("Passport Renewal - Abroad");
             contentStream.endText();
-            contentStream.drawImage(pdfImgPassptAbroad, 50, PAGE_A4_HEIGHT_PX / 2.0f - pdfImgPassptAbroad.getHeight() * 0.6f, pdfImgPassptAbroad.getWidth() * 0.6f, pdfImgPassptAbroad.getHeight() * 0.6f);
+            contentStream.drawImage(pdfImgPassptAbroad, 50, PAGE_A4_HEIGHT_PX / 2.0f - pdfImgPassptAbroad.getHeight() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgPassptAbroad.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgPassptAbroad.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
             contentStream.close();
 
             pdfDoc.save(outputFile);
@@ -994,15 +998,17 @@ public class CtrForm
         Rectangle rect;
         WritableImage writableImage;
         ImageView imgView;
+        SnapshotParameters spa;
+        final int pixelScaleFactor = 2;
 
-        rect = new Rectangle(0, 0, pGUIComponent.getWidth(), pGUIComponent.getHeight());
-        pGUIComponent.setClip(rect);
-        writableImage = new WritableImage((int) pGUIComponent.getWidth(), (int) pGUIComponent.getHeight());
-        pGUIComponent.snapshot(null, writableImage);
+        //doubles the snapshot resolution for better quality/sharpness
+        spa = new SnapshotParameters();
+        spa.setTransform(Transform.scale(pixelScaleFactor, pixelScaleFactor));
+
+        writableImage = new WritableImage((int) Math.rint(pGUIComponent.getWidth() * pixelScaleFactor), (int) Math.rint(pGUIComponent.getHeight() * pixelScaleFactor));
+        pGUIComponent.snapshot(spa, writableImage);
 
         imgView = new ImageView(writableImage);
-
-        pGUIComponent.setClip(null);
 
         return SwingFXUtils.fromFXImage(imgView.getImage(), null);
     }
@@ -1187,7 +1193,8 @@ public class CtrForm
     private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p) throws IOException
     {
         File fScan1, fScan2;
-        PassportScan ps1, ps2;
+        PassportScan ps1;
+        PassportScan ps2;
         PDPageContentStream contentStream;
         ArrayList<PassportScan> listPassportScan;
         PDImageXObject imgScan1, imgScan2;
@@ -1246,6 +1253,77 @@ public class CtrForm
             contentStream.drawImage(imgScan3, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
             contentStream.close();
         }
+    }
+
+    public void generatePhotoPage(String nicknameMonastic1, String nicknameMonastic2, int option)
+    {
+        PDDocument pdfDoc;
+        File outputFile;
+        PDPage page1;
+        PDPageContentStream contentStream;
+        PDImageXObject pdIMG1, pdIMG2;
+        float step;
+
+        //Photo Real Real size 40mm x 60mm
+        //Converts the photo height to pixels
+        //Photo Real Height  60mm
+        //A4 Height pixel size: PDRectangle.A4.getHeight() 
+        //A4 Height real size 297mm
+        final float photoHeight_PX = (PDRectangle.A4.getHeight() * 60) / 297.0f;
+
+        //Converts the photo Width to pixels
+        //Photo Real Width  40mm
+        //A4 Width pixel size: PDRectangle.A4.getHeight() 
+        //A4 Width real size 210mm
+        final float photoWidth_PX = (PDRectangle.A4.getWidth() * 40) / 210.0f;
+
+        pdfDoc = new PDDocument();
+        page1 = new PDPage(PDRectangle.A4);
+        pdfDoc.addPage(page1);
+        outputFile = AppFiles.getFormTMPOutputPDF("PhotoPage");
+        try
+        {
+            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+            pdIMG1 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic1).toString(), pdfDoc);
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    contentStream.drawImage(pdIMG1, 50 + i * (photoWidth_PX + 10), PAGE_A4_HEIGHT_PX - photoHeight_PX - 50 - j * (photoHeight_PX + 10), photoWidth_PX, photoHeight_PX);
+                }
+
+            }
+
+            if (nicknameMonastic2 != null)
+            {
+                pdIMG2 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic2).toString(), pdfDoc);
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        contentStream.drawImage(pdIMG2, 50 + i * (photoWidth_PX + 10), PAGE_A4_HEIGHT_PX / 2.0f - photoHeight_PX - j * (photoHeight_PX + 10), photoWidth_PX, photoHeight_PX);
+                    }
+
+                }
+
+            }
+            contentStream.close();
+            pdfDoc.save(outputFile);
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDoc);
+            }
+            else
+            {
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+            }
+            pdfDoc.close();
+        } catch (IOException ioe)
+        {
+            CtrAlertDialog.errorDialog("Error to generate pdf with Photo Page.");
+        }
+
     }
 
     private void printPDF(PDDocument p)
