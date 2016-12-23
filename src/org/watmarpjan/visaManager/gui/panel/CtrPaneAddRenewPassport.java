@@ -47,12 +47,16 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
 
-        tfpassportNumber.textProperty().addListener((observable, oldValue, newValue) ->
-        {
-            if (newValue != null)
-            {
-                tfpassportNumber.setText(newValue.toUpperCase());
-            }
+        tfpassportNumber.textProperty().addListener((observable, oldValue, newValue)
+                -> 
+                {
+                    if (newValue != null)
+                    {
+                        String filteredString;
+                        //removes any non-word characters
+                        filteredString = newValue.replaceAll("\\W", "");
+                        tfpassportNumber.setText(filteredString.toUpperCase());
+                    }
         });
     }
 
@@ -81,8 +85,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 tfpassportIssuedAt.setEditable(false);
                 dpPassportExpiryDate.setDisable(true);
                 dpPassportIssueDate.setDisable(true);
-            }
-            else
+            } else
             {
                 //unlocks edition and enables select scan button
                 bClear.setDisable(true);
@@ -156,8 +159,7 @@ public class CtrPaneAddRenewPassport extends AbstractChildPaneController impleme
                 fillData(p);
                 CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
             }
-        }
-        else
+        } else
         {
             CtrAlertDialog.errorDialog("Please fill out the ALL passport information before registering.");
         }
