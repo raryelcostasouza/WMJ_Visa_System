@@ -195,6 +195,45 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         listFields.add(taRemark);
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
+        tfNickname.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    //removes any character except letters, number, dot and space
+                    tfNickname.setText(newValue.replaceAll("[^a-zA-Z0-9\\. ]", ""));
+                }
+            }
+        });
+
+        tfGraduationYear.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    //removes any non-digits
+                    tfGraduationYear.setText(newValue.replaceAll("\\D", ""));
+                }
+            }
+        });
+
+        tfDuration.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    //removes any non-digits
+                    tfDuration.setText(newValue.replaceAll("\\D", ""));
+                }
+            }
+        });
+
         dpBirthDate.valueProperty().addListener(new ChangeListener<LocalDate>()
         {
             @Override
@@ -596,14 +635,7 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if ((!tfDuration.getText().equals(p.getCertificateDuration())
                 && (!tfDuration.getText().equals(""))))
         {
-            try
-            {
-                p.setCertificateDuration(parseInt(tfDuration.getText()));
-            } catch (NumberFormatException nfe)
-            {
-                CtrAlertDialog.errorDialog("Invalid number for 'Certificate Duration'");
-                error = true;
-            }
+            p.setCertificateDuration(parseInt(tfDuration.getText()));
         }
         else
         {
@@ -614,23 +646,14 @@ public class CtrPaneMonasticProfile extends AbstractChildPaneController implemen
         if ((!tfGraduationYear.getText().equals(p.getCertificateGradYear()))
                 && (!tfGraduationYear.getText().equals("")))
         {
-            try
+            gradYear = parseInt(tfGraduationYear.getText());
+            if (gradYear < 2400)
             {
-                gradYear = parseInt(tfGraduationYear.getText());
-                if (gradYear < 2400)
-                {
-                    p.setCertificateGradYear(gradYear);
-                }
-                else
-                {
-                    CtrAlertDialog.errorDialog("The graduation Year should be on Western format.");
-                    error = true;
-                }
-
-            } catch (NumberFormatException nfe)
+                p.setCertificateGradYear(gradYear);
+            }
+            else
             {
-
-                CtrAlertDialog.errorDialog("Invalid number for 'Graduation Year'");
+                CtrAlertDialog.errorDialog("The graduation Year should be on Western format.");
                 error = true;
             }
         }
