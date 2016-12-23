@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePrintedDocStock">
+   <children>
+      <TitledPane collapsible="false" text="Update Stock">
+         <content>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Printed Photos:" GridPane.rowIndex="1" />
+                              <Label layoutX="10.0" layoutY="50.0" text="Signed 90 Day Forms:" />
+                              <Spinner fx:id="spPrintedPhotos" disable="true" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Spinner fx:id="spSigned90DayForms" disable="true" editable="true" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <CheckBox fx:id="cbSignedPhotocopies" disable="true" mnemonicParsing="false" text="Signed Photocopies (Passport/Bysuddhi)" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Overview" VBox.vgrow="ALWAYS">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <TableView fx:id="tvOverview">
+                    <columns>
+                      <TableColumn editable="false" minWidth="-1.0" prefWidth="90.0" sortable="false" text="Monastic" />
+                        <TableColumn fx:id="tcSignedPhotocopies" editable="false" minWidth="-1.0" prefWidth="140.0" sortable="false" text="Signed Photocopies" />
+                      <TableColumn fx:id="tcNSigned90DForms" editable="false" minWidth="-1.0" prefWidth="140.0" sortable="false" text="Signed 90 Day Forms" />
+                        <TableColumn fx:id="tcNPrintedPhotos" editable="false" minWidth="-1.0" prefWidth="110.0" sortable="false" text="Printed Photos" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>
