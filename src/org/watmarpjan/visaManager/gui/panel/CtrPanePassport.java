@@ -33,12 +33,12 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.AppConstants;
-import static java.lang.Integer.parseInt;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrForm;
+import static java.lang.Integer.parseInt;
 
 /**
  *
@@ -217,7 +217,27 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         fieldsScan2 = new FieldsPaneScanContent(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
         fieldsScan3 = new FieldsPaneScanContent(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
 
+        initNonDigitFilter(tfScan1LeftPageNumber);
+        initNonDigitFilter(tfScan2LeftPageNumber);
+        initNonDigitFilter(tfScan3LeftPageNumber);
+
         initChangeListener();
+    }
+
+    //listener to remove any non-digit char from the text field
+    private void initNonDigitFilter(TextField objTF)
+    {
+        objTF.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    objTF.setText(newValue.replaceAll("\\D", ""));
+                }
+            }
+        });
     }
 
     private void initChangeListener()
@@ -443,8 +463,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 if (ps1.getContentArriveStamp())
                 {
                     /*
-                 * if this scan contains the Arrive Stamp blocks the
-                 * selection of ArriveStamp option for other scans
+                     * if this scan contains the Arrive Stamp blocks the
+                     * selection of ArriveStamp option for other scans
                      */
                     rbScan1ArriveStamp.setSelected(true);
 
@@ -454,8 +474,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 if (ps1.getContentVisaScan())
                 {
                     /*
-                 * if this scan contains the Visa page blocks the selection
-                 * of Visa option for other scans
+                     * if this scan contains the Visa page blocks the selection
+                     * of Visa option for other scans
                      */
                     rbScan1Visa.setSelected(true);
 
@@ -465,8 +485,8 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
                 if (ps1.getContentLastVisaExt())
                 {
                     /*
-                 * if this scan contains the Last Visa Ext blocks the
-                 * selection of Last Visa Ext option for other scans
+                     * if this scan contains the Last Visa Ext blocks the
+                     * selection of Last Visa Ext option for other scans
                      */
                     rbScan1LastVisaExt.setSelected(true);
 
