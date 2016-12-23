@@ -6,7 +6,6 @@
 package org.watmarpjan.visaManager.gui.panel;
 
 import java.util.ArrayList;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,14 +13,15 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry;
 import org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry;
@@ -45,11 +45,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private TableView<EntryDueTask> tvAbroadPassportRenewal;
 
     @FXML
-    private TitledPane tPAux90DayTH;
-    @FXML
-    private TitledPane tPAuxVisaExtTH;
-    @FXML
-    private TitledPane tPAuxPsptTH;
+    private TableColumn<EntryDueTask, String> tcWeekDay;
 
     private ArrayList<TableView<EntryDueTask>> alTV;
 
@@ -65,6 +61,91 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     private Button bPrintAbroad;
     @FXML
     private Button bPreviewAbroad;
+
+    private final Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>> actionCellFactory =
+            new Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>>()
+    {
+        @Override
+        public TableCell call(final TableColumn<EntryDueTask, String> param)
+        {
+            final TableCell<EntryDueTask, String> cell = new TableCell<EntryDueTask, String>()
+            {
+                final ImageView ivActionIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("action.png").toUri().toString());
+                final Button btn = new Button("");
+
+                @Override
+                public void updateItem(String item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    if (empty)
+                    {
+                        setGraphic(null);
+                        setText(null);
+                    }
+                    else
+                    {
+                        btn.setGraphic(ivActionIcon);
+                        btn.setScaleY(0.5);
+                        btn.setOnAction((ActionEvent event)
+                                -> 
+                                {
+                                    EntryDueTask objEntry;
+
+                                    objEntry = getTableView().getItems().get(getIndex());
+                                    ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
+                                    if (objEntry instanceof Notice90DayTaskEntry)
+                                    {
+                                        ctrGUIMain.actionButton90DayNotice(null);
+                                    }
+                                    else if (objEntry instanceof VisaExtTaskEntry)
+                                    {
+                                        ctrGUIMain.actionButtonVisaExt(null);
+                                    }
+                                    else
+                                    {
+                                        ctrGUIMain.actionButtonAddRenewPassport(null);
+                                    }
+                        });
+                        setGraphic(btn);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        }
+    };
+
+    private final Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>> weekDayCellFactory = new Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>>()
+    {
+        @Override
+        public TableCell call(final TableColumn<EntryDueTask, String> param)
+        {
+            final TableCell<EntryDueTask, String> cell = new TableCell<EntryDueTask, String>()
+            {
+                @Override
+                protected void updateItem(String item, boolean empty)
+                {
+                    super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+
+                    if (item == null || empty)
+                    {
+                        setText(null);
+                    }
+                    else
+                    {
+                        setText(item);
+                        if (item.equals("SUN") || item.equals("SAT"))
+                        {
+                            setTextFill(Color.RED);
+                        }
+                    }
+
+                }
+            };
+            return cell;
+
+        }
+    };
 
     @Override
     public void init()
@@ -96,69 +177,9 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         }
     }
 
-    private void initAutoHeightResize(TableView<EntryDueTask> tv, double headerAdjust)
-    {
-        tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(headerAdjust)));
-        tv.minHeightProperty().bind(tv.prefHeightProperty());
-        tv.maxHeightProperty().bind(tv.prefHeightProperty());
-    }
-
     private void initTableGeneric(TableView<EntryDueTask> tv)
     {
         TableColumn<EntryDueTask, String> tcAction;
-
-        Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>> actionCellFactory
-                = new Callback<TableColumn<EntryDueTask, String>, TableCell<EntryDueTask, String>>()
-        {
-            @Override
-            public TableCell call(final TableColumn<EntryDueTask, String> param)
-            {
-                final TableCell<EntryDueTask, String> cell = new TableCell<EntryDueTask, String>()
-                {
-                    final ImageView ivActionIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("action.png").toUri().toString());
-                    final Button btn = new Button("");
-
-                    @Override
-                    public void updateItem(String item, boolean empty)
-                    {
-                        super.updateItem(item, empty);
-                        if (empty)
-                        {
-                            setGraphic(null);
-                            setText(null);
-                        }
-                        else
-                        {
-                            btn.setGraphic(ivActionIcon);
-                            btn.setScaleY(0.5);
-                            btn.setOnAction((ActionEvent event)
-                                    ->
-                            {
-                                EntryDueTask objEntry;
-
-                                objEntry = getTableView().getItems().get(getIndex());
-                                ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
-                                if (objEntry instanceof Notice90DayTaskEntry)
-                                {
-                                    ctrGUIMain.actionButton90DayNotice(null);
-                                }
-                                else if (objEntry instanceof VisaExtTaskEntry)
-                                {
-                                    ctrGUIMain.actionButtonVisaExt(null);
-                                }
-                                else
-                                {
-                                    ctrGUIMain.actionButtonAddRenewPassport(null);
-                                }
-                            });
-                            setGraphic(btn);
-                            setText(null);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
 
         tv.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
         tv.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("dueDate"));
@@ -168,6 +189,9 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tcAction = (TableColumn<EntryDueTask, String>) tv.getColumns().get(0);
         tcAction.setCellValueFactory(new PropertyValueFactory<>(""));
         tcAction.setCellFactory(actionCellFactory);
+
+        tcWeekDay = (TableColumn<EntryDueTask, String>) tv.getColumns().get(3);
+        tcWeekDay.setCellFactory(weekDayCellFactory);
     }
 
     private void initTable90Day(TableView<EntryDueTask> tv)
@@ -178,7 +202,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastDayOnline"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
 
-        initAutoHeightResize(tv, 2.7);
+        GUIUtil.initAutoHeightResize(tv, 2.7);
     }
 
     private void initTableVisaExtension(TableView<EntryDueTask> tv)
@@ -189,7 +213,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tv.getColumns().get(5).getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("samnakput"));
         tv.getColumns().get(5).getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("immigration"));
 
-        initAutoHeightResize(tv, 2.5);
+        GUIUtil.initAutoHeightResize(tv, 2.5);
     }
 
     private void initTablePassportRenew(TableView<EntryDueTask> tv)
@@ -197,7 +221,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         initTableGeneric(tv);
         tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
 
-        initAutoHeightResize(tv, 1.01);
+        GUIUtil.initAutoHeightResize(tv, 1.01);
     }
 
     public void fillData()
@@ -225,6 +249,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
         tvAbroadPassportRenewal.getItems().addAll(alAbroadPassportRenewal);
 
         taRecentChanges.setText(CtrFileOperation.loadChangelog());
+
     }
 
     @FXML

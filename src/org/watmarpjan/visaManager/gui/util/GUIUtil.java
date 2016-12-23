@@ -9,7 +9,9 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppFiles;
@@ -59,5 +61,12 @@ public class GUIUtil
     {
         objCB.getItems().clear();
         objCB.getItems().addAll(listItems);
+    }
+    
+    public static void initAutoHeightResize(TableView tv, double headerAdjust)
+    {
+        tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(headerAdjust)));
+        tv.minHeightProperty().bind(tv.prefHeightProperty());
+        tv.maxHeightProperty().bind(tv.prefHeightProperty());
     }
 }

@@ -42,12 +42,12 @@
                                                                     <columns>
                                                                         <TableColumn minWidth="-1.0" prefWidth="53.0" text="Action" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="118.0" text="Monastic" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="116.0" text="Remaining Time" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="394.0" text="Acceptable Dates">
                                                                             <columns>
-                                                                                <TableColumn minWidth="-Infinity" prefWidth="110.0" text="First Day" />
+                                                                                <TableColumn minWidth="-Infinity" prefWidth="90.0" text="First Day" />
                                                                                 <TableColumn prefWidth="110.0" text="Last Day Online" />
                                                                                 <TableColumn prefWidth="140.0" text="Last Day Office" />
                                                                             </columns>
@@ -69,9 +69,9 @@
                                                                     <columns>
                                                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Action" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="116.0" text="Remaining Time" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
                                                                         <TableColumn prefWidth="260.0" text="Begin processing">
                                                                             <columns>
                                                                                 <TableColumn prefWidth="85.0" text="Prawat" />
@@ -96,9 +96,9 @@
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                                                     </columns>
                                                                 </TableView>
@@ -136,9 +136,9 @@
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Due Date" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="150.0" text="Remaining Time" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
                                                                         <TableColumn prefWidth="260.0" text="Begin processing">
                                                                             <columns>
                                                                                 <TableColumn prefWidth="85.0" text="Prawat" />
@@ -163,9 +163,9 @@
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="118.0" text="Due Date" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="150.0" text="Remaining Time" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                                                     </columns>
                                                                 </TableView>
@@ -192,7 +192,7 @@
             <children>
                 <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Recent Changes" VBox.vgrow="ALWAYS">
                     <content>
-                        <TextArea fx:id="taRecentChanges" editable="false" prefWidth="400.0" />
+                        <TextArea fx:id="taRecentChanges" editable="false" prefWidth="400.0" wrapText="true" />
                     </content>
                 </TitledPane>
             </children>
