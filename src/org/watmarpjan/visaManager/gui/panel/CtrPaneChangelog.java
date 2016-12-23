@@ -164,7 +164,6 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         cbMonastic.getItems().clear();
         cbMonastic.getItems().addAll(nickNameList);
         cbMonastic.setValue(null);
-        
 
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(cs90D);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csAddNewMonastic);
@@ -230,15 +229,18 @@ public class CtrPaneChangelog extends AbstractChildPaneController
                 logSection = generateChangelogSection(objChangelogSection);
                 if (!logSection.equals(""))
                 {
-                    logLine+="\n" +logSection;
+                    logLine += "\n" + logSection;
                 }
             }
 
             //if there is a optional comment
             if (!taOptionalComment.getText().equals(""))
             {
-                logLine += "\n         Remark: " + taOptionalComment.getText();
+                logLine += "\n         Remark: ";
+                logLine += "\n                 " + taOptionalComment.getText().replaceAll("\n", "\n                 ");
             }
+
+            logLine += "\n";
 
             CtrFileOperation.saveChangelog(logLine);
             fillData();
@@ -252,13 +254,13 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         if (cbMonastic.getValue() != null)
         {
             bAddEntry.setDisable(false);
-        }        
+        }
         else
         {
             bAddEntry.setDisable(true);
         }
     }
-    
+
     private boolean validateFields()
     {
         return (cbMonastic.getValue() != null);
