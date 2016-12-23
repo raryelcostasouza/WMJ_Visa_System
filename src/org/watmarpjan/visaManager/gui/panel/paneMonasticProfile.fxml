@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
@@ -170,9 +170,9 @@
                               <GridPane>
                                   <children>
                                       <Label text="Occupation (Thai):" />
-                                      <ComboBox fx:id="cbOccupationThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                                      <ComboBox fx:id="cbOccupationThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
                                       <Label text="Certificate (Thai):" GridPane.rowIndex="1" />
-                                      <ComboBox fx:id="cbCertificateThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <ComboBox fx:id="cbCertificateThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                   </children>
                                   <columnConstraints>
                                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
@@ -217,7 +217,7 @@
                            <children>
                                     <Label text="Previous Residence Country:" />
                                     <Label text="Residence Wat:" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cbResidingAt" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cbResidingAt" disable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbPreviousResidenceCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
@@ -241,7 +241,7 @@
                            <children>
                                     <Label text="Adviser's name:" />
                                     <Label text="Adviser's Wat:" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cbAdvisorWat" disable="true" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cbAdvisorWat" disable="true" prefWidth="210.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbAdviserToCome" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
@@ -327,13 +327,13 @@
                                   <HBox alignment="CENTER_LEFT">
                                       <children>
                                           <RadioButton fx:id="rbDhammaStudiesRegular" disable="true" mnemonicParsing="false" selected="true" text="Regular">
-                                              <toggleGroup>
-                                                  <ToggleGroup fx:id="tgPrawatAnswers" />
-                                              </toggleGroup>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="tgDhammaStudies" />
+                                       </toggleGroup>
                                           </RadioButton>
-                                          <RadioButton fx:id="rbDhammaStudiesNaktamTri" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgPrawatAnswers" />
-                                          <RadioButton fx:id="rbDhammaStudiesNaktamToh" disable="true" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgPrawatAnswers" />
-                                          <RadioButton fx:id="rbDhammaStudiesNaktamEk" disable="true" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgPrawatAnswers" />
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamTri" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Tri" toggleGroup="$tgDhammaStudies" />
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamToh" disable="true" layoutX="107.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Toh" toggleGroup="$tgDhammaStudies" />
+                                          <RadioButton fx:id="rbDhammaStudiesNaktamEk" disable="true" layoutX="194.0" layoutY="20.0" mnemonicParsing="false" text="Naktam Ek" toggleGroup="$tgDhammaStudies" />
                                       </children>
                                   </HBox>
                               </content>

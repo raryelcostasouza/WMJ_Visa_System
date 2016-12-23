@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneUpajjhaya">
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneUpajjhaya">
    <children>
       <TitledPane animated="false" collapsible="false" text="Upajjhaya List">
          <content>
             <HBox alignment="CENTER">
                <children>
-                  <ComboBox fx:id="cbUpajjhayaList" onAction="#actionSelectUpajjhaya" />
+                  <ComboBox fx:id="cbUpajjhayaList" onAction="#actionSelectUpajjhaya" stylesheets="@thaiField.css" />
                </children>
             </HBox>
          </content>
@@ -37,8 +37,8 @@
                      <children>
                         <Label text="Name:" />
                         <Label text="Monastery:" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="cbMonasteryList" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="tfName" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="cbMonasteryList" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfName" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

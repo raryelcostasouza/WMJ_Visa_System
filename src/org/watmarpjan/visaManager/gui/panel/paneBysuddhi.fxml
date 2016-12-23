@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -73,9 +73,9 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label text="Pali Name:">
@@ -95,17 +95,17 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="tfPaliNameThai" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="tfPaliNameThai" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <ComboBox fx:id="cbOrdainedAt" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <ComboBox fx:id="cbOrdainedAt" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <ComboBox fx:id="cbUpajjhaya" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cbUpajjhaya" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
