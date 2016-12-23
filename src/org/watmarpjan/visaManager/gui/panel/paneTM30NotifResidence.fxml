@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneTM30NotifResidence">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneTM30NotifResidence">
   <tabs>
     <Tab text="Saved Printouts TM 30">
          <content>
@@ -26,7 +26,7 @@
                      <columns>
                         <TableColumn editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Notif. Date" />
                         <TableColumn fx:id="tcOpenPDF" editable="false" maxWidth="70.0" minWidth="53.0" prefWidth="53.0" text="PDF" />
-                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="246.0" text="Monastics" />
+                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="400.0" text="Monastics" />
                      </columns>
                   </TableView>
                </children>
