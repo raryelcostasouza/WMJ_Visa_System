@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -372,6 +373,16 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.next90DayNotice";
 
         return (ArrayList<EntryUpdate90DayNotice>) ctrDB.getSession().createQuery(hql).getResultList();
+    }
+
+    public ArrayList<EntryPrintedDocStock> loadListPrintedDocStock()
+    {
+        String hql;
+        hql = "select new org.watmarpjan.visaManager.model.EntryPrintedDocStock(p.nickname, p.nSigned90dForms, p.signedPhotocopies, p.nPrintedPhotos)"
+                + " from MonasticProfile p "
+                + " where p.status <> 'INACTIVE'";
+
+        return (ArrayList<EntryPrintedDocStock>) ctrDB.getSession().createQuery(hql).getResultList();
     }
 
     public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
