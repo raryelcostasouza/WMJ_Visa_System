@@ -23,15 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author wmj_user
+ * @author WMJ_user
  */
 @Entity
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u")
-    , @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya")
-    , @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
+    @NamedQuery(name = "Upajjhaya.findAll", query = "SELECT u FROM Upajjhaya u"),
+    @NamedQuery(name = "Upajjhaya.findByIdUpajjhaya", query = "SELECT u FROM Upajjhaya u WHERE u.idUpajjhaya = :idUpajjhaya"),
+    @NamedQuery(name = "Upajjhaya.findByUpajjhayaName", query = "SELECT u FROM Upajjhaya u WHERE u.upajjhayaName = :upajjhayaName")
 })
 public class Upajjhaya implements Serializable
 {
@@ -129,5 +129,5 @@ public class Upajjhaya implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.Upajjhaya[ idUpajjhaya=" + idUpajjhaya + " ]";
     }
-    
+
 }

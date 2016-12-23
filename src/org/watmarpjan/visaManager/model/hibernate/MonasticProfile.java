@@ -29,64 +29,67 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author wmj_user
+ * @author WMJ_user
  */
 @Entity
 @Table(name = "MONASTIC_PROFILE")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "MonasticProfile.findAll", query = "SELECT m FROM MonasticProfile m")
-    , @NamedQuery(name = "MonasticProfile.findByIdProfile", query = "SELECT m FROM MonasticProfile m WHERE m.idProfile = :idProfile")
-    , @NamedQuery(name = "MonasticProfile.findByArrivalCardNumber", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalCardNumber = :arrivalCardNumber")
-    , @NamedQuery(name = "MonasticProfile.findByArrivalLastEntryDate", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalLastEntryDate = :arrivalLastEntryDate")
-    , @NamedQuery(name = "MonasticProfile.findByArrivalPortOfEntry", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalPortOfEntry = :arrivalPortOfEntry")
-    , @NamedQuery(name = "MonasticProfile.findByArrivalTravelBy", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalTravelBy = :arrivalTravelBy")
-    , @NamedQuery(name = "MonasticProfile.findByArrivalTravelFrom", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalTravelFrom = :arrivalTravelFrom")
-    , @NamedQuery(name = "MonasticProfile.findByBhikkhuOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.bhikkhuOrdDate = :bhikkhuOrdDate")
-    , @NamedQuery(name = "MonasticProfile.findByBirthCountry", query = "SELECT m FROM MonasticProfile m WHERE m.birthCountry = :birthCountry")
-    , @NamedQuery(name = "MonasticProfile.findByBirthDate", query = "SELECT m FROM MonasticProfile m WHERE m.birthDate = :birthDate")
-    , @NamedQuery(name = "MonasticProfile.findByBirthPlace", query = "SELECT m FROM MonasticProfile m WHERE m.birthPlace = :birthPlace")
-    , @NamedQuery(name = "MonasticProfile.findByBysuddhiIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.bysuddhiIssueDate = :bysuddhiIssueDate")
-    , @NamedQuery(name = "MonasticProfile.findByCertificateDuration", query = "SELECT m FROM MonasticProfile m WHERE m.certificateDuration = :certificateDuration")
-    , @NamedQuery(name = "MonasticProfile.findByCertificateEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.certificateEnglish = :certificateEnglish")
-    , @NamedQuery(name = "MonasticProfile.findByCertificateGradYear", query = "SELECT m FROM MonasticProfile m WHERE m.certificateGradYear = :certificateGradYear")
-    , @NamedQuery(name = "MonasticProfile.findByCertificateThai", query = "SELECT m FROM MonasticProfile m WHERE m.certificateThai = :certificateThai")
-    , @NamedQuery(name = "MonasticProfile.findByDhammaStudies", query = "SELECT m FROM MonasticProfile m WHERE m.dhammaStudies = :dhammaStudies")
-    , @NamedQuery(name = "MonasticProfile.findByEmail", query = "SELECT m FROM MonasticProfile m WHERE m.email = :email")
-    , @NamedQuery(name = "MonasticProfile.findByEthnicity", query = "SELECT m FROM MonasticProfile m WHERE m.ethnicity = :ethnicity")
-    , @NamedQuery(name = "MonasticProfile.findByFatherName", query = "SELECT m FROM MonasticProfile m WHERE m.fatherName = :fatherName")
-    , @NamedQuery(name = "MonasticProfile.findByFirstEntryDate", query = "SELECT m FROM MonasticProfile m WHERE m.firstEntryDate = :firstEntryDate")
-    , @NamedQuery(name = "MonasticProfile.findByLastName", query = "SELECT m FROM MonasticProfile m WHERE m.lastName = :lastName")
-    , @NamedQuery(name = "MonasticProfile.findByMiddleName", query = "SELECT m FROM MonasticProfile m WHERE m.middleName = :middleName")
-    , @NamedQuery(name = "MonasticProfile.findByMotherName", query = "SELECT m FROM MonasticProfile m WHERE m.motherName = :motherName")
-    , @NamedQuery(name = "MonasticProfile.findByMonasticName", query = "SELECT m FROM MonasticProfile m WHERE m.monasticName = :monasticName")
-    , @NamedQuery(name = "MonasticProfile.findByNameAdviserToCome", query = "SELECT m FROM MonasticProfile m WHERE m.nameAdviserToCome = :nameAdviserToCome")
-    , @NamedQuery(name = "MonasticProfile.findByNationality", query = "SELECT m FROM MonasticProfile m WHERE m.nationality = :nationality")
-    , @NamedQuery(name = "MonasticProfile.findByNext90DayNotice", query = "SELECT m FROM MonasticProfile m WHERE m.next90DayNotice = :next90DayNotice")
-    , @NamedQuery(name = "MonasticProfile.findByNickname", query = "SELECT m FROM MonasticProfile m WHERE m.nickname = :nickname")
-    , @NamedQuery(name = "MonasticProfile.findByOccupationEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.occupationEnglish = :occupationEnglish")
-    , @NamedQuery(name = "MonasticProfile.findByOccupationThai", query = "SELECT m FROM MonasticProfile m WHERE m.occupationThai = :occupationThai")
-    , @NamedQuery(name = "MonasticProfile.findByPahkahwOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.pahkahwOrdDate = :pahkahwOrdDate")
-    , @NamedQuery(name = "MonasticProfile.findByPaliNameEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.paliNameEnglish = :paliNameEnglish")
-    , @NamedQuery(name = "MonasticProfile.findByPaliNameThai", query = "SELECT m FROM MonasticProfile m WHERE m.paliNameThai = :paliNameThai")
-    , @NamedQuery(name = "MonasticProfile.findByPassportExpiryDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportExpiryDate = :passportExpiryDate")
-    , @NamedQuery(name = "MonasticProfile.findByPassportIssuedAt", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssuedAt = :passportIssuedAt")
-    , @NamedQuery(name = "MonasticProfile.findByPassportNumber", query = "SELECT m FROM MonasticProfile m WHERE m.passportNumber = :passportNumber")
-    , @NamedQuery(name = "MonasticProfile.findByPreviousResidenceCountry", query = "SELECT m FROM MonasticProfile m WHERE m.previousResidenceCountry = :previousResidenceCountry")
-    , @NamedQuery(name = "MonasticProfile.findBySamaneraOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.samaneraOrdDate = :samaneraOrdDate")
-    , @NamedQuery(name = "MonasticProfile.findBySchool", query = "SELECT m FROM MonasticProfile m WHERE m.school = :school")
-    , @NamedQuery(name = "MonasticProfile.findByStatus", query = "SELECT m FROM MonasticProfile m WHERE m.status = :status")
-    , @NamedQuery(name = "MonasticProfile.findByVisaExpiryDate", query = "SELECT m FROM MonasticProfile m WHERE m.visaExpiryDate = :visaExpiryDate")
-    , @NamedQuery(name = "MonasticProfile.findByVisaNumber", query = "SELECT m FROM MonasticProfile m WHERE m.visaNumber = :visaNumber")
-    , @NamedQuery(name = "MonasticProfile.findByVisaType", query = "SELECT m FROM MonasticProfile m WHERE m.visaType = :visaType")
-    , @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate")
-    , @NamedQuery(name = "MonasticProfile.findByPassportCountry", query = "SELECT m FROM MonasticProfile m WHERE m.passportCountry = :passportCountry")
-    , @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter")
-    , @NamedQuery(name = "MonasticProfile.findByOnlineNoticeAccepted", query = "SELECT m FROM MonasticProfile m WHERE m.onlineNoticeAccepted = :onlineNoticeAccepted")
-    , @NamedQuery(name = "MonasticProfile.findByVisaManager", query = "SELECT m FROM MonasticProfile m WHERE m.visaManager = :visaManager")
-    , @NamedQuery(name = "MonasticProfile.findByPhoneNumber1", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber1 = :phoneNumber1")
-    , @NamedQuery(name = "MonasticProfile.findByPhoneNumber2", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber2 = :phoneNumber2")
+    @NamedQuery(name = "MonasticProfile.findAll", query = "SELECT m FROM MonasticProfile m"),
+    @NamedQuery(name = "MonasticProfile.findByIdProfile", query = "SELECT m FROM MonasticProfile m WHERE m.idProfile = :idProfile"),
+    @NamedQuery(name = "MonasticProfile.findByArrivalCardNumber", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalCardNumber = :arrivalCardNumber"),
+    @NamedQuery(name = "MonasticProfile.findByArrivalLastEntryDate", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalLastEntryDate = :arrivalLastEntryDate"),
+    @NamedQuery(name = "MonasticProfile.findByArrivalPortOfEntry", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalPortOfEntry = :arrivalPortOfEntry"),
+    @NamedQuery(name = "MonasticProfile.findByArrivalTravelBy", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalTravelBy = :arrivalTravelBy"),
+    @NamedQuery(name = "MonasticProfile.findByArrivalTravelFrom", query = "SELECT m FROM MonasticProfile m WHERE m.arrivalTravelFrom = :arrivalTravelFrom"),
+    @NamedQuery(name = "MonasticProfile.findByBhikkhuOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.bhikkhuOrdDate = :bhikkhuOrdDate"),
+    @NamedQuery(name = "MonasticProfile.findByBirthCountry", query = "SELECT m FROM MonasticProfile m WHERE m.birthCountry = :birthCountry"),
+    @NamedQuery(name = "MonasticProfile.findByBirthDate", query = "SELECT m FROM MonasticProfile m WHERE m.birthDate = :birthDate"),
+    @NamedQuery(name = "MonasticProfile.findByBirthPlace", query = "SELECT m FROM MonasticProfile m WHERE m.birthPlace = :birthPlace"),
+    @NamedQuery(name = "MonasticProfile.findByBysuddhiIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.bysuddhiIssueDate = :bysuddhiIssueDate"),
+    @NamedQuery(name = "MonasticProfile.findByCertificateDuration", query = "SELECT m FROM MonasticProfile m WHERE m.certificateDuration = :certificateDuration"),
+    @NamedQuery(name = "MonasticProfile.findByCertificateEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.certificateEnglish = :certificateEnglish"),
+    @NamedQuery(name = "MonasticProfile.findByCertificateGradYear", query = "SELECT m FROM MonasticProfile m WHERE m.certificateGradYear = :certificateGradYear"),
+    @NamedQuery(name = "MonasticProfile.findByCertificateThai", query = "SELECT m FROM MonasticProfile m WHERE m.certificateThai = :certificateThai"),
+    @NamedQuery(name = "MonasticProfile.findByDhammaStudies", query = "SELECT m FROM MonasticProfile m WHERE m.dhammaStudies = :dhammaStudies"),
+    @NamedQuery(name = "MonasticProfile.findByEmail", query = "SELECT m FROM MonasticProfile m WHERE m.email = :email"),
+    @NamedQuery(name = "MonasticProfile.findByEthnicity", query = "SELECT m FROM MonasticProfile m WHERE m.ethnicity = :ethnicity"),
+    @NamedQuery(name = "MonasticProfile.findByFatherName", query = "SELECT m FROM MonasticProfile m WHERE m.fatherName = :fatherName"),
+    @NamedQuery(name = "MonasticProfile.findByFirstEntryDate", query = "SELECT m FROM MonasticProfile m WHERE m.firstEntryDate = :firstEntryDate"),
+    @NamedQuery(name = "MonasticProfile.findByLastName", query = "SELECT m FROM MonasticProfile m WHERE m.lastName = :lastName"),
+    @NamedQuery(name = "MonasticProfile.findByMiddleName", query = "SELECT m FROM MonasticProfile m WHERE m.middleName = :middleName"),
+    @NamedQuery(name = "MonasticProfile.findByMotherName", query = "SELECT m FROM MonasticProfile m WHERE m.motherName = :motherName"),
+    @NamedQuery(name = "MonasticProfile.findByMonasticName", query = "SELECT m FROM MonasticProfile m WHERE m.monasticName = :monasticName"),
+    @NamedQuery(name = "MonasticProfile.findByNameAdviserToCome", query = "SELECT m FROM MonasticProfile m WHERE m.nameAdviserToCome = :nameAdviserToCome"),
+    @NamedQuery(name = "MonasticProfile.findByNationality", query = "SELECT m FROM MonasticProfile m WHERE m.nationality = :nationality"),
+    @NamedQuery(name = "MonasticProfile.findByNext90DayNotice", query = "SELECT m FROM MonasticProfile m WHERE m.next90DayNotice = :next90DayNotice"),
+    @NamedQuery(name = "MonasticProfile.findByNickname", query = "SELECT m FROM MonasticProfile m WHERE m.nickname = :nickname"),
+    @NamedQuery(name = "MonasticProfile.findByOccupationEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.occupationEnglish = :occupationEnglish"),
+    @NamedQuery(name = "MonasticProfile.findByOccupationThai", query = "SELECT m FROM MonasticProfile m WHERE m.occupationThai = :occupationThai"),
+    @NamedQuery(name = "MonasticProfile.findByPahkahwOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.pahkahwOrdDate = :pahkahwOrdDate"),
+    @NamedQuery(name = "MonasticProfile.findByPaliNameEnglish", query = "SELECT m FROM MonasticProfile m WHERE m.paliNameEnglish = :paliNameEnglish"),
+    @NamedQuery(name = "MonasticProfile.findByPaliNameThai", query = "SELECT m FROM MonasticProfile m WHERE m.paliNameThai = :paliNameThai"),
+    @NamedQuery(name = "MonasticProfile.findByPassportExpiryDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportExpiryDate = :passportExpiryDate"),
+    @NamedQuery(name = "MonasticProfile.findByPassportIssuedAt", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssuedAt = :passportIssuedAt"),
+    @NamedQuery(name = "MonasticProfile.findByPassportNumber", query = "SELECT m FROM MonasticProfile m WHERE m.passportNumber = :passportNumber"),
+    @NamedQuery(name = "MonasticProfile.findByPreviousResidenceCountry", query = "SELECT m FROM MonasticProfile m WHERE m.previousResidenceCountry = :previousResidenceCountry"),
+    @NamedQuery(name = "MonasticProfile.findBySamaneraOrdDate", query = "SELECT m FROM MonasticProfile m WHERE m.samaneraOrdDate = :samaneraOrdDate"),
+    @NamedQuery(name = "MonasticProfile.findBySchool", query = "SELECT m FROM MonasticProfile m WHERE m.school = :school"),
+    @NamedQuery(name = "MonasticProfile.findByStatus", query = "SELECT m FROM MonasticProfile m WHERE m.status = :status"),
+    @NamedQuery(name = "MonasticProfile.findByVisaExpiryDate", query = "SELECT m FROM MonasticProfile m WHERE m.visaExpiryDate = :visaExpiryDate"),
+    @NamedQuery(name = "MonasticProfile.findByVisaNumber", query = "SELECT m FROM MonasticProfile m WHERE m.visaNumber = :visaNumber"),
+    @NamedQuery(name = "MonasticProfile.findByVisaType", query = "SELECT m FROM MonasticProfile m WHERE m.visaType = :visaType"),
+    @NamedQuery(name = "MonasticProfile.findByPassportIssueDate", query = "SELECT m FROM MonasticProfile m WHERE m.passportIssueDate = :passportIssueDate"),
+    @NamedQuery(name = "MonasticProfile.findByPassportCountry", query = "SELECT m FROM MonasticProfile m WHERE m.passportCountry = :passportCountry"),
+    @NamedQuery(name = "MonasticProfile.findByPatimokkhaChanter", query = "SELECT m FROM MonasticProfile m WHERE m.patimokkhaChanter = :patimokkhaChanter"),
+    @NamedQuery(name = "MonasticProfile.findByOnlineNoticeAccepted", query = "SELECT m FROM MonasticProfile m WHERE m.onlineNoticeAccepted = :onlineNoticeAccepted"),
+    @NamedQuery(name = "MonasticProfile.findByVisaManager", query = "SELECT m FROM MonasticProfile m WHERE m.visaManager = :visaManager"),
+    @NamedQuery(name = "MonasticProfile.findByPhoneNumber1", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber1 = :phoneNumber1"),
+    @NamedQuery(name = "MonasticProfile.findByPhoneNumber2", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber2 = :phoneNumber2"),
+    @NamedQuery(name = "MonasticProfile.findBySignedPhotocopies", query = "SELECT m FROM MonasticProfile m WHERE m.signedPhotocopies = :signedPhotocopies"),
+    @NamedQuery(name = "MonasticProfile.findByNPrintedPhotos", query = "SELECT m FROM MonasticProfile m WHERE m.nPrintedPhotos = :nPrintedPhotos"),
+    @NamedQuery(name = "MonasticProfile.findByNSigned90dForms", query = "SELECT m FROM MonasticProfile m WHERE m.nSigned90dForms = :nSigned90dForms")
 })
 public class MonasticProfile implements Serializable
 {
@@ -207,6 +210,12 @@ public class MonasticProfile implements Serializable
     private String phoneNumber1;
     @Column(name = "PHONE_NUMBER2")
     private String phoneNumber2;
+    @Column(name = "SIGNED_PHOTOCOPIES")
+    private Boolean signedPhotocopies;
+    @Column(name = "N_PRINTED_PHOTOS")
+    private Integer nPrintedPhotos;
+    @Column(name = "N_SIGNED_90D_FORMS")
+    private Integer nSigned90dForms;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -763,6 +772,36 @@ public class MonasticProfile implements Serializable
         this.phoneNumber2 = phoneNumber2;
     }
 
+    public Boolean getSignedPhotocopies()
+    {
+        return signedPhotocopies;
+    }
+
+    public void setSignedPhotocopies(Boolean signedPhotocopies)
+    {
+        this.signedPhotocopies = signedPhotocopies;
+    }
+
+    public Integer getNPrintedPhotos()
+    {
+        return nPrintedPhotos;
+    }
+
+    public void setNPrintedPhotos(Integer nPrintedPhotos)
+    {
+        this.nPrintedPhotos = nPrintedPhotos;
+    }
+
+    public Integer getNSigned90dForms()
+    {
+        return nSigned90dForms;
+    }
+
+    public void setNSigned90dForms(Integer nSigned90dForms)
+    {
+        this.nSigned90dForms = nSigned90dForms;
+    }
+
     @XmlTransient
     public Set<PassportScan> getPassportScanSet()
     {
@@ -864,5 +903,5 @@ public class MonasticProfile implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.MonasticProfile[ idProfile=" + idProfile + " ]";
     }
-    
+
 }
