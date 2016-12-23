@@ -51,7 +51,7 @@ public class CtrPaneConversionTools extends AbstractChildPaneController
         }
         cbMonthWestern.getItems().addAll(listWesternMonthName);
         cbMonthThai.getItems().addAll(listThaiMonthName);
-        
+
         tfYearThai.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -60,7 +60,7 @@ public class CtrPaneConversionTools extends AbstractChildPaneController
                 removeNonNumericChars(tfYearThai);
             }
         });
-        
+
         tfYearWestern.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -75,7 +75,7 @@ public class CtrPaneConversionTools extends AbstractChildPaneController
     {
         objTF.setText(objTF.getText().replaceAll("[^0-9]", ""));
     }
-    
+
     @FXML
     void actionSelectThaiMonth(ActionEvent ae)
     {
@@ -83,7 +83,7 @@ public class CtrPaneConversionTools extends AbstractChildPaneController
         String selectedThaiMonth, convertedWesternMonth;
 
         selectedThaiMonth = cbMonthThai.getValue();
-        if (selectedThaiMonth != null)
+        if (selectedThaiMonth != null && !selectedThaiMonth.isEmpty())
         {
             monthIndex = cbMonthThai.getItems().indexOf(selectedThaiMonth);
             convertedWesternMonth = cbMonthWestern.getItems().get(monthIndex);
@@ -98,38 +98,38 @@ public class CtrPaneConversionTools extends AbstractChildPaneController
         String selectedWesternMonth, convertedThaiMonth;
 
         selectedWesternMonth = cbMonthWestern.getValue();
-        if (selectedWesternMonth != null)
+        if (selectedWesternMonth != null && !selectedWesternMonth.isEmpty())
         {
             monthIndex = cbMonthWestern.getItems().indexOf(selectedWesternMonth);
             convertedThaiMonth = cbMonthThai.getItems().get(monthIndex);
             cbMonthThai.setValue(convertedThaiMonth);
         }
     }
-    
+
     @FXML
     void actionInputWesternYear(ActionEvent ae)
     {
         String strWesternYear;
         int yearWestern, yearThai;
-        
+
         strWesternYear = tfYearWestern.getText();
         yearWestern = Integer.parseInt(strWesternYear);
-        
+
         yearThai = yearWestern + 543;
-        tfYearThai.setText(yearThai+"");
+        tfYearThai.setText(yearThai + "");
     }
-    
+
     @FXML
     void actionInputThaiYear(ActionEvent ae)
     {
         String strThaiYear;
         int yearWestern, yearThai;
-        
+
         strThaiYear = tfYearThai.getText();
         yearThai = Integer.parseInt(strThaiYear);
-        
+
         yearWestern = yearThai - 543;
-        tfYearWestern.setText(yearWestern+"");
+        tfYearWestern.setText(yearWestern + "");
     }
 
 }
