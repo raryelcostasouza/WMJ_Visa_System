@@ -366,7 +366,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     public ArrayList<EntryUpdate90DayNotice> loadListUpdate90DayNotice()
     {
         String hql;
-        hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idProfile, p.nickname, p.next90DayNotice)"
+        hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idProfile, p.nickname, p.next90DayNotice, p.nSigned90dForms)"
                 + " from MonasticProfile p "
                 + " where p.status = 'THAILAND' and"
                 + " p.next90DayNotice is not null "
