@@ -274,7 +274,7 @@
                                     <TableView fx:id="tvReceipts" prefWidth="500.0">
                                        <columns>
                                           <TableColumn fx:id="tcOpenPDF" prefWidth="60.0" text="PDF" />
-                                          <TableColumn prefWidth="90.0" text="Receipt Date" />
+                                          <TableColumn prefWidth="90.0" text="Date" />
                                           <TableColumn prefWidth="100.0" text="Type" />
                                           <TableColumn prefWidth="230.0" text="Ref Number" />
                                        </columns>
