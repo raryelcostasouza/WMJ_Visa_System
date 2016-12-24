@@ -60,6 +60,17 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
     private TextField tfAddrNumber;
 
     @FXML
+    private TextField tfTHAddrProvince;
+    @FXML
+    private TextField tfTHAddrAmpher;
+    @FXML
+    private TextField tfTHAddrTambol;
+    @FXML
+    private TextField tfTHAddrRoad;
+    @FXML
+    private TextField tfTHAddrNumber;
+
+    @FXML
     private ToggleGroup tgCountry;
 
     @FXML
@@ -134,13 +145,16 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             if (rbJkJangwat.isSelected())
             {
                 m.setMonasteryOfJaokana(JAOKANA_JANGWAT);
-            } else if (rbJKAmpher.isSelected())
+            }
+            else if (rbJKAmpher.isSelected())
             {
                 m.setMonasteryOfJaokana(JAOKANA_AMPHER);
-            } else if (rbJKTambol.isSelected())
+            }
+            else if (rbJKTambol.isSelected())
             {
                 m.setMonasteryOfJaokana(JAOKANA_TAMBOL);
-            } else
+            }
+            else
             {
                 m.setMonasteryOfJaokana(JAOKANA_NO);
             }
@@ -148,15 +162,28 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             if (rbCountryThailand.isSelected())
             {
                 m.setAddrCountry(AppConstants.COUNTRY_THAILAND);
-            } else
+            }
+            else
             {
                 m.setAddrCountry(cbAddrCountry.getValue());
             }
-            m.setAddrJangwat(tfAddrProvince.getText());
-            m.setAddrAmpher(tfAddrAmpher.getText());
-            m.setAddrTambon(tfAddrTambol.getText());
-            m.setAddrRoad(tfAddrRoad.getText());
-            m.setAddrNumber(tfAddrNumber.getText());
+
+            if (rbCountryThailand.isSelected())
+            {
+                m.setAddrJangwat(tfAddrProvince.getText());
+                m.setAddrAmpher(tfAddrAmpher.getText());
+                m.setAddrTambon(tfAddrTambol.getText());
+                m.setAddrRoad(tfAddrRoad.getText());
+                m.setAddrNumber(tfAddrNumber.getText());
+            }
+            else
+            {
+                m.setAddrJangwat(tfTHAddrProvince.getText());
+                m.setAddrAmpher(tfTHAddrAmpher.getText());
+                m.setAddrTambon(tfTHAddrTambol.getText());
+                m.setAddrRoad(tfTHAddrRoad.getText());
+                m.setAddrNumber(tfTHAddrNumber.getText());
+            }
 
             opStatus = ctrGUIMain.getCtrMain().getCtrMonastery().updateMonastery(m);
             if (opStatus == 0)
@@ -180,7 +207,8 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         if (cbMonasteryList.getValue() == null)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -224,7 +252,7 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
     public void fillMonasteryData(Monastery m)
     {
         GUIUtil.loadContentComboboxGeneric(cbAddrCountry, ctrGUIMain.getCtrMain().loadListCountry());
-        
+
         //if no monastery is passed as parameter,
         //shows the last selected
         if (m == null && !cbMonasteryList.getItems().isEmpty())
@@ -237,21 +265,40 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
         {
             tfName.setText(m.getMonasteryName());
             tfPhoneNumber.setText(m.getPhoneNumber());
-
+            clearAddrTextFields();
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
                 rbCountryThailand.setSelected(true);
                 cbAddrCountry.setValue("");
-            } else
+            }
+            else
             {
                 rbCountryOther.setSelected(true);
                 cbAddrCountry.setValue(m.getAddrCountry());
             }
-            tfAddrProvince.setText(m.getAddrJangwat());
-            tfAddrAmpher.setText(m.getAddrAmpher());
-            tfAddrTambol.setText(m.getAddrTambon());
-            tfAddrRoad.setText(m.getAddrRoad());
-            tfAddrNumber.setText(m.getAddrNumber());
+            if (rbCountryOther.isSelected())
+            {
+                enableTextFieldEnglish(null);
+                //for english address use a separate set of TextFields
+                //reason: the Thai field need to increase font size using CSS
+
+                tfAddrProvince.setText(m.getAddrJangwat());
+                tfAddrAmpher.setText(m.getAddrAmpher());
+                tfAddrTambol.setText(m.getAddrTambon());
+                tfAddrRoad.setText(m.getAddrRoad());
+                tfAddrNumber.setText(m.getAddrNumber());
+            }
+            else
+            {
+                enableTextFieldThai(null);
+                //for Thai address use a separate set of TextFields
+                //reason: the Thai field need to increase font size using CSS
+                tfTHAddrProvince.setText(m.getAddrJangwat());
+                tfTHAddrAmpher.setText(m.getAddrAmpher());
+                tfTHAddrTambol.setText(m.getAddrTambon());
+                tfTHAddrRoad.setText(m.getAddrRoad());
+                tfTHAddrNumber.setText(m.getAddrNumber());
+            }
 
             switch (m.getMonasteryOfJaokana())
             {
@@ -269,7 +316,6 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
                     break;
             }
         }
-
     }
 
     private void fillMonasteryList()
@@ -315,6 +361,57 @@ public class CtrPaneMonastery extends AbstractChildPaneController implements ICr
             fillMonasteryList();
             cbMonasteryList.setValue(nameNewMonastery);
         }
+    }
+
+    @FXML
+    void enableTextFieldEnglish(ActionEvent ae)
+    {
+        //makes the English TextFields visible
+        tfAddrProvince.setVisible(true);
+        tfAddrAmpher.setVisible(true);
+        tfAddrTambol.setVisible(true);
+        tfAddrRoad.setVisible(true);
+        tfAddrNumber.setVisible(true);
+
+        //makes the Thai TextFields invisible
+        tfTHAddrProvince.setVisible(false);
+        tfTHAddrAmpher.setVisible(false);
+        tfTHAddrTambol.setVisible(false);
+        tfTHAddrRoad.setVisible(false);
+        tfTHAddrNumber.setVisible(false);
+    }
+
+    @FXML
+    void enableTextFieldThai(ActionEvent ae)
+    {
+        //makes the English TextFields invisible
+        tfAddrProvince.setVisible(false);
+        tfAddrAmpher.setVisible(false);
+        tfAddrTambol.setVisible(false);
+        tfAddrRoad.setVisible(false);
+        tfAddrNumber.setVisible(false);
+
+        //makes the Thai TextFields visible
+        tfTHAddrProvince.setVisible(true);
+        tfTHAddrAmpher.setVisible(true);
+        tfTHAddrTambol.setVisible(true);
+        tfTHAddrRoad.setVisible(true);
+        tfTHAddrNumber.setVisible(true);
+    }
+
+    private void clearAddrTextFields()
+    {
+        tfAddrProvince.setText("");
+        tfAddrAmpher.setText("");
+        tfAddrTambol.setText("");
+        tfAddrRoad.setText("");
+        tfAddrNumber.setText("");
+
+        tfTHAddrProvince.setText("");
+        tfTHAddrAmpher.setText("");
+        tfTHAddrTambol.setText("");
+        tfTHAddrRoad.setText("");
+        tfTHAddrNumber.setText("");
     }
 
 }
