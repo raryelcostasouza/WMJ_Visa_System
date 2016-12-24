@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePrintedDocStock">
+<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePrintedDocStock">
    <children>
       <TitledPane collapsible="false" text="Update Stock">
          <content>
@@ -54,9 +54,9 @@
                   <TableView fx:id="tvOverview">
                     <columns>
                       <TableColumn editable="false" minWidth="-1.0" prefWidth="90.0" sortable="false" text="Monastic" />
-                        <TableColumn fx:id="tcSignedPhotocopies" editable="false" minWidth="-1.0" prefWidth="140.0" sortable="false" text="Signed Photocopies" />
-                      <TableColumn fx:id="tcNSigned90DForms" editable="false" minWidth="-1.0" prefWidth="140.0" sortable="false" text="Signed 90 Day Forms" />
-                        <TableColumn fx:id="tcNPrintedPhotos" editable="false" minWidth="-1.0" prefWidth="110.0" sortable="false" text="Printed Photos" />
+                        <TableColumn fx:id="tcSignedPhotocopies" editable="false" minWidth="-1.0" prefWidth="150.0" sortable="false" text="Signed Photocopies" />
+                      <TableColumn fx:id="tcNSigned90DForms" editable="false" minWidth="-1.0" prefWidth="150.0" sortable="false" text="Signed 90 D Forms" />
+                        <TableColumn fx:id="tcNPrintedPhotos" editable="false" minWidth="-1.0" prefWidth="120.0" sortable="false" text="Printed Photos" />
                     </columns>
                   </TableView>
                </children>
