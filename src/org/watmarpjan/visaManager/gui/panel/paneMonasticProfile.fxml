@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
+<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
@@ -145,7 +145,7 @@
                 </VBox>
             </content>
         </TitledPane>
-        <TitledPane animated="false" collapsible="false" text="Occupation/Certificate" VBox.vgrow="NEVER">
+        <TitledPane animated="false" collapsible="false" text="Occupation/Education" VBox.vgrow="NEVER">
             <content>
                 <VBox>
                     <children>
