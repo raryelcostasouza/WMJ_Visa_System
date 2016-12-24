@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -52,6 +53,9 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
 
     @FXML
     private DatePicker dpNext90DayNotice;
+    
+    @FXML
+    private CheckBox cbUsedSignedForm;
 
     @FXML
     private TableView<EntryUpdate90DayNotice> tvDueNotice90Day;
@@ -156,6 +160,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
 
         tvDueNotice90Day.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
         tvDueNotice90Day.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("strDueDate"));
+        tvDueNotice90Day.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("strNPrinted90DForms"));
 
         tvReceipts.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>(""));
         tvReceipts.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("receiptDate"));
@@ -301,6 +306,7 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
         tvDueNotice90Day.getItems().addAll(al);
 
         dpNext90DayNotice.setValue(LocalDate.now().plusDays(89));
+        cbUsedSignedForm.setSelected(false);
 
         loadListVisaManager();
     }
@@ -392,6 +398,12 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
 
                 p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(e.getIdProfile());
                 p.setNext90DayNotice(dNextNotice);
+                
+                //if a signed form was used, decrease the count on stock
+                if (cbUsedSignedForm.isSelected())
+                {
+                    p.setNSigned90dForms(p.getNSigned90dForms()-1);
+                }
                 ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
             }
         }

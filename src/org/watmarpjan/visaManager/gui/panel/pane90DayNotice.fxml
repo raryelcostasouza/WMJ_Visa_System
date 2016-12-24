@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Hyperlink?>
@@ -22,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
   <tabs>
     <Tab text="Register 90 day Notice">
          <content>
@@ -49,21 +50,27 @@
                      <content>
                         <BorderPane>
                            <top>
-                              <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                              <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label text="Next 90 Day Notice at:" />
-                                    <DatePicker fx:id="dpNext90DayNotice" />
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Next 90 Day Notice at:" />
+                                          <DatePicker fx:id="dpNext90DayNotice" />
+                                       </children>
+                                    </HBox>
+                                    <CheckBox fx:id="cbUsedSignedForm" mnemonicParsing="false" text="Used signed form" />
                                  </children>
-                              </HBox>
+                              </VBox>
                            </top>
                            <center>
-                              <HBox alignment="CENTER" prefHeight="400.0" BorderPane.alignment="CENTER">
+                              <HBox alignment="CENTER">
                                  <children>
-                                    <TableView fx:id="tvDueNotice90Day" editable="true" prefHeight="100.0" prefWidth="390.0">
+                                    <TableView fx:id="tvDueNotice90Day" editable="true">
                                        <columns>
-                                          <TableColumn fx:id="tcSelected" prefWidth="65.0" text="Selection" />
-                                          <TableColumn editable="false" prefWidth="159.0" text="Monastic" />
-                                          <TableColumn editable="false" minWidth="0.0" prefWidth="164.0" resizable="false" text="90 Day Notice Due Date" />
+                                          <TableColumn fx:id="tcSelected" minWidth="-1.0" text="Selection" />
+                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="159.0" text="Monastic" />
+                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="185.0" resizable="false" text="90 Day Notice Due Date" />
+                                          <TableColumn minWidth="-1.0" prefWidth="150.0" text="Signed 90D Forms" />
                                        </columns>
                                     </TableView>
                                  </children>
