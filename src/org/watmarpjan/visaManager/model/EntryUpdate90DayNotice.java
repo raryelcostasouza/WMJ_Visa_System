@@ -22,10 +22,11 @@ public class EntryUpdate90DayNotice
     private final SimpleStringProperty profileNickname;
     private final SimpleStringProperty strDueDate;
     private final BooleanProperty selected;
+    private final SimpleStringProperty strNPrinted90DForms;
     private final Integer idProfile;
     private final Date dueDate;
 
-    public EntryUpdate90DayNotice(Integer idProfile, String profileNickname, Date dueDate)
+    public EntryUpdate90DayNotice(Integer idProfile, String profileNickname, Date dueDate, Integer nPrinted90DForms)
     {
         LocalDate ld;
 
@@ -36,6 +37,14 @@ public class EntryUpdate90DayNotice
         this.dueDate = dueDate;
         this.strDueDate = new SimpleStringProperty(ld.format(Util.DEFAULT_DATE_FORMAT));
         this.selected = new SimpleBooleanProperty(false);
+        if (nPrinted90DForms != null)
+        {
+            this.strNPrinted90DForms = new SimpleStringProperty(nPrinted90DForms +"");
+        }
+        else
+        {
+            this.strNPrinted90DForms = new SimpleStringProperty(0+"");
+        }
     }
 
     public String getProfileNickname()
@@ -46,6 +55,11 @@ public class EntryUpdate90DayNotice
     public String getStrDueDate()
     {
         return strDueDate.get();
+    }
+    
+    public String getStrNPrinted90DForms()
+    {
+        return strNPrinted90DForms.get();
     }
 
     public Date getDueDate()
