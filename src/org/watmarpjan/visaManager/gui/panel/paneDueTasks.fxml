@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneDueTasks">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneDueTasks">
     <center>
         <TabPane fx:id="rootPane" prefHeight="850.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -45,7 +45,7 @@
                                                                         <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="394.0" text="Acceptable Dates">
+                                                                        <TableColumn minWidth="-1.0" prefWidth="400.0" text="Acceptable Dates">
                                                                             <columns>
                                                                                 <TableColumn minWidth="-Infinity" prefWidth="90.0" text="First Day" />
                                                                                 <TableColumn prefWidth="110.0" text="Last Day Online" />
