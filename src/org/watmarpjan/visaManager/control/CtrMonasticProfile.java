@@ -380,7 +380,11 @@ public class CtrMonasticProfile extends AbstractControllerDB
         String hql;
         hql = "select new org.watmarpjan.visaManager.model.EntryPrintedDocStock(p.nickname, p.nSigned90dForms, p.signedPhotocopies, p.nPrintedPhotos)"
                 + " from MonasticProfile p "
-                + " where p.status <> 'INACTIVE'";
+                + " where p.status <> 'INACTIVE'"
+                + " order by "
+                + " p.bhikkhuOrdDate asc nulls last"
+                + " p.samaneraOrdDate asc nulls last,"
+                + " p.pahkahwOrdDate asc nulls last";
 
         return (ArrayList<EntryPrintedDocStock>) ctrDB.getSession().createQuery(hql).getResultList();
     }
