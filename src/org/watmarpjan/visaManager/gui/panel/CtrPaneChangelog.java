@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -110,12 +111,8 @@ public class CtrPaneChangelog extends AbstractChildPaneController
     private BlockMonasticSelection csNewBysuddhiScans;
 
     @FXML
-    private TitledPane tpUpdateMonastery;
-    @FXML
-    private TreeView<String> tvUpdateMonastery;
-    @FXML
-    private BlockMonasticSelection csUpdateMonastery;
-
+    private CheckBox cbUpdateMonastery;
+    
     @FXML
     private TextArea taOptionalComment;
 
@@ -136,7 +133,6 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         csNewPassportScans = new BlockMonasticSelection(tvNewPassportScans, tpNewPassportScans);
         csTM30 = new BlockMonasticSelection(tvTM30, tpTM30);
 
-        csUpdateMonastery = new BlockMonasticSelection(tvUpdateMonastery, tpUpdateMonastery);
         csUpdatedBysuddhi = new BlockMonasticSelection(tvUpdatedBysuddhi, tpUpdatedBysuddhi);
         csUpdatedMonastic = new BlockMonasticSelection(tvUpdatedMonastic, tpUpdatedMonastic);
         csUpdatedPassport = new BlockMonasticSelection(tvUpdatedPassport, tpUpdatedPassport);
@@ -149,7 +145,6 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         listChangelogSections.add(csNewBysuddhiScans);
         listChangelogSections.add(csNewPassportScans);
         listChangelogSections.add(csTM30);
-        listChangelogSections.add(csUpdateMonastery);
         listChangelogSections.add(csUpdatedBysuddhi);
         listChangelogSections.add(csUpdatedMonastic);
         listChangelogSections.add(csUpdatedPassport);
@@ -172,12 +167,12 @@ public class CtrPaneChangelog extends AbstractChildPaneController
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csNewBysuddhiScans);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csNewPassportScans);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csTM30);
-        ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdateMonastery);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedBysuddhi);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedMonastic);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedPassport);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csVisaExtension);
 
+        cbUpdateMonastery.setSelected(false);
         taOptionalComment.clear();
         taChangelogPreview.setText(CtrFileOperation.loadChangelog());
     }
@@ -221,9 +216,13 @@ public class CtrPaneChangelog extends AbstractChildPaneController
 
         if (validateFields())
         {
+            //timestamp
             logLine = LocalDateTime.now().format(Util.CHANGELOG_DATE_TIME_FORMAT_) + " ";
+            
+            //user visa manager
             logLine += cbMonastic.getValue() + ":";
 
+            //loop to generate the log for all log sections
             for (BlockMonasticSelection objChangelogSection : listChangelogSections)
             {
                 logSection = generateChangelogSection(objChangelogSection);
@@ -233,6 +232,11 @@ public class CtrPaneChangelog extends AbstractChildPaneController
                 }
             }
 
+            if (cbUpdateMonastery.isSelected())
+            {
+                logLine += "\n         "+ cbUpdateMonastery.getText()+".";
+            }
+            
             //if there is a optional comment
             if (!taOptionalComment.getText().equals(""))
             {
