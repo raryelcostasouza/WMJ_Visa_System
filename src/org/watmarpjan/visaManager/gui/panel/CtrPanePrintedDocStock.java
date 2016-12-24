@@ -51,6 +51,42 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
 
     private ArrayList listFields;
 
+    private Callback<TableColumn<EntryPrintedDocStock, String>, TableCell<EntryPrintedDocStock, String>> stringCellFactory = new Callback<TableColumn<EntryPrintedDocStock, String>, TableCell<EntryPrintedDocStock, String>>()
+    {
+        @Override
+        public TableCell call(final TableColumn<EntryPrintedDocStock, String> param)
+        {
+            final TableCell<EntryPrintedDocStock, String> cell = new TableCell<EntryPrintedDocStock, String>()
+            {
+                @Override
+                protected void updateItem(String item, boolean empty)
+                {
+                    super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+
+                    if (item == null || empty)
+                    {
+                        setText(null);
+                    }
+                    else
+                    {
+                        setText(item);
+                        if (item.equals(EntryPrintedDocStock.STR_MISSING))
+                        {
+                            setTextFill(Color.RED);
+                        }
+                        else
+                        {
+                            setTextFill(Color.BLACK);
+                        }
+                    }
+
+                }
+            };
+            return cell;
+
+        }
+    };
+
     @Override
     public void init()
     {
@@ -69,38 +105,6 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
 
     private void initTableView()
     {
-        Callback<TableColumn<EntryPrintedDocStock, String>, TableCell<EntryPrintedDocStock, String>> stringCellFactory = new Callback<TableColumn<EntryPrintedDocStock, String>, TableCell<EntryPrintedDocStock, String>>()
-        {
-            @Override
-            public TableCell call(final TableColumn<EntryPrintedDocStock, String> param)
-            {
-                final TableCell<EntryPrintedDocStock, String> cell = new TableCell<EntryPrintedDocStock, String>()
-                {
-                    @Override
-                    protected void updateItem(String item, boolean empty)
-                    {
-                        super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
-
-                        if (item == null || empty)
-                        {
-                            setText(null);
-                        }
-                        else
-                        {
-                            setText(item);
-                            if (item.equals(EntryPrintedDocStock.STR_MISSING))
-                            {
-                                setTextFill(Color.RED);
-                            }
-                        }
-
-                    }
-                };
-                return cell;
-
-            }
-        };
-
         final Callback<TableColumn<EntryPrintedDocStock, Boolean>, TableCell<EntryPrintedDocStock, Boolean>> booleanCellFactory = CheckBoxTableCell.forTableColumn(tcSignedPhotocopies);
 
         tcNSigned90DForms.setCellFactory(stringCellFactory);
