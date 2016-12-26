@@ -22,7 +22,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     private final SimpleStringProperty strDueDate;
     private final SimpleStringProperty weekDayDueDate;
     private final SimpleStringProperty remainingTime;
-    
+
     protected LocalDate ldDueDate;
 
     public EntryDueTask(String profileNickname, Date dueDate)
@@ -46,15 +46,21 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
         if (remainingTime.getYears() != 0)
         {
             str += remainingTime.getYears() + " year(s) ";
-        } else if (remainingTime.getMonths() != 0)
+        }
+
+        if (remainingTime.getMonths() != 0)
         {
             str += remainingTime.getMonths() + " month(s) ";
         }
 
-        if (remainingTime.getDays() != 0)
+        if (remainingTime.getYears() == 0 || remainingTime.getMonths() == 0)
         {
-            str += remainingTime.getDays() + " day(s)";
+            if (remainingTime.getDays() != 0)
+            {
+                str += remainingTime.getDays() + " day(s)";
+            }
         }
+
         return str;
     }
 
@@ -62,7 +68,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     {
         return profileNickname.get();
     }
-    
+
     protected void setProfileNickname(String pNewNickname)
     {
         profileNickname.set(pNewNickname);
@@ -87,7 +93,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     {
         return ldDueDate;
     }
-    
+
     @Override
     public int compareTo(EntryDueTask objEntryDueTask)
     {
