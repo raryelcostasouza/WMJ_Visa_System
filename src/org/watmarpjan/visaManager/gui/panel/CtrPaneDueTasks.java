@@ -130,6 +130,7 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
                     if (item == null || empty)
                     {
                         setText(null);
+                        setTextFill(Color.BLACK);
                     }
                     else
                     {
