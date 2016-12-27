@@ -354,7 +354,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.Notice90DayTaskEntry(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
                 + " from MonasticProfile p "
                 + " where p.status = 'THAILAND' and"
                 + " p.next90DayNotice is not null "
@@ -394,7 +394,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         String hql1, hql2;
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry(p.nickname, max(vext.expiryDate))"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaOld(p.nickname, max(vext.expiryDate))"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where p.status = '" + currentLocation + "'"
@@ -403,7 +403,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.VisaExtTaskEntry(p.nickname, p.visaExpiryDate)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaNew(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
                 + " where p.status = '" + currentLocation + "'"
                 + " and p.visaExpiryDate is not null"
@@ -424,7 +424,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.PassportRenewTaskEntry(p.nickname, p.passportExpiryDate)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskRenewPassport(p.nickname, p.passportExpiryDate)"
                 + " from MonasticProfile p "
                 + " where p.status = '" + currentLocation + "' and"
                 + " p.passportExpiryDate is not null "
