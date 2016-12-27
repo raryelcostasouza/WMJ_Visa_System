@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
@@ -24,7 +25,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
@@ -39,7 +39,6 @@ import javafx.stage.WindowEvent;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.gui.util.CtrFieldChangeListener;
-import org.watmarpjan.visaManager.model.ResultDialogSelectScan.AbstractResultDialogSelectScan;
 
 /**
  *
@@ -149,8 +148,6 @@ public class CtrGUIMain
     private CtrPanePrintedDocStock ctrPanePrintedDocStock;
     @FXML
     private VBox panePrintedDocStock;
-
-    private Dialog<AbstractResultDialogSelectScan> dialogSelectExtraScan;
 
     @FXML
     private BorderPane centerPane;
@@ -293,7 +290,7 @@ public class CtrGUIMain
 
     private void initGUIAfterFXMLLoad()
     {
-        
+
         Platform.runLater(new Runnable()
         {
             @Override
@@ -306,7 +303,7 @@ public class CtrGUIMain
                 initChildControllers();
                 actionDueTasksButton(null);
                 System.out.println("LoadTime: " + Duration.between(Init.INSTANT_INIT_START, Instant.now()));
-                
+
                 primaryStage = Init.MAIN_STAGE;
                 primaryStage.setScene(mainScene);
                 primaryStage.setTitle("WMJ Visa System");
@@ -364,7 +361,7 @@ public class CtrGUIMain
             ctrPaneMonasticProfile = loader.getController();
             initChildPane(ctrPaneMonasticProfile);
 
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -403,7 +400,7 @@ public class CtrGUIMain
             ctrPanePassport = loader.getController();
 
             initChildPane(ctrPanePassport);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -443,7 +440,7 @@ public class CtrGUIMain
             System.out.println("hereLoaded");
 
             initChildPane(ctrPaneBysuddhi);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -459,7 +456,7 @@ public class CtrGUIMain
             paneMonastery = loader.load();
             ctrPaneMonastery = loader.getController();
             initChildPane(ctrPaneMonastery);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -476,7 +473,7 @@ public class CtrGUIMain
             ctrPaneUpajjhaya = loader.getController();
 
             initChildPane(ctrPaneUpajjhaya);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -492,7 +489,7 @@ public class CtrGUIMain
             paneVisaExt = loader.load();
             ctrPaneVisaExt = loader.getController();
             initChildPane(ctrPaneVisaExt);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -507,7 +504,7 @@ public class CtrGUIMain
             paneReEntry = loader.load();
             ctrPaneReEntry = loader.getController();
             initChildPane(ctrPaneReEntry);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -523,7 +520,7 @@ public class CtrGUIMain
             paneAddRenewPassport = loader.load();
             ctrPaneAddRenewPassport = loader.getController();
             initChildPane(ctrPaneAddRenewPassport);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -538,7 +535,7 @@ public class CtrGUIMain
             paneAddChangeVisa = loader.load();
             ctrPaneAddChangeVisa = loader.getController();
             initChildPane(ctrPaneAddChangeVisa);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -554,7 +551,7 @@ public class CtrGUIMain
             pane90DayNotice = loader.load();
             ctrPane90DayNotice = loader.getController();
             initChildPane(ctrPane90DayNotice);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -576,7 +573,7 @@ public class CtrGUIMain
                     listPaneControllers.add(ctrPaneDueTasks);
 
                     flagFXMLLoaded[0].setValue(Boolean.TRUE);
-                } catch (Exception ex)
+                } catch (IOException ex)
                 {
                     CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
                 }
@@ -603,7 +600,7 @@ public class CtrGUIMain
                     listPaneControllers.add(ctrPaneEditSave);
 
                     flagFXMLLoaded[1].setValue(Boolean.TRUE);
-                } catch (Exception ex)
+                } catch (IOException ex)
                 {
                     CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
                 }
@@ -630,7 +627,7 @@ public class CtrGUIMain
                     listPaneControllers.add(ctrPaneMonasticSelection);
 
                     flagFXMLLoaded[2].setValue(Boolean.TRUE);
-                } catch (Exception ex)
+                } catch (IOException ex)
                 {
                     CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
                 }
@@ -650,7 +647,7 @@ public class CtrGUIMain
             paneTM30NotifResidence = loader.load();
             ctrPaneTM30NotifResidence = loader.getController();
             initChildPane(ctrPaneTM30NotifResidence);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -667,7 +664,7 @@ public class CtrGUIMain
             ctrPaneChangelog = loader.getController();
             initChildPane(ctrPaneChangelog);
 
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -683,7 +680,7 @@ public class CtrGUIMain
             paneConvert = loader.load();
             ctrPaneConvert = loader.getController();
             initChildPane(ctrPaneConvert);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -698,7 +695,7 @@ public class CtrGUIMain
             panePhotoPagePrint = loader.load();
             ctrPanePhotoPagePrint = loader.getController();
             initChildPane(ctrPanePhotoPagePrint);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -713,7 +710,7 @@ public class CtrGUIMain
             panePrintedDocStock = loader.load();
             ctrPanePrintedDocStock = loader.getController();
             initChildPane(ctrPanePrintedDocStock);
-        } catch (Exception ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
@@ -986,7 +983,7 @@ public class CtrGUIMain
     {
         checkUnsavedChanges();
 
-        if(ctrPaneConvert == null)
+        if (ctrPaneConvert == null)
         {
             initPaneConvert();
         }
@@ -1000,7 +997,7 @@ public class CtrGUIMain
     void actionButtonPhotoPagePrint(ActionEvent ae)
     {
         checkUnsavedChanges();
-        
+
         if (ctrPanePhotoPagePrint == null)
         {
             initPanePhotoPagePrinting();
@@ -1016,7 +1013,7 @@ public class CtrGUIMain
     void actionButtonPrintedDocStock(ActionEvent ae)
     {
         checkUnsavedChanges();
-        
+
         if (ctrPanePrintedDocStock == null)
         {
             initPanePrintedDocStock();
@@ -1041,11 +1038,6 @@ public class CtrGUIMain
     public CtrPaneMonasticSelection getCtrPaneSelection()
     {
         return ctrPaneMonasticSelection;
-    }
-
-    public Dialog getDialogSelectExtraScan()
-    {
-        return dialogSelectExtraScan;
     }
 
     public CtrPaneMonasticProfile getPaneMonasticProfileController()
