@@ -69,7 +69,7 @@
                                        <columns>
                                           <TableColumn fx:id="tcSelected" minWidth="-1.0" text="Selection" />
                                           <TableColumn editable="false" minWidth="-1.0" prefWidth="159.0" text="Monastic" />
-                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="185.0" resizable="false" text="90 Day Notice Due Date" />
+                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="100.0" resizable="false" text="Due Date" />
                                           <TableColumn minWidth="-1.0" prefWidth="150.0" text="Signed 90D Forms" />
                                        </columns>
                                     </TableView>

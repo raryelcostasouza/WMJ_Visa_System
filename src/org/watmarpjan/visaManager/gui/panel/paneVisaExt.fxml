@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneVisaExt">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneVisaExt">
   <tabs>
     <Tab text="Forms">
          <content>
@@ -121,10 +121,10 @@
                      <content>
                         <HBox alignment="CENTER">
                            <children>
-                              <TableView fx:id="tvExtensions" editable="true" prefHeight="200.0">
+                              <TableView fx:id="tvExtensions" editable="true">
                                 <columns>
                                   <TableColumn editable="false" prefWidth="150.0" sortable="false" text="Extension Number" />
-                                  <TableColumn editable="false" prefWidth="150.0" sortable="false" text="Expiry Date" />
+                                  <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Expiry" />
                                     <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Remove" />
                                 </columns>
                               </TableView>

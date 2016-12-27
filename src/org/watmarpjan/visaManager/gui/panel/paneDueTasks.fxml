@@ -31,7 +31,7 @@
                                     <content>
                                         <VBox fx:id="vPaneDueTasksTH">
                                             <children>
-                                                <TitledPane fx:id="tPAux90DayTH" animated="false" collapsible="false" text="90 Day Notice">
+                                                <TitledPane fx:id="tPAux90DayTH" text="90 Day Notice">
                                                     <font>
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
@@ -45,11 +45,12 @@
                                                                         <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
+                                                      <TableColumn prefWidth="60.0" text="Online" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="400.0" text="Acceptable Dates">
                                                                             <columns>
-                                                                                <TableColumn minWidth="-Infinity" prefWidth="90.0" text="First Day" />
-                                                                                <TableColumn prefWidth="110.0" text="Last Day Online" />
-                                                                                <TableColumn prefWidth="140.0" text="Last Day Office" />
+                                                                                <TableColumn fx:id="tcFirstDay" minWidth="-1.0" prefWidth="90.0" text="First Day" />
+                                                                                <TableColumn fx:id="tcLastDayOnline" minWidth="-1.0" prefWidth="110.0" text="Last Day Online" />
+                                                                                <TableColumn fx:id="tcLastDayOffice" minWidth="-1.0" prefWidth="140.0" text="Last Day Office" />
                                                                             </columns>
                                                                         </TableColumn>
                                                                     </columns>
@@ -58,7 +59,7 @@
                                                         </HBox>
                                                     </content>
                                                 </TitledPane>
-                                                <TitledPane fx:id="tPAuxVisaExtTH" animated="false" collapsible="false" text="Visa Extension">
+                                                <TitledPane fx:id="tPAuxVisaExtTH" text="Visa Extension">
                                                     <font>
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
@@ -72,11 +73,11 @@
                                                                         <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
-                                                                        <TableColumn prefWidth="260.0" text="Begin processing">
+                                                                        <TableColumn minWidth="-1.0" prefWidth="400.0" text="Begin processing">
                                                                             <columns>
-                                                                                <TableColumn prefWidth="85.0" text="Prawat" />
-                                                                                <TableColumn prefWidth="85.0" text="Samnakput" />
-                                                                                <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Immigration" />
+                                                                                <TableColumn minWidth="-1.0" prefWidth="90.0" text="Prawat" />
+                                                                                <TableColumn minWidth="-1.0" prefWidth="105.0" text="Samnakput" />
+                                                                                <TableColumn minWidth="-1.0" prefWidth="125.0" text="Immigration" />
                                                                             </columns>
                                                                         </TableColumn>
                                                                     </columns>
@@ -85,7 +86,7 @@
                                                         </HBox>
                                                     </content>
                                                 </TitledPane>
-                                                <TitledPane fx:id="tPAuxPsptTH" animated="false" collapsible="false" text="Passport Renewal">
+                                                <TitledPane fx:id="tPAuxPsptTH" text="Passport Renewal">
                                                     <font>
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
@@ -128,7 +129,7 @@
                                     <content>
                                         <VBox alignment="CENTER">
                                             <children>
-                                                <TitledPane collapsible="false" text="Visa Extension">
+                                                <TitledPane text="Visa Extension">
                                                     <content>
                                                         <HBox alignment="TOP_CENTER">
                                                             <children>
@@ -155,7 +156,7 @@
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
                                                 </TitledPane>
-                                                <TitledPane animated="false" collapsible="false" text="Passport Renewal">
+                                                <TitledPane text="Passport Renewal">
                                                     <content>
                                                         <HBox alignment="TOP_CENTER">
                                                             <children>
