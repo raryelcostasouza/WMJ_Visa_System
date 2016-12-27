@@ -115,7 +115,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
                 final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>()
                 {
 
-                    final Button btn = new Button("Remove");
+                    final Button btn = new Button("X");
 
                     @Override
                     public void updateItem(String item, boolean empty)
