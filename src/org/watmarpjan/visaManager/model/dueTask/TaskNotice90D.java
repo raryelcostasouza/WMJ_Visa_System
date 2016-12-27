@@ -7,6 +7,8 @@ package org.watmarpjan.visaManager.model.dueTask;
 
 import java.time.LocalDate;
 import java.util.Date;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -14,25 +16,28 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class Notice90DayTaskEntry extends EntryDueTask
+public class TaskNotice90D extends EntryDueTask
 {
-    private SimpleStringProperty firstDay;
+
+    private final SimpleBooleanProperty onlineNoticeAccepted;
+    private final SimpleStringProperty firstDay;
     private final SimpleStringProperty lastDayOnline;
     private final SimpleStringProperty lastDayOffice;
 
-    public Notice90DayTaskEntry(String profileNickname, Date dDueDate, Boolean isOnlineNoticeAccepted)
+    public TaskNotice90D(String profileNickname, Date dDueDate, Boolean isOnlineNoticeAccepted)
     {
         super(profileNickname, dDueDate);
         LocalDate ldFirstDay, ldLastDayOnline, ldLastDayOffice;
-        
+
         //adds the * mark indicating that the 90 day online is accepted
-        if (isOnlineNoticeAccepted != null)
+        if (isOnlineNoticeAccepted == null || !isOnlineNoticeAccepted)
         {
-            if (isOnlineNoticeAccepted.booleanValue())
-            {
-                setProfileNickname(getProfileNickname() + " *");
-            }
-        }        
+            onlineNoticeAccepted = new SimpleBooleanProperty(false);
+        }
+        else
+        {
+            onlineNoticeAccepted = new SimpleBooleanProperty(true);
+        }
 
         ldFirstDay = ldDueDate.minusDays(14);
         ldLastDayOnline = ldDueDate.minusDays(7);
@@ -55,6 +60,16 @@ public class Notice90DayTaskEntry extends EntryDueTask
     public String getLastDayOffice()
     {
         return lastDayOffice.get();
+    }
+
+    public Boolean getOnlineNoticeAccepted()
+    {
+        return onlineNoticeAccepted.get();
+    }
+    
+    public BooleanProperty onlineNoticeAcceptedProperty()
+    {
+        return onlineNoticeAccepted;
     }
 
 }

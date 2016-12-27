@@ -14,11 +14,11 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class PassportRenewTaskEntry extends EntryDueTask
+public class TaskRenewPassport extends EntryDueTask
 {
     private SimpleStringProperty beginProcessingBy;
     
-    public PassportRenewTaskEntry(String profileNickname, Date dDueDate)
+    public TaskRenewPassport(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
 

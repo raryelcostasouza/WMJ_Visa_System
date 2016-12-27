@@ -12,26 +12,21 @@ import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
- * @author WMJ_user
+ * @author pm.dell
  */
-public class VisaExtTaskEntry extends EntryDueTask
+public class TaskExtendVisaGeneric extends EntryDueTask
 {
 
-    private final SimpleStringProperty prawat;
-    private final SimpleStringProperty samnakput;
-    private final SimpleStringProperty immigration;
-    
-    public VisaExtTaskEntry(String profileNickname, Date dDueDate)
+    private SimpleStringProperty prawat;
+    private SimpleStringProperty samnakput;
+    private SimpleStringProperty immigration;
+
+    public TaskExtendVisaGeneric(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
-        LocalDate ldPrawat, ldSamnakput, ldImmigration;
+        LocalDate ldImmigration;
 
-        ldPrawat = ldDueDate.minusMonths(6);
-        ldSamnakput = ldDueDate.minusMonths(3);
         ldImmigration = ldDueDate.minusMonths(1);
-        
-        prawat = new SimpleStringProperty(ldPrawat.format(Util.DEFAULT_DATE_FORMAT));
-        samnakput = new SimpleStringProperty(ldSamnakput.format(Util.DEFAULT_DATE_FORMAT));
         immigration = new SimpleStringProperty(ldImmigration.format(Util.DEFAULT_DATE_FORMAT));
     }
 
@@ -40,9 +35,19 @@ public class VisaExtTaskEntry extends EntryDueTask
         return prawat.get();
     }
 
+    protected void setPrawat(LocalDate ldPrawat)
+    {
+        this.prawat = new SimpleStringProperty(ldPrawat.format(Util.DEFAULT_DATE_FORMAT));
+    }
+
     public String getSamnakput()
     {
         return samnakput.get();
+    }
+
+    protected void setSamnakput(LocalDate ldSNP)
+    {
+        this.samnakput = new SimpleStringProperty(ldSNP.format(Util.DEFAULT_DATE_FORMAT));
     }
 
     public String getImmigration()
