@@ -105,11 +105,9 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
 
     private void initTableView()
     {
-        final Callback<TableColumn<EntryPrintedDocStock, Boolean>, TableCell<EntryPrintedDocStock, Boolean>> booleanCellFactory = CheckBoxTableCell.forTableColumn(tcSignedPhotocopies);
-
         tcNSigned90DForms.setCellFactory(stringCellFactory);
         tcNPrintedPhotos.setCellFactory(stringCellFactory);
-        tcSignedPhotocopies.setCellFactory(booleanCellFactory);
+        tcSignedPhotocopies.setCellFactory(CheckBoxTableCell.forTableColumn(tcSignedPhotocopies));
 
         tvOverview.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("monasticName"));
         tcSignedPhotocopies.setCellValueFactory(new PropertyValueFactory<EntryPrintedDocStock, Boolean>("signedPhotocopies"));
