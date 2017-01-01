@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
@@ -62,7 +63,8 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     private TableView<EntryWorkflowVisaExt> tvOverview;
 
     @FXML
-    private TableColumn<EntryWorkflowVisaExt, String> tcSNP;
+    private TableColumn<EntryWorkflowVisaExt, String> tcDueDate;
+
     @FXML
     private TableColumn<EntryWorkflowVisaExt, String> tcSNPPrawat;
     @FXML
@@ -81,12 +83,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     @FXML
     private TableColumn<EntryWorkflowVisaExt, String> tcIMMPhotocopies;
 
-    @FXML
-    private TableColumn<EntryWorkflowVisaExt, String> tcIMM;
-
     private ObservableList<String> valuesPrawat, valuesLetter, valuesApprovalSNP, valuesTM7, valuesExtraIMM, valuesPhotocopies;
-
-    private static final String STATUS_MISSING = "Missing";
 
     private Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>> prawatCellFactory = new Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>>()
     {
@@ -287,6 +284,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
 
         }
     };
+
     private Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>> extraCellFactory = new Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>>()
     {
         @Override
@@ -317,6 +315,50 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
                         else
                         {
                             setTextFill(Color.DARKGOLDENROD);
+                        }
+                    }
+
+                }
+            };
+            return cell;
+
+        }
+    };
+
+    private Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>> dueDateCellFactory = new Callback<TableColumn<EntryWorkflowVisaExt, String>, TableCell<EntryWorkflowVisaExt, String>>()
+    {
+        @Override
+        public TableCell call(final TableColumn<EntryWorkflowVisaExt, String> param)
+        {
+            final TableCell<EntryWorkflowVisaExt, String> cell = new TableCell<EntryWorkflowVisaExt, String>()
+            {
+                @Override
+                protected void updateItem(String item, boolean empty)
+                {
+                    super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+
+                    if (item == null || empty)
+                    {
+                        setText(null);
+                    }
+                    else
+                    {
+                        LocalDate objLD;
+                        int indexEntry;
+                        EntryWorkflowVisaExt objEntryWF;
+
+                        setText(item);
+                        indexEntry = getIndex();
+                        objEntryWF = tvOverview.getItems().get(indexEntry);
+                        objLD = objEntryWF.getLDDueDate();
+
+                        if (LocalDate.now().compareTo(objLD) >= 0)
+                        {
+                            setTextFill(Color.RED);
+                        }
+                        else
+                        {
+                            setTextFill(Color.BLACK);
                         }
                     }
 
@@ -398,6 +440,9 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     private void initTableView()
     {
         tvOverview.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("monastic"));
+
+        tcDueDate.setCellFactory(dueDateCellFactory);
+        tcDueDate.setCellValueFactory(new PropertyValueFactory<>("strDueDate"));
 
         tcSNPPrawat.setCellValueFactory(new PropertyValueFactory<>("snpPrawat"));
         tcSNPPrawat.setCellFactory(prawatCellFactory);
@@ -509,7 +554,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spPrawat.getValueFactory().setValue(STATUS_MISSING);
+                spPrawat.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtLetterSnp() != null)
@@ -518,7 +563,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spLetterSNP.getValueFactory().setValue(STATUS_MISSING);
+                spLetterSNP.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtPhotocopiesSnp() != null)
@@ -527,7 +572,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spPhotocopiesSNP.getValueFactory().setValue(STATUS_MISSING);
+                spPhotocopiesSNP.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtApprovalSnp() != null)
@@ -536,7 +581,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spApprovalSNP.getValueFactory().setValue(STATUS_MISSING);
+                spApprovalSNP.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtTm7() != null)
@@ -545,7 +590,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spTM7.getValueFactory().setValue(STATUS_MISSING);
+                spTM7.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtLetterImm() != null)
@@ -554,7 +599,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spLetterIMM.getValueFactory().setValue(STATUS_MISSING);
+                spLetterIMM.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if (p.getWfExtPhotocopiesImm() != null)
@@ -563,7 +608,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
             }
             else
             {
-                spPhotocopiesIMM.getValueFactory().setValue(STATUS_MISSING);
+                spPhotocopiesIMM.getValueFactory().setValue(EntryWorkflowVisaExt.STATUS_MISSING);
             }
 
             if ((p.getWfExtExtraImm() != null) && (p.getWfExtExtraImm()))
@@ -602,14 +647,14 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-            p.setWfExtPrawat(STATUS_MISSING);
-            p.setWfExtLetterSnp(STATUS_MISSING);
-            p.setWfExtPhotocopiesSnp(STATUS_MISSING);
+            p.setWfExtPrawat(EntryWorkflowVisaExt.STATUS_MISSING);
+            p.setWfExtLetterSnp(EntryWorkflowVisaExt.STATUS_MISSING);
+            p.setWfExtPhotocopiesSnp(EntryWorkflowVisaExt.STATUS_MISSING);
 
-            p.setWfExtApprovalSnp(STATUS_MISSING);
-            p.setWfExtTm7(STATUS_MISSING);
-            p.setWfExtLetterImm(STATUS_MISSING);
-            p.setWfExtPhotocopiesImm(STATUS_MISSING);
+            p.setWfExtApprovalSnp(EntryWorkflowVisaExt.STATUS_MISSING);
+            p.setWfExtTm7(EntryWorkflowVisaExt.STATUS_MISSING);
+            p.setWfExtLetterImm(EntryWorkflowVisaExt.STATUS_MISSING);
+            p.setWfExtPhotocopiesImm(EntryWorkflowVisaExt.STATUS_MISSING);
             p.setWfExtExtraImm(false);
 
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);

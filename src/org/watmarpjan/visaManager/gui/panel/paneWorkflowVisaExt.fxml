@@ -113,13 +113,14 @@
                   <TableView fx:id="tvOverview">
                     <columns>
                       <TableColumn editable="false" minWidth="-1.0" prefWidth="90.0" sortable="false" text="Monastic" />
-                      <TableColumn fx:id="tcSNP" editable="false" minWidth="-1.0" prefWidth="270.0" sortable="false" text="Samnakput">
+                        <TableColumn fx:id="tcDueDate" minWidth="-1.0" prefWidth="75.0" text="Due Date" />
+                      <TableColumn editable="false" minWidth="-1.0" prefWidth="270.0" sortable="false" text="Samnakput">
                            <columns>
                               <TableColumn fx:id="tcSNPPrawat" editable="false" minWidth="-1.0" prefWidth="120.0" sortable="false" text="Prawat" />
                               <TableColumn fx:id="tcSNPLetter" editable="false" minWidth="-1.0" prefWidth="120.0" sortable="false" text="Letter SNP" />
                               <TableColumn fx:id="tcSNPPhotocopies" editable="false" minWidth="-1.0" prefWidth="120.0" sortable="false" text="Photocopies" />
                            </columns></TableColumn>
-                        <TableColumn fx:id="tcIMM" editable="false" minWidth="-1.0" prefWidth="255.0" sortable="false" text="Immigration">
+                        <TableColumn editable="false" minWidth="-1.0" prefWidth="255.0" sortable="false" text="Immigration">
                            <columns>
                               <TableColumn fx:id="tcIMMApprovalSNP" prefWidth="130.0" text="Approval Letter SNP" />
                               <TableColumn fx:id="tcIMMTM7" prefWidth="75.0" text="TM7" />

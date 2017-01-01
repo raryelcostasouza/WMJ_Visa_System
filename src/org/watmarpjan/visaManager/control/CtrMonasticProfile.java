@@ -395,18 +395,36 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
     public ArrayList<EntryWorkflowVisaExt> loadListWorkflowVisaExt()
     {
-        String hql;
-        hql = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p.nickname, p.wfExtPrawat, p.wfExtLetterSnp, p.wfExtPhotocopiesSnp, "
-                + "p.wfExtApprovalSnp, p.wfExtTm7, p.wfExtLetterImm, p.wfExtPhotocopiesImm, p.wfExtExtraImm)"
-                + " from MonasticProfile p "
-                + " where p.status <> 'INACTIVE' and"
-                + " p.wfExtPrawat <> 'Missing'"
-                + " order by "
-                + " p.bhikkhuOrdDate asc nulls last"
-                + " p.samaneraOrdDate asc nulls last,"
-                + " p.pahkahwOrdDate asc nulls last";
+        String hql1, hql2;
+        ArrayList<EntryWorkflowVisaExt> listWF, listWF2;
 
-        return (ArrayList<EntryWorkflowVisaExt>) ctrDB.getSession().createQuery(hql).getResultList();
+        //with prawat status different than MISSING
+        hql1 = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p, max(vext.expiryDate))"
+                + " from MonasticProfile p "
+                + " inner join p.visaExtensionSet vext"
+                + " where p.status <> 'INACTIVE' "
+                + " and p.wfExtPrawat <> 'Missing'"
+                + " and size(p.visaExtensionSet) > 0"
+                + " group by p"
+                + " order by max(vext.expiryDate)";
+
+        listWF = (ArrayList<EntryWorkflowVisaExt>) ctrDB.getSession().createQuery(hql1).getResultList();
+
+        //for monastics with NO visa extensions
+        hql2 = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p.nickname, p.wfExtPrawat, p.wfExtLetterSnp, p.wfExtPhotocopiesSnp, "
+                + "p.wfExtApprovalSnp, p.wfExtTm7, p.wfExtLetterImm, p.wfExtPhotocopiesImm, p.wfExtExtraImm, p.visaExpiryDate)"
+                + " from MonasticProfile p "
+                + " where p.status <> 'INACTIVE' "
+                + " and p.wfExtPrawat <> 'Missing'"
+                + " and size(p.visaExtensionSet) = 0"
+                + " and p.visaExpiryDate is not null"
+                + " order by p.visaExpiryDate";
+
+        listWF.addAll(ctrDB.getSession().createQuery(hql2).getResultList());
+        listWF.sort(null);
+
+        return listWF;
+
     }
 
     public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
@@ -414,6 +432,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         String hql1, hql2;
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
+        //for monastics whose visa has ALREADY been extended
         hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaOld(p.nickname, max(vext.expiryDate))"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
@@ -423,6 +442,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
+        //for monastics whose visa has NOT BEEN extended
         hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaNew(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
                 + " where p.status = '" + currentLocation + "'"
