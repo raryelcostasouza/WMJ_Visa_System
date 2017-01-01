@@ -23,7 +23,7 @@ public class Init extends Application
     public static Stage MAIN_STAGE;
     public static HostServices HOST_SERVICES;
     public static Application APP;
-    
+
     
     public static Instant INSTANT_INIT_START = Instant.now();
 
@@ -50,14 +50,14 @@ public class Init extends Application
         {
             MAIN_STAGE = primaryStage;
             HOST_SERVICES = getHostServices();
-            
+
             loadFXMLRootPanel();
         } catch (Exception ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to init app.");
         }
     }
-    
+
     public static void main(String[] args)
     {
         Application.launch(Init.class, (java.lang.String[]) null);
