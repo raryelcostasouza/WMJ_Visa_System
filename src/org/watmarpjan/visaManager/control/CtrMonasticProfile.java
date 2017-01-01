@@ -14,6 +14,7 @@ import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.EntryUpdate90DayNotice;
+import org.watmarpjan.visaManager.model.EntryWorkflowVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -50,7 +51,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
             ctrDB.commitCurrentTransaction();
             return p.getNickname();
 
-        } catch (PersistenceException he)
+        }
+        catch (PersistenceException he)
         {
             ctrDB.rollbackCurrentTransaction();
 
@@ -76,7 +78,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
             ctrDB.commitCurrentTransaction();
             return 0;
-        } catch (PersistenceException he)
+        }
+        catch (PersistenceException he)
         {
             ctrDB.rollbackCurrentTransaction();
 
@@ -190,7 +193,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         {
             p = (MonasticProfile) ctrDB.getSession().find(MonasticProfile.class, id);
             return p;
-        } catch (PersistenceException he)
+        }
+        catch (PersistenceException he)
         {
             CtrAlertDialog.exceptionDialog(he, "Error when loading profile.");
             return null;
@@ -378,7 +382,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     public ArrayList<EntryPrintedDocStock> loadListPrintedDocStock()
     {
         String hql;
-        hql = "select new org.watmarpjan.visaManager.model.EntryPrintedDocStock(p.nickname, p.nSigned90dForms, p.signedPhotocopies, p.nPrintedPhotos)"
+        hql = "select new org.watmarpjan.visaManager.model.EntryPrintedDocStock(p.nickname, p.nSigned90dForms, p.wfExtPhotocopiesSnp, p.wfExtPhotocopiesImm, p.nPrintedPhotos)"
                 + " from MonasticProfile p "
                 + " where p.status <> 'INACTIVE'"
                 + " order by "
@@ -387,6 +391,22 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " p.pahkahwOrdDate asc nulls last";
 
         return (ArrayList<EntryPrintedDocStock>) ctrDB.getSession().createQuery(hql).getResultList();
+    }
+
+    public ArrayList<EntryWorkflowVisaExt> loadListWorkflowVisaExt()
+    {
+        String hql;
+        hql = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p.nickname, p.wfExtPrawat, p.wfExtLetterSnp, p.wfExtPhotocopiesSnp, "
+                + "p.wfExtApprovalSnp, p.wfExtTm7, p.wfExtLetterImm, p.wfExtPhotocopiesImm, p.wfExtExtraImm)"
+                + " from MonasticProfile p "
+                + " where p.status <> 'INACTIVE' and"
+                + " p.wfExtPrawat <> 'Missing'"
+                + " order by "
+                + " p.bhikkhuOrdDate asc nulls last"
+                + " p.samaneraOrdDate asc nulls last,"
+                + " p.pahkahwOrdDate asc nulls last";
+
+        return (ArrayList<EntryWorkflowVisaExt>) ctrDB.getSession().createQuery(hql).getResultList();
     }
 
     public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
