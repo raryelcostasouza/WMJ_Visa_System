@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
@@ -40,6 +40,9 @@
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -48,30 +51,17 @@
                           </rowConstraints>
                            <children>
                                       <Label text="Nickname: " />
-                                      <Label text="Middle Name: " GridPane.rowIndex="1" />
-                                      <Label text="Mother: " GridPane.rowIndex="2" />
                                       <TextField fx:id="tfNickname" editable="false" GridPane.columnIndex="1" />
+                                      <Label text="Name: " GridPane.columnIndex="3" />
+                                      <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" />
+                                      <Label text="Middle Name: " GridPane.rowIndex="1" />
                                       <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                      <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                      <Label text="Mother: " GridPane.rowIndex="2" />
                                       <TextField fx:id="tfMother" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           </children>
-                        </GridPane>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                                      <Label text="Name: " />
-                                      <Label text="Last Name: " GridPane.rowIndex="1" />
-                                      <Label text="Father: " GridPane.rowIndex="2" />
-                                      <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" />
-                                      <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                      <TextField fx:id="tfFather" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                      <Label text="Father: " GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                      <TextField fx:id="tfFather" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -103,6 +93,9 @@
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -110,35 +103,23 @@
                           </rowConstraints>
                            <children>
                                         <Label text="Birth Country:" />
-                                        <Label text="Ethnicity: " GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbBirthCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                                        <Label text="Birth Place:" GridPane.columnIndex="3">
+                                            <GridPane.margin>
+                                                <Insets />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <TextField fx:id="tfBirthPlace" editable="false" GridPane.columnIndex="4" />
+                                        <Label text="Ethnicity: " GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbEthnicity" disable="true" editable="true" layoutX="101.0" layoutY="13.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Nationality:" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets />
+                                            </GridPane.margin>
+                                        </Label>
+                              <ComboBox fx:id="cbNationality" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                                <GridPane>
-                                    <children>
-                                        <Label text="Birth Place:">
-                                            <GridPane.margin>
-                                                <Insets />
-                                            </GridPane.margin>
-                                        </Label>
-                                        <TextField fx:id="tfBirthPlace" editable="false" GridPane.columnIndex="1" />
-                                        <Label text="Nationality:" GridPane.rowIndex="1">
-                                            <GridPane.margin>
-                                                <Insets />
-                                            </GridPane.margin>
-                                        </Label>
-                              <ComboBox fx:id="cbNationality" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    </children>
-                                    <columnConstraints>
-                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                </GridPane>
                             </children>
                         </HBox>
                     </children>
@@ -155,6 +136,9 @@
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -163,26 +147,14 @@
                            <children>
                                       <Label text="Occupation:" />
                                       <ComboBox fx:id="cbOccupation" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                                      <Label text="Occupation (Thai):" GridPane.columnIndex="3" />
+                                      <ComboBox fx:id="cbOccupationThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="4" />
                                       <Label text="Certificate:" GridPane.rowIndex="1" />
                                       <ComboBox fx:id="cbCertificate" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <Label text="Certificate (Thai):" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                      <ComboBox fx:id="cbCertificateThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                              <GridPane>
-                                  <children>
-                                      <Label text="Occupation (Thai):" />
-                                      <ComboBox fx:id="cbOccupationThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
-                                      <Label text="Certificate (Thai):" GridPane.rowIndex="1" />
-                                      <ComboBox fx:id="cbCertificateThai" disable="true" editable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                  </children>
-                                  <columnConstraints>
-                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                  </columnConstraints>
-                                  <rowConstraints>
-                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                  </rowConstraints>
-                              </GridPane>
                      </children>
                   </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
@@ -216,9 +188,9 @@
                           </rowConstraints>
                            <children>
                                     <Label text="Previous Residence Country:" />
+                              <ComboBox fx:id="cbPreviousResidenceCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                                     <Label text="Residence Wat:" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cbResidingAt" disable="true" maxWidth="1.7976931348623157E308" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="cbPreviousResidenceCountry" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                           </children>
@@ -236,13 +208,13 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                                     <Label text="Adviser's name:" />
                                     <Label text="Adviser's Wat:" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cbAdvisorWat" disable="true" prefWidth="210.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbAdviserToCome" disable="true" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                                    <ComboBox fx:id="cbAdvisorWat" disable="true" prefWidth="210.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                           </children>

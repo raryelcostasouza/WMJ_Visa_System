@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePassport">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePassport">
     <left>
         <VBox>
             <children>
@@ -48,30 +48,30 @@
                                     </GridPane.margin>
                                 </Label>
                                 <TextField fx:id="tfpassportNumber" editable="false" GridPane.columnIndex="1" />
-                                <Label text="Issued at:" GridPane.rowIndex="2">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfpassportIssuedAt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="Expiry Date:" GridPane.rowIndex="4">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <DatePicker fx:id="dpPassportExpiryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label layoutX="30.0" layoutY="57.0" text="Issue Date:" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <DatePicker fx:id="dpPassportIssueDate" disable="true" layoutX="112.0" layoutY="113.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label layoutX="32.0" layoutY="87.0" text="Pspt. Country:" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
                         <TextField fx:id="tfpassportCountry" editable="false" layoutX="124.0" layoutY="22.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="Issued at:" GridPane.rowIndex="2">
+                                    <GridPane.margin>
+                                        <Insets left="10.0" />
+                                    </GridPane.margin>
+                                </Label>
+                                <TextField fx:id="tfpassportIssuedAt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label layoutX="30.0" layoutY="57.0" text="Issue Date:" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="dpPassportIssueDate" disable="true" layoutX="112.0" layoutY="113.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="Expiry Date:" GridPane.rowIndex="4">
+                                    <GridPane.margin>
+                                        <Insets left="10.0" />
+                                    </GridPane.margin>
+                                </Label>
+                                <DatePicker fx:id="dpPassportExpiryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
                     </content>
@@ -98,6 +98,12 @@
                                     </GridPane.margin>
                                 </Label>
                                 <TextField fx:id="tfArrivalTMNumber" editable="false" GridPane.columnIndex="1" />
+                                <Label text="Last Entry:" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets left="10.0" />
+                                    </GridPane.margin>
+                                </Label>
+                                <DatePicker fx:id="dpLastEntry" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label text="Travel from:" GridPane.rowIndex="2">
                                     <GridPane.margin>
                                         <Insets left="10.0" />
@@ -110,13 +116,6 @@
                                     </GridPane.margin>
                                 </Label>
                                 <ComboBox fx:id="cbTravelBy" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <DatePicker fx:id="dpFirstEntryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <Label text="Last Entry:" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <DatePicker fx:id="dpLastEntry" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label text="Port of Entry:" GridPane.rowIndex="4">
                                     <GridPane.margin>
                                         <Insets left="10.0" />
@@ -133,6 +132,7 @@
                                       </Label>
                            </children>
                         </HBox>
+                                <DatePicker fx:id="dpFirstEntryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             </children>
                         </GridPane>
                     </content>

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
+<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
    <children>
       <TitledPane collapsible="false" text="Forms">
          <content>
@@ -62,6 +62,12 @@
                                  </GridPane.margin>
                               </Label>
                               <TextField fx:id="tfTM6Number" editable="false" GridPane.columnIndex="1" />
+                              <Label text="Last Entry:" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <DatePicker fx:id="dpLastEntry" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="Travel from:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
@@ -74,12 +80,6 @@
                                  </GridPane.margin>
                               </Label>
                               <ComboBox fx:id="cbTravelBy" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="Last Entry:" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <DatePicker fx:id="dpLastEntry" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="Port of Entry:" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
