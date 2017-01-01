@@ -87,9 +87,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonasticProfile.findByVisaManager", query = "SELECT m FROM MonasticProfile m WHERE m.visaManager = :visaManager"),
     @NamedQuery(name = "MonasticProfile.findByPhoneNumber1", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber1 = :phoneNumber1"),
     @NamedQuery(name = "MonasticProfile.findByPhoneNumber2", query = "SELECT m FROM MonasticProfile m WHERE m.phoneNumber2 = :phoneNumber2"),
-    @NamedQuery(name = "MonasticProfile.findBySignedPhotocopies", query = "SELECT m FROM MonasticProfile m WHERE m.signedPhotocopies = :signedPhotocopies"),
+    @NamedQuery(name = "MonasticProfile.findByNSigned90dForms", query = "SELECT m FROM MonasticProfile m WHERE m.nSigned90dForms = :nSigned90dForms"),
     @NamedQuery(name = "MonasticProfile.findByNPrintedPhotos", query = "SELECT m FROM MonasticProfile m WHERE m.nPrintedPhotos = :nPrintedPhotos"),
-    @NamedQuery(name = "MonasticProfile.findByNSigned90dForms", query = "SELECT m FROM MonasticProfile m WHERE m.nSigned90dForms = :nSigned90dForms")
+    @NamedQuery(name = "MonasticProfile.findByWfExtPrawat", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPrawat = :wfExtPrawat"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtLetterSnp", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtLetterSnp = :wfExtLetterSnp"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtApprovalSnp", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtApprovalSnp = :wfExtApprovalSnp"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtTm7", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtTm7 = :wfExtTm7"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtExtraImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtExtraImm = :wfExtExtraImm"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtLetterImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtLetterImm = :wfExtLetterImm"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesSnp", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesSnp = :wfExtPhotocopiesSnp"),
+    @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesImm = :wfExtPhotocopiesImm")
 })
 public class MonasticProfile implements Serializable
 {
@@ -135,10 +142,12 @@ public class MonasticProfile implements Serializable
     @Basic(optional = false)
     @Column(name = "DHAMMA_STUDIES")
     private String dhammaStudies;
+    @Column(name = "EMAIL")
     private String email;
     @Lob
     @Column(name = "EMERGENCY_CONTACT")
     private String emergencyContact;
+    @Column(name = "ETHNICITY")
     private String ethnicity;
     @Column(name = "FATHER_NAME")
     private String fatherName;
@@ -155,10 +164,12 @@ public class MonasticProfile implements Serializable
     private String monasticName;
     @Column(name = "NAME_ADVISER_TO_COME")
     private String nameAdviserToCome;
+    @Column(name = "NATIONALITY")
     private String nationality;
     @Column(name = "NEXT_90_DAY_NOTICE")
     @Temporal(TemporalType.DATE)
     private Date next90DayNotice;
+    @Column(name = "NICKNAME")
     private String nickname;
     @Column(name = "OCCUPATION_ENGLISH")
     private String occupationEnglish;
@@ -183,8 +194,10 @@ public class MonasticProfile implements Serializable
     @Column(name = "SAMANERA_ORD_DATE")
     @Temporal(TemporalType.DATE)
     private Date samaneraOrdDate;
+    @Column(name = "SCHOOL")
     private String school;
     @Basic(optional = false)
+    @Column(name = "STATUS")
     private String status;
     @Column(name = "VISA_EXPIRY_DATE")
     @Temporal(TemporalType.DATE)
@@ -201,6 +214,7 @@ public class MonasticProfile implements Serializable
     @Column(name = "PATIMOKKHA_CHANTER")
     private Boolean patimokkhaChanter;
     @Lob
+    @Column(name = "REMARK")
     private String remark;
     @Column(name = "ONLINE_NOTICE_ACCEPTED")
     private Boolean onlineNoticeAccepted;
@@ -210,12 +224,26 @@ public class MonasticProfile implements Serializable
     private String phoneNumber1;
     @Column(name = "PHONE_NUMBER2")
     private String phoneNumber2;
-    @Column(name = "SIGNED_PHOTOCOPIES")
-    private Boolean signedPhotocopies;
-    @Column(name = "N_PRINTED_PHOTOS")
-    private Integer nPrintedPhotos;
     @Column(name = "N_SIGNED_90D_FORMS")
     private Integer nSigned90dForms;
+    @Column(name = "N_PRINTED_PHOTOS")
+    private Integer nPrintedPhotos;
+    @Column(name = "WF_EXT_PRAWAT")
+    private String wfExtPrawat;
+    @Column(name = "WF_EXT_LETTER_SNP")
+    private String wfExtLetterSnp;
+    @Column(name = "WF_EXT_APPROVAL_SNP")
+    private String wfExtApprovalSnp;
+    @Column(name = "WF_EXT_TM7")
+    private String wfExtTm7;
+    @Column(name = "WF_EXT_EXTRA_IMM")
+    private Boolean wfExtExtraImm;
+    @Column(name = "WF_EXT_LETTER_IMM")
+    private String wfExtLetterImm;
+    @Column(name = "WF_EXT_PHOTOCOPIES_SNP")
+    private String wfExtPhotocopiesSnp;
+    @Column(name = "WF_EXT_PHOTOCOPIES_IMM")
+    private String wfExtPhotocopiesImm;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
     private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
@@ -772,14 +800,14 @@ public class MonasticProfile implements Serializable
         this.phoneNumber2 = phoneNumber2;
     }
 
-    public Boolean getSignedPhotocopies()
+    public Integer getNSigned90dForms()
     {
-        return signedPhotocopies;
+        return nSigned90dForms;
     }
 
-    public void setSignedPhotocopies(Boolean signedPhotocopies)
+    public void setNSigned90dForms(Integer nSigned90dForms)
     {
-        this.signedPhotocopies = signedPhotocopies;
+        this.nSigned90dForms = nSigned90dForms;
     }
 
     public Integer getNPrintedPhotos()
@@ -792,14 +820,84 @@ public class MonasticProfile implements Serializable
         this.nPrintedPhotos = nPrintedPhotos;
     }
 
-    public Integer getNSigned90dForms()
+    public String getWfExtPrawat()
     {
-        return nSigned90dForms;
+        return wfExtPrawat;
     }
 
-    public void setNSigned90dForms(Integer nSigned90dForms)
+    public void setWfExtPrawat(String wfExtPrawat)
     {
-        this.nSigned90dForms = nSigned90dForms;
+        this.wfExtPrawat = wfExtPrawat;
+    }
+
+    public String getWfExtLetterSnp()
+    {
+        return wfExtLetterSnp;
+    }
+
+    public void setWfExtLetterSnp(String wfExtLetterSnp)
+    {
+        this.wfExtLetterSnp = wfExtLetterSnp;
+    }
+
+    public String getWfExtApprovalSnp()
+    {
+        return wfExtApprovalSnp;
+    }
+
+    public void setWfExtApprovalSnp(String wfExtApprovalSnp)
+    {
+        this.wfExtApprovalSnp = wfExtApprovalSnp;
+    }
+
+    public String getWfExtTm7()
+    {
+        return wfExtTm7;
+    }
+
+    public void setWfExtTm7(String wfExtTm7)
+    {
+        this.wfExtTm7 = wfExtTm7;
+    }
+
+    public Boolean getWfExtExtraImm()
+    {
+        return wfExtExtraImm;
+    }
+
+    public void setWfExtExtraImm(Boolean wfExtExtraImm)
+    {
+        this.wfExtExtraImm = wfExtExtraImm;
+    }
+
+    public String getWfExtLetterImm()
+    {
+        return wfExtLetterImm;
+    }
+
+    public void setWfExtLetterImm(String wfExtLetterImm)
+    {
+        this.wfExtLetterImm = wfExtLetterImm;
+    }
+
+    public String getWfExtPhotocopiesSnp()
+    {
+        return wfExtPhotocopiesSnp;
+    }
+
+    public void setWfExtPhotocopiesSnp(String wfExtPhotocopiesSnp)
+    {
+        this.wfExtPhotocopiesSnp = wfExtPhotocopiesSnp;
+    }
+
+    public String getWfExtPhotocopiesImm()
+    {
+        return wfExtPhotocopiesImm;
+    }
+
+    public void setWfExtPhotocopiesImm(String wfExtPhotocopiesImm)
+    {
+        this.wfExtPhotocopiesImm = wfExtPhotocopiesImm;
     }
 
     @XmlTransient

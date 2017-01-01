@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author WMJ_user
  */
 @Entity
+@Table(name = "MONASTERY")
 @XmlRootElement
 @NamedQueries(
 {
