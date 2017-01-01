@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,14 @@ public class Util
     public final static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public final static DateTimeFormatter CHANGELOG_DATE_TIME_FORMAT_ = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+    public static String getLastElement(List<String> list)
+    {
+        int indexLastElement;
+
+        indexLastElement = list.size() - 1;
+        return list.get(indexLastElement);
+    }
 
     //creates a new arraylist with the distinct values from the input arraylist
     public static ArrayList<String> filterDistinctElement(ArrayList<String> list)
@@ -39,7 +48,8 @@ public class Util
             if (i == 0)
             {
                 listDistinct.add(currentElement);
-            } else
+            }
+            else
             {
                 previousElement = list.get(i - 1);
                 if (!currentElement.equals(previousElement))
@@ -56,7 +66,8 @@ public class Util
         if (iso_year != null)
         {
             return iso_year + 543;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -70,7 +81,8 @@ public class Util
             return Instant.ofEpochMilli(d.getTime())
                     .atZone(ZoneId.systemDefault()).
                     toLocalDate();
-        } else
+        }
+        else
         {
             return null;
         }
@@ -82,7 +94,8 @@ public class Util
         if (ld != null)
         {
             return ThaiBuddhistDate.from(ld).format(DEFAULT_DATE_FORMAT);
-        } else
+        }
+        else
         {
             return null;
         }
@@ -96,7 +109,8 @@ public class Util
         if (ld != null)
         {
             return ThaiBuddhistDate.from(ld).format(DEFAULT_DATE_FORMAT);
-        } else
+        }
+        else
         {
             return null;
         }
@@ -110,7 +124,8 @@ public class Util
         {
             gc = new GregorianCalendar(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
             return gc.getTime();
-        } else
+        }
+        else
         {
             return null;
         }
