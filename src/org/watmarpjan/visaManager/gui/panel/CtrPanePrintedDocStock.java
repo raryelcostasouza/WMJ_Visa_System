@@ -22,6 +22,7 @@ import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
+import org.watmarpjan.visaManager.model.EntryWorkflowVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -131,9 +132,11 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
             spPrintedPhotos.getValueFactory().setValue(0);
         }
 
-        if (p.getSignedPhotocopies() != null)
+        if (((p.getWfExtPhotocopiesImm() != null) && (p.getWfExtPhotocopiesImm().equals(EntryWorkflowVisaExt.STATUS_SIGNED_MONASTIC)))
+                || ((p.getWfExtPhotocopiesSnp() != null) && (p.getWfExtPhotocopiesSnp().equals(EntryWorkflowVisaExt.STATUS_SIGNED_MONASTIC))))
+
         {
-            cbSignedPhotocopies.setSelected(p.getSignedPhotocopies());
+            cbSignedPhotocopies.setSelected(true);
         }
         else
         {
@@ -193,7 +196,15 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
 
         if (p != null)
         {
-            p.setSignedPhotocopies(cbSignedPhotocopies.isSelected());
+            if (cbSignedPhotocopies.isSelected())
+            {
+                p.setWfExtPhotocopiesSnp(EntryWorkflowVisaExt.STATUS_SIGNED_MONASTIC);
+            }
+            else
+            {
+                p.setWfExtPhotocopiesSnp(EntryWorkflowVisaExt.STATUS_MISSING);
+            }
+
             p.setNPrintedPhotos(spPrintedPhotos.getValue());
             p.setNSigned90dForms(spSigned90DayForms.getValue());
 

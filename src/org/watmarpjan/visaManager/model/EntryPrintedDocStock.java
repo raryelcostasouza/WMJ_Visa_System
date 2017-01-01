@@ -23,7 +23,7 @@ public class EntryPrintedDocStock
 
     public static final String STR_MISSING = "MISSING";
 
-    public EntryPrintedDocStock(String monasticName, Integer nSigned90DayForms, Boolean signedPhotocopies, Integer nPrintedPhotos)
+    public EntryPrintedDocStock(String monasticName, Integer nSigned90DayForms, String photocopiesSnp, String photocopiesImm, Integer nPrintedPhotos)
     {
         this.monasticName = new SimpleStringProperty(monasticName);
         if (nSigned90DayForms == null || nSigned90DayForms == 0)
@@ -35,9 +35,11 @@ public class EntryPrintedDocStock
             this.nSigned90DayForms = new SimpleStringProperty(nSigned90DayForms + "");
         }
 
-        if (signedPhotocopies != null)
+        //if the status of photocopiesIMM OR photocopiesSNP is SIGNED_BY_MONASTIC
+        if ((photocopiesImm != null) && (photocopiesImm.equals(EntryWorkflowVisaExt.STATUS_SIGNED_MONASTIC))
+                || ((photocopiesSnp != null) && (photocopiesSnp.equals(EntryWorkflowVisaExt.STATUS_SIGNED_MONASTIC))))
         {
-            this.signedPhotocopies = new SimpleBooleanProperty(signedPhotocopies);
+            this.signedPhotocopies = new SimpleBooleanProperty(true);
         }
         else
         {
