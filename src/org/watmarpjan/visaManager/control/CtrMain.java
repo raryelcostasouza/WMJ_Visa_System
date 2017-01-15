@@ -20,7 +20,7 @@ public class CtrMain
     private final CtrDatabase ctrDB;
     private final CtrMonasticProfile ctrProfile;
     private final CtrMonastery ctrMonastery;
-    private final CtrForm ctrForm;
+    private final CtrPDF ctrPDF;
     private final CtrVisa ctrVisa;
     private final CtrPassportScan ctrPassportScan;
     private final CtrUpajjhaya ctrUpajjhaya;
@@ -34,7 +34,7 @@ public class CtrMain
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
-        ctrForm = new CtrForm(this);
+        ctrPDF = new CtrPDF(this);
         ctrPrintoutTM30 = new CtrPrintoutTM30(ctrDB, ctrProfile);
     }
     
@@ -60,9 +60,9 @@ public class CtrMain
         return ctrPrintoutTM30;
     }
 
-    public CtrForm getCtrForm()
+    public CtrPDF getCtrPDF()
     {
-        return ctrForm;
+        return ctrPDF;
     }
 
     public CtrDatabase getCtrDB()
