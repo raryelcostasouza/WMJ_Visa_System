@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.gui.panel;
 
 import java.util.ArrayList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -29,9 +31,8 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author pm.dell
  */
-public class CtrPanePrintedDocStock extends AbstractChildPaneController implements IFormMonasticProfile, IEditableGUIForm
+public class CtrPanePrintedDocStock extends AbstractPDFPreviewPrintController implements IFormMonasticProfile, IEditableGUIForm
 {
-
     @FXML
     private Spinner<Integer> spPrintedPhotos;
     @FXML
@@ -91,6 +92,7 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
     @Override
     public void init()
     {
+        super.init();
         listFields = new ArrayList();
 
         listFields.add(spPrintedPhotos);
@@ -218,6 +220,24 @@ public class CtrPanePrintedDocStock extends AbstractChildPaneController implemen
             }
 
         }
+    }
+
+    @FXML
+    void actionPreviewPDF(ActionEvent ae)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
+    }
+
+    @FXML
+    void actionPrintPDF(ActionEvent ae)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PRINT_FORM);
     }
 
 }

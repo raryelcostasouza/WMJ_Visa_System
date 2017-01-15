@@ -7,9 +7,6 @@ package org.watmarpjan.visaManager.gui.panel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,15 +18,12 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
 import org.watmarpjan.visaManager.model.EntryWorkflowVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
@@ -38,7 +32,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implements IEditableGUIForm, IFormMonasticProfile
+public class CtrPaneWorkflowVisaExt extends AbstractPDFPreviewPrintController implements IEditableGUIForm, IFormMonasticProfile
 {
 
     @FXML
@@ -61,12 +55,6 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
 
     @FXML
     private Button bReset;
-
-    @FXML
-    private Button bPreview;
-
-    @FXML
-    private Button bPrint;
 
     @FXML
     private TableView<EntryWorkflowVisaExt> tvOverview;
@@ -381,9 +369,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-
+        super.init();
         initChangeListener();
         initSpinner();
         initTableView();
@@ -686,21 +672,21 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     }
 
     @FXML
-    void actionPreviewPDFWorkflow(ActionEvent ae)
+    void actionPreviewPDF(ActionEvent ae)
     {
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
     @FXML
-    void actionPrintPDFWorkflow(ActionEvent ae)
+    void actionPrintPDF(ActionEvent ae)
     {
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PRINT_FORM);
     }
 
 }

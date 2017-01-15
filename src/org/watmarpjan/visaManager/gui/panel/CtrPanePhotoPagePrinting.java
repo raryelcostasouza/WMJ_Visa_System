@@ -8,17 +8,14 @@ package org.watmarpjan.visaManager.gui.panel;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.ImageView;
-import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 
 /**
  *
  * @author wmj_user
  */
-public class CtrPanePhotoPagePrinting extends AbstractChildPaneController
+public class CtrPanePhotoPagePrinting extends AbstractPDFPreviewPrintController
 {
 
     @FXML
@@ -27,16 +24,10 @@ public class CtrPanePhotoPagePrinting extends AbstractChildPaneController
     @FXML
     private ComboBox<String> cbMonastic2;
 
-    @FXML
-    private Button bPreview;
-    @FXML
-    private Button bPrint;
-
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        super.init();
     }
 
     public void fillData()
@@ -86,14 +77,14 @@ public class CtrPanePhotoPagePrinting extends AbstractChildPaneController
     @FXML
     void actionPreviewPhotoPage(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PREVIEW_FORM);
         clearSelection();
     }
     
     @FXML
     void actionPrintPhotoPage(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PRINT_FORM);
         clearSelection();
     }
     

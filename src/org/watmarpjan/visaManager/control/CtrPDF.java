@@ -44,7 +44,6 @@ import org.apache.pdfbox.util.Matrix;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.EntryWorkflowVisaExt;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -65,6 +64,8 @@ public class CtrPDF
 
     public static final int OPTION_PRINT_FORM = 0;
     public static final int OPTION_PREVIEW_FORM = 1;
+    public static final int ORIENTATION_PORTRAIT = 0;
+    public static final int ORIENTATION_LANDSCAPE = 1;
 
     public static final String DESTINATION_SAMNAKPUT = "SNP";
     public static final String DESTINATION_IMMIGRATION = "IMM";
@@ -90,6 +91,7 @@ public class CtrPDF
     private final float PAGE_A4_WIDTH_PX = PDRectangle.A4.getWidth();
 
     private final float SCALE_DUE_TASKS_SNAPSHOT = 0.3f;
+    
 
     public CtrPDF(CtrMain pCtrMain)
     {
@@ -386,7 +388,7 @@ public class CtrPDF
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("WatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
@@ -419,7 +421,7 @@ public class CtrPDF
         if (mResidingAt != null)
         {
 
-            acroForm.getField("WatResidingAtThai").setValue(mResidingAt.getMonasteryName());
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
@@ -864,7 +866,7 @@ public class CtrPDF
             posX = PAGE_A4_WIDTH_PX - 210;
             posY = PAGE_A4_HEIGHT_PX - 15;
         }
-        
+
         objContentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
         objContentStream.beginText();
         objContentStream.newLineAtOffset(posX, posY);
@@ -1011,44 +1013,81 @@ public class CtrPDF
 
     }
 
-    public void generatePDFWorkflow(TableView<EntryWorkflowVisaExt> tvVisaExtAbroad, int option)
+    public void generatePDFWorkflow(TableView tvWorkflowVisaExt, int option)
     {
-        final float SCALE_WORKFLOW_SNAPSHOT = 0.33f;
+        generatePDFSnapshotTableView(tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+    }
+    
+    public void generatePDFPrintedDocStock(TableView tvPrintedDocStock, int option)
+    {
+        generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Doc Stock", ORIENTATION_PORTRAIT, 0.33f, option);
+    }
+
+    public void generatePDFSnapshotTableView(TableView objTV, String title, int orientation, float scale, int option)
+    {
+        String filePrefix;
+        float posYTopPage, posX, paperWidth;
         PDDocument pdfDoc;
         PDPage page1;
         PDPageContentStream contentStream;
         File outputFile;
         PDFont font = PDType1Font.HELVETICA_BOLD;
         int fontSize = 18;
-        BufferedImage imgVisaExtAbroad;
-        PDImageXObject pdfImgWFVisaExt;
+        BufferedImage objBufferedImgSnapshot;
+        PDImageXObject pdImgSnapshot;
 
-        outputFile = AppFiles.getFormTMPOutputPDF("Workflow-Visa-Extension");
+        //removes any non-word characters from the title
+        filePrefix = title.replaceAll("\\W ", "");
+        outputFile = AppFiles.getFormTMPOutputPDF(filePrefix);
+
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
-
-        page1.setRotation(90);
+        
+        if (orientation == ORIENTATION_LANDSCAPE)
+        {
+            page1.setRotation(90);
+        }
+        else
+        {
+            page1.setRotation(0);
+        }
         pdfDoc.addPage(page1);
 
-        imgVisaExtAbroad = snapshotGUIComponent(tvVisaExtAbroad);
+        objBufferedImgSnapshot = snapshotGUIComponent(objTV);
 
         try
         {
-            pdfImgWFVisaExt = LosslessFactory.createFromImage(pdfDoc, imgVisaExtAbroad);
+            pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
 
-            // including a translation of pageWidth to use the lower left corner as 0,0 reference
-            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+            if (orientation == ORIENTATION_LANDSCAPE)
+            {
+                // including a translation of pageWidth to use the lower left corner as 0,0 reference
+                contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+                //on the landscape orientation, the height of the page is the same as the 
+                //width of the page on portrait orientation
+                posYTopPage = PAGE_A4_WIDTH_PX;
+                paperWidth = PAGE_A4_HEIGHT_PX;
+            }
+            else
+            {
+                posYTopPage = PAGE_A4_HEIGHT_PX;
+                paperWidth = PAGE_A4_WIDTH_PX;
+            }
 
             fillPrintDate(contentStream, page1);
 
+            //left margin for centering the snapshot
+            posX = (paperWidth - pdImgSnapshot.getWidth()*scale)/2.0f;
+            
             contentStream.setFont(font, fontSize);
             contentStream.beginText();
-            contentStream.newLineAtOffset(20, PAGE_A4_WIDTH_PX - 40);
-            contentStream.showText("Workflow Visa Extension");
+            contentStream.newLineAtOffset(posX, posYTopPage - 40);
+            contentStream.showText(title);
             contentStream.endText();
-            contentStream.drawImage(pdfImgWFVisaExt, 20, PAGE_A4_WIDTH_PX - pdfImgWFVisaExt.getHeight() * SCALE_WORKFLOW_SNAPSHOT - 50, pdfImgWFVisaExt.getWidth() * SCALE_WORKFLOW_SNAPSHOT, pdfImgWFVisaExt.getHeight() * SCALE_WORKFLOW_SNAPSHOT);
+            
+            contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
             contentStream.close();
 
             pdfDoc.save(outputFile);
@@ -1066,7 +1105,7 @@ public class CtrPDF
         }
         catch (IOException e)
         {
-            CtrAlertDialog.errorDialog("Error to generate pdf with Due Tasks printout.");
+            CtrAlertDialog.errorDialog("Error to generate pdf for " + title);
         }
 
     }
