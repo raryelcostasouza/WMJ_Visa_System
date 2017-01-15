@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -39,7 +40,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonasticProfile extends AbstractChildPaneController implements IFormMonasticProfile, ICreateEditGUIForm
+public class CtrPaneMonasticProfile extends AChildPaneController implements IFormMonasticProfile, ICreateEditGUIForm
 {
 
     private final String PATH_DEFAULT_PROFILE_PHOTO = "img/profile/default.png";

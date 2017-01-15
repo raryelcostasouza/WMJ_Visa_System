@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.io.File;
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneTM30NotifResidence extends AbstractChildPaneController
+public class CtrPaneTM30NotifResidence extends AChildPaneController
 {
 
 //    @FXML

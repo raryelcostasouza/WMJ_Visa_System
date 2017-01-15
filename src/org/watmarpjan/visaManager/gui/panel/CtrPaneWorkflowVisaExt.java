@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -32,7 +33,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneWorkflowVisaExt extends AbstractPDFPreviewPrintController implements IEditableGUIForm, IFormMonasticProfile
+public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implements IEditableGUIForm, IFormMonasticProfile
 {
 
     @FXML

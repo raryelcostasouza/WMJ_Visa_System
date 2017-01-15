@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.watmarpjan.visaManager.gui.panel;
+package org.watmarpjan.visaManager.gui.panel.abs;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +14,7 @@ import org.watmarpjan.visaManager.AppPaths;
  *
  * @author wmj_user
  */
-public class AbstractPDFPreviewPrintController extends AbstractChildPaneController
+public class AChildPaneControllerExportPDF extends AChildPaneController
 {
 
     @FXML

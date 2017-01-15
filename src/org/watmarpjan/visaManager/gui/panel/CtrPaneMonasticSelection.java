@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -22,7 +23,7 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonasticSelection extends AbstractChildPaneController
+public class CtrPaneMonasticSelection extends AChildPaneController
 {
 
     @FXML

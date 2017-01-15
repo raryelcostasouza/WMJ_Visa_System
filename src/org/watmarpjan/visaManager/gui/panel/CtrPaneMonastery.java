@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonastery extends AbstractChildPaneController implements ICreateEditGUIForm
+public class CtrPaneMonastery extends AChildPaneController implements ICreateEditGUIForm
 {
 
     @FXML

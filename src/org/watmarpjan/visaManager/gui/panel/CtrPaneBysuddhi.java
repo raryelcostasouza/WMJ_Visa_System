@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -33,7 +34,7 @@ import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
  *
  * @author WMJ_user
  */
-public class CtrPaneBysuddhi extends AbstractPDFPreviewPrintController implements IEditableGUIForm, IFormMonasticProfile
+public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IEditableGUIForm, IFormMonasticProfile
 {
 
     @FXML

@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import java.io.File;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPane90DayNotice extends AbstractChildPaneController implements IFormMonasticProfile
+public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements IFormMonasticProfile
 {
 
     @FXML
@@ -137,17 +138,10 @@ public class CtrPane90DayNotice extends AbstractChildPaneController implements I
     @FXML
     private ComboBox<String> cbVisaManager;
 
-    @FXML
-    private Button bPreview;
-
-    @FXML
-    private Button bPrint;
-
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        super.init();
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpDateOfBirth);

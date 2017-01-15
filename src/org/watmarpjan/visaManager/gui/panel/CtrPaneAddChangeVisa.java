@@ -13,11 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -25,7 +24,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements IFormMonasticProfile
+public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implements IFormMonasticProfile
 {
 
     @FXML
@@ -45,18 +44,10 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     @FXML
     private Button bRegister;
 
-    @FXML
-    private Button bPreview;
-
-    @FXML
-    private Button bPrint;
-
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-
+        super.init();
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);

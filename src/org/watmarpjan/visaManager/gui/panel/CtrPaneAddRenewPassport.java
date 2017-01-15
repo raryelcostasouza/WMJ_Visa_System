@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddRenewPassport extends AbstractChildPaneController implements IFormMonasticProfile
+public class CtrPaneAddRenewPassport extends AChildPaneController implements IFormMonasticProfile
 {
 
     @FXML

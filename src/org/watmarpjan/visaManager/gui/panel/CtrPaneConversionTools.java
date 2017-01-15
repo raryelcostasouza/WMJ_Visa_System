@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import javafx.scene.control.TextField;
  *
  * @author wmj_user
  */
-public class CtrPaneConversionTools extends AbstractChildPaneController
+public class CtrPaneConversionTools extends AChildPaneController
 {
 
     @FXML

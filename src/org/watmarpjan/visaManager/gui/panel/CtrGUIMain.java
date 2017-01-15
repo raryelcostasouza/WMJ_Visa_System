@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -159,8 +160,8 @@ public class CtrGUIMain
     @FXML
     private BorderPane topPane;
 
-    private AbstractChildPaneController currentPaneController;
-    private ArrayList<AbstractChildPaneController> listPaneControllers;
+    private AChildPaneController currentPaneController;
+    private ArrayList<AChildPaneController> listPaneControllers;
 
     private CtrFieldChangeListener ctrFieldChangeListener;
     private CtrGUISharedUtil ctrGUISharedUtil;
@@ -312,7 +313,7 @@ public class CtrGUIMain
 
     }
 
-    private void initChildPane(AbstractChildPaneController objACC)
+    private void initChildPane(AChildPaneController objACC)
     {
         objACC.setParent(this);
         objACC.init();
@@ -1073,7 +1074,7 @@ public class CtrGUIMain
 
     public void initChildControllers()
     {
-        for (AbstractChildPaneController acc : listPaneControllers)
+        for (AChildPaneController acc : listPaneControllers)
         {
             acc.setParent(this);
             acc.init();

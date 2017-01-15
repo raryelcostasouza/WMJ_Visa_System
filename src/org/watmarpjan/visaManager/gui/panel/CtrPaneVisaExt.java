@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneVisaExt extends AbstractChildPaneController implements IFormMonasticProfile
+public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasticProfile
 {
 
     @FXML

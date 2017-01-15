@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -24,7 +25,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author wmj_user
  */
-public class CtrPaneChangelog extends AbstractChildPaneController
+public class CtrPaneChangelog extends AChildPaneController
 {
 
     @FXML

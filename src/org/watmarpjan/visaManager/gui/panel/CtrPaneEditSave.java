@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import java.io.File;
@@ -20,7 +21,7 @@ import org.watmarpjan.visaManager.AppPaths;
  *
  * @author WMJ_user
  */
-public class CtrPaneEditSave extends AbstractChildPaneController
+public class CtrPaneEditSave extends AChildPaneController
 {
 
     private boolean lockStatus;

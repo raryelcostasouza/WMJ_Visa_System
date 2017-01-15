@@ -15,11 +15,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -27,7 +26,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implements IFormMonasticProfile
+public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implements IFormMonasticProfile
 {
 
     @FXML
@@ -51,18 +50,10 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     @FXML
     private Button bRegister;
 
-    @FXML
-    private Button bPreview;
-
-    @FXML
-    private Button bPrint;
-
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-
+        super.init();
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
 

@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import org.watmarpjan.visaManager.control.CtrPDF;
  *
  * @author wmj_user
  */
-public class CtrPanePhotoPagePrinting extends AbstractPDFPreviewPrintController
+public class CtrPanePhotoPagePrinting extends AChildPaneControllerExportPDF
 {
 
     @FXML

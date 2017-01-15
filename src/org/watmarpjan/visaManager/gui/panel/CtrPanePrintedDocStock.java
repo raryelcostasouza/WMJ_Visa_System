@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author pm.dell
  */
-public class CtrPanePrintedDocStock extends AbstractPDFPreviewPrintController implements IFormMonasticProfile, IEditableGUIForm
+public class CtrPanePrintedDocStock extends AChildPaneControllerExportPDF implements IFormMonasticProfile, IEditableGUIForm
 {
     @FXML
     private Spinner<Integer> spPrintedPhotos;
