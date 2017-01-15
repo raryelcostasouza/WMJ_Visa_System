@@ -430,7 +430,6 @@ public class CtrGUIMain
             loader = new FXMLLoader(getClass().getResource("paneBysuddhi.fxml"));
             paneBysuddhi = loader.load();
             ctrPaneBysuddhi = loader.getController();
-            System.out.println("hereLoaded");
 
             initChildPane(ctrPaneBysuddhi);
         }
