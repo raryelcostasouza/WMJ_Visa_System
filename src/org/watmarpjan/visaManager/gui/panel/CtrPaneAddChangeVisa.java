@@ -44,8 +44,8 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     private Button bClear;
     @FXML
     private Button bRegister;
-    
-     @FXML
+
+    @FXML
     private Button bPreview;
 
     @FXML
@@ -56,16 +56,16 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     {
         bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        
+
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
-        
+
         tfVisaNumber.textProperty().addListener((observable, oldValue, newValue) ->
         {
             if (newValue != null)
             {
-            tfVisaNumber.setText(newValue.toUpperCase());
+                tfVisaNumber.setText(newValue.toUpperCase());
             }
         });
     }
@@ -85,7 +85,7 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
             if (opStatus == 0)
             {
                 fillData(p);
-                CtrAlertDialog.infoDialog("Cleared successfully", "The previous departure scan was cleareds successfully.");
+                CtrAlertDialog.infoDialog("Cleared successfully", "The previous visa information was cleared successfully.");
             }
         }
     }
@@ -162,7 +162,7 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
                 && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null));
     }
-    
+
     @FXML
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
     {
