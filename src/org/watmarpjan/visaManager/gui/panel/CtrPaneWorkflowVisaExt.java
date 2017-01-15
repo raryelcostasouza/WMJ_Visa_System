@@ -21,8 +21,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrForm;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -58,6 +61,12 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
 
     @FXML
     private Button bReset;
+
+    @FXML
+    private Button bPreview;
+
+    @FXML
+    private Button bPrint;
 
     @FXML
     private TableView<EntryWorkflowVisaExt> tvOverview;
@@ -372,6 +381,9 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     @Override
     public void init()
     {
+        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+
         initChangeListener();
         initSpinner();
         initTableView();
@@ -671,6 +683,24 @@ public class CtrPaneWorkflowVisaExt extends AbstractChildPaneController implemen
     public boolean isSelectionEmpty()
     {
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
+    }
+
+    @FXML
+    void actionPreviewPDFWorkflow(ActionEvent ae)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrForm.OPTION_PREVIEW_FORM);
+    }
+
+    @FXML
+    void actionPrintPDFWorkflow(ActionEvent ae)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrForm.OPTION_PRINT_FORM);
     }
 
 }
