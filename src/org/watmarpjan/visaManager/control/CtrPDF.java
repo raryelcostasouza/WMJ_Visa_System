@@ -1020,7 +1020,7 @@ public class CtrPDF
     
     public void generatePDFPrintedDocStock(TableView tvPrintedDocStock, int option)
     {
-        generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Doc Stock", ORIENTATION_PORTRAIT, 0.33f, option);
+        generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
     }
 
     public void generatePDFSnapshotTableView(TableView objTV, String title, int orientation, float scale, int option)
