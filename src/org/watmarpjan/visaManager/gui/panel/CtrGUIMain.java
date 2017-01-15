@@ -298,7 +298,7 @@ public class CtrGUIMain
 
                 primaryStage = Init.MAIN_STAGE;
                 primaryStage.setScene(mainScene);
-                primaryStage.setTitle("WMJ Visa System");
+                primaryStage.setTitle("WMJ Visa System - " + Init.APP_VERSION);
                 primaryStage.setWidth(1600);
                 primaryStage.setHeight(990);
 
