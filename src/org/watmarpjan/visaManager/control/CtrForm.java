@@ -44,6 +44,7 @@ import org.apache.pdfbox.util.Matrix;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.EntryWorkflowVisaExt;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -707,7 +708,8 @@ public class CtrForm
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
 
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, MSG_ERROR);
         }
@@ -847,11 +849,25 @@ public class CtrForm
 
     }
 
-    private void fillPrintDate(PDPageContentStream objContentStream) throws IOException
+    private void fillPrintDate(PDPageContentStream objContentStream, PDPage objPage) throws IOException
     {
+        float posX, posY;
+        //for landscape page orientation
+        if (objPage.getRotation() == 90)
+        {
+            posX = PAGE_A4_HEIGHT_PX - 210;
+            posY = PAGE_A4_WIDTH_PX - 15;
+        }
+        //for default orientation
+        else
+        {
+            posX = PAGE_A4_WIDTH_PX - 210;
+            posY = PAGE_A4_HEIGHT_PX - 15;
+        }
+        
         objContentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
         objContentStream.beginText();
-        objContentStream.newLineAtOffset(PAGE_A4_WIDTH_PX - 210, PAGE_A4_HEIGHT_PX - 15);
+        objContentStream.newLineAtOffset(posX, posY);
         objContentStream.showText("Print Date: " + LocalDateTime.now().format(Util.DEFAULT_DATE_TIME_FORMAT));
         objContentStream.endText();
     }
@@ -887,7 +903,7 @@ public class CtrForm
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
 
-            fillPrintDate(contentStream);
+            fillPrintDate(contentStream, page1);
 
             contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
@@ -925,7 +941,8 @@ public class CtrForm
             }
             pdfDoc.close();
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with Due Tasks printout.");
         }
@@ -958,7 +975,7 @@ public class CtrForm
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
 
-            fillPrintDate(contentStream);
+            fillPrintDate(contentStream, page1);
 
             contentStream.setFont(font, fontSize);
             contentStream.beginText();
@@ -986,14 +1003,75 @@ public class CtrForm
             }
             pdfDoc.close();
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with Due Tasks printout.");
         }
 
     }
 
-    private BufferedImage snapshotGUIComponent(TableView<EntryDueTask> pGUIComponent)
+    public void generatePDFWorkflow(TableView<EntryWorkflowVisaExt> tvVisaExtAbroad, int option)
+    {
+        final float SCALE_WORKFLOW_SNAPSHOT = 0.33f;
+        PDDocument pdfDoc;
+        PDPage page1;
+        PDPageContentStream contentStream;
+        File outputFile;
+        PDFont font = PDType1Font.HELVETICA_BOLD;
+        int fontSize = 18;
+        BufferedImage imgVisaExtAbroad;
+        PDImageXObject pdfImgWFVisaExt;
+
+        outputFile = AppFiles.getFormTMPOutputPDF("Workflow-Visa-Extension");
+        pdfDoc = new PDDocument();
+        page1 = new PDPage(PDRectangle.A4);
+
+        page1.setRotation(90);
+        pdfDoc.addPage(page1);
+
+        imgVisaExtAbroad = snapshotGUIComponent(tvVisaExtAbroad);
+
+        try
+        {
+            pdfImgWFVisaExt = LosslessFactory.createFromImage(pdfDoc, imgVisaExtAbroad);
+
+            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+
+            // including a translation of pageWidth to use the lower left corner as 0,0 reference
+            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+
+            fillPrintDate(contentStream, page1);
+
+            contentStream.setFont(font, fontSize);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(20, PAGE_A4_WIDTH_PX - 40);
+            contentStream.showText("Workflow Visa Extension");
+            contentStream.endText();
+            contentStream.drawImage(pdfImgWFVisaExt, 20, PAGE_A4_WIDTH_PX - pdfImgWFVisaExt.getHeight() * SCALE_WORKFLOW_SNAPSHOT - 50, pdfImgWFVisaExt.getWidth() * SCALE_WORKFLOW_SNAPSHOT, pdfImgWFVisaExt.getHeight() * SCALE_WORKFLOW_SNAPSHOT);
+            contentStream.close();
+
+            pdfDoc.save(outputFile);
+
+            if (option == OPTION_PRINT_FORM)
+            {
+                printPDF(pdfDoc);
+            }
+            else
+            {
+                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+            }
+            pdfDoc.close();
+
+        }
+        catch (IOException e)
+        {
+            CtrAlertDialog.errorDialog("Error to generate pdf with Due Tasks printout.");
+        }
+
+    }
+
+    private BufferedImage snapshotGUIComponent(TableView pGUIComponent)
     {
         Rectangle rect;
         WritableImage writableImage;
@@ -1094,7 +1172,8 @@ public class CtrForm
             }
             pdfDoc.close();
 
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
         }
@@ -1129,7 +1208,8 @@ public class CtrForm
             }
             pdfDoc.close();
 
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
         }
@@ -1319,7 +1399,8 @@ public class CtrForm
                 CtrFileOperation.openPDFOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
-        } catch (IOException ioe)
+        }
+        catch (IOException ioe)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with Photo Page.");
         }
@@ -1339,7 +1420,8 @@ public class CtrForm
             try
             {
                 pj.print(attr);
-            } catch (PrinterException ex)
+            }
+            catch (PrinterException ex)
             {
                 CtrAlertDialog.exceptionDialog(ex, "Error to print form.");
             }
