@@ -37,14 +37,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import static java.lang.Integer.parseInt;
 
 /**
  *
  * @author WMJ_user
  */
-public class CtrPanePassport extends AbstractChildPaneController implements IFormMonasticProfile, IEditableGUIForm
+public class CtrPanePassport extends AbstractPDFPreviewPrintController implements IFormMonasticProfile, IEditableGUIForm
 {
 
     @FXML
@@ -181,21 +181,14 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     private FieldsPaneScanContent fieldsScan2;
     private FieldsPaneScanContent fieldsScan3;
 
-    @FXML
-    private Button bPreview;
-
-    @FXML
-    private Button bPrint;
-
     private final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
 
     @Override
     public void init()
     {
+        super.init();
         TableColumn tc1;
 
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         labelLock.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
@@ -1010,7 +1003,7 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPassportScans(p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -1018,6 +1011,6 @@ public class CtrPanePassport extends AbstractChildPaneController implements IFor
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPassportScans(p, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PRINT_FORM);
     }
 }

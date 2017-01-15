@@ -22,7 +22,7 @@ import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.dueTask.TaskNotice90D;
@@ -333,24 +333,24 @@ public class CtrPaneDueTasks extends AbstractChildPaneController
     @FXML
     void actionPrintDueTasksTH(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrPDF.OPTION_PRINT_FORM);
     }
 
     @FXML
     void actionPreviewDueTasksTH(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
     @FXML
     void actionPrintDueTasksAbroad(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrPDF.OPTION_PRINT_FORM);
     }
 
     @FXML
     void actionPreviewDueTasksAbroad(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksAbroad(tvAbroadVisaExtension, tvAbroadPassportRenewal, CtrPDF.OPTION_PREVIEW_FORM);
     }
 }

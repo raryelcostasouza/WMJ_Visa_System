@@ -677,7 +677,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractPDFPreviewPrintController im
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -686,7 +686,7 @@ public class CtrPaneWorkflowVisaExt extends AbstractPDFPreviewPrintController im
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PRINT_FORM);
     }
 
 }

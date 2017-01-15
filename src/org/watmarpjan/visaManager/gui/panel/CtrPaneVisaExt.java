@@ -25,7 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -279,7 +279,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormPrawat(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -287,7 +287,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -295,7 +295,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -303,7 +303,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -319,7 +319,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
         if (objTM30.getNotifDate() != null)
         {
             ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
-            ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PREVIEW_FORM, false);
+            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrPDF.OPTION_PREVIEW_FORM, false);
         }
         else
         {
@@ -332,7 +332,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -340,7 +340,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -348,7 +348,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormPrawat(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormPrawat(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML
@@ -356,7 +356,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML
@@ -364,7 +364,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML
@@ -372,7 +372,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML
@@ -388,7 +388,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
         if (objTM30.getNotifDate() != null)
         {
             ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
-            ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrForm.OPTION_PRINT_FORM, false);
+            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrPDF.OPTION_PRINT_FORM, false);
         }
         else
         {
@@ -401,7 +401,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormOverstay(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML
@@ -409,7 +409,7 @@ public class CtrPaneVisaExt extends AbstractChildPaneController implements IForm
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
 }

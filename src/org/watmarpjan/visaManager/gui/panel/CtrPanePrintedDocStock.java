@@ -228,7 +228,7 @@ public class CtrPanePrintedDocStock extends AbstractPDFPreviewPrintController im
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
     @FXML
@@ -237,7 +237,7 @@ public class CtrPanePrintedDocStock extends AbstractPDFPreviewPrintController im
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PRINT_FORM);
     }
 
 }

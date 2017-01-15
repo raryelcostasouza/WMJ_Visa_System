@@ -22,9 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -34,7 +33,7 @@ import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
  *
  * @author WMJ_user
  */
-public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEditableGUIForm, IFormMonasticProfile
+public class CtrPaneBysuddhi extends AbstractPDFPreviewPrintController implements IEditableGUIForm, IFormMonasticProfile
 {
 
     @FXML
@@ -84,8 +83,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
     @Override
     public void init()
     {
-        bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+        super.init();
         
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPahkahwOrd);
@@ -197,7 +195,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         MonasticProfile p;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFBysuddhiScans(p, CtrForm.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PREVIEW_FORM);
     }
     
     @FXML
@@ -206,7 +204,7 @@ public class CtrPaneBysuddhi extends AbstractChildPaneController implements IEdi
         MonasticProfile p;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().generatePDFBysuddhiScans(p, CtrForm.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PRINT_FORM);
     }
 
     @Override

@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -168,7 +168,7 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrForm.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -176,7 +176,7 @@ public class CtrPaneAddChangeVisa extends AbstractChildPaneController implements
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrForm.OPTION_PRINT_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
 }

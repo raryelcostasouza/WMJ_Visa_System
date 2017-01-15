@@ -19,7 +19,7 @@ import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrForm;
+import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -204,7 +204,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
     }
 
     @FXML
@@ -212,7 +212,7 @@ public class CtrPaneAddEntryReEntry extends AbstractChildPaneController implemen
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrForm().fillForm(AppFiles.getFormTM8Reentry(), p, CtrForm.OPTION_PRINT_FORM, cbReentryTogetherExtension.isSelected());
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PRINT_FORM, cbReentryTogetherExtension.isSelected());
     }
 
 }

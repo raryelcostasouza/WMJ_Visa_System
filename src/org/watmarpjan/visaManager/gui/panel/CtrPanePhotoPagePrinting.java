@@ -77,14 +77,14 @@ public class CtrPanePhotoPagePrinting extends AbstractPDFPreviewPrintController
     @FXML
     void actionPreviewPhotoPage(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PREVIEW_FORM);
         clearSelection();
     }
     
     @FXML
     void actionPrintPhotoPage(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrForm().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PRINT_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PRINT_FORM);
         clearSelection();
     }
     
