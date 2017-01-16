@@ -107,7 +107,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 
         //code for inserting a remove button on the last column
-        Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> actionCellFactory
+        Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>> removeColumnCellFactory
                 = new Callback<TableColumn<EntryVisaExt, String>, TableCell<EntryVisaExt, String>>()
         {
             @Override
@@ -116,7 +116,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
                 final TableCell<EntryVisaExt, String> cell = new TableCell<EntryVisaExt, String>()
                 {
 
-                    final Button btn = new Button("X");
+                    final Button btn = new Button("");
+                    final ImageView ivRemove = new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString());
 
                     @Override
                     public void updateItem(String item, boolean empty)
@@ -129,6 +130,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
                         }
                         else
                         {
+                            btn.setGraphic(ivRemove);
                             btn.setOnAction(new EventHandler<ActionEvent>()
                             {
                                 @Override
@@ -151,7 +153,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         tc = (TableColumn<EntryVisaExt, String>) tvExtensions.getColumns().get(2);
 
         tc.setCellValueFactory(new PropertyValueFactory<>("action"));
-        tc.setCellFactory(actionCellFactory);
+        tc.setCellFactory(removeColumnCellFactory);
     }
 
     @Override
