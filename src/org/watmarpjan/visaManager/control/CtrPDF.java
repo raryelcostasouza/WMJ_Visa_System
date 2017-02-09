@@ -91,7 +91,6 @@ public class CtrPDF
     private final float PAGE_A4_WIDTH_PX = PDRectangle.A4.getWidth();
 
     private final float SCALE_DUE_TASKS_SNAPSHOT = 0.3f;
-    
 
     public CtrPDF(CtrMain pCtrMain)
     {
@@ -139,8 +138,8 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaJangwatThai"));
 
         alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF1"));
-        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
-        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
+//        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
+//        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
@@ -251,11 +250,11 @@ public class CtrPDF
             }
             if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_TOH))
             {
-                acroForm.getField("dhammaStudiesThaiPDF2").setValue("นักธรรมตโท");
+                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมโท");
             }
             if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_EK))
             {
-                acroForm.getField("dhammaStudiesThaiPDF3").setValue("นักธรรมตเอก");
+                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมเอก");
             }
 
         }
@@ -676,7 +675,8 @@ public class CtrPDF
             {
                 fillTM7ReqExtension(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
+            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
+                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter().getName())))
             {
                 fillPrawat(pdfDocument, acroForm, p);
             }
@@ -1017,7 +1017,7 @@ public class CtrPDF
     {
         generatePDFSnapshotTableView(tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
     }
-    
+
     public void generatePDFPrintedDocStock(TableView tvPrintedDocStock, int option)
     {
         generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
@@ -1042,7 +1042,7 @@ public class CtrPDF
 
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
-        
+
         if (orientation == ORIENTATION_LANDSCAPE)
         {
             page1.setRotation(90);
@@ -1079,14 +1079,14 @@ public class CtrPDF
             fillPrintDate(contentStream, page1);
 
             //left margin for centering the snapshot
-            posX = (paperWidth - pdImgSnapshot.getWidth()*scale)/2.0f;
-            
+            posX = (paperWidth - pdImgSnapshot.getWidth() * scale) / 2.0f;
+
             contentStream.setFont(font, fontSize);
             contentStream.beginText();
             contentStream.newLineAtOffset(posX, posYTopPage - 40);
             contentStream.showText(title);
             contentStream.endText();
-            
+
             contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
             contentStream.close();
 

@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.io.File;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
@@ -277,12 +278,27 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
                 && (dpExpiryDate.getValue() != null);
     }
 
+    private File getPrawatTemplate(MonasticProfile p)
+    {
+        if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
+        {
+            return AppFiles.getFormPrawat();
+        }
+        else
+        {
+            return AppFiles.getFormPrawatPatimokkhaChanter();
+        }
+    }
+
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
+        File fPrawatTemplate;
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormPrawat(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        fPrawatTemplate = getPrawatTemplate(p);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -349,9 +365,12 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     @FXML
     void actionPrintPrawat(ActionEvent ae)
     {
+        File fPrawatTemplate;
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormPrawat(), p, CtrPDF.OPTION_PRINT_FORM, false);
+        
+        fPrawatTemplate = getPrawatTemplate(p);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PRINT_FORM, false);
     }
 
     @FXML

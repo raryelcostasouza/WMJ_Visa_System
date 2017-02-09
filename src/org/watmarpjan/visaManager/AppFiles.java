@@ -123,6 +123,11 @@ public class AppFiles
     {
         return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
     }
+    
+    public static File getFormPrawatPatimokkhaChanter()
+    {
+        return AppPaths.getPathToForms().resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
+    }
 
     public static File getPrintoutTM30(LocalDate ldNotifDate)
     {

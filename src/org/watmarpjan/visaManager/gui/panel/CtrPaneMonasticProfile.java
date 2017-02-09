@@ -102,6 +102,15 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     private ComboBox<String> cbAdvisorWat;
 
     @FXML
+    private ToggleGroup tgPatimokkhaChanter;
+
+    @FXML
+    private RadioButton rbPatimokkhaChanterYes;
+
+    @FXML
+    private RadioButton rbPatimokkhaChanterNo;
+
+    @FXML
     private ToggleGroup tgStatus;
     @FXML
     private RadioButton rbInThailand;
@@ -182,6 +191,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         listFields.add(tfSchool);
         listFields.add(tfGraduationYear);
         listFields.add(tfDuration);
+        listFields.add(tgPatimokkhaChanter);
         listFields.add(cbPreviousResidenceCountry);
         listFields.add(cbResidingAt);
         listFields.add(cbAdviserToCome);
@@ -345,6 +355,15 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             }
 
             cbAdviserToCome.setValue(p.getNameAdviserToCome());
+
+            if ((p.getPatimokkhaChanter() == null) || (!p.getPatimokkhaChanter()))
+            {
+                rbPatimokkhaChanterNo.setSelected(true);
+            }
+            else
+            {
+                rbPatimokkhaChanterYes.setSelected(true);
+            }
 
             if (p.getOnlineNoticeAccepted() != null)
             {
@@ -514,6 +533,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         cbAdviserToCome.setDisable(true);
         cbAdvisorWat.setDisable(true);
 
+        rbPatimokkhaChanterNo.setDisable(true);
+        rbPatimokkhaChanterYes.setDisable(true);
+
         rbOnlineNoticeNo.setDisable(true);
         rbOnlineNoticeYes.setDisable(true);
 
@@ -569,6 +591,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
         cbAdviserToCome.setDisable(false);
         cbAdvisorWat.setDisable(false);
+
+        rbPatimokkhaChanterNo.setDisable(false);
+        rbPatimokkhaChanterYes.setDisable(false);
 
         rbOnlineNoticeNo.setDisable(false);
         rbOnlineNoticeYes.setDisable(false);
@@ -673,6 +698,15 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
             wAdviserToCome = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbAdvisorWat.getValue());
             p.setMonasteryAdviserToCome(wAdviserToCome);
+        }
+
+        if (rbPatimokkhaChanterYes.isSelected())
+        {
+            p.setPatimokkhaChanter(true);
+        }
+        else
+        {
+            p.setPatimokkhaChanter(false);
         }
 
         p.setNameAdviserToCome(cbAdviserToCome.getValue());
