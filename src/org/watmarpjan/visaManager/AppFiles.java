@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
+import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
+import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -129,9 +131,37 @@ public class AppFiles
         return AppPaths.getPathToForms().resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
     }
 
-    public static File getPrintoutTM30(LocalDate ldNotifDate)
+    public static File getPrintoutTM30(PrintoutTm30 objTM30)
     {
-        return AppPaths.getPathToTM30Printout().resolve("TM30-" + ldNotifDate.format(DateTimeFormatter.ISO_DATE) + ".pdf").toFile();
+        String fileName;
+        LocalDate ldNotifDate;
+        Integer auxIndex;
+        
+        ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
+        auxIndex = objTM30.getAuxIndex();
+        
+        fileName = "TM30-" + ldNotifDate.format(DateTimeFormatter.ISO_DATE);
+        
+        //if there is more than one printout for a certain date
+        //it is necessary to add the auxIndex to the filename
+        if (auxIndex != null && auxIndex != 0)
+        {
+            fileName += "-"+auxIndex;
+        }
+        fileName+= ".pdf";
+        
+       return AppPaths.getPathToTM30Printout().resolve(fileName).toFile(); 
+    }
+    
+    public static File getPrintoutTM30(LocalDate ldNotif, int auxIndex)
+    {
+        PrintoutTm30 objTM30;
+        
+        objTM30 = new PrintoutTm30();
+        objTM30.setNotifDate(Util.convertLocalDateToDate(ldNotif));
+        objTM30.setAuxIndex(auxIndex);
+        
+        return getPrintoutTM30(objTM30);
     }
 
     public static File getOverlayWatermark()
