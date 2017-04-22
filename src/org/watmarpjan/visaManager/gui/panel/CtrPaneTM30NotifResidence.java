@@ -30,7 +30,6 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.BlockMonasticSelection;
 import org.watmarpjan.visaManager.model.EntryPrintoutTM30;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
-import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -47,7 +46,10 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
 
     @FXML
     private TableColumn<EntryPrintoutTM30, String> tcOpenPDF;
-
+    
+    @FXML
+    private TableColumn<EntryPrintoutTM30, String> tcRemovePrintout;
+    
     @FXML
     private TreeView<String> tvMonastics;
 
@@ -70,7 +72,9 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         
         tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
         tvSavedNotifications.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
+        
         tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
+        tcRemovePrintout.setCellValueFactory(new PropertyValueFactory<>(""));
 
         tvSavedNotifications.setColumnResizePolicy((param) -> true);
         Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> openPDFCellFactory =
@@ -101,12 +105,50 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                                     -> 
                                     {
                                         EntryPrintoutTM30 clickedEntry;
-                                        LocalDate ldNotif;
-                                        
                                         clickedEntry = getTableView().getItems().get(getIndex());
-                                        ldNotif = Util.convertDateToLocalDate(clickedEntry.getPrintoutTM30().getNotifDate());
-                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(ldNotif));
+                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getPrintoutTM30()));
                             });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        
+         Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> removePrintoutCellFactory =
+                new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
+        {
+            @Override
+            public TableCell call(final TableColumn<EntryPrintoutTM30, String> param)
+            {
+                final TableCell<EntryPrintoutTM30, String> cell = new TableCell<EntryPrintoutTM30, String>()
+                {
+
+                    final Button btn = new Button("");
+                    final ImageView ivRemoveIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString());
+
+                    @Override
+                    public void updateItem(String item, boolean empty)
+                    {
+                        super.updateItem(item, empty);
+                        if (empty)
+                        {
+                            setGraphic(null);
+                            setText(null);
+                        } else
+                        {
+
+                            btn.setGraphic(ivRemoveIcon);
+                            btn.setOnAction((ActionEvent event)
+                                    -> 
+                                    {
+                                        EntryPrintoutTM30 clickedEntry;
+                                        clickedEntry = getTableView().getItems().get(getIndex());
+                                        actionRemovePrintout(event, clickedEntry);
+                            });
+                            
                             setGraphic(btn);
                             setText(null);
                         }
@@ -117,6 +159,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         };
 
         tcOpenPDF.setCellFactory(openPDFCellFactory);
+        tcRemovePrintout.setCellFactory(removePrintoutCellFactory);
     }
 
     public void fillData()
@@ -153,17 +196,32 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
     void actionAddNew(ActionEvent ae)
     {
         LocalDate ldNotifDate;
-        int opStatus2, opStatus1;
+        int opStatus2, opStatus1, auxIndex;
+        Integer nMaxAuxIndex;
 
         ldNotifDate = dpNotification.getValue();
 
         if (validateFields())
         {
-            opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate));
+            //if there is more than one printout on the same date
+            //they will have different auxIndex values
+            nMaxAuxIndex = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().getMaxAuxIndexPrintoutForNotifDate(ldNotifDate);
+            
+            //if there is no entry registered for the selected notif date
+            if (nMaxAuxIndex == null)
+            {
+                auxIndex = 0;
+            }
+            else
+            {
+                auxIndex = nMaxAuxIndex +1;
+            }
+            
+            opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate, auxIndex));
             //if the file copy was successfull
             if (opStatus1 == 0)
             {
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().addNewPrintout(ldNotifDate, getNicknameSelectedMonastics());
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().addNewPrintout(ldNotifDate, getNicknameSelectedMonastics(), auxIndex);
                 //if the DB update was successfull
                 if (opStatus2 == 0)
                 {
@@ -171,7 +229,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                     fillData();
                 } else
                 {
-                    CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate));
+                    CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate,auxIndex));
                 }
             }
         }
@@ -181,6 +239,28 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         }
     }
 
+    @FXML
+    void actionRemovePrintout(ActionEvent ae, EntryPrintoutTM30 objEntryTM30)
+    {
+        String msg;
+        boolean confirmation;
+        int opStatus;
+    
+         msg = "Are you sure that you want to remove the following TM30 Printout entry?\n"
+                + "Notification Date: " + objEntryTM30.getPNotifDate() + "\n"
+                + "Monastics: " + objEntryTM30.getPListMonasticNickname();
+
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
+        if (confirmation)
+        {
+            opStatus = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().removePrintout(objEntryTM30.getPrintoutTM30());
+            if (opStatus == 0)
+            {
+                tvSavedNotifications.getItems().remove(objEntryTM30);
+            }
+        }
+    }
+    
     @FXML
     void actionSelectFile(ActionEvent ae)
     {

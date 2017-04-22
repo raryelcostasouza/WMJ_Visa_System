@@ -25,16 +25,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author WMJ_user
+ * @author wmj_user
  */
 @Entity
 @Table(name = "PRINTOUT_TM30")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p"),
-    @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout"),
-    @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
+    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p")
+    , @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout")
+    , @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
+    , @NamedQuery(name = "PrintoutTm30.findByAuxIndex", query = "SELECT p FROM PrintoutTm30 p WHERE p.auxIndex = :auxIndex")
 })
 public class PrintoutTm30 implements Serializable
 {
@@ -49,6 +50,8 @@ public class PrintoutTm30 implements Serializable
     @Column(name = "NOTIF_DATE")
     @Temporal(TemporalType.DATE)
     private Date notifDate;
+    @Column(name = "AUX_INDEX")
+    private Integer auxIndex;
     @OneToMany(mappedBy = "printoutTm30")
     private Set<MonasticProfile> monasticProfileSet;
 
@@ -85,6 +88,16 @@ public class PrintoutTm30 implements Serializable
     public void setNotifDate(Date notifDate)
     {
         this.notifDate = notifDate;
+    }
+
+    public Integer getAuxIndex()
+    {
+        return auxIndex;
+    }
+
+    public void setAuxIndex(Integer auxIndex)
+    {
+        this.auxIndex = auxIndex;
     }
 
     @XmlTransient
@@ -127,5 +140,5 @@ public class PrintoutTm30 implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.PrintoutTm30[ idPrintout=" + idPrintout + " ]";
     }
-
+    
 }
