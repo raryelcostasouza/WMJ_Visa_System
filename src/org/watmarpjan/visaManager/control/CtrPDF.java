@@ -1250,6 +1250,7 @@ public class CtrPDF
         }
         catch (IOException ex)
         {
+            System.out.println(ex.getMessage());
             CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
         }
     }
@@ -1280,13 +1281,13 @@ public class CtrPDF
         fScanPassportFirstPage = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
         fScanDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
 
-        if (fScanPassportFirstPage != null || fScanDepartureCard != null)
+        if (fScanPassportFirstPage.exists() || fScanDepartureCard.exists())
         {
             page1 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page1);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            if (fScanPassportFirstPage != null)
+            if (fScanPassportFirstPage.exists())
             {
                 imgPassportScan = PDImageXObject.createFromFile(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()).toString(), pdfDoc);
 
@@ -1298,7 +1299,7 @@ public class CtrPDF
                 contentStream.drawImage(imgPassportScan, tMatrix);
             }
 
-            if (fScanDepartureCard != null)
+            if (fScanDepartureCard.exists())
             {
                 imgDepartureCardScan = PDImageXObject.createFromFile(AppFiles.getScanDepartureCard(p.getNickname()).toString(), pdfDoc);
                 contentStream.drawImage(imgDepartureCardScan, 40, 50, departureCardScanWidth, departureCardScanHeight);
