@@ -91,6 +91,13 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
 
         listFields.add(tfName);
         listFields.add(cbAddrCountry);
+        
+        listFields.add(tfTHAddrProvince);
+        listFields.add(tfTHAddrAmpher);
+        listFields.add(tfTHAddrTambol);
+        listFields.add(tfTHAddrRoad);
+        listFields.add(tfTHAddrNumber);       
+        
         listFields.add(tfAddrProvince);
         listFields.add(tfAddrAmpher);
         listFields.add(tfAddrTambol);
@@ -99,6 +106,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields.add(tfPhoneNumber);
         listFields.add(tgJaokana);
         listFields.add(tgCountry);
+        
+        
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
@@ -114,11 +123,18 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         rbCountryOther.setDisable(true);
         rbCountryThailand.setDisable(true);
         cbAddrCountry.setDisable(true);
+        
         tfAddrProvince.setEditable(false);
         tfAddrAmpher.setEditable(false);
         tfAddrTambol.setEditable(false);
         tfAddrRoad.setEditable(false);
         tfAddrNumber.setEditable(false);
+        
+        tfTHAddrProvince.setEditable(false);
+        tfTHAddrAmpher.setEditable(false);
+        tfTHAddrTambol.setEditable(false);
+        tfTHAddrRoad.setEditable(false);
+        tfTHAddrNumber.setEditable(false);
 
         rbNo.setDisable(true);
         rbJkJangwat.setDisable(true);
@@ -171,19 +187,19 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
 
             if (rbCountryThailand.isSelected())
             {
+                 m.setAddrJangwat(tfTHAddrProvince.getText());
+                m.setAddrAmpher(tfTHAddrAmpher.getText());
+                m.setAddrTambon(tfTHAddrTambol.getText());
+                m.setAddrRoad(tfTHAddrRoad.getText());
+                m.setAddrNumber(tfTHAddrNumber.getText());
+            }
+            else
+            {
                 m.setAddrJangwat(tfAddrProvince.getText());
                 m.setAddrAmpher(tfAddrAmpher.getText());
                 m.setAddrTambon(tfAddrTambol.getText());
                 m.setAddrRoad(tfAddrRoad.getText());
                 m.setAddrNumber(tfAddrNumber.getText());
-            }
-            else
-            {
-                m.setAddrJangwat(tfTHAddrProvince.getText());
-                m.setAddrAmpher(tfTHAddrAmpher.getText());
-                m.setAddrTambon(tfTHAddrTambol.getText());
-                m.setAddrRoad(tfTHAddrRoad.getText());
-                m.setAddrNumber(tfTHAddrNumber.getText());
             }
 
             opStatus = ctrGUIMain.getCtrMain().getCtrMonastery().updateMonastery(m);
@@ -243,6 +259,12 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         tfAddrTambol.setEditable(true);
         tfAddrRoad.setEditable(true);
         tfAddrNumber.setEditable(true);
+        
+        tfTHAddrProvince.setEditable(true);
+        tfTHAddrAmpher.setEditable(true);
+        tfTHAddrTambol.setEditable(true);
+        tfTHAddrRoad.setEditable(true);
+        tfTHAddrNumber.setEditable(true);
 
         rbNo.setDisable(false);
         rbJkJangwat.setDisable(false);
