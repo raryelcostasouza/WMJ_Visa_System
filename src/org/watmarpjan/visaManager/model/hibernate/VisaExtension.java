@@ -24,17 +24,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author WMJ_user
+ * @author wmj_user
  */
 @Entity
 @Table(name = "VISA_EXTENSION")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "VisaExtension.findAll", query = "SELECT v FROM VisaExtension v"),
-    @NamedQuery(name = "VisaExtension.findByIdVisaExtension", query = "SELECT v FROM VisaExtension v WHERE v.idVisaExtension = :idVisaExtension"),
-    @NamedQuery(name = "VisaExtension.findByExpiryDate", query = "SELECT v FROM VisaExtension v WHERE v.expiryDate = :expiryDate"),
-    @NamedQuery(name = "VisaExtension.findByExtNumber", query = "SELECT v FROM VisaExtension v WHERE v.extNumber = :extNumber")
+    @NamedQuery(name = "VisaExtension.findAll", query = "SELECT v FROM VisaExtension v")
+    , @NamedQuery(name = "VisaExtension.findByIdVisaExtension", query = "SELECT v FROM VisaExtension v WHERE v.idVisaExtension = :idVisaExtension")
+    , @NamedQuery(name = "VisaExtension.findByExpiryDate", query = "SELECT v FROM VisaExtension v WHERE v.expiryDate = :expiryDate")
+    , @NamedQuery(name = "VisaExtension.findByExtNumber", query = "SELECT v FROM VisaExtension v WHERE v.extNumber = :extNumber")
 })
 public class VisaExtension implements Serializable
 {
@@ -141,5 +141,5 @@ public class VisaExtension implements Serializable
     {
         return "org.watmarpjan.visaManager.model.hibernate.VisaExtension[ idVisaExtension=" + idVisaExtension + " ]";
     }
-
+    
 }
