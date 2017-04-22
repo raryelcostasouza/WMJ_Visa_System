@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
+<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
@@ -171,7 +171,7 @@
                 </VBox>
             </content>
         </TitledPane>
-      <HBox spacing="-0.0" VBox.vgrow="NEVER">
+      <HBox spacing="-0.0">
          <children>
               <TitledPane animated="false" collapsible="false" maxWidth="1.7976931348623157E308" text="Residence">
                   <content>
@@ -221,6 +221,20 @@
                       </HBox>
                   </content>
               </TitledPane>
+            <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Pāṭimokkha Chanter">
+               <content>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <RadioButton fx:id="rbPatimokkhaChanterYes" disable="true" mnemonicParsing="false" text="Yes">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="tgPatimokkhaChanter" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbPatimokkhaChanterNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgPatimokkhaChanter" />
+                     </children>
+                  </HBox>
+               </content>
+            </TitledPane>
          </children>
       </HBox>
       <HBox VBox.vgrow="NEVER">
