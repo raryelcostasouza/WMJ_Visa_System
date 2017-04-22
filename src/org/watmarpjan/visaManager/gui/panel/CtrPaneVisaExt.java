@@ -329,16 +329,14 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     void actionPreviewTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        LocalDate ldNotifDate;
         PrintoutTm30 objTM30;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         objTM30 = p.getPrintoutTm30();
 
-        if (objTM30.getNotifDate() != null)
+        if (objTM30 != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
-            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PREVIEW_FORM, false);
         }
         else
         {
@@ -401,16 +399,14 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     void actionPrintTM30NotifResidence(ActionEvent ae)
     {
         MonasticProfile p;
-        LocalDate ldNotifDate;
         PrintoutTm30 objTM30;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         objTM30 = p.getPrintoutTm30();
 
-        if (objTM30.getNotifDate() != null)
+        if (objTM30 != null)
         {
-            ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
-            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(ldNotifDate), p, CtrPDF.OPTION_PRINT_FORM, false);
+            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PRINT_FORM, false);
         }
         else
         {
