@@ -1007,11 +1007,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
-    @FXML
-    void actionPrintScans(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PRINT_FORM);
-    }
+//    @FXML
+//    void actionPrintScans(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PRINT_FORM);
+//    }
 }

@@ -78,8 +78,8 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     @FXML
     private Button bPreview;
     
-    @FXML
-    private Button bPrint;
+//    @FXML
+//    private Button bPrint;
 
     @Override
     public void init()
@@ -199,14 +199,14 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PREVIEW_FORM);
     }
     
-    @FXML
-    void actionPrintScans(ActionEvent ae)
-    {
-        MonasticProfile p;
-        
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PRINT_FORM);
-    }
+//    @FXML
+//    void actionPrintScans(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PRINT_FORM);
+//    }
 
     @Override
     public void fillData(MonasticProfile p)

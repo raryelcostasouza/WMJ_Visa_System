@@ -198,12 +198,12 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
     }
 
-    @FXML
-    void actionPrintFormTM8Reentry(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PRINT_FORM, cbReentryTogetherExtension.isSelected());
-    }
+//    @FXML
+//    void actionPrintFormTM8Reentry(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PRINT_FORM, cbReentryTogetherExtension.isSelected());
+//    }
 
 }

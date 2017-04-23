@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePhotoPagePrinting">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePhotoPagePrinting">
    <children>
       <TitledPane collapsible="false" text="Photo Page Printing">
          <content>
@@ -37,7 +36,6 @@
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Button fx:id="bPreview" disable="true" mnemonicParsing="false" onAction="#actionPreviewPhotoPage" text="Preview" />
-                        <Button fx:id="bPrint" disable="true" mnemonicParsing="false" onAction="#actionPrintPhotoPage" text="Print" />
                      </children>
                   </HBox>
                </children>

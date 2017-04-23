@@ -232,13 +232,13 @@ public class CtrPanePrintedDocStock extends AChildPaneControllerExportPDF implem
         ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
-    @FXML
-    void actionPrintPDF(ActionEvent ae)
-    {
-        MonasticProfile p;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PRINT_FORM);
-    }
+//    @FXML
+//    void actionPrintPDF(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPrintedDocStock(tvOverview, CtrPDF.OPTION_PRINT_FORM);
+//    }
 
 }

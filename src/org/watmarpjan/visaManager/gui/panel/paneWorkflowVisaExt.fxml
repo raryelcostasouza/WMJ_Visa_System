@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneWorkflowVisaExt">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneWorkflowVisaExt">
    <children>
       <TitledPane collapsible="false" text="Workflow Visa Extension">
          <content>
@@ -113,7 +113,6 @@
                   <HBox alignment="CENTER" spacing="10.0">
                      <children>
                         <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewPDF" text="Preview" />
-                        <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintPDF" text="Print" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">

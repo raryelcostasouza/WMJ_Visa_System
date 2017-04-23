@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddChangeVisa">
    <children>
       <TitledPane collapsible="false" text="Forms">
@@ -23,7 +22,6 @@
                <children>
                   <Label text="TM86 - Visa Change" />
                   <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewFormTM86VisaChange" text="Preview" />
-                  <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintFormTM86VisaChange" text="Print" />
                </children>
             </HBox>
          </content>

@@ -681,13 +681,13 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
         ctrGUIMain.getCtrMain().getCtrPDF().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PREVIEW_FORM);
     }
 
-    @FXML
-    void actionPrintPDF(ActionEvent ae)
-    {
-        MonasticProfile p;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PRINT_FORM);
-    }
+//    @FXML
+//    void actionPrintPDF(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFWorkflow(tvOverview, CtrPDF.OPTION_PRINT_FORM);
+//    }
 
 }

@@ -82,17 +82,17 @@ public class CtrPanePhotoPagePrinting extends AChildPaneControllerExportPDF
         clearSelection();
     }
     
-    @FXML
-    void actionPrintPhotoPage(ActionEvent ae)
-    {
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PRINT_FORM);
-        clearSelection();
-    }
+//    @FXML
+//    void actionPrintPhotoPage(ActionEvent ae)
+//    {
+//        ctrGUIMain.getCtrMain().getCtrPDF().generatePhotoPage(cbMonastic1.getValue(), cbMonastic2.getValue(), CtrPDF.OPTION_PRINT_FORM);
+//        clearSelection();
+//    }
     
     private void setDisablePrintButtons(boolean newStatus)
     {
         bPreview.setDisable(newStatus);
-        bPrint.setDisable(newStatus);
+//        bPrint.setDisable(newStatus);
     }
 
 }

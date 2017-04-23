@@ -69,20 +69,20 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     @FXML
     private Button bPreview7;
 
-    @FXML
-    private Button bPrint1;
-    @FXML
-    private Button bPrint2;
-    @FXML
-    private Button bPrint3;
-    @FXML
-    private Button bPrint4;
-    @FXML
-    private Button bPrint5;
-    @FXML
-    private Button bPrint6;
-    @FXML
-    private Button bPrint7;
+//    @FXML
+//    private Button bPrint1;
+//    @FXML
+//    private Button bPrint2;
+//    @FXML
+//    private Button bPrint3;
+//    @FXML
+//    private Button bPrint4;
+//    @FXML
+//    private Button bPrint5;
+//    @FXML
+//    private Button bPrint6;
+//    @FXML
+//    private Button bPrint7;
 
     @Override
     public void init()
@@ -97,13 +97,13 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
-        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint2.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint3.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint4.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint5.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint6.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-        bPrint7.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint2.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint3.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint4.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint5.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint6.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint7.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 
@@ -360,74 +360,74 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
-    @FXML
-    void actionPrintPrawat(ActionEvent ae)
-    {
-        File fPrawatTemplate;
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        
-        fPrawatTemplate = getPrawatTemplate(p);
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
-
-    @FXML
-    void actionPrintLetterSamnakput(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
-
-    @FXML
-    void actionPrintLetterImmigration(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
-
-    @FXML
-    void actionPrintTM7ExtRequest(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
-
-    @FXML
-    void actionPrintTM30NotifResidence(ActionEvent ae)
-    {
-        MonasticProfile p;
-        PrintoutTm30 objTM30;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objTM30 = p.getPrintoutTm30();
-
-        if (objTM30 != null)
-        {
-            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PRINT_FORM, false);
-        }
-        else
-        {
-            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
-        }
-    }
-
-    @FXML
-    void actionPrintAckOverstayPenalties(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
-
-    @FXML
-    void actionPrintSTM2AckConditions(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
+//    @FXML
+//    void actionPrintPrawat(ActionEvent ae)
+//    {
+//        File fPrawatTemplate;
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        
+//        fPrawatTemplate = getPrawatTemplate(p);
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
+//
+//    @FXML
+//    void actionPrintLetterSamnakput(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
+//
+//    @FXML
+//    void actionPrintLetterImmigration(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
+//
+//    @FXML
+//    void actionPrintTM7ExtRequest(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
+//
+//    @FXML
+//    void actionPrintTM30NotifResidence(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        PrintoutTm30 objTM30;
+//
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        objTM30 = p.getPrintoutTm30();
+//
+//        if (objTM30 != null)
+//        {
+//            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PRINT_FORM, false);
+//        }
+//        else
+//        {
+//            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
+//        }
+//    }
+//
+//    @FXML
+//    void actionPrintAckOverstayPenalties(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
+//
+//    @FXML
+//    void actionPrintSTM2AckConditions(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
 
 }

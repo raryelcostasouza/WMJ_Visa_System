@@ -162,12 +162,12 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
-    @FXML
-    void actionPrintFormTM86VisaChange(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
+//    @FXML
+//    void actionPrintFormTM86VisaChange(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
 
 }

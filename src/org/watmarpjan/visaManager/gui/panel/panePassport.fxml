@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePassport">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePassport">
     <left>
         <VBox>
             <children>
@@ -208,7 +208,6 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
-                  <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintScans" text="Print Scans" />
                </children>
             </HBox>
               <ScrollPane prefHeight="820.0" prefWidth="1050.0">

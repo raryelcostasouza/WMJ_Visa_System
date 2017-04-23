@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
   <tabs>
     <Tab text="Register 90 day Notice">
          <content>
@@ -37,7 +37,6 @@
                               <Pane prefHeight="36.0" prefWidth="56.0" />
                               <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewForm90day" text="Preview" />
                               <Pane prefHeight="36.0" prefWidth="56.0" />
-                              <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintForm" text="Print" />
                               <VBox />
                            </children>
                            <opaqueInsets>

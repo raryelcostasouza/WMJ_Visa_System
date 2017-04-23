@@ -368,13 +368,13 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
-    @FXML
-    void actionPrintForm(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrPDF.OPTION_PRINT_FORM, false);
-    }
+//    @FXML
+//    void actionPrintForm(ActionEvent ae)
+//    {
+//        MonasticProfile p;
+//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+//        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrPDF.OPTION_PRINT_FORM, false);
+//    }
 
     @FXML
     void actionUpdate90Day(ActionEvent ae)

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
    <children>
       <TitledPane collapsible="false" text="Forms">
          <content>
@@ -25,7 +25,6 @@
                      <children>
                         <Label text="TM8 - Application for re-entry:" />
                         <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewFormTM8Reentry" text="Preview" />
-                        <Button fx:id="bPrint" mnemonicParsing="false" onAction="#actionPrintFormTM8Reentry" text="Print" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
