@@ -20,14 +20,14 @@ public class AChildPaneControllerExportPDF extends AChildPaneController
     @FXML
     protected Button bPreview;
 
-    @FXML
-    protected Button bPrint;
+//    @FXML
+//    protected Button bPrint;
 
     @Override
     public void init()
     {
         bPreview.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
+//        bPrint.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
     }
 
 }
