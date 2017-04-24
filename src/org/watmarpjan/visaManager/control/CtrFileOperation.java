@@ -93,27 +93,39 @@ public class CtrFileOperation
 
     public static int archiveScanFile(String profileNickName, String scanType, File f2Archive)
     {
-        File fProfileArchive;
-        Path pSourceFile, pDestFile, pProfileArchive;
-        String fileNameWithoutExtension;
+         //the path to the archive subfolder for the specified profile and scantype
+        return archiveFile(f2Archive, AppPaths.getPathArchiveScan(profileNickName, scanType));
+    }
+    
+    public static int archivePrintoutTM30(File fPrintoutTM30)
+    {
+        return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
+    }
+    
+    private static int archiveFile(File f2Archive, Path pDestArchive)
+    {
+        File fDestArchive;
+        Path pSourceFile, pDestFile;
+        String fileNameWithoutExtension, fExtension;
         DateTimeFormatter dFFileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-kk'h'mm'm'ss's'");
 
         fileNameWithoutExtension = Util.getFileNameWithoutExtension(f2Archive);
+        fExtension = Util.getFileExtension(f2Archive);
+        
         pSourceFile = f2Archive.toPath();
 
         //the path to the archive subfolder for the specified profile and scantype
-        pProfileArchive = AppPaths.getPathArchiveFolder(profileNickName, scanType);
-        fProfileArchive = pProfileArchive.toFile();
+        fDestArchive = pDestArchive.toFile();
 
         //add a timestamp of the archiving time to the beginning of the fileName
-        pDestFile = pProfileArchive.resolve(LocalDateTime.now().format(dFFileName) + "-" + fileNameWithoutExtension + ".jpg");
+        pDestFile = pDestArchive.resolve(LocalDateTime.now().format(dFFileName) + "-" + fileNameWithoutExtension + "." + fExtension);
 
         try
         {
-            //if the archive directory for this profile does not exist, creates it
-            if (!fProfileArchive.exists())
+            //if the archive directory does not exist, creates it
+            if (!fDestArchive.exists())
             {
-                fProfileArchive.mkdirs();
+                fDestArchive.mkdirs();
             }
             Files.move(pSourceFile, pDestFile);
             return 0;

@@ -244,7 +244,8 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
     {
         String msg;
         boolean confirmation;
-        int opStatus;
+        int opStatusDB, opStatusArchive;
+        PrintoutTm30 objTM30;
     
          msg = "Are you sure that you want to remove the following TM30 Printout entry?\n"
                 + "Notification Date: " + objEntryTM30.getPNotifDate() + "\n"
@@ -253,10 +254,16 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
         if (confirmation)
         {
-            opStatus = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().removePrintout(objEntryTM30.getPrintoutTM30());
-            if (opStatus == 0)
+            objTM30 = objEntryTM30.getPrintoutTM30();
+            opStatusDB = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().removePrintout(objTM30);
+            if (opStatusDB == 0)
             {
                 tvSavedNotifications.getItems().remove(objEntryTM30);
+                opStatusArchive = CtrFileOperation.archivePrintoutTM30(AppFiles.getPrintoutTM30(objTM30));
+                if (opStatusArchive == 0)
+                {
+                    CtrAlertDialog.infoDialog("Archived successfully", "The TM30 Printout was archived successfully.");
+                }
             }
         }
     }

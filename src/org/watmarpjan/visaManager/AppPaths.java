@@ -25,9 +25,19 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName);
     }
 
-    public static Path getPathArchiveFolder(String nickName, String scanType)
+    private static Path getPathArchiveFolder()
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Archive/" + nickName + "/Scans/" + scanType);
+        return Paths.get(System.getProperty("user.dir")).resolve("../Archive/");
+    }
+
+    public static Path getPathArchiveScan(String nickName, String scanType)
+    {
+        return getPathArchiveFolder().resolve(nickName + "/Scans/" + scanType);
+    }
+
+    public static Path getPathArchivePrintoutTM30()
+    {
+        return getPathArchiveFolder().resolve("TM30-Printout/");
     }
 
     public static Path getPathToPassportSubFolder(String nickName)
@@ -89,7 +99,8 @@ public class AppPaths
             try
             {
                 Files.createDirectory(PATH_TMP_FOLDER);
-            } catch (IOException ex)
+            }
+            catch (IOException ex)
             {
                 CtrAlertDialog.exceptionDialog(ex, "Unable to create TMP folder");
                 return null;
