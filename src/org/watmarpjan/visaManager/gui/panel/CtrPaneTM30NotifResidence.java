@@ -248,6 +248,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         PrintoutTm30 objTM30;
     
          msg = "Are you sure that you want to remove the following TM30 Printout entry?\n"
+                 + "(Note: The printout file will be archived)\n "
                 + "Notification Date: " + objEntryTM30.getPNotifDate() + "\n"
                 + "Monastics: " + objEntryTM30.getPListMonasticNickname();
 
