@@ -40,7 +40,7 @@
                                                                 <TableView fx:id="tvTH90DayNotice" stylesheets="@tableViewPaneDueTasks.css">
                                                                     <columns>
                                                                         <TableColumn minWidth="-1.0" prefWidth="53.0" text="Action" />
-                                                                        <TableColumn minWidth="-1.0" prefWidth="118.0" text="Monastic" />
+                                                                        <TableColumn minWidth="-1.0" prefWidth="140.0" text="Monastic" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
@@ -68,7 +68,7 @@
                                                                 <TableView fx:id="tvTHVisaExtension" stylesheets="@tableViewPaneDueTasks.css">
                                                                     <columns>
                                                                         <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
@@ -95,7 +95,7 @@
                                                                 <TableView fx:id="tvTHPassportRenewal" stylesheets="@tableViewPaneDueTasks.css">
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
@@ -134,7 +134,7 @@
                                                                 <TableView fx:id="tvAbroadVisaExtension" stylesheets="@tableViewPaneDueTasks.css">
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
@@ -161,7 +161,7 @@
                                                                 <TableView fx:id="tvAbroadPassportRenewal" stylesheets="@tableViewPaneDueTasks.css">
                                                                     <columns>
                                                                         <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Action" />
-                                                                        <TableColumn minWidth="-Infinity" prefWidth="118.0" text="Monastic" />
+                                                                        <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                         <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                         <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
