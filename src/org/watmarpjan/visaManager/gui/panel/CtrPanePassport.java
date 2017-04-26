@@ -50,6 +50,12 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     @FXML
     private Label labelLock;
+    @FXML
+    private Label labelLock2;
+    @FXML
+    private Label labelLock3;
+    @FXML
+    private Label labelLock4;
 
     @FXML
     private ImageView ivPassportScan;
@@ -191,7 +197,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         TableColumn tc1;
 
         labelLock.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
-
+        labelLock2.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
+        labelLock3.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
+        labelLock4.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
+        
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpFirstEntryDate);
@@ -695,10 +704,16 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             //for a registered scan
             else
             {
-                ps = listPassportScan.get(0);
-                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                if (listPassportScan.size() >=1)
+                {
+                    ps = listPassportScan.get(0);
+                    fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                }
+                else
+                {
+                    fImgScan = null;
+                }
             }
-
         }
         else if (me.getSource().equals(ivScan2))
         {
@@ -710,8 +725,16 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             //for a registered scan
             else
             {
-                ps = listPassportScan.get(1);
-                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                if (listPassportScan.size() >=2)
+                {
+                    ps = listPassportScan.get(1);
+                    fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                }
+                else
+                {
+                    fImgScan = null;
+                }
+                
             }
         }
         else
@@ -724,8 +747,16 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             //for a registered scan
             else
             {
-                ps = listPassportScan.get(2);
-                fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                if (listPassportScan.size() >=3)
+                {
+                    ps = listPassportScan.get(2);
+                    fImgScan = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
+                }
+                else 
+                {
+                    fImgScan = null;
+                }
+                
             }
         }
 
@@ -949,6 +980,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     public void actionLockEdit()
     {
         MonasticProfile p;
+        
+        tfpassportIssuedAt.setEditable(false);
+        dpPassportIssueDate.setDisable(true);
+        dpPassportExpiryDate.setDisable(true);
         dpFirstEntryDate.setDisable(true);
 
         bScanPassport.setDisable(true);
@@ -973,6 +1008,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         MonasticProfile p;
 
+        tfpassportIssuedAt.setEditable(true);
+        dpPassportIssueDate.setDisable(false);
+        dpPassportExpiryDate.setDisable(false);
         dpFirstEntryDate.setDisable(false);
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -988,6 +1026,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
+        p.setPassportIssuedAt(tfpassportIssuedAt.getText());
+        p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
+        p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
         operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
 

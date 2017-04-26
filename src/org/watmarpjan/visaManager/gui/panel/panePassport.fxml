@@ -54,23 +54,47 @@
                            </GridPane.margin>
                         </Label>
                         <TextField fx:id="tfpassportCountry" editable="false" layoutX="124.0" layoutY="22.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Issued at:" GridPane.rowIndex="2">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfpassportIssuedAt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label layoutX="30.0" layoutY="57.0" text="Issue Date:" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
-                        </Label>
+                           <children>
+                              <Label fx:id="labelLock2" />
+                                      <Label text="Issued at:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                      </Label>
+                           </children>
+                        </HBox>
+                                <TextField fx:id="tfpassportIssuedAt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                           <children>
+                              <Label fx:id="labelLock3" />
+                              <Label text="Issue Date:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                         <DatePicker fx:id="dpPassportIssueDate" disable="true" layoutX="112.0" layoutY="113.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="Expiry Date:" GridPane.rowIndex="4">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
+                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                           <children>
+                              <Label fx:id="labelLock4" />
+                                      <Label text="Expiry Date:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                      </Label>
+                           </children>
+                        </HBox>
                                 <DatePicker fx:id="dpPassportExpiryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
