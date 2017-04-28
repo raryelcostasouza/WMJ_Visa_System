@@ -17,7 +17,7 @@
     <center>
         <TabPane fx:id="rootPane" prefHeight="850.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab closable="false" text="Thailand">
+                <Tab fx:id="tThailand" closable="false" text="Thailand">
                     <content>
                         <VBox alignment="TOP_CENTER">
                             <children>
@@ -114,7 +114,7 @@
                         </VBox>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Abroad">
+                <Tab fx:id="tAbroad" closable="false" text="Abroad">
                     <content>
                         <VBox alignment="TOP_CENTER">
                             <children>
