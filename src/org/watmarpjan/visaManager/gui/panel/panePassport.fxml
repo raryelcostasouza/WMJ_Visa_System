@@ -67,7 +67,6 @@
                                       </Label>
                            </children>
                         </HBox>
-                                <TextField fx:id="tfpassportIssuedAt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="10.0" />
@@ -96,6 +95,7 @@
                            </children>
                         </HBox>
                                 <DatePicker fx:id="dpPassportExpiryDate" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
                     </content>

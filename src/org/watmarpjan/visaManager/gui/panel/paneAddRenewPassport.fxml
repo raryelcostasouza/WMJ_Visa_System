@@ -46,7 +46,6 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="tfpassportIssuedAt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Expiry Date:" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
@@ -65,6 +64,7 @@
                                  </GridPane.margin>
                               </Label>
                               <ComboBox fx:id="cbPassportCountry" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>

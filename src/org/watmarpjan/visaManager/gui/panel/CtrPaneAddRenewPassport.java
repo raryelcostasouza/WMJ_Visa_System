@@ -31,7 +31,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
     @FXML
     private ComboBox<String> cbPassportCountry;
     @FXML
-    private TextField tfpassportIssuedAt;
+    private ComboBox<String> cbPassportIssuedAt;
     @FXML
     private DatePicker dpPassportExpiryDate;
     @FXML
@@ -65,12 +65,13 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
     public void fillData(MonasticProfile p)
     {
         GUIUtil.loadContentComboboxGeneric(cbPassportCountry, ctrGUIMain.getCtrMain().loadListCountry());
+        GUIUtil.loadContentComboboxGeneric(cbPassportIssuedAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportIssuedAt());
 
         if (p != null)
         {
             tfpassportNumber.setText(p.getPassportNumber());
             cbPassportCountry.setValue(p.getPassportCountry());
-            tfpassportIssuedAt.setText(p.getPassportIssuedAt());
+            cbPassportIssuedAt.setValue(p.getPassportIssuedAt());
             dpPassportExpiryDate.setValue(Util.convertDateToLocalDate(p.getPassportExpiryDate()));
             dpPassportIssueDate.setValue(Util.convertDateToLocalDate(p.getPassportIssueDate()));
 
@@ -83,7 +84,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
 
                 tfpassportNumber.setEditable(false);
                 cbPassportCountry.setDisable(true);
-                tfpassportIssuedAt.setEditable(false);
+                cbPassportIssuedAt.setDisable(true);
                 dpPassportExpiryDate.setDisable(true);
                 dpPassportIssueDate.setDisable(true);
             } else
@@ -94,7 +95,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
 
                 tfpassportNumber.setEditable(true);
                 cbPassportCountry.setDisable(false);
-                tfpassportIssuedAt.setEditable(true);
+                cbPassportIssuedAt.setDisable(false);
                 dpPassportExpiryDate.setDisable(false);
                 dpPassportIssueDate.setDisable(false);
             }
@@ -150,7 +151,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
             p.setPassportNumber(tfpassportNumber.getText());
             p.setPassportCountry(cbPassportCountry.getValue());
-            p.setPassportIssuedAt(tfpassportIssuedAt.getText());
+            p.setPassportIssuedAt(cbPassportIssuedAt.getValue());
             p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
             p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
             operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
@@ -172,6 +173,6 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
                 && (dpPassportIssueDate.getValue() != null)
                 && (!tfpassportNumber.getText().isEmpty())
                 && (cbPassportCountry.getValue() != null)
-                && (!tfpassportIssuedAt.getText().isEmpty()));
+                && (cbPassportIssuedAt.getValue() != null));
     }
 }

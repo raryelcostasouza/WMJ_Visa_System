@@ -100,7 +100,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     @FXML
     private TextField tfpassportCountry;
     @FXML
-    private TextField tfpassportIssuedAt;
+    private ComboBox<String> cbPassportIssuedAt;
     @FXML
     private DatePicker dpPassportIssueDate;
     @FXML
@@ -248,9 +248,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ArrayList listFields;
         listFields = new ArrayList();
 
+        listFields.add(cbPassportIssuedAt);
+        listFields.add(dpPassportIssueDate);
+        listFields.add(dpPassportExpiryDate);
         listFields.add(dpFirstEntryDate);
-        listFields.add(dpNext90dayNotice);
-        listFields.add(dpFirstEntryDate);
+        
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
@@ -324,12 +326,13 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
 
+        GUIUtil.loadContentComboboxGeneric(cbPassportIssuedAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportIssuedAt());
         loadIMGPreviews(p);
         if (p != null)
         {
             tfpassportNumber.setText(p.getPassportNumber());
             tfpassportCountry.setText(p.getPassportCountry());
-            tfpassportIssuedAt.setText(p.getPassportIssuedAt());
+            cbPassportIssuedAt.setValue(p.getPassportIssuedAt());
 
             fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
 
@@ -981,7 +984,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         MonasticProfile p;
         
-        tfpassportIssuedAt.setEditable(false);
+        cbPassportIssuedAt.setDisable(true);
         dpPassportIssueDate.setDisable(true);
         dpPassportExpiryDate.setDisable(true);
         dpFirstEntryDate.setDisable(true);
@@ -1008,7 +1011,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         MonasticProfile p;
 
-        tfpassportIssuedAt.setEditable(true);
+        cbPassportIssuedAt.setDisable(false);
         dpPassportIssueDate.setDisable(false);
         dpPassportExpiryDate.setDisable(false);
         dpFirstEntryDate.setDisable(false);
@@ -1026,7 +1029,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        p.setPassportIssuedAt(tfpassportIssuedAt.getText());
+        p.setPassportIssuedAt(cbPassportIssuedAt.getValue());
         p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
         p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
