@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,6 +38,11 @@ import org.watmarpjan.visaManager.util.Util;
 public class CtrPaneDueTasks extends AChildPaneController
 {
 
+    @FXML
+    private Tab tThailand;
+    @FXML
+    private Tab tAbroad;
+    
     @FXML
     private TableView<EntryDueTask> tvTH90DayNotice;
     @FXML
@@ -308,6 +314,13 @@ public class CtrPaneDueTasks extends AChildPaneController
         ArrayList<EntryDueTask> alTHDue90dNotice, alTHDueVisaExtension, alTHPassportRenewal,
                 alAbroadDueVisaExtension, alAbroadPassportRenewal;
 
+        int countMonasticThailand, countMonasticAbroad;
+        
+        countMonasticThailand = ctrGUIMain.getCtrMain().getCtrProfile().getCountMonasticThailand();
+        countMonasticAbroad = ctrGUIMain.getCtrMain().getCtrProfile().getCountMonasticAbroad();
+        tThailand.setText("Thailand (" + countMonasticThailand + ")");
+        tAbroad.setText("Abroad (" + countMonasticAbroad + ")");
+        
         alTHDue90dNotice = ctrGUIMain.getCtrMain().getCtrProfile().loadListDue90DayNotice();
         alTHDueVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueVisaExtension(AppConstants.STATUS_THAILAND);
         alTHPassportRenewal = ctrGUIMain.getCtrMain().getCtrProfile().loadListDuePassportRenewal(AppConstants.STATUS_THAILAND);
