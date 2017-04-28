@@ -31,7 +31,7 @@ public class GUIUtil
     {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
         {
-            if (fImg.exists())
+            if (fImg != null && fImg.exists())
             {
                 try
                 {
