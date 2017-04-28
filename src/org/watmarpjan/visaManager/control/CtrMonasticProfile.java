@@ -206,6 +206,26 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ctrDB.getSession().refresh(p);
     }
 
+    public int getCountMonasticAbroad()
+    {
+        String hql;
+        
+        hql = "select count(p)"
+                + " from MonasticProfile p "
+                + " where p.status = 'ABROAD'";
+        return ctrDB.getSession().createQuery(hql, Long.class).getSingleResult().intValue();
+    }
+    
+    public int getCountMonasticThailand()
+    {
+        String hql;
+        
+        hql = "select count(p)"
+                + " from MonasticProfile p "
+                + " where p.status = 'THAILAND'";
+        return ctrDB.getSession().createQuery(hql, Long.class).getSingleResult().intValue();
+    }
+    
     public ArrayList<String> loadOccupationEnglishList()
     {
         String hql;
@@ -351,6 +371,18 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " where p.arrivalTravelFrom is not null"
                 + " group by p.arrivalTravelFrom"
                 + " order by p.arrivalTravelFrom";
+        return queryStringField(hql);
+    }
+    
+    public ArrayList<String> loadListPassportIssuedAt()
+    {
+        String hql;
+
+        hql = "select p.passportIssuedAt"
+                + " from MonasticProfile p "
+                + " where p.passportIssuedAt is not null"
+                + " group by p.passportIssuedAt"
+                + " order by p.passportIssuedAt";
         return queryStringField(hql);
     }
 
