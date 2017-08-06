@@ -109,7 +109,7 @@ public class CtrGUIMain
     private CtrPaneVisaExt ctrPaneVisaExt;
     @FXML
     private TabPane paneVisaExt;
-
+    
     @FXML
     private CtrPaneAddEntryReEntry ctrPaneReEntry;
     @FXML
@@ -123,7 +123,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneAddChangeVisa ctrPaneAddChangeVisa;
     @FXML
-    private VBox paneAddChangeVisa;
+    private TabPane paneAddChangeVisa;
 
     @FXML
     private CtrPaneTM30NotifResidence ctrPaneTM30NotifResidence;
@@ -154,6 +154,11 @@ public class CtrGUIMain
     private CtrPaneWorkflowVisaExt ctrPaneWFVisaExt;
     @FXML
     private VBox paneWFVisaExt;
+    
+    @FXML
+    private CtrPaneEmbassy ctrPaneEmbassy;
+    @FXML
+    private VBox paneEmbassy;
 
     @FXML
     private BorderPane centerPane;
@@ -740,6 +745,22 @@ public class CtrGUIMain
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
     }
+    
+    private void initPaneEmbassy()
+    {
+        FXMLLoader loader;
+        try
+        {
+            loader = new FXMLLoader(getClass().getResource("paneEmbassy.fxml"));
+            paneEmbassy = loader.load();
+            ctrPaneEmbassy = loader.getController();
+            initChildPane(ctrPaneEmbassy);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
+        }
+    }
 
     public CtrMain getCtrMain()
     {
@@ -1070,6 +1091,24 @@ public class CtrGUIMain
 
         ctrPaneEditSave.actionLock();
         fillMonasticProfileData();
+    }
+    
+    @FXML
+    void actionButtonEmbassy(ActionEvent ae)
+    {
+        checkUnsavedChanges();
+
+        if (ctrPaneEmbassy == null)
+        {
+            initPaneEmbassy();
+        }
+        ctrPaneEditSave.setVisible_ButtonAddNew(true);
+        topPane.setCenter(null);
+        topPane.setLeft(paneEditSave);
+        centerPane.setCenter(paneEmbassy);
+        currentPaneController = ctrPaneEmbassy;
+
+        ctrPaneEditSave.actionLock();
     }
 
     public void initChildControllers()
