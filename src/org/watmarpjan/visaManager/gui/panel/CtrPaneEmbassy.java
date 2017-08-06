@@ -65,7 +65,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         //shows the last selected
         if (e == null && !cbEmbassy.getItems().isEmpty())
         {
-            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadEmbassyByName(cbEmbassy.getValue());
+            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(cbEmbassy.getValue());
         }
 
         //if Embassy m exists on the database
@@ -85,7 +85,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
     {
         ArrayList<String> alEmbassy;
 
-        alEmbassy = ctrGUIMain.getCtrMain().getCtrEmbassy().loadEmbassyList();
+        alEmbassy = ctrGUIMain.getCtrMain().getCtrEmbassy().loadList();
         GUIUtil.loadContentComboboxGeneric(cbEmbassy, alEmbassy);
 
         //if the list is not empty selects the first monastery to show the data
@@ -100,7 +100,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
     {
         String nameEnNewEmbassy;
 
-        nameEnNewEmbassy = ctrGUIMain.getCtrMain().getCtrEmbassy().add();
+        nameEnNewEmbassy = ctrGUIMain.getCtrMain().getCtrEmbassy().create();
         if (nameEnNewEmbassy != null)
         {
             //reloads the monastery list and selects the new monastery
@@ -155,7 +155,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         String previousNameEn, newNameEn;
         Embassy e;
 
-        e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadEmbassyByName(cbEmbassy.getValue());
+        e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(cbEmbassy.getValue());
         if (e != null)
         {
             previousNameEn = e.getNameEn();
@@ -195,7 +195,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         if (nameSelectedEmbassy != null)
         {
             ctrGUIMain.getPaneEditSaveController().actionLock();
-            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadEmbassyByName(nameSelectedEmbassy);
+            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
             fillEmbassyData(e);
         }
     }
