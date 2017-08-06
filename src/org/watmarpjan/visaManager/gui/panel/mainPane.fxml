@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
   
     <children>
         <BorderPane>
@@ -24,6 +24,7 @@
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBysuddhiButton" text="Bysuddhi" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonMonastery" text="Monastery" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonUpajjhaya" text="Upajjhaya" />
+                              <Button layoutX="22.0" layoutY="227.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonEmbassy" text="Embassy" />
                                     </children>
                                 </VBox>
                             </content>
@@ -34,9 +35,9 @@
                                     <children>
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButton90DayNotice" text="90 Day Notice" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonWFVisaExt" text="Workflow Visa Extension" />
-                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Register Visa Extension" />
-                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonReEntry" text="Register Entry/Re-entry" />
-                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="Add/Change Visa" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Visa Extension" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonReEntry" text="Entry/Re-entry" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="New Visa" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddRenewPassport" text="Add/Renew Passport" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonTM30NotifResidence" text="TM30 - Notif. Residence" />
                                     </children>
