@@ -13,6 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrPDF;
@@ -44,6 +48,51 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     @FXML
     private Button bRegister;
 
+    @FXML
+    private ComboBox<String> cbLetterType;
+
+    @FXML
+    private DatePicker dpDepartureDateFromThai;
+
+    @FXML
+    private ComboBox<String> cbEmbassy;
+
+    @FXML
+    private TextField tfMonasticPhoneAbroad;
+    
+    @FXML
+    private TextField tfMonasticAddr1;
+    
+    @FXML
+    private TextField tfMonasticAddr2;
+    
+    @FXML
+    private TextField tfMonasticAddr3;
+    
+    @FXML
+    private TextField tfMonasticAddr4;
+
+    @FXML
+    private BorderPane bpLetterFields;
+
+    @FXML
+    private TitledPane tbExtraFields;
+
+    @FXML
+    private VBox vbExtraFields;
+
+    @FXML
+    private GridPane gpDeparture;
+
+    @FXML
+    private GridPane gpEmbassy;
+
+    @FXML
+    private TitledPane tbMonasticAddr;
+
+    @FXML
+    private GridPane gpMonasticPhone;
+
     @Override
     public void init()
     {
@@ -59,6 +108,25 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
                 tfVisaNumber.setText(newValue.toUpperCase());
             }
         });
+    }
+
+    private void clearFieldsVisaLetters()
+    {
+        cbLetterType.setValue(null);
+        dpDepartureDateFromThai.setValue(null);
+        cbEmbassy.setValue(null);
+        tfMonasticAddr1.setText("");
+        tfMonasticAddr2.setText("");
+        tfMonasticAddr3.setText("");
+        tfMonasticAddr4.setText("");
+        tfMonasticPhoneAbroad.setText("");
+
+        bpLetterFields.setCenter(null);
+    }
+
+    private void loadContentsCBLetter(String[] letterList)
+    {
+        cbLetterType.getItems().addAll(letterList);
     }
 
     @FXML
@@ -115,8 +183,18 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     @Override
     public void fillData(MonasticProfile p)
     {
+        clearFieldsVisaLetters();
         if (p != null)
         {
+            if (p.getSamaneraOrdDate() != null || p.getBhikkhuOrdDate() != null)
+            {
+                loadContentsCBLetter(AppConstants.LIST_LETTER_MONASTIC);
+            }
+            else
+            {
+                loadContentsCBLetter(AppConstants.LIST_LETTER_LAYPERSON);
+            }
+
             tfVisaNumber.setText(p.getVisaNumber());
             cbVisaType.setValue(p.getVisaType());
             dpVisaExpiryDate.setValue(Util.convertDateToLocalDate(p.getVisaExpiryDate()));
@@ -162,6 +240,48 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
+    @FXML
+    void listenerCBLetter(ActionEvent ae)
+    {
+        String strLetterSelected;
+
+        strLetterSelected = cbLetterType.getValue();
+
+        if (strLetterSelected != null)
+        {
+            switch (strLetterSelected)
+            {
+                 case "Layperson Abroad (Embassy) TH":
+                     break;
+                
+                case "Monastic Abroad (Embassy) TH":
+                    bpLetterFields.setCenter(tbExtraFields);
+                    vbExtraFields.getChildren().clear();
+                    vbExtraFields.getChildren().add(gpEmbassy);
+                    vbExtraFields.getChildren().add(gpDeparture);
+                    break;
+                case "Monastic Abroad (Embassy) EN":
+                    bpLetterFields.setCenter(tbExtraFields);
+                    vbExtraFields.getChildren().clear();
+                    vbExtraFields.getChildren().add(gpEmbassy);
+                    break;
+                case "Monastic Abroad (Samnak Put)":
+                    bpLetterFields.setCenter(tbExtraFields);
+                    vbExtraFields.getChildren().clear();
+                    vbExtraFields.getChildren().add(gpEmbassy);
+                    vbExtraFields.getChildren().add(tbMonasticAddr);
+                    vbExtraFields.getChildren().add(gpMonasticPhone);
+                    vbExtraFields.getChildren().add(gpDeparture);
+                    break;
+            }
+        }
+    }
+
+    @FXML
+    void actionGenerateLetter(ActionEvent ae)
+    {
+
+    }
 //    @FXML
 //    void actionPrintFormTM86VisaChange(ActionEvent ae)
 //    {
@@ -169,5 +289,4 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 //        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 //        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PRINT_FORM, false);
 //    }
-
 }
