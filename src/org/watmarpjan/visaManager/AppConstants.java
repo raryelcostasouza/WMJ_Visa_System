@@ -16,6 +16,16 @@ public class AppConstants
     public static final String STATUS_ABROAD = "ABROAD";
     public static final String STATUS_INACTIVE = "INACTIVE";
 
+    public static final String[] LIST_LETTER_LAYPERSON = new String[]
+    {
+        "Layperson Abroad (Embassy) TH", "LaypersonAbroad (Embassy) EN", "Layperson sThailand (Vientiane Embassy)"
+    };
+    
+    public static final String[] LIST_LETTER_MONASTIC = new String[]
+    {
+         "Monastic Abroad (Embassy) TH", "Monastic Abroad (Embassy) EN", "Monastic Abroad (Samnak Put)"
+    };
+    
     public static final String[] LIST_VISA_TYPES = new String[]
     {
         "Non-O", "Non-RE", "Non-ED", "Tourist"
