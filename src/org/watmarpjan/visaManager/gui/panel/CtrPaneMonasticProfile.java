@@ -474,7 +474,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     public void actionAddNew()
     {
         String nickNameNewProfile;
-        nickNameNewProfile = ctrGUIMain.getCtrMain().getCtrProfile().addProfile();
+        nickNameNewProfile = ctrGUIMain.getCtrMain().getCtrProfile().create();
         if (nickNameNewProfile != null)
         {
             ctrGUIMain.getCtrPaneSelection().reloadNicknameList(nickNameNewProfile);
@@ -690,13 +690,13 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
         if (cbResidingAt.getValue() != null)
         {
-            wResidingAt = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbResidingAt.getValue());
+            wResidingAt = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbResidingAt.getValue());
             p.setMonasteryResidingAt(wResidingAt);
         }
 
         if (cbAdvisorWat.getValue() != null)
         {
-            wAdviserToCome = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbAdvisorWat.getValue());
+            wAdviserToCome = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbAdvisorWat.getValue());
             p.setMonasteryAdviserToCome(wAdviserToCome);
         }
 
@@ -769,7 +769,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         //if no field caused errors
         if (!error)
         {
-            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             //if the update operation was successful
             if (operationStatus == 0)
             {

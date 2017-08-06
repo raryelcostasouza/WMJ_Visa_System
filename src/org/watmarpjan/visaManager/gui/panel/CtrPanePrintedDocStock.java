@@ -211,7 +211,7 @@ public class CtrPanePrintedDocStock extends AChildPaneControllerExportPDF implem
             p.setNPrintedPhotos(spPrintedPhotos.getValue());
             p.setNSigned90dForms(spSigned90DayForms.getValue());
 
-            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (operationStatus == 0)
             {
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();

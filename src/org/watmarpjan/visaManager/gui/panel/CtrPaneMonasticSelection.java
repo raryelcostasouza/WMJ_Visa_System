@@ -43,7 +43,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         MonasticProfile firstProfile;
 
         fillNicknameList();
-        firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByIndex(0);
+        firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadByIndex(0);
 
         if (firstProfile != null)
         {
@@ -62,7 +62,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
     {
         ArrayList<String> nickNameList;
 
-        nickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(cbShowOnlyActive.isSelected());
+        nickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadNicknameList(cbShowOnlyActive.isSelected());
 
         // if the nickname list is not initialized
         if (cbSelectedMonastic.getItems() != null)
@@ -95,7 +95,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
     {
         if (IDSelectedProfile != -1)
         {
-            return ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(IDSelectedProfile);
+            return ctrGUIMain.getCtrMain().getCtrProfile().loadByID(IDSelectedProfile);
         }
         return null;
 
@@ -122,7 +122,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
                 ctrGUIMain.getPaneEditSaveController().actionLock();
             }
 
-            p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(selectedNickname);
+            p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(selectedNickname);
             loadIMGProfile(p);
             IDSelectedProfile = p.getIdProfile();
             ctrGUIMain.fillMonasticProfileData();
@@ -149,7 +149,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         MonasticProfile selectedProfile;
         MonasticProfile firstProfile;
 
-        selectedProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(IDSelectedProfile);
+        selectedProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadByID(IDSelectedProfile);
 
         /*
          * if the currently selected profile is inactive and the option for
@@ -159,7 +159,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         if (cbShowOnlyActive.isSelected() && selectedProfile.getStatus().equals("INACTIVE"))
         {
             //one choice is to select to the first profile on the DB
-            firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByIndex(0);
+            firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadByIndex(0);
             //if there is at least one active profile on the DB
             if (firstProfile != null)
             {

@@ -179,7 +179,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         ArrayList<EntryPrintoutTM30> listEntryTM30;
         EntryPrintoutTM30 objEntryTM30;
         
-        listPrintoutTM30 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().loadListPrintoutTM30();
+        listPrintoutTM30 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().loadList();
         listEntryTM30 = new ArrayList<>();
         for (PrintoutTm30 objTM30 : listPrintoutTM30)
         {
@@ -221,7 +221,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             //if the file copy was successfull
             if (opStatus1 == 0)
             {
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().addNewPrintout(ldNotifDate, getNicknameSelectedMonastics(), auxIndex);
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().create(ldNotifDate, getNicknameSelectedMonastics(), auxIndex);
                 //if the DB update was successfull
                 if (opStatus2 == 0)
                 {
@@ -256,7 +256,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         if (confirmation)
         {
             objTM30 = objEntryTM30.getPrintoutTM30();
-            opStatusDB = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().removePrintout(objTM30);
+            opStatusDB = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().remove(objTM30);
             if (opStatusDB == 0)
             {
                 tvSavedNotifications.getItems().remove(objEntryTM30);

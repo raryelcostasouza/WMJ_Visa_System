@@ -820,7 +820,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             if (opStatus == 0)
             {
                 //refresh the profile because the passportScan list was updated
-                ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(profile);
+                ctrGUIMain.getCtrMain().getCtrProfile().refresh(profile);
                 loadIMGPreviews(profile);
                 fillDataContentScans(profile, ctrGUIMain.getPaneEditSaveController().getLockStatus());
             }
@@ -843,20 +843,20 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 ps = new PassportScan(p, parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
                 fSelected = fScan1Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
+                ctrGUIMain.getCtrMain().getCtrPassportScan().create(ps);
 
             }
             else if (ae.getSource().equals(bAddScan2))
             {
                 ps = new PassportScan(p, parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
                 fSelected = fScan2Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
+                ctrGUIMain.getCtrMain().getCtrPassportScan().create(ps);
             }
             else
             {
                 ps = new PassportScan(p, parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
                 fSelected = fScan3Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().addPassportScan(ps);
+                ctrGUIMain.getCtrMain().getCtrPassportScan().create(ps);
             }
             fScanDestination = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps);
 
@@ -886,7 +886,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                     }
 
                     //refresh the profile because the passportScan list was updated
-                    ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                    ctrGUIMain.getCtrMain().getCtrProfile().refresh(p);
                     loadIMGPreviews(p);
                     fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
                 }
@@ -1033,7 +1033,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
         p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
-        operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+        operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
 
         if (operationStatus == 0)
         {

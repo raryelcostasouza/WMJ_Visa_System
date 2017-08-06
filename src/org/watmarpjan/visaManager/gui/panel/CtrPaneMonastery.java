@@ -149,7 +149,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         Monastery m;
         String previousName, newName;
 
-        m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbMonasteryList.getValue());
+        m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
 
         if (m != null)
         {
@@ -202,7 +202,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
                 m.setAddrNumber(tfAddrNumber.getText());
             }
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrMonastery().updateMonastery(m);
+            opStatus = ctrGUIMain.getCtrMain().getCtrMonastery().update(m);
             if (opStatus == 0)
             {
                 //if the name was updated need to refresh the name list
@@ -236,7 +236,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     {
         String nameNewMonastery;
 
-        nameNewMonastery = ctrGUIMain.getCtrMain().getCtrMonastery().addMonastery();
+        nameNewMonastery = ctrGUIMain.getCtrMain().getCtrMonastery().create();
         if (nameNewMonastery != null)
         {
             //reloads the monastery list and selects the new monastery
@@ -280,7 +280,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         //shows the last selected
         if (m == null && !cbMonasteryList.getItems().isEmpty())
         {
-            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbMonasteryList.getValue());
+            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
         }
 
         //if Monastery m exists on the database
@@ -367,7 +367,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         if (nameSelectedMonastery != null)
         {
             ctrGUIMain.getPaneEditSaveController().actionLock();
-            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(nameSelectedMonastery);
+            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
             fillMonasteryData(m);
         }
     }
@@ -377,7 +377,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     {
         String nameNewMonastery;
 
-        nameNewMonastery = ctrGUIMain.getCtrMain().getCtrMonastery().addMonastery();
+        nameNewMonastery = ctrGUIMain.getCtrMain().getCtrMonastery().create();
         if (nameNewMonastery != null)
         {
             //reloads the monastery list and selects the new monastery

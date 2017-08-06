@@ -229,13 +229,13 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
             vExt.setExpiryDate(Util.convertLocalDateToDate(dpExpiryDate.getValue()));
             vExt.setMonasticProfile(p);
 
-            operationStatus = ctrGUIMain.getCtrMain().getCtrVisa().addVisaExt(vExt);
+            operationStatus = ctrGUIMain.getCtrMain().getCtrVisa().createVisaExt(vExt);
 
             //if the DB update is successful
             if (operationStatus == 0)
             {
                 CtrAlertDialog.infoDialog("Extension info registered", "The visa extension was successfully registered.");
-                ctrGUIMain.getCtrMain().getCtrProfile().refreshProfile(p);
+                ctrGUIMain.getCtrMain().getCtrProfile().refresh(p);
                 fillData(p);
             }
         }

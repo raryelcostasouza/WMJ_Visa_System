@@ -514,7 +514,7 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
 
             p.setWfExtPhotocopiesImm(spPhotocopiesIMM.getValue());
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (opStatus == 0)
             {
                 fillData(p);
@@ -656,7 +656,7 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
             p.setWfExtPhotocopiesImm(EntryWorkflowVisaExt.STATUS_MISSING);
             p.setWfExtExtraImm(false);
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (opStatus == 0)
             {
                 fillData(p);

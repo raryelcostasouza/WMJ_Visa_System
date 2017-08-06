@@ -60,7 +60,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
         int opStatus;
         String previousName, newName;
 
-        u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaByName(cbUpajjhayaList.getValue());
+        u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(cbUpajjhayaList.getValue());
 
         if (u != null)
         {
@@ -70,7 +70,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
             u.setUpajjhayaName(tfName.getText());
             if (cbMonasteryList.getValue() != null)
             {
-                u.setMonastery(ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbMonasteryList.getValue()));
+                u.setMonastery(ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue()));
             }
 
             opStatus = ctrGUIMain.getCtrMain().getCtrUpajjhaya().update(u);
@@ -119,7 +119,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
     {
         ArrayList<String> alUpajjhaya;
 
-        alUpajjhaya = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaList();
+        alUpajjhaya = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadList();
 
         cbUpajjhayaList.getItems().clear();
         cbUpajjhayaList.getItems().addAll(alUpajjhaya);
@@ -138,7 +138,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
         //shows the last selected 
         if (u == null)
         {
-            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaByName(cbUpajjhayaList.getValue());
+            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(cbUpajjhayaList.getValue());
         }
 
         //If Upajjhaya u exists on DB
@@ -165,7 +165,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
         if (nameSelectedUpajjhaya != null)
         {
             ctrGUIMain.getPaneEditSaveController().actionLock();
-            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaByName(nameSelectedUpajjhaya);
+            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(nameSelectedUpajjhaya);
             fillUpajjhayaData(u);
         }
     }
@@ -175,7 +175,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
     {
         String nameNewUpajjhaya;
 
-        nameNewUpajjhaya = ctrGUIMain.getCtrMain().getCtrUpajjhaya().addNew();
+        nameNewUpajjhaya = ctrGUIMain.getCtrMain().getCtrUpajjhaya().create();
         if (nameNewUpajjhaya != null)
         {
             //reloads the monastery list and selects the new monastery

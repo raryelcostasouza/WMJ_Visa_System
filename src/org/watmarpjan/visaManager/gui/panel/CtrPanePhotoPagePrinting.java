@@ -35,7 +35,7 @@ public class CtrPanePhotoPagePrinting extends AChildPaneControllerExportPDF
     {
         ArrayList<String> listMonastic;
 
-        listMonastic = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
+        listMonastic = ctrGUIMain.getCtrMain().getCtrProfile().loadNicknameList(true);
         
         cbMonastic1.getItems().clear();
         cbMonastic1.getItems().addAll(listMonastic);
