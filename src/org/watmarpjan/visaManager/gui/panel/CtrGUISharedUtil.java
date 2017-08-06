@@ -29,7 +29,7 @@ public class CtrGUISharedUtil
     {
         ArrayList<String> monasticNickNameList;
 
-        monasticNickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileNicknameList(true);
+        monasticNickNameList = ctrGUIMain.getCtrMain().getCtrProfile().loadNicknameList(true);
         TreeItem<String> rootItem = new TreeItem<>("Monastics");
         objTVC.getListCheckBoxMonastics().clear();
         for (String nickname : monasticNickNameList)
