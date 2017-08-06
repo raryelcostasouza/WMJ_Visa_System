@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author wmj_user
+ * @author KroobaHariel
  */
 @Entity
 @XmlRootElement

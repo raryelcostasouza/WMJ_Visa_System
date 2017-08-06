@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author wmj_user
+ * @author KroobaHariel
  */
 @Entity
 @Table(name = "PASSPORT_SCAN")
