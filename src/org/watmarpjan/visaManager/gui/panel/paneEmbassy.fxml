@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneEmbassy">
+   <children>
+      <TitledPane animated="false" collapsible="false" text="Embassy List">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <ComboBox fx:id="cbEmbassy" onAction="#actionSelectEmbassy" stylesheets="@thaiField.css" />
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" text="Basic information">
+         <content>
+            <HBox alignment="CENTER">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Name (English):" />
+                        <Label text="Name (Thai):" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfNameEN" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfNameTH" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="108.0" text="Address Line 1:" GridPane.rowIndex="2" />
+                        <Label text="Country (Thai):" GridPane.rowIndex="6" />
+                        <Label layoutX="10.0" layoutY="135.0" text="Address Line 2:" GridPane.rowIndex="3" />
+                        <Label layoutX="10.0" layoutY="225.0" text="Address Line 3:" GridPane.rowIndex="4" />
+                        <Label layoutX="10.0" layoutY="255.0" text="Address Line 4:" GridPane.rowIndex="5" />
+                        <TextField fx:id="tfAddr1" layoutX="114.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfAddr2" layoutX="114.0" layoutY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="tfAddr3" layoutX="114.0" layoutY="101.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="tfAddr4" layoutX="114.0" layoutY="131.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="tfCountryTH" layoutX="114.0" layoutY="161.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>
