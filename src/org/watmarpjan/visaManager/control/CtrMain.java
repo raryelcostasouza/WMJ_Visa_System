@@ -21,6 +21,7 @@ public class CtrMain
     private final CtrMonasticProfile ctrProfile;
     private final CtrMonastery ctrMonastery;
     private final CtrPDF ctrPDF;
+    private final CtrEmbassy ctrEmbassy;
     private final CtrVisa ctrVisa;
     private final CtrPassportScan ctrPassportScan;
     private final CtrUpajjhaya ctrUpajjhaya;
@@ -32,6 +33,7 @@ public class CtrMain
         ctrProfile = new CtrMonasticProfile(ctrDB);
         ctrMonastery = new CtrMonastery(ctrDB);
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
+        ctrEmbassy = new CtrEmbassy(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
         ctrPassportScan = new CtrPassportScan(ctrDB);
         ctrPDF = new CtrPDF(this);
@@ -75,6 +77,11 @@ public class CtrMain
         return ctrProfile;
     }
 
+    public CtrEmbassy getCtrEmbassy()
+    {
+        return ctrEmbassy;
+    }
+    
     public CtrMonastery getCtrMonastery()
     {
         return ctrMonastery;
