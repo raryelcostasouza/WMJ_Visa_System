@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
@@ -29,7 +27,7 @@ public class CtrPassportScan extends AbstractControllerDB
         super(ctrDB);
     }
     
-    public int addPassportScan(PassportScan ps)
+    public int create(PassportScan ps)
     {
         String errorMessage = "Unable to add passport scan data.";
         try
@@ -41,14 +39,7 @@ public class CtrPassportScan extends AbstractControllerDB
             
         } catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }
     }
@@ -64,14 +55,7 @@ public class CtrPassportScan extends AbstractControllerDB
             
         } catch (PersistenceException pe)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (pe instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(pe, errorMessage);
-            }
+            ctrDB.handleException(pe, errorMessage);
             return -1;
         }
     }
@@ -92,14 +76,7 @@ public class CtrPassportScan extends AbstractControllerDB
             
         } catch (PersistenceException pe)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (pe instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(pe, errorMessage);
-            }
+            ctrDB.handleException(pe, errorMessage);
             return -1;
         }
     }
@@ -116,14 +93,7 @@ public class CtrPassportScan extends AbstractControllerDB
             
         } catch (PersistenceException pe)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (pe instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(pe, errorMessage);
-            }
+            ctrDB.handleException(pe, errorMessage);
             return -1;
         }
     }
@@ -143,8 +113,7 @@ public class CtrPassportScan extends AbstractControllerDB
             return 0;
         } catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            CtrAlertDialog.exceptionDialog(hex, "Error to clear passport scans");
+            ctrDB.handleException(hex, "Error to clear passport scans");
             return -1;
         }
     }

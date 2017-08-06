@@ -7,8 +7,6 @@ package org.watmarpjan.visaManager.control;
 
 import java.util.ArrayList;
 import javax.persistence.PersistenceException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 
 /**
@@ -23,7 +21,7 @@ public class CtrUpajjhaya extends AbstractControllerDB
         super(ctrDB);
     }
 
-    public String addNew()
+    public String create()
     {
         Upajjhaya u;
         Integer generatedID;
@@ -47,15 +45,7 @@ public class CtrUpajjhaya extends AbstractControllerDB
 
         } catch (PersistenceException he)
         {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(he, errorMessage);
-            }
+            ctrDB.handleException(he, errorMessage);
             return null;
         }
     }
@@ -65,7 +55,7 @@ public class CtrUpajjhaya extends AbstractControllerDB
         return ctrDB.updatePersistentObject(u, "Unable to update upajjhaya data.");
     }
 
-    public ArrayList<String> loadUpajjhayaList()
+    public ArrayList<String> loadList()
     {
         ArrayList<String> alUpajjhaya;
         String hql;
@@ -76,19 +66,9 @@ public class CtrUpajjhaya extends AbstractControllerDB
         return alUpajjhaya;
     }
 
-    public Upajjhaya loadUpajjhayaByName(String name)
+    public Upajjhaya loadByName(String name)
     {
-        ArrayList<Upajjhaya> alUpajjhaya;
-        String hql;
-
-        hql = "from Upajjhaya u where u.upajjhayaName = " + "'" + name + "'";
-        alUpajjhaya = (ArrayList<Upajjhaya>) ctrDB.getSession().createQuery(hql).getResultList();
-        if (!alUpajjhaya.isEmpty())
-        {
-            return alUpajjhaya.get(0);
-        }
-
-        return null;
+        return (Upajjhaya) ctrDB.loadEntityByUniqueProperty("Upajjhaya", "upajjhayaName", name);
     }
 
 }

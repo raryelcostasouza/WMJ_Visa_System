@@ -21,12 +21,12 @@ public class CtrEmbassy extends AbstractControllerDB
         super(ctrDB);
     }
 
-    public Embassy loadEmbassyByName(String name)
+    public Embassy loadByName(String name)
     {
-        return (Embassy) ctrDB.loadEntityByProperty("Embassy", "nameEn", name);
+        return (Embassy) ctrDB.loadEntityByUniqueProperty("Embassy", "nameEn", name);
     }
     
-    public ArrayList<String> loadEmbassyList()
+    public ArrayList<String> loadList()
     {
         ArrayList<String> alEmbassy;
         String hql;
@@ -37,7 +37,7 @@ public class CtrEmbassy extends AbstractControllerDB
         return alEmbassy;
     }
 
-     public String add()
+     public String create()
     {
         Embassy e;
         Integer generatedID;
@@ -67,17 +67,7 @@ public class CtrEmbassy extends AbstractControllerDB
     
     public int update(Embassy e)
     {
-        try
-        {
-            ctrDB.openTransaction();
-            ctrDB.commitCurrentTransaction();
-            return 0;
-        }
-        catch (PersistenceException he)
-        {
-            ctrDB.handleException(he, "Error when saving embassy info.");
-            return -1;
-        }
+        return ctrDB.updatePersistentObject(e, "Error when saving embassy info.");
     }
 
 }

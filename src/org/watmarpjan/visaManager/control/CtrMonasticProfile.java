@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
@@ -29,7 +28,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         super(ctrDatabase);
     }
 
-    public String addProfile()
+    public String create()
     {
         MonasticProfile p;
         Integer generatedID;
@@ -54,46 +53,14 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
         catch (PersistenceException he)
         {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(he, errorMessage);
-            }
+            ctrDB.handleException(he, errorMessage);
             return null;
         }
     }
 
-    public int updateProfile(MonasticProfile p)
+    public int update(MonasticProfile p)
     {
-        ConstraintViolationException cve;
-
-        try
-        {
-            ctrDB.openTransaction();
-
-            ctrDB.commitCurrentTransaction();
-            return 0;
-        }
-        catch (PersistenceException he)
-        {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                cve = (ConstraintViolationException) he;
-                CtrAlertDialog.databaseExceptionDialog(cve, "Error when saving profile info.");
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(he, "Error when saving profile info.");
-            }
-            return -1;
-        }
+        return ctrDB.updatePersistentObject(p, "Error when saving profile info.");
     }
 
     public ArrayList<String> loadProfileVisaManager()
@@ -119,7 +86,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return listNickname;
     }
 
-    public ArrayList<String> loadProfileNicknameList(boolean onlyActive)
+    public ArrayList<String> loadNicknameList(boolean onlyActive)
     {
         String hql;
         List<MonasticProfile> listProfile;
@@ -155,7 +122,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return listNickname;
     }
 
-    public MonasticProfile loadProfileByIndex(int index)
+    public MonasticProfile loadByIndex(int index)
     {
         ArrayList<MonasticProfile> alProfile;
         String hql;
@@ -178,15 +145,12 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
     }
 
-    public MonasticProfile loadProfileByNickName(String nickName)
+    public MonasticProfile loadByNickName(String nickName)
     {
-        String hql;
-
-        hql = "from MonasticProfile p where p.nickname = " + "'" + nickName + "'";
-        return queryProfile(hql);
+        return (MonasticProfile) ctrDB.loadEntityByUniqueProperty("MonasticProfile", "nickname", nickName);
     }
 
-    public MonasticProfile loadProfileByID(Integer id)
+    public MonasticProfile loadByID(Integer id)
     {
         MonasticProfile p;
         try
@@ -201,7 +165,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
     }
 
-    public void refreshProfile(MonasticProfile p)
+    public void refresh(MonasticProfile p)
     {
         ctrDB.getSession().refresh(p);
     }

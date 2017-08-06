@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -29,7 +28,7 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         this.ctrProfile = ctrProfile;
     }
 
-    public int addNewPrintout(LocalDate ldNotifDate, ArrayList<String> listNicknameSelectedMonastics, int auxIndex)
+    public int create(LocalDate ldNotifDate, ArrayList<String> listNicknameSelectedMonastics, int auxIndex)
     {
         ConstraintViolationException cve;
         PrintoutTm30 objTM30;
@@ -45,32 +44,20 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
             ctrDB.getSession().persist(objTM30);
             for (String nickname : listNicknameSelectedMonastics)
             {
-                mp = ctrProfile.loadProfileByNickName(nickname);
+                mp = ctrProfile.loadByNickName(nickname);
                 mp.setPrintoutTm30(objTM30);
             }
             ctrDB.commitCurrentTransaction();
-           
-            
             return 0;
         }
         catch (PersistenceException he)
         {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                cve = (ConstraintViolationException) he;
-                CtrAlertDialog.databaseExceptionDialog(cve, "Error when saving profile info.");
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(he, "Error when saving profile info.");
-            }
+            ctrDB.handleException(he, "Error when saving profile info.");
             return -1;
         }
     }
     
-    public int removePrintout(PrintoutTm30 objTM30)
+    public int remove(PrintoutTm30 objTM30)
     {
        String errorMessage = "Unable to remove this TM30 Printout entry.";
         try
@@ -91,22 +78,14 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         }
         catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }  
     }
     
     
     
-    public ArrayList<PrintoutTm30> loadListPrintoutTM30()
+    public ArrayList<PrintoutTm30> loadList()
     {
         String hql;
 

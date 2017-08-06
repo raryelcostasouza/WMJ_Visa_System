@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -27,7 +25,7 @@ public class CtrVisa extends AbstractControllerDB
         super(ctrDB);
     }
 
-    public int addVisaExt(VisaExtension vExt)
+    public int createVisaExt(VisaExtension vExt)
     {
         String errorMessage = "Unable to add visa extension.";
         try
@@ -41,15 +39,7 @@ public class CtrVisa extends AbstractControllerDB
         }
         catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }
     }
@@ -67,30 +57,14 @@ public class CtrVisa extends AbstractControllerDB
         }
         catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }
     }
 
     public VisaExtension loadVisaExtensionByNumber(String extNumber)
     {
-        Query result;
-        String hql;
-
-        hql = "from VisaExtension vext"
-                + " where vext.extNumber = '" + extNumber + "'";
-
-        result = ctrDB.getSession().createQuery(hql);
-        return (VisaExtension) result.getSingleResult();
-
+        return (VisaExtension) ctrDB.loadEntityByUniqueProperty("VisaExtension", "extNumber", extNumber);
     }
 
     public ArrayList<EntryVisaExt> loadListExtensions(Integer idProfile)
@@ -159,15 +133,7 @@ public class CtrVisa extends AbstractControllerDB
         }
         catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }
     }
@@ -204,15 +170,7 @@ public class CtrVisa extends AbstractControllerDB
         }
         catch (PersistenceException hex)
         {
-            ctrDB.rollbackCurrentTransaction();
-            if (hex instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) hex, errorMessage);
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(hex, errorMessage);
-            }
+            ctrDB.handleException(hex, errorMessage);
             return -1;
         }
     }

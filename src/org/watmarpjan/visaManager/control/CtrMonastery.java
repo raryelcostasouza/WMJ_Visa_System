@@ -10,8 +10,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import org.hibernate.exception.ConstraintViolationException;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
@@ -26,7 +24,7 @@ public class CtrMonastery extends AbstractControllerDB
         super(ctrDB);
     }
 
-    public String addMonastery()
+    public String create()
     {
         Monastery m;
         Integer generatedID;
@@ -51,39 +49,14 @@ public class CtrMonastery extends AbstractControllerDB
 
         } catch (PersistenceException he)
         {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, errorMessage);
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(he, errorMessage);
-            }
+            ctrDB.handleException(he, errorMessage);
             return null;
         }
     }
 
-    public int updateMonastery(Monastery m)
+    public int update(Monastery m)
     {
-        try
-        {
-            ctrDB.openTransaction();
-            ctrDB.commitCurrentTransaction();
-            return 0;
-        } catch (PersistenceException he)
-        {
-            ctrDB.rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, "Error when saving monastery info.");
-            } else
-            {
-                CtrAlertDialog.exceptionDialog(he, "Error when saving monastery info.");
-            }
-            return -1;
-        }
+        return ctrDB.updatePersistentObject(m, "Error when saving monastery info.");
     }
 
     public ArrayList<String> loadMonasteryList()
@@ -97,12 +70,9 @@ public class CtrMonastery extends AbstractControllerDB
         return alMonastery;
     }
 
-    public Monastery loadMonasteryByName(String name)
+    public Monastery loadByName(String name)
     {
-        String hql;
-
-        hql = "from Monastery m where m.monasteryName = '" + name + "'";
-        return (Monastery) ctrDB.getSession().createQuery(hql).getSingleResult();
+        return (Monastery) ctrDB.loadEntityByUniqueProperty("Monastery", "monasteryName", name);
     }
 
     public Monastery loadMonasteryJaoKanaAmpher()
