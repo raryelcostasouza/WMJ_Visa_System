@@ -47,7 +47,8 @@ public class CtrDatabase
             finish = Instant.now();
 
             System.out.println("Hibernate Load: " + Duration.between(start, finish));
-        } catch (PersistenceException he)
+        }
+        catch (PersistenceException he)
         {
             CtrAlertDialog.exceptionDialog(he, "Error when connecting to Database: \n" + he.getMessage());
             System.exit(-1);
@@ -59,7 +60,8 @@ public class CtrDatabase
         if (this.entityManager != null && entityManager.isOpen())
         {
             return entityManager;
-        } else
+        }
+        else
         {
             entityManager = emFactory.createEntityManager();
         }
@@ -89,14 +91,16 @@ public class CtrDatabase
             openTransaction();
             commitCurrentTransaction();
             return 0;
-        } catch (PersistenceException he)
+        }
+        catch (PersistenceException he)
         {
             rollbackCurrentTransaction();
 
             if (he instanceof ConstraintViolationException)
             {
                 CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, strErrorMessage + "\n\nDetails:");
-            } else
+            }
+            else
             {
                 CtrAlertDialog.exceptionDialog(he, strErrorMessage);
             }
@@ -113,9 +117,32 @@ public class CtrDatabase
                 entityManager.close();
             }
             emFactory.close();
-        } catch (PersistenceException hex)
+        }
+        catch (PersistenceException hex)
         {
             CtrAlertDialog.exceptionDialog(hex, "Error to close DB connection.");
+        }
+    }
+
+    public Object loadEntityByUniqueProperty(String entityName, String propertyName, String value2Search)
+    {
+        String hql;
+
+        hql = "from " + entityName + " e where e." + propertyName + " = '" + value2Search + "'";
+        return getSession().createQuery(hql).getSingleResult();
+    }
+    
+    public void handleException(PersistenceException pe, String errorMessage)
+    {
+        rollbackCurrentTransaction();
+
+        if (pe instanceof ConstraintViolationException)
+        {
+            CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
+        }
+        else
+        {
+            CtrAlertDialog.exceptionDialog(pe, errorMessage);
         }
     }
 }
