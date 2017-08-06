@@ -172,17 +172,17 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
 
         if (cbOrdainedAt.getValue() != null)
         {
-            wOrdainedAt = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryByName(cbOrdainedAt.getValue());
+            wOrdainedAt = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbOrdainedAt.getValue());
             p.setMonasteryOrdainedAt(wOrdainedAt);
         }
 
         if (cbUpajjhaya != null)
         {
-            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaByName(cbUpajjhaya.getValue());
+            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(cbUpajjhaya.getValue());
             p.setUpajjhaya(u);
         }
 
-        operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+        operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
         if (operationStatus == 0)
         {
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
@@ -391,7 +391,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     {
         ArrayList<String> alUpajjhayaList;
 
-        alUpajjhayaList = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadUpajjhayaList();
+        alUpajjhayaList = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadList();
         cbUpajjhaya.getItems().clear();
         cbUpajjhaya.getItems().addAll(alUpajjhayaList);
     }

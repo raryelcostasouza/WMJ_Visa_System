@@ -144,7 +144,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
             p.setArrivalTravelBy(null);
             p.setArrivalPortOfEntry(null);
 
-            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (operationStatus == 0)
             {
                 fillData(p);
@@ -168,7 +168,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
             p.setArrivalTravelBy(cbTravelBy.getValue());
             p.setArrivalPortOfEntry(cbPortOfEntry.getValue());
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (opStatus == 0)
             {
                 fillData(p);

@@ -390,7 +390,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
                 ldNextNotice = dpNext90DayNotice.getValue();
                 dNextNotice = org.watmarpjan.visaManager.util.Util.convertLocalDateToDate(ldNextNotice);
 
-                p = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByID(e.getIdProfile());
+                p = ctrGUIMain.getCtrMain().getCtrProfile().loadByID(e.getIdProfile());
                 p.setNext90DayNotice(dNextNotice);
                 
                 //if a signed form was used, decrease the count on stock
@@ -398,7 +398,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
                 {
                     p.setNSigned90dForms(p.getNSigned90dForms()-1);
                 }
-                ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+                ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             }
         }
         fillData();
@@ -458,7 +458,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
         MonasticProfile pVisaManager;
         if (cbVisaManager.getValue() != null)
         {
-            pVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadProfileByNickName(cbVisaManager.getValue());
+            pVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(cbVisaManager.getValue());
             tfVisaManagerEmail.setText(pVisaManager.getEmail());
             if ((pVisaManager.getPhoneNumber1() != null) && 
                     (pVisaManager.getPhoneNumber1().length() >= 10))

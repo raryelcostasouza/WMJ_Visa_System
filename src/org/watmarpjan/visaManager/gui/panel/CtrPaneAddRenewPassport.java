@@ -130,7 +130,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
             p.setPassportExpiryDate(null);
             p.setPassportIssueDate(null);
 
-            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            opStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (opStatus == 0)
             {
                 fillData(p);
@@ -154,7 +154,7 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
             p.setPassportIssuedAt(cbPassportIssuedAt.getValue());
             p.setPassportIssueDate(Util.convertLocalDateToDate(dpPassportIssueDate.getValue()));
             p.setPassportExpiryDate(Util.convertLocalDateToDate(dpPassportExpiryDate.getValue()));
-            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().updateProfile(p);
+            operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
 
             if (operationStatus == 0)
             {
