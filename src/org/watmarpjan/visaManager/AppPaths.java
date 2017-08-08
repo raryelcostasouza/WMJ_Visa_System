@@ -59,10 +59,20 @@ public class AppPaths
     {
         return Paths.get(System.getProperty("user.dir")).resolve("../Data/TM30-Printout");
     }
+    
+    public static Path getPathToProfileLetters(String nickname)
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("../Data/"+nickname + "/Letters");
+    }
 
     public static Path getPathToForms()
     {
         return Paths.get(System.getProperty("user.dir")).resolve("appData/Forms-Templates");
+    }
+    
+    public static Path getPathToLetterTemplate()
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("appData/Letter-Templates");
     }
 
     public static Path getPathToIconSubfolder()
