@@ -19,9 +19,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
+import org.watmarpjan.visaManager.gui.util.GUIUtil;
+import org.watmarpjan.visaManager.model.hibernate.Embassy;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -59,16 +64,16 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
     @FXML
     private TextField tfMonasticPhoneAbroad;
-    
+
     @FXML
     private TextField tfMonasticAddr1;
-    
+
     @FXML
     private TextField tfMonasticAddr2;
-    
+
     @FXML
     private TextField tfMonasticAddr3;
-    
+
     @FXML
     private TextField tfMonasticAddr4;
 
@@ -124,8 +129,10 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         bpLetterFields.setCenter(null);
     }
 
-    private void loadContentsCBLetter(String[] letterList)
+    private void initTabLetters(String[] letterList)
     {
+        GUIUtil.loadContentComboboxGeneric(cbEmbassy, ctrGUIMain.getCtrMain().getCtrEmbassy().loadList());
+        cbLetterType.getItems().clear();
         cbLetterType.getItems().addAll(letterList);
     }
 
@@ -188,11 +195,11 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         {
             if (p.getSamaneraOrdDate() != null || p.getBhikkhuOrdDate() != null)
             {
-                loadContentsCBLetter(AppConstants.LIST_LETTER_MONASTIC);
+                initTabLetters(AppConstants.LIST_LETTER_MONASTIC);
             }
             else
             {
-                loadContentsCBLetter(AppConstants.LIST_LETTER_LAYPERSON);
+                initTabLetters(AppConstants.LIST_LETTER_LAYPERSON);
             }
 
             tfVisaNumber.setText(p.getVisaNumber());
@@ -251,21 +258,21 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         {
             switch (strLetterSelected)
             {
-                 case "Layperson Abroad (Embassy) TH":
-                     break;
-                
-                case "Monastic Abroad (Embassy) TH":
+                case "Layperson Abroad - Embassy) TH":
+                    break;
+
+                case "Monastic Abroad - Embassy":
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
                     vbExtraFields.getChildren().add(gpDeparture);
                     break;
-                case "Monastic Abroad (Embassy) EN":
+                case "Monastic Abroad - Embassy EN":
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
                     break;
-                case "Monastic Abroad (Samnak Put)":
+                case "Monastic Abroad - Samnak Put":
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
@@ -280,7 +287,98 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     @FXML
     void actionGenerateLetter(ActionEvent ae)
     {
+        String strLetterSelected, strSelectedEmbassy;
+        String[][] data2CSV = new String[2][27];
+        MonasticProfile p;
+        Embassy e;
 
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        strLetterSelected = cbLetterType.getValue();
+        strSelectedEmbassy = cbEmbassy.getValue();
+        e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(strSelectedEmbassy);
+
+        data2CSV[0][0] = "titleEnglish";
+        data2CSV[1][0] = ProfileUtil.getTitleEN(p);
+
+        data2CSV[0][1] = "titleThai";
+        data2CSV[1][1] = ProfileUtil.getTitleTH2(p);
+
+        data2CSV[0][2] = "OrdinationTypeThai";
+        data2CSV[1][2] = ProfileUtil.getOrdinationType(p);
+
+        data2CSV[0][3] = "OrdinationStatusThai";
+        data2CSV[1][3] = ProfileUtil.getTitleTH(p);
+
+        data2CSV[0][4] = "OrdinationStatusEnglish";
+        data2CSV[1][4] = ProfileUtil.getTitleEN2(p);
+
+        data2CSV[0][5] = "name";
+        data2CSV[1][5] = p.getMonasticName();
+
+        data2CSV[0][6] = "middleName";
+        data2CSV[1][6] = p.getMiddleName();
+
+        data2CSV[0][7] = "lastName";
+        data2CSV[1][7] = p.getLastName();
+
+        data2CSV[0][8] = "paliNameEnglish";
+        data2CSV[1][8] = p.getPaliNameEnglish();
+
+        data2CSV[0][9] = "nationality";
+        data2CSV[1][9] = p.getNationality();
+
+        data2CSV[0][10] = "passportNumber";
+        data2CSV[1][10] = p.getPassportNumber();
+
+        data2CSV[0][11] = "addressLine1";
+        data2CSV[1][11] = tfMonasticAddr1.getText();
+
+        data2CSV[0][12] = "addressLine2";
+        data2CSV[1][12] = tfMonasticAddr2.getText();
+
+        data2CSV[0][13] = "addressLine3";
+        data2CSV[1][13] = tfMonasticAddr3.getText();
+
+        data2CSV[0][14] = "addressLine4";
+        data2CSV[1][14] = tfMonasticAddr4.getText();
+
+        data2CSV[0][15] = "contactEmail";
+        data2CSV[1][15] = p.getEmail();
+
+        data2CSV[0][16] = "contactPhone";
+        data2CSV[1][16] = tfMonasticPhoneAbroad.getText();
+
+        data2CSV[0][17] = "nameEmbassyThai";
+        data2CSV[1][17] = e.getNameTh();
+
+        data2CSV[0][18] = "nameEmbassyEnglish";
+        data2CSV[1][18] = e.getNameEn();
+
+        data2CSV[0][19] = "countryEmbassyThai";
+        data2CSV[1][19] = e.getCountry();
+
+        data2CSV[0][20] = "addressEmbassyLine1";
+        data2CSV[1][20] = e.getAddressLine1();
+
+        data2CSV[0][21] = "addressEmbassyLine2";
+        data2CSV[1][21] = e.getAddressLine2();
+
+        data2CSV[0][22] = "addressEmbassyLine3";
+        data2CSV[1][22] = e.getAddressLine3();
+
+        data2CSV[0][23] = "addressEmbassyLine4";
+        data2CSV[1][23] = e.getAddressLine4();
+
+        data2CSV[0][24] = "departureDateThai";
+        data2CSV[1][24] = dpDepartureDateFromThai.getValue().toString();
+
+        data2CSV[0][25] = "firstArrivalDateThai";
+        data2CSV[1][25] = p.getFirstEntryDate().toString();
+
+        data2CSV[0][26] = "destinationPath";
+        data2CSV[1][26] = AppPaths.getPathToProfileLetters(p.getNickname()).toAbsolutePath().toString();
+
+        CtrFileOperation.generateLetter(strLetterSelected, p, data2CSV);
     }
 //    @FXML
 //    void actionPrintFormTM86VisaChange(ActionEvent ae)
