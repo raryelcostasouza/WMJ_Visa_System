@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.TitledPane;
 import javafx.stage.FileChooser;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
@@ -93,15 +93,15 @@ public class CtrFileOperation
 
     public static int archiveScanFile(String profileNickName, String scanType, File f2Archive)
     {
-         //the path to the archive subfolder for the specified profile and scantype
+        //the path to the archive subfolder for the specified profile and scantype
         return archiveFile(f2Archive, AppPaths.getPathArchiveScan(profileNickName, scanType));
     }
-    
+
     public static int archivePrintoutTM30(File fPrintoutTM30)
     {
         return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
     }
-    
+
     private static int archiveFile(File f2Archive, Path pDestArchive)
     {
         File fDestArchive;
@@ -111,7 +111,7 @@ public class CtrFileOperation
 
         fileNameWithoutExtension = Util.getFileNameWithoutExtension(f2Archive);
         fExtension = Util.getFileExtension(f2Archive);
-        
+
         pSourceFile = f2Archive.toPath();
 
         //the path to the archive subfolder for the specified profile and scantype
@@ -130,7 +130,8 @@ public class CtrFileOperation
             Files.move(pSourceFile, pDestFile);
             return 0;
 
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             CtrAlertDialog.errorDialog("Error to archive. Details:\n\n" + ex.getMessage());
             return -1;
@@ -143,7 +144,8 @@ public class CtrFileOperation
         {
             Files.delete(fScan.toPath());
             return 0;
-        } catch (IOException ioe)
+        }
+        catch (IOException ioe)
         {
             CtrAlertDialog.errorDialog("Unable to delete scan file. Details:\n\n" + ioe.getMessage());
             return -1;
@@ -156,7 +158,8 @@ public class CtrFileOperation
         {
             fBefore.renameTo(fAfter);
             return 0;
-        } catch (SecurityException ex)
+        }
+        catch (SecurityException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Unable to rename scan file.");
             return -1;
@@ -179,11 +182,13 @@ public class CtrFileOperation
             //copy the selected file to the proper application folder with a internally generated filename
             Files.copy(fSelected.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             return 0;
-        } catch (IOException ioe)
+        }
+        catch (IOException ioe)
         {
             CtrAlertDialog.exceptionDialog(ioe, errorMessage);
             return -1;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             CtrAlertDialog.exceptionDialog(e, errorMessage);
             return -1;
@@ -261,12 +266,14 @@ public class CtrFileOperation
             try
             {
                 Desktop.getDesktop().open(f);
-            } catch (IOException ex)
+            }
+            catch (IOException ex)
             {
                 CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
             }
 
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("No support for opening files on this OS.");
         }
@@ -303,7 +310,8 @@ public class CtrFileOperation
                 listReceipts90D.add(objEntryReceipt);
             }
             return listReceipts90D;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -315,7 +323,6 @@ public class CtrFileOperation
         ArrayList<String> listLinesUpdated;
         LinkedList<String> lList;
         Path pFileChangelog;
-        TitledPane tp = new TitledPane();
         pFileChangelog = AppPaths.getPathChangelog();
         try
         {
@@ -324,7 +331,8 @@ public class CtrFileOperation
             if (pFileChangelog.toFile().exists())
             {
                 listLinesBeforeUpdate = Files.readAllLines(pFileChangelog);
-            } else
+            }
+            else
             {
                 listLinesBeforeUpdate = null;
             }
@@ -336,7 +344,8 @@ public class CtrFileOperation
             }
 
             Files.write(pFileChangelog, listLinesUpdated);
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -362,14 +371,100 @@ public class CtrFileOperation
                     strChangelog += line + "\n";
                 }
                 return strChangelog;
-            } else
+            }
+            else
             {
                 return "";
             }
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
             return "";
+        }
+    }
+
+    private static String array2CSVString(String[] data)
+    {
+        String lineCSV;
+        int i;
+
+        lineCSV = "";
+        for (i = 0; i < data.length - 1; i++)
+        {
+            lineCSV += data[i] + ", ";
+        }
+        lineCSV += data[i];
+        return lineCSV;
+    }
+
+    private static List<String> matrix2CSVString(String[][] data)
+    {
+        LinkedList<String> linesCSV = new LinkedList<String>();
+
+        linesCSV.add(array2CSVString(data[0]));
+        linesCSV.add(array2CSVString(data[1]));
+
+        return linesCSV;
+    }
+
+    public static int generateCSV(MonasticProfile p, String[][] data)
+    {
+        Path pFolderLetterTemplate, pCSV;
+        List<String> linesCSV;
+
+        linesCSV = matrix2CSVString(data);
+        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
+        
+        pCSV = pFolderLetterTemplate.resolve("letterInput.csv");
+        try
+        {
+            //deletes the file if it previously exists
+            if (pCSV.toFile().exists())
+            {
+                Files.delete(pCSV);
+            }
+            Files.write(pCSV, linesCSV);
+            return 0;
+        }
+        catch (Exception ioex)
+        {
+            CtrAlertDialog.exceptionDialog(ioex, "Unable to save letterInput.csv file.");
+            return -1;
+        }
+
+    }
+
+    public static void generateLetter(String letterSelected, MonasticProfile p, String[][] data)
+    {
+        Process pCMD;
+        Path pFolderLetterTemplate, pCSV, pProfileLetterStorage;
+        String fileName;
+        int output;
+
+        fileName = "NonImm" + letterSelected.replaceAll("[-  ]+", "") + ".dotm";
+        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
+        pCSV = pFolderLetterTemplate.resolve("letterInput.csv");
+        pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
+        
+        output = generateCSV(p, data);
+        if (output == 0)
+        {
+            try
+            {
+                if (!pProfileLetterStorage.toFile().exists())
+                {
+                    pProfileLetterStorage.toFile().mkdirs();
+                }
+                
+               //Run the word macro
+                pCMD = Runtime.getRuntime().exec("cmd /c start /wait winword /embedded /q "+fileName +" /mvisaLetterGenerator", null, pFolderLetterTemplate.toFile());
+                pCMD.waitFor(5, TimeUnit.SECONDS);
+            }
+            catch (Exception ex)
+            {
+                CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
+            }
         }
     }
 
