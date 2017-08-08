@@ -18,13 +18,21 @@ public class AppConstants
 
     public static final String[] LIST_LETTER_LAYPERSON = new String[]
     {
-        "Layperson Abroad (Embassy) TH", "LaypersonAbroad (Embassy) EN", "Layperson sThailand (Vientiane Embassy)"
+        AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY, AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY_EN, AppConstants.LETTER_LAYPERSON_THAILAND_VIENTIANE_EMBASSY
     };
     
     public static final String[] LIST_LETTER_MONASTIC = new String[]
     {
-         "Monastic Abroad (Embassy) TH", "Monastic Abroad (Embassy) EN", "Monastic Abroad (Samnak Put)"
+         AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY, AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY_EN, AppConstants.LETTER_MONASTIC_ABROAD_SAMNAKPUT
     };
+    
+    public static final String LETTER_LAYPERSON_ABROAD_EMBASSY = "Layperson Abroad - Embassy";
+    public static final String LETTER_LAYPERSON_ABROAD_EMBASSY_EN = "Layperson Abroad - Embassy EN";
+    public static final String LETTER_LAYPERSON_THAILAND_VIENTIANE_EMBASSY = "Layperson Thailand - Vientiane Embassy";
+    
+    public static final String LETTER_MONASTIC_ABROAD_EMBASSY = "Monastic Abroad - Embassy";
+    public static final String LETTER_MONASTIC_ABROAD_EMBASSY_EN = "Monastic Abroad - Embassy EN";
+    public static final String LETTER_MONASTIC_ABROAD_SAMNAKPUT = "Monastic Abroad - Samnak Put";
     
     public static final String[] LIST_VISA_TYPES = new String[]
     {
