@@ -109,7 +109,7 @@
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ComboBox fx:id="cbLetterType" onAction="#listenerCBLetter" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="cbLetterType" onAction="#listenerCBLetter" GridPane.columnIndex="1" />
                               <Label text="Letter:" />
                            </children>
                         </GridPane>
@@ -128,8 +128,8 @@
                                  <children>
                                     <GridPane fx:id="gpEmbassy" layoutX="22.0" layoutY="22.0">
                                        <columnConstraints>
-                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -141,8 +141,8 @@
                                     </GridPane>
                                     <GridPane fx:id="gpDeparture">
                                       <columnConstraints>
-                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -150,6 +150,19 @@
                                        <children>
                                           <Label text="Departure Date From Thailand:" />
                                           <DatePicker fx:id="dpDepartureDateFromThai" GridPane.columnIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane fx:id="gpMonasticPhone">
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Phone Number Abroad:" />
+                                          <TextField fx:id="tfMonasticPhoneAbroad" GridPane.columnIndex="1" />
                                        </children>
                                     </GridPane>
                                     <TitledPane fx:id="tbMonasticAddr" collapsible="false" text="Monastic Address Abroad">
@@ -178,19 +191,6 @@
                                           </GridPane>
                                        </content>
                                     </TitledPane>
-                                    <GridPane fx:id="gpMonasticPhone">
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label text="Phone Number Abroad:" />
-                                          <TextField fx:id="tfMonasticPhoneAbroad" GridPane.columnIndex="1" />
-                                       </children>
-                                    </GridPane>
                                  </children>
                               </VBox>
                            </content>
