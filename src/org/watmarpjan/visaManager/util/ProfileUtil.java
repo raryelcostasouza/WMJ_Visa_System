@@ -32,7 +32,7 @@ public class ProfileUtil
         return "";
     }
 
-    public static String getTitle(MonasticProfile p)
+    public static String getTitleTH(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
         {
@@ -42,9 +42,49 @@ public class ProfileUtil
         {
             return "สามเณร";
         }
-        else
+        else    
         {
             return "นาค";
+        }
+    }
+    
+    public static String getTitleTH2(MonasticProfile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "พระ";
+        }
+        else
+        {
+            return "สามเณร";
+        }
+    }
+    
+    public static String getTitleEN(MonasticProfile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "Phra";
+        }
+        else if (p.getSamaneraOrdDate() != null)
+        {
+            return "Samanera";
+        }
+        else
+        {
+            return "Mr.";
+        }
+    }
+    
+    public static String getTitleEN2(MonasticProfile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "Bhikkhu";
+        }
+        else 
+        {
+            return "Samanera";
         }
     }
 
