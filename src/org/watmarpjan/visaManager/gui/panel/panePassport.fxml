@@ -254,7 +254,7 @@
                                                       </ImageView>
                                           <HBox alignment="CENTER" spacing="10.0">
                                              <children>
-                                                <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportScan" text="Archive" />
+                                                <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportFirstPage" text="Archive" />
                                                 <Button fx:id="bScanPassport" mnemonicParsing="false" onAction="#actionChooseScanPassport" text="Passport Scan" />
                                              </children>
                                           </HBox>
@@ -329,7 +329,7 @@
                                                                     </RadioButton>
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
-                                                                            <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
+                                                                            <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
                                                                             <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
                                                             <Button fx:id="bAddScan1" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                                         </children>
@@ -375,7 +375,7 @@
                                                                     <RadioButton fx:id="rbScan2LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVIsaExt" />
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
-                                                                            <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
+                                                                            <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
                                                                             <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
                                                             <Button fx:id="bAddScan2" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                                         </children>
@@ -421,7 +421,7 @@
                                                                     <RadioButton fx:id="rbScan3LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVIsaExt" />
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
-                                                                            <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchive" text="Archive" />
+                                                                            <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
                                                                             <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
                                                             <Button fx:id="bAddScan3" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
                                                                         </children>
