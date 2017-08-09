@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneChangelog">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneChangelog">
   <tabs>
     <Tab text="Recent Changes">
          <content>
@@ -165,7 +165,28 @@
                                           </HBox>
                                        </content>
                                     </TitledPane>
+                                    <TitledPane fx:id="tpChangedStatusAbroad2Thailand" expanded="false" layoutX="10.0" layoutY="134.0" text="Changed Status: Abroad-&gt; Thailand">
+                                       <content>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Monastic Selection:" />
+                                                <TreeView fx:id="tvChangedStatusAbroad2Thailand" showRoot="false" />
+                                             </children>
+                                          </HBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane fx:id="tpChangedStatusThailand2Abroad" expanded="false" layoutX="10.0" layoutY="165.0" text="Changed Status: Thailand-&gt; Abroad">
+                                       <content>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <Label text="Monastic Selection:" />
+                                                <TreeView fx:id="tvChangedStatusThailand2Abroad" showRoot="false" />
+                                             </children>
+                                          </HBox>
+                                       </content>
+                                    </TitledPane>
                                     <CheckBox fx:id="cbUpdateMonastery" mnemonicParsing="false" text="Updated Monastery Data" />
+                                    <CheckBox fx:id="cbUpdatedDocumentStock" layoutX="10.0" layoutY="165.0" mnemonicParsing="false" text="Updated Document Stock" />
                                  </children>
                               </VBox>
                            </content>

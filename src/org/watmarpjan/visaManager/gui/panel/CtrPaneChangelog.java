@@ -16,6 +16,7 @@ import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeView;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.BlockMonasticSelection;
@@ -110,15 +111,35 @@ public class CtrPaneChangelog extends AChildPaneController
     private TreeView<String> tvNewBysuddhiScans;
     @FXML
     private BlockMonasticSelection csNewBysuddhiScans;
+    
+    @FXML
+    private TitledPane tpChangedStatusAbroad2Thailand;
+    @FXML
+    private TreeView<String> tvChangedStatusAbroad2Thailand;
+    @FXML
+    private BlockMonasticSelection csChangedStatusAbroad2Thailand;
+    
+    @FXML
+    private TitledPane tpChangedStatusThailand2Abroad;
+    @FXML
+    private TreeView<String> tvChangedStatusThailand2Abroad;
+    @FXML
+    private BlockMonasticSelection csChangedStatusThailand2Abroad;
 
     @FXML
     private CheckBox cbUpdateMonastery;
+    
+    @FXML
+    private CheckBox cbUpdatedDocumentStock;
     
     @FXML
     private TextArea taOptionalComment;
 
     @FXML
     private TextArea taChangelogPreview;
+    
+    @FXML
+    private ToggleGroup tgChangedStatus;
 
     private ArrayList<BlockMonasticSelection> listChangelogSections;
 
@@ -138,6 +159,8 @@ public class CtrPaneChangelog extends AChildPaneController
         csUpdatedMonastic = new BlockMonasticSelection(tvUpdatedMonastic, tpUpdatedMonastic);
         csUpdatedPassport = new BlockMonasticSelection(tvUpdatedPassport, tpUpdatedPassport);
         csVisaExtension = new BlockMonasticSelection(tvVisaExtension, tpVisaExtension);
+        csChangedStatusAbroad2Thailand = new BlockMonasticSelection(tvChangedStatusAbroad2Thailand, tpChangedStatusAbroad2Thailand);
+        csChangedStatusThailand2Abroad = new BlockMonasticSelection(tvChangedStatusThailand2Abroad, tpChangedStatusThailand2Abroad);
 
         listChangelogSections.add(cs90D);
         listChangelogSections.add(csAddNewMonastic);
@@ -150,6 +173,8 @@ public class CtrPaneChangelog extends AChildPaneController
         listChangelogSections.add(csUpdatedMonastic);
         listChangelogSections.add(csUpdatedPassport);
         listChangelogSections.add(csVisaExtension);
+        listChangelogSections.add(csChangedStatusAbroad2Thailand);
+        listChangelogSections.add(csChangedStatusThailand2Abroad);
     }
 
     public void fillData()
@@ -172,13 +197,16 @@ public class CtrPaneChangelog extends AChildPaneController
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedMonastic);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csUpdatedPassport);
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csVisaExtension);
+        ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csVisaExtension);
+        ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csChangedStatusAbroad2Thailand);
+        ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(csChangedStatusThailand2Abroad);
 
         cbUpdateMonastery.setSelected(false);
         taOptionalComment.clear();
         taChangelogPreview.setText(CtrFileOperation.loadChangelog());
     }
 
-    private String generateChangelogSection(BlockMonasticSelection objBMS)
+        private String generateChangelogSection(BlockMonasticSelection objBMS)
     {
         boolean haveCheckboxSelected;
         String logSection;
@@ -236,6 +264,11 @@ public class CtrPaneChangelog extends AChildPaneController
             if (cbUpdateMonastery.isSelected())
             {
                 logLine += "\n         "+ cbUpdateMonastery.getText()+".";
+            }
+            
+            if (cbUpdatedDocumentStock.isSelected() )
+            {
+                logLine += "\n         "+ cbUpdatedDocumentStock.getText()+".";
             }
             
             //if there is a optional comment
