@@ -216,6 +216,29 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return queryStringField(hql);
     }
 
+      public ArrayList<String> loadListMonasticsMissingTM30()
+    {
+        ArrayList<String> listQ1, listQ2;
+        String hql, hql2;
+
+        hql = "select p.nickname"
+                + " from MonasticProfile p "
+                + " where p.printoutTm30 is null and"
+                + " p.status = 'THAILAND'";
+
+        hql2 = "select p.nickname"
+                + " from MonasticProfile p "
+                + " where p.printoutTm30 is not null and"
+                + " p.status = 'THAILAND' and"
+                + " p.arrivalLastEntryDate > p.printoutTm30.notifDate";
+        
+        listQ1 = queryStringField(hql);
+        listQ2 = queryStringField(hql2);
+        
+        listQ1.addAll(listQ2);
+        return listQ1;
+    }
+    
     public ArrayList<String> loadCertificateEngList()
     {
         String hql;

@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,24 +41,29 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
 
 //    @FXML
 //    private Button bArchive;
-
     @FXML
     private TableView<EntryPrintoutTM30> tvSavedNotifications;
 
     @FXML
     private TableColumn<EntryPrintoutTM30, String> tcOpenPDF;
-    
+
     @FXML
     private TableColumn<EntryPrintoutTM30, String> tcRemovePrintout;
-    
+
     @FXML
     private TreeView<String> tvMonastics;
+
+    @FXML
+    private ListView<String> lvMonasticsMissingNewReport;
 
     @FXML
     private DatePicker dpNotification;
 
     @FXML
     private TextField tfPathPDF;
+
+    @FXML
+    private TextField tfMonasticsNeedingNewReport;
 
     private BlockMonasticSelection bMonasticSelection;
     private File fSelected;
@@ -69,16 +75,16 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         tvMonastics.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
 
         bMonasticSelection = new BlockMonasticSelection(tvMonastics);
-        
+
         tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
         tvSavedNotifications.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
-        
+
         tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
         tcRemovePrintout.setCellValueFactory(new PropertyValueFactory<>(""));
 
         tvSavedNotifications.setColumnResizePolicy((param) -> true);
-        Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> openPDFCellFactory =
-                new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
+        Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> openPDFCellFactory
+                = new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
         {
             @Override
             public TableCell call(final TableColumn<EntryPrintoutTM30, String> param)
@@ -97,16 +103,17 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                         {
                             setGraphic(null);
                             setText(null);
-                        } else
+                        }
+                        else
                         {
 
                             btn.setGraphic(ivPDFIcon);
                             btn.setOnAction((ActionEvent event)
-                                    -> 
-                                    {
-                                        EntryPrintoutTM30 clickedEntry;
-                                        clickedEntry = getTableView().getItems().get(getIndex());
-                                        CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getPrintoutTM30()));
+                                    ->
+                            {
+                                EntryPrintoutTM30 clickedEntry;
+                                clickedEntry = getTableView().getItems().get(getIndex());
+                                CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getPrintoutTM30()));
                             });
                             setGraphic(btn);
                             setText(null);
@@ -116,9 +123,9 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                 return cell;
             }
         };
-        
-         Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> removePrintoutCellFactory =
-                new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
+
+        Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>> removePrintoutCellFactory
+                = new Callback<TableColumn<EntryPrintoutTM30, String>, TableCell<EntryPrintoutTM30, String>>()
         {
             @Override
             public TableCell call(final TableColumn<EntryPrintoutTM30, String> param)
@@ -137,18 +144,19 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                         {
                             setGraphic(null);
                             setText(null);
-                        } else
+                        }
+                        else
                         {
 
                             btn.setGraphic(ivRemoveIcon);
                             btn.setOnAction((ActionEvent event)
-                                    -> 
-                                    {
-                                        EntryPrintoutTM30 clickedEntry;
-                                        clickedEntry = getTableView().getItems().get(getIndex());
-                                        actionRemovePrintout(event, clickedEntry);
+                                    ->
+                            {
+                                EntryPrintoutTM30 clickedEntry;
+                                clickedEntry = getTableView().getItems().get(getIndex());
+                                actionRemovePrintout(event, clickedEntry);
                             });
-                            
+
                             setGraphic(btn);
                             setText(null);
                         }
@@ -162,8 +170,26 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         tcRemovePrintout.setCellFactory(removePrintoutCellFactory);
     }
 
+    private void loadListMonasticsNeedNewReport()
+    {
+        ArrayList<String> listMonasticsNeedingNewReport;
+        
+        listMonasticsNeedingNewReport = ctrGUIMain.getCtrMain().getCtrProfile().loadListMonasticsMissingTM30();
+
+        if (listMonasticsNeedingNewReport != null)
+        {
+            lvMonasticsMissingNewReport.getItems().clear();
+            lvMonasticsMissingNewReport.getItems().addAll(listMonasticsNeedingNewReport);
+        }
+        else
+        {
+            lvMonasticsMissingNewReport.getItems().clear();
+        }
+    }
+
     public void fillData()
     {
+        loadListMonasticsNeedNewReport();
         loadTableNotifResidence();
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(bMonasticSelection);
 
@@ -178,7 +204,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         ArrayList<PrintoutTm30> listPrintoutTM30;
         ArrayList<EntryPrintoutTM30> listEntryTM30;
         EntryPrintoutTM30 objEntryTM30;
-        
+
         listPrintoutTM30 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().loadList();
         listEntryTM30 = new ArrayList<>();
         for (PrintoutTm30 objTM30 : listPrintoutTM30)
@@ -206,7 +232,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             //if there is more than one printout on the same date
             //they will have different auxIndex values
             nMaxAuxIndex = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().getMaxAuxIndexPrintoutForNotifDate(ldNotifDate);
-            
+
             //if there is no entry registered for the selected notif date
             if (nMaxAuxIndex == null)
             {
@@ -214,9 +240,9 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             }
             else
             {
-                auxIndex = nMaxAuxIndex +1;
+                auxIndex = nMaxAuxIndex + 1;
             }
-            
+
             opStatus1 = CtrFileOperation.copyOperation(fSelected, AppFiles.getPrintoutTM30(ldNotifDate, auxIndex));
             //if the file copy was successfull
             if (opStatus1 == 0)
@@ -227,9 +253,10 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                 {
                     CtrAlertDialog.infoDialog("TM30 Registered", "The TM30 Form was added successfully.");
                     fillData();
-                } else
+                }
+                else
                 {
-                    CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate,auxIndex));
+                    CtrFileOperation.deleteFile(AppFiles.getPrintoutTM30(ldNotifDate, auxIndex));
                 }
             }
         }
@@ -246,9 +273,9 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         boolean confirmation;
         int opStatusDB, opStatusArchive;
         PrintoutTm30 objTM30;
-    
-         msg = "Are you sure that you want to remove the following TM30 Printout entry?\n"
-                 + "(Note: The printout file will be archived)\n "
+
+        msg = "Are you sure that you want to remove the following TM30 Printout entry?\n"
+                + "(Note: The printout file will be archived)\n "
                 + "Notification Date: " + objEntryTM30.getPNotifDate() + "\n"
                 + "Monastics: " + objEntryTM30.getPListMonasticNickname();
 
@@ -268,7 +295,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             }
         }
     }
-    
+
     @FXML
     void actionSelectFile(ActionEvent ae)
     {
@@ -293,10 +320,10 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         }
         return listSelectedMonastics;
     }
-    
+
     private boolean validateFields()
     {
-        return (fSelected!= null) && 
-                (dpNotification.getValue() != null);
+        return (fSelected != null)
+                && (dpNotification.getValue() != null);
     }
 }
