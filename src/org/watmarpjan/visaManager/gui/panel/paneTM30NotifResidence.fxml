@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -20,18 +22,29 @@
   <tabs>
     <Tab text="Saved Printouts TM 30">
          <content>
-            <HBox alignment="CENTER">
-               <children>
-                  <TableView fx:id="tvSavedNotifications">
-                     <columns>
-                        <TableColumn editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Notif. Date" />
-                        <TableColumn fx:id="tcOpenPDF" editable="false" maxWidth="70.0" minWidth="53.0" prefWidth="53.0" text="PDF" />
-                        <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="400.0" text="Monastics" />
-                        <TableColumn fx:id="tcRemovePrintout" editable="false" maxWidth="70.0" minWidth="90.0" prefWidth="-1.0" text="Remove" />
-                     </columns>
-                  </TableView>
-               </children>
-            </HBox>
+            <BorderPane>
+               <center>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <TableView fx:id="tvSavedNotifications">
+                           <columns>
+                              <TableColumn editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Notif. Date" />
+                              <TableColumn fx:id="tcOpenPDF" editable="false" maxWidth="70.0" minWidth="53.0" prefWidth="53.0" text="PDF" />
+                              <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="400.0" text="Monastics" />
+                              <TableColumn fx:id="tcRemovePrintout" editable="false" maxWidth="70.0" minWidth="90.0" prefWidth="-1.0" text="Remove" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </center>
+               <right>
+                  <TitledPane collapsible="false" text="Monastics who need a new TM 30 report" BorderPane.alignment="TOP_CENTER">
+                     <content>
+                        <ListView fx:id="lvMonasticsMissingNewReport" />
+                     </content>
+                  </TitledPane>
+               </right>
+            </BorderPane>
          </content></Tab>
     <Tab text="Register Printout TM30">
          <content>
