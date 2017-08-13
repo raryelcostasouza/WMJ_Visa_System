@@ -142,7 +142,7 @@ public class CtrPDF
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("paliNameThai").setValue(p.getPaliNameThai());
         acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
@@ -315,7 +315,7 @@ public class CtrPDF
 
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("lastName").setValue(p.getLastName());
         acroForm.getField("name").setValue(p.getMonasticName());
         if (p.getMiddleName() != null)
@@ -394,7 +394,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
@@ -438,7 +438,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("nationality").setValue(p.getNationality());
         acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
@@ -461,7 +461,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("lastName").setValue(p.getLastName());
         acroForm.getField("name").setValue(p.getMonasticName());
         acroForm.getField("middleName").setValue(p.getMiddleName());
@@ -540,7 +540,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("lastName").setValue(p.getLastName());
         acroForm.getField("name").setValue(p.getMonasticName());
         acroForm.getField("middleName").setValue(p.getMiddleName());
@@ -725,7 +725,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         adjustFontThaiField(alThaiFields);
 
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitle(p));
+        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
         acroForm.getField("lastName").setValue(p.getLastName());
         acroForm.getField("name").setValue(p.getMonasticName());
         acroForm.getField("middleName").setValue(p.getMiddleName());
@@ -752,7 +752,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("WatResidingAtThai_addrAmpher_addrJangwat"));
 
         adjustFontThaiField(alThaiFields);
-        strTitle = ProfileUtil.getTitle(p);
+        strTitle = ProfileUtil.getTitleTH(p);
         strFullName = ProfileUtil.getFullName(p);
         mOrdainedAt = p.getMonasteryOrdainedAt();
         mResidingAt = p.getMonasteryResidingAt();
