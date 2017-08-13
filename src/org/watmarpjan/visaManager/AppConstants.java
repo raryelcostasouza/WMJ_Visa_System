@@ -34,9 +34,11 @@ public class AppConstants
     public static final String LETTER_MONASTIC_ABROAD_EMBASSY_EN = "Monastic Abroad - Embassy EN";
     public static final String LETTER_MONASTIC_ABROAD_SAMNAKPUT = "Monastic Abroad - Samnak Put";
     
+    public static final String VISA_TYPE_TOURIST = "Tourist";
+    
     public static final String[] LIST_VISA_TYPES = new String[]
     {
-        "Non-O", "Non-RE", "Non-ED", "Tourist"
+        "Non-O", "Non-RE", "Non-ED", VISA_TYPE_TOURIST
     };
 
     public static final String[] LIST_TRAVEL_BY = new String[]

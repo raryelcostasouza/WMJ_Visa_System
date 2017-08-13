@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
+import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
@@ -379,8 +380,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
                 + " from MonasticProfile p "
-                + " where p.status = 'THAILAND' and"
-                + " p.next90DayNotice is not null "
+                + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
+                + "and p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
         return queryDueTaskEntry(hql);
@@ -391,8 +392,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         String hql;
         hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idProfile, p.nickname, p.next90DayNotice, p.nSigned90dForms)"
                 + " from MonasticProfile p "
-                + " where p.status = 'THAILAND' and"
-                + " p.next90DayNotice is not null "
+                + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
+                 + " and p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
         return (ArrayList<EntryUpdate90DayNotice>) ctrDB.getSession().createQuery(hql).getResultList();
@@ -403,7 +404,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         String hql;
         hql = "select new org.watmarpjan.visaManager.model.EntryPrintedDocStock(p.nickname, p.nSigned90dForms, p.wfExtPhotocopiesSnp, p.wfExtPhotocopiesImm, p.nPrintedPhotos)"
                 + " from MonasticProfile p "
-                + " where p.status <> 'INACTIVE'"
+                + " where p.status <> '" +AppConstants.STATUS_INACTIVE+ "'"
                 + " order by "
                 + " p.bhikkhuOrdDate asc nulls last"
                 + " p.samaneraOrdDate asc nulls last,"
@@ -421,7 +422,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         hql1 = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p, max(vext.expiryDate))"
                 + " from MonasticProfile p "
                 + " inner join p.visaExtensionSet vext"
-                + " where p.status <> 'INACTIVE' "
+                + " where p.status <>  '" +AppConstants.STATUS_INACTIVE+ "'"
                 + " and p.wfExtPrawat <> 'Missing'"
                 + " and size(p.visaExtensionSet) > 0"
                 + " group by p"
@@ -433,7 +434,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         hql2 = "select new org.watmarpjan.visaManager.model.EntryWorkflowVisaExt(p.nickname, p.wfExtPrawat, p.wfExtLetterSnp, p.wfExtPhotocopiesSnp, "
                 + "p.wfExtApprovalSnp, p.wfExtTm7, p.wfExtLetterImm, p.wfExtPhotocopiesImm, p.wfExtExtraImm, p.visaExpiryDate)"
                 + " from MonasticProfile p "
-                + " where p.status <> 'INACTIVE' "
+                + " where p.status <> '" +AppConstants.STATUS_INACTIVE+ "'"
                 + " and p.wfExtPrawat <> 'Missing'"
                 + " and size(p.visaExtensionSet) = 0"
                 + " and p.visaExpiryDate is not null"
@@ -455,7 +456,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate))"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
-                + " where p.visaType <> 'Tourist'"
+                + " where p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" + currentLocation + "'"
                 + " and size(p.visaExtensionSet) > 0"
                 + " group by p.nickname"
@@ -465,7 +466,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         //for monastics whose NonImm visa has NOT BEEN extended
         hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
-                + " where p.visaType <> 'Tourist'"
+                + " where p.visaType <>'"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" + currentLocation + "'"
                 + " and p.visaExpiryDate is not null"
                 + " and size(p.visaExtensionSet) = 0"
@@ -490,8 +491,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate))"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
-                + " where p.visaType = 'Tourist'"
-                + " and p.status = 'THAILAND'"
+                + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + " and size(p.visaExtensionSet) > 0"
                 + " group by p.nickname"
                 + " order by max(vext.expiryDate)";
@@ -500,8 +501,8 @@ public class CtrMonasticProfile extends AbstractControllerDB
         //for monastics whose Tourist visa has NOT BEEN extended
         hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
-                + " where p.visaType = 'Tourist'"
-                + " and p.status = 'THAILAND'"
+                + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + " and p.visaExpiryDate is not null"
                 + " and size(p.visaExtensionSet) = 0"
                 + " order by p.visaExpiryDate";
