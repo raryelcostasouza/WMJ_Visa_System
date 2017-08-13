@@ -14,20 +14,15 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author pm.dell
  */
-public class TaskExtendVisaGeneric extends EntryDueTask
+public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtended
 {
 
     private SimpleStringProperty prawat;
     private SimpleStringProperty samnakput;
-    private SimpleStringProperty immigration;
 
-    public TaskExtendVisaGeneric(String profileNickname, Date dDueDate)
+    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
-        LocalDate ldImmigration;
-
-        ldImmigration = ldDueDate.minusMonths(1);
-        immigration = new SimpleStringProperty(ldImmigration.format(Util.DEFAULT_DATE_FORMAT));
     }
 
     public String getPrawat()
@@ -48,10 +43,5 @@ public class TaskExtendVisaGeneric extends EntryDueTask
     protected void setSamnakput(LocalDate ldSNP)
     {
         this.samnakput = new SimpleStringProperty(ldSNP.format(Util.DEFAULT_DATE_FORMAT));
-    }
-
-    public String getImmigration()
-    {
-        return immigration.get();
     }
 }

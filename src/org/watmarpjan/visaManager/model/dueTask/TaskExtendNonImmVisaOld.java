@@ -12,10 +12,10 @@ import java.util.Date;
  *
  * @author WMJ_user
  */
-public class TaskExtendVisaOld extends TaskExtendVisaGeneric
+public class TaskExtendNonImmVisaOld extends TaskExtendNonImmVisaGeneric
 {
     //used when the visa has ALREADY been EXTENDED.
-    public TaskExtendVisaOld(String profileNickname, Date dDueDate)
+    public TaskExtendNonImmVisaOld(String profileNickname, Date dDueDate)
     {
         super(profileNickname, dDueDate);
         LocalDate ldPrawat, ldSamnakput;
