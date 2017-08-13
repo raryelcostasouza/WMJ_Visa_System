@@ -16,7 +16,7 @@
          <content>
             <HBox alignment="CENTER">
                <children>
-                  <ComboBox fx:id="cbEmbassy" onAction="#actionSelectEmbassy" stylesheets="@thaiField.css" />
+                  <ComboBox fx:id="cbEmbassy" onAction="#actionSelectEmbassy" />
                </children>
             </HBox>
          </content>
@@ -31,19 +31,18 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Name (English):" />
                         <Label text="Name (Thai):" GridPane.rowIndex="1" />
-                        <TextField fx:id="tfNameEN" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
-                        <TextField fx:id="tfNameTH" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfNameTH" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label layoutX="10.0" layoutY="108.0" text="Address Line 1:" GridPane.rowIndex="2" />
                         <Label text="Country (Thai):" GridPane.rowIndex="6" />
                         <Label layoutX="10.0" layoutY="135.0" text="Address Line 2:" GridPane.rowIndex="3" />
@@ -53,7 +52,8 @@
                         <TextField fx:id="tfAddr2" layoutX="114.0" layoutY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="tfAddr3" layoutX="114.0" layoutY="101.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="tfAddr4" layoutX="114.0" layoutY="131.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="tfCountryTH" layoutX="114.0" layoutY="161.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="tfCountryTH" layoutX="114.0" layoutY="161.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="tfNameEN" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
