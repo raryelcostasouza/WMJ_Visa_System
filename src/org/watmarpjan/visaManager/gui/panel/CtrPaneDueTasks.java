@@ -348,7 +348,7 @@ public class CtrPaneDueTasks extends AChildPaneController
 
         alTHDue90dNotice = ctrGUIMain.getCtrMain().getCtrProfile().loadListDue90DayNotice();
         alTHDueNonImmVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueNonImmVisaExtension(AppConstants.STATUS_THAILAND);
-        alTHDueTouristVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueTouristVisaExtension(AppConstants.STATUS_THAILAND);
+        alTHDueTouristVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueTouristVisaExtension();
         alTHPassportRenewal = ctrGUIMain.getCtrMain().getCtrProfile().loadListDuePassportRenewal(AppConstants.STATUS_THAILAND);
 
         alAbroadDueVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueNonImmVisaExtension(AppConstants.STATUS_ABROAD);
