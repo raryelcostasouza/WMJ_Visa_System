@@ -115,9 +115,13 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         });
     }
 
-    private void clearFieldsVisaLetters()
+    private void clearFieldsVisaLetters(boolean partialClear)
     {
-        cbLetterType.setValue(null);
+        if (!partialClear)
+        {
+            cbLetterType.setValue(null);
+        }
+        
         dpDepartureDateFromThai.setValue(null);
         cbEmbassy.setValue(null);
         tfMonasticAddr1.setText("");
@@ -190,7 +194,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     @Override
     public void fillData(MonasticProfile p)
     {
-        clearFieldsVisaLetters();
+        clearFieldsVisaLetters(false);
         if (p != null)
         {
             if (p.getSamaneraOrdDate() != null || p.getBhikkhuOrdDate() != null)
@@ -251,28 +255,38 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     void listenerCBLetter(ActionEvent ae)
     {
         String strLetterSelected;
-
+        
+        clearFieldsVisaLetters(true);
         strLetterSelected = cbLetterType.getValue();
-
         if (strLetterSelected != null)
         {
             switch (strLetterSelected)
             {
-                case "Layperson Abroad - Embassy) TH":
+                case AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY:
+                    bpLetterFields.setCenter(null);
+                    vbExtraFields.getChildren().clear();
+                    break;
+                case AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY_EN:
+                    vbExtraFields.getChildren().clear();
+                    vbExtraFields.getChildren().add(gpEmbassy);
+                    break;
+                case AppConstants.LETTER_LAYPERSON_THAILAND_VIENTIANE_EMBASSY:
+                    bpLetterFields.setCenter(null);
+                    vbExtraFields.getChildren().clear();
                     break;
 
-                case "Monastic Abroad - Embassy":
+                case AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY:
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
                     vbExtraFields.getChildren().add(gpDeparture);
                     break;
-                case "Monastic Abroad - Embassy EN":
+                case AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY_EN:
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
                     break;
-                case "Monastic Abroad - Samnak Put":
+                case AppConstants.LETTER_MONASTIC_ABROAD_SAMNAKPUT:
                     bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
@@ -294,22 +308,30 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         strLetterSelected = cbLetterType.getValue();
-        strSelectedEmbassy = cbEmbassy.getValue();
-        e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(strSelectedEmbassy);
 
-        data2CSV[0][0] = "titleEnglish";
+        strSelectedEmbassy = cbEmbassy.getValue();
+        if (cbEmbassy.getValue() != null)
+        {
+            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(strSelectedEmbassy);
+        }
+        else
+        {
+            e = null;
+        }
+
+        data2CSV[0][0] = "titleEN";
         data2CSV[1][0] = ProfileUtil.getTitleEN(p);
 
-        data2CSV[0][1] = "titleThai";
+        data2CSV[0][1] = "titleTH2";
         data2CSV[1][1] = ProfileUtil.getTitleTH2(p);
 
         data2CSV[0][2] = "OrdinationTypeThai";
         data2CSV[1][2] = ProfileUtil.getOrdinationType(p);
 
-        data2CSV[0][3] = "OrdinationStatusThai";
+        data2CSV[0][3] = "titleTH";
         data2CSV[1][3] = ProfileUtil.getTitleTH(p);
 
-        data2CSV[0][4] = "OrdinationStatusEnglish";
+        data2CSV[0][4] = "titleEN2";
         data2CSV[1][4] = ProfileUtil.getTitleEN2(p);
 
         data2CSV[0][5] = "name";
@@ -348,32 +370,65 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         data2CSV[0][16] = "contactPhone";
         data2CSV[1][16] = tfMonasticPhoneAbroad.getText();
 
-        data2CSV[0][17] = "nameEmbassyThai";
-        data2CSV[1][17] = e.getNameTh();
+        if (e != null)
+        {
+            data2CSV[0][17] = "nameEmbassyThai";
+            data2CSV[1][17] = e.getNameTh();
 
-        data2CSV[0][18] = "nameEmbassyEnglish";
-        data2CSV[1][18] = e.getNameEn();
+            data2CSV[0][18] = "nameEmbassyEnglish";
+            data2CSV[1][18] = e.getNameEn();
 
-        data2CSV[0][19] = "countryEmbassyThai";
-        data2CSV[1][19] = e.getCountry();
+            data2CSV[0][19] = "countryEmbassyThai";
+            data2CSV[1][19] = e.getCountry();
 
-        data2CSV[0][20] = "addressEmbassyLine1";
-        data2CSV[1][20] = e.getAddressLine1();
+            data2CSV[0][20] = "addressEmbassyLine1";
+            data2CSV[1][20] = e.getAddressLine1();
 
-        data2CSV[0][21] = "addressEmbassyLine2";
-        data2CSV[1][21] = e.getAddressLine2();
+            data2CSV[0][21] = "addressEmbassyLine2";
+            data2CSV[1][21] = e.getAddressLine2();
 
-        data2CSV[0][22] = "addressEmbassyLine3";
-        data2CSV[1][22] = e.getAddressLine3();
+            data2CSV[0][22] = "addressEmbassyLine3";
+            data2CSV[1][22] = e.getAddressLine3();
 
-        data2CSV[0][23] = "addressEmbassyLine4";
-        data2CSV[1][23] = e.getAddressLine4();
+            data2CSV[0][23] = "addressEmbassyLine4";
+            data2CSV[1][23] = e.getAddressLine4();
+        }
+        else
+        {
+            data2CSV[0][17] = "nameEmbassyThai";
+            data2CSV[1][17] = "";
+
+            data2CSV[0][18] = "nameEmbassyEnglish";
+            data2CSV[1][18] = "";
+
+            data2CSV[0][19] = "countryEmbassyThai";
+            data2CSV[1][19] = "";
+
+            data2CSV[0][20] = "addressEmbassyLine1";
+            data2CSV[1][20] = "";
+
+            data2CSV[0][21] = "addressEmbassyLine2";
+            data2CSV[1][21] = "";
+
+            data2CSV[0][22] = "addressEmbassyLine3";
+            data2CSV[1][22] = "";
+
+            data2CSV[0][23] = "addressEmbassyLine4";
+            data2CSV[1][23] = "";
+        }
 
         data2CSV[0][24] = "departureDateThai";
-        data2CSV[1][24] = dpDepartureDateFromThai.getValue().toString();
-
+        if (dpDepartureDateFromThai.getValue() != null)
+        {
+            data2CSV[1][24] = Util.toStringThaiDateFormatMonthText(dpDepartureDateFromThai.getValue());
+        }
+        else
+        {
+             data2CSV[1][24] = "";
+        }
+ 
         data2CSV[0][25] = "firstArrivalDateThai";
-        data2CSV[1][25] = p.getFirstEntryDate().toString();
+        data2CSV[1][25] = Util.toStringThaiDateFormatMonthText(p.getFirstEntryDate());
 
         data2CSV[0][26] = "destinationPath";
         data2CSV[1][26] = AppPaths.getPathToProfileLetters(p.getNickname()).toAbsolutePath().toString();

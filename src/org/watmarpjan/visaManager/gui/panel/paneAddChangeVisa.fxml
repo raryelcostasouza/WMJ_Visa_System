@@ -102,8 +102,8 @@
                      <top>
                         <GridPane BorderPane.alignment="CENTER">
                           <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -124,7 +124,7 @@
                      <center>
                         <TitledPane fx:id="tbExtraFields" collapsible="false" text="Extra Fields" BorderPane.alignment="CENTER">
                            <content>
-                              <VBox fx:id="vbExtraFields">
+                              <VBox fx:id="vbExtraFields" alignment="CENTER">
                                  <children>
                                     <GridPane fx:id="gpEmbassy" layoutX="22.0" layoutY="22.0">
                                        <columnConstraints>
@@ -132,7 +132,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <Label text="Embassy:" />
@@ -155,40 +155,44 @@
                                     <GridPane fx:id="gpMonasticPhone">
                                        <columnConstraints>
                                           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <Label text="Phone Number Abroad:" />
-                                          <TextField fx:id="tfMonasticPhoneAbroad" GridPane.columnIndex="1" />
+                                          <TextField fx:id="tfMonasticPhoneAbroad" GridPane.columnIndex="1" GridPane.hgrow="NEVER" />
                                        </children>
                                     </GridPane>
-                                    <TitledPane fx:id="tbMonasticAddr" collapsible="false" text="Monastic Address Abroad">
+                                    <TitledPane fx:id="tbMonasticAddr" collapsible="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Monastic Address Abroad">
                                        <content>
-                                          <GridPane>
-                                             <columnConstraints>
-                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
+                                          <HBox alignment="CENTER">
                                              <children>
-                                                <Label text="Address Line 2:" GridPane.rowIndex="1" />
-                                                <Label layoutX="10.0" layoutY="105.0" text="Address Line 1:" />
-                                                <Label layoutX="14.0" layoutY="105.0" text="Address Line 3:" GridPane.rowIndex="2" />
-                                                <Label layoutX="14.0" layoutY="195.0" text="Address Line 4:" GridPane.rowIndex="3" />
-                                                <TextField fx:id="tfMonasticAddr1" GridPane.columnIndex="1" />
-                                                <TextField fx:id="tfMonasticAddr2" layoutX="171.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField fx:id="tfMonasticAddr3" layoutX="171.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField fx:id="tfMonasticAddr4" layoutX="171.0" layoutY="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <GridPane>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Address Line 2:" GridPane.rowIndex="1" />
+                                                      <Label layoutX="10.0" layoutY="105.0" text="Address Line 1:" />
+                                                      <Label layoutX="14.0" layoutY="105.0" text="Address Line 3:" GridPane.rowIndex="2" />
+                                                      <Label layoutX="14.0" layoutY="195.0" text="Address Line 4:" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="tfMonasticAddr1" GridPane.columnIndex="1" />
+                                                      <TextField fx:id="tfMonasticAddr2" layoutX="171.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="tfMonasticAddr3" layoutX="171.0" layoutY="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="tfMonasticAddr4" layoutX="171.0" layoutY="71.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
-                                          </GridPane>
+                                          </HBox>
                                        </content>
                                     </TitledPane>
                                  </children>
