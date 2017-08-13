@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.gui.panel;
 
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.dueTask.TaskNotice90D;
-import org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaOld;
+import org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -42,11 +43,13 @@ public class CtrPaneDueTasks extends AChildPaneController
     private Tab tThailand;
     @FXML
     private Tab tAbroad;
-    
+
     @FXML
     private TableView<EntryDueTask> tvTH90DayNotice;
     @FXML
     private TableView<EntryDueTask> tvTHVisaExtension;
+    @FXML
+    private TableView<EntryDueTask> tvTHTouristVisaExtension;
     @FXML
     private TableView<EntryDueTask> tvTHPassportRenewal;
     @FXML
@@ -68,8 +71,8 @@ public class CtrPaneDueTasks extends AChildPaneController
 
 //    @FXML
 //    private Button bPrintTH;
-      @FXML
-      private Button bPreviewTH;
+    @FXML
+    private Button bPreviewTH;
 
 //    @FXML
 //    private Button bPrintAbroad;
@@ -111,7 +114,7 @@ public class CtrPaneDueTasks extends AChildPaneController
                             {
                                 ctrGUIMain.actionButton90DayNotice(null);
                             }
-                            else if (objEntry instanceof TaskExtendVisaOld)
+                            else if (objEntry instanceof TaskExtendNonImmVisaOld)
                             {
                                 ctrGUIMain.actionButtonVisaExt(null);
                             }
@@ -182,19 +185,28 @@ public class CtrPaneDueTasks extends AChildPaneController
                     {
                         LocalDate objLD;
 
-                        objLD = LocalDate.parse(item, Util.DEFAULT_DATE_FORMAT);
-                        setText(item);
-                        //if the date in the cell is passed 
-                        if (LocalDate.now().compareTo(objLD) >= 0)
+                        try
                         {
-                            //paint text in red
+                            objLD = LocalDate.parse(item, Util.DEFAULT_DATE_FORMAT);
+                            setText(item);
+                            //if the date in the cell is passed 
+                            if (LocalDate.now().compareTo(objLD) >= 0)
+                            {
+                                //paint text in red
+                                setTextFill(Color.RED);
+                            }
+                            else
+                            {
+                                //paint text in black
+                                setTextFill(Color.BLACK);
+                            }
+                        }
+                        catch (DateTimeParseException dtEx)
+                        {
+                            setText(item);
                             setTextFill(Color.RED);
                         }
-                        else
-                        {
-                            //paint text in black
-                            setTextFill(Color.BLACK);
-                        }
+
                     }
                 }
             };
@@ -215,14 +227,16 @@ public class CtrPaneDueTasks extends AChildPaneController
         alTV = new ArrayList<>();
         alTV.add(tvTH90DayNotice);
         alTV.add(tvTHVisaExtension);
+        alTV.add(tvTHTouristVisaExtension);
         alTV.add(tvTHPassportRenewal);
 
         alTV.add(tvAbroadVisaExtension);
         alTV.add(tvAbroadPassportRenewal);
 
         initTable90Day(tvTH90DayNotice);
-        initTableVisaExtension(tvTHVisaExtension);
-        initTableVisaExtension(tvAbroadVisaExtension);
+        initTableTouristVisaExtension(tvTHTouristVisaExtension);
+        initTableNonImmVisaExtension(tvTHVisaExtension);
+        initTableNonImmVisaExtension(tvAbroadVisaExtension);
 
         initTablePassportRenew(tvTHPassportRenewal);
         initTablePassportRenew(tvAbroadPassportRenewal);
@@ -237,13 +251,12 @@ public class CtrPaneDueTasks extends AChildPaneController
     {
         TableColumn<EntryDueTask, String> tcAction, tcWeekDay, tcDueDate;
 
-        
         tcDueDate = (TableColumn<EntryDueTask, String>) tv.getColumns().get(2);
         tcDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         tcDueDate.setCellFactory(dateCellFactory);
-        
+
         tv.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
-        
+
         tv.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("weekDayDueDate"));
         tv.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
 
@@ -276,7 +289,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         GUIUtil.initAutoHeightResize(tv, 2.7);
     }
 
-    private void initTableVisaExtension(TableView<EntryDueTask> tv)
+    private void initTableNonImmVisaExtension(TableView<EntryDueTask> tv)
     {
         TableColumn<EntryDueTask, String> tcPrawat, tcSamnakput, tcImmigration;
         initTableGeneric(tv);
@@ -290,6 +303,18 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcSamnakput.setCellFactory(dateCellFactory);
 
         tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(2);
+        tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
+        tcImmigration.setCellFactory(dateCellFactory);
+
+        GUIUtil.initAutoHeightResize(tv, 2.5);
+    }
+
+    private void initTableTouristVisaExtension(TableView<EntryDueTask> tv)
+    {
+        TableColumn<EntryDueTask, String> tcImmigration;
+        initTableGeneric(tv);
+
+        tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(0);
         tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
         tcImmigration.setCellFactory(dateCellFactory);
 
@@ -311,21 +336,22 @@ public class CtrPaneDueTasks extends AChildPaneController
 
     public void fillData()
     {
-        ArrayList<EntryDueTask> alTHDue90dNotice, alTHDueVisaExtension, alTHPassportRenewal,
+        ArrayList<EntryDueTask> alTHDue90dNotice, alTHDueNonImmVisaExtension, alTHDueTouristVisaExtension, alTHPassportRenewal,
                 alAbroadDueVisaExtension, alAbroadPassportRenewal;
 
         int countMonasticThailand, countMonasticAbroad;
-        
+
         countMonasticThailand = ctrGUIMain.getCtrMain().getCtrProfile().getCountMonasticThailand();
         countMonasticAbroad = ctrGUIMain.getCtrMain().getCtrProfile().getCountMonasticAbroad();
         tThailand.setText("Thailand (" + countMonasticThailand + ")");
         tAbroad.setText("Abroad (" + countMonasticAbroad + ")");
-        
+
         alTHDue90dNotice = ctrGUIMain.getCtrMain().getCtrProfile().loadListDue90DayNotice();
-        alTHDueVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueVisaExtension(AppConstants.STATUS_THAILAND);
+        alTHDueNonImmVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueNonImmVisaExtension(AppConstants.STATUS_THAILAND);
+        alTHDueTouristVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueTouristVisaExtension(AppConstants.STATUS_THAILAND);
         alTHPassportRenewal = ctrGUIMain.getCtrMain().getCtrProfile().loadListDuePassportRenewal(AppConstants.STATUS_THAILAND);
 
-        alAbroadDueVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueVisaExtension(AppConstants.STATUS_ABROAD);
+        alAbroadDueVisaExtension = ctrGUIMain.getCtrMain().getCtrProfile().loadListDueNonImmVisaExtension(AppConstants.STATUS_ABROAD);
         alAbroadPassportRenewal = ctrGUIMain.getCtrMain().getCtrProfile().loadListDuePassportRenewal(AppConstants.STATUS_ABROAD);
 
         for (TableView tv : alTV)
@@ -334,7 +360,8 @@ public class CtrPaneDueTasks extends AChildPaneController
         }
 
         tvTH90DayNotice.getItems().addAll(alTHDue90dNotice);
-        tvTHVisaExtension.getItems().addAll(alTHDueVisaExtension);
+        tvTHVisaExtension.getItems().addAll(alTHDueNonImmVisaExtension);
+        tvTHTouristVisaExtension.getItems().addAll(alTHDueTouristVisaExtension);
         tvTHPassportRenewal.getItems().addAll(alTHPassportRenewal);
 
         tvAbroadVisaExtension.getItems().addAll(alAbroadDueVisaExtension);
@@ -349,7 +376,6 @@ public class CtrPaneDueTasks extends AChildPaneController
 //    {
 //        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrPDF.OPTION_PRINT_FORM);
 //    }
-
     @FXML
     void actionPreviewDueTasksTH(ActionEvent ae)
     {
