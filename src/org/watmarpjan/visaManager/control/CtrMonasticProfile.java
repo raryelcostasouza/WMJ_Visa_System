@@ -446,25 +446,62 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
     }
 
-    public ArrayList<EntryDueTask> loadListDueVisaExtension(String currentLocation)
+    public ArrayList<EntryDueTask> loadListDueNonImmVisaExtension(String currentLocation)
     {
         String hql1, hql2;
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
-        //for monastics whose visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaOld(p.nickname, max(vext.expiryDate))"
+        //for monastics whose NonImm visa has ALREADY been extended
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate))"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
-                + " where p.status = '" + currentLocation + "'"
+                + " where p.visaType <> 'Tourist'"
+                + " and p.status = '" + currentLocation + "'"
                 + " and size(p.visaExtensionSet) > 0"
                 + " group by p.nickname"
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
-        //for monastics whose visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendVisaNew(p.nickname, p.visaExpiryDate)"
+        //for monastics whose NonImm visa has NOT BEEN extended
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate)"
                 + " from MonasticProfile p"
-                + " where p.status = '" + currentLocation + "'"
+                + " where p.visaType <> 'Tourist'"
+                + " and p.status = '" + currentLocation + "'"
+                + " and p.visaExpiryDate is not null"
+                + " and size(p.visaExtensionSet) = 0"
+                + " order by p.visaExpiryDate";
+        listVisaNotExtended = queryDueTaskEntry(hql2);
+
+        listMerged = new ArrayList<>();
+
+        listMerged.addAll(listVisaNotExtended);
+        listMerged.addAll(listVisaExtended);
+        listMerged.sort(null);
+
+        return listMerged;
+    }
+    
+    public ArrayList<EntryDueTask> loadListDueTouristVisaExtension()
+    {
+        String hql1, hql2;
+        ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
+
+        //for monastics whose Tourist visa has ALREADY been extended
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate))"
+                + " from MonasticProfile p"
+                + " inner join p.visaExtensionSet vext"
+                + " where p.visaType = 'Tourist'"
+                + " and p.status = 'THAILAND'"
+                + " and size(p.visaExtensionSet) > 0"
+                + " group by p.nickname"
+                + " order by max(vext.expiryDate)";
+        listVisaExtended = queryDueTaskEntry(hql1);
+
+        //for monastics whose Tourist visa has NOT BEEN extended
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate)"
+                + " from MonasticProfile p"
+                + " where p.visaType = 'Tourist'"
+                + " and p.status = 'THAILAND'"
                 + " and p.visaExpiryDate is not null"
                 + " and size(p.visaExtensionSet) = 0"
                 + " order by p.visaExpiryDate";
