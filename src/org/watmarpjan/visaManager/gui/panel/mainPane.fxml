@@ -16,7 +16,7 @@
                     <children>
                         <TitledPane animated="false" collapsible="false" text="View Data">
                             <content>
-                                <VBox alignment="CENTER" spacing="10.0">
+                                <VBox alignment="CENTER" spacing="5.0">
                                     <children>
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionDueTasksButton" text="Due Tasks" />
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionMonasticProfileButton" text="Monastic Profile" />
@@ -31,7 +31,7 @@
                         </TitledPane>
                         <TitledPane animated="false" collapsible="false" text="Visa Operations">
                             <content>
-                                <VBox alignment="CENTER" spacing="10.0">
+                                <VBox alignment="CENTER" spacing="5.0">
                                     <children>
                                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButton90DayNotice" text="90 Day Notice" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonWFVisaExt" text="Workflow Visa Extension" />
@@ -46,7 +46,7 @@
                         </TitledPane>
                         <TitledPane animated="false" collapsible="false" text="Others">
                             <content>
-                                <VBox alignment="CENTER" spacing="10.0">
+                                <VBox alignment="CENTER" spacing="5.0">
                                     <children>
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPhotoPagePrint" text="Photo Page Printing" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPrintedDocStock" text="Printed Documents Stock" />
