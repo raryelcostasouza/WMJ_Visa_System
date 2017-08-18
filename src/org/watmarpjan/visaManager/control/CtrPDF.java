@@ -874,33 +874,37 @@ public class CtrPDF
         objContentStream.endText();
     }
 
-    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpVisaExtTH, TableView<EntryDueTask> tpPsptTH, int option)
+    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
     {
         PDDocument pdfDoc;
-        PDPage page1, page2;
+        PDPage page1, page2, page3;
         PDPageContentStream contentStream;
         File outputFile;
         PDFont fontTitle = PDType1Font.HELVETICA_BOLD;
 
         int fontSizeTitle = 18;
-        BufferedImage img90DayTH, imgVisaExtTH, imgPassptRenew;
-        PDImageXObject pdfImg90DayTH, pdfImgVisaExtTH, pdfImgPassptRenew;
+        BufferedImage img90DayTH, imgNonImmVisaExtTH, imgTouristVisaExtTH, imgPassptRenew;
+        PDImageXObject pdfImg90DayTH, pdfImgNonImmVisaExtTH, pdfImgTouristVisaExtTH, pdfImgPassptRenew;
 
         outputFile = AppFiles.getFormTMPOutputPDF("DueTasksTH");
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
         page2 = new PDPage(PDRectangle.A4);
+        page3 = new PDPage(PDRectangle.A4);
         pdfDoc.addPage(page1);
         pdfDoc.addPage(page2);
+        pdfDoc.addPage(page3);
 
         img90DayTH = snapshotGUIComponent(tp90DayTH);
-        imgVisaExtTH = snapshotGUIComponent(tpVisaExtTH);
+        imgNonImmVisaExtTH = snapshotGUIComponent(tpNonImmVisaExtTH);
+        imgTouristVisaExtTH = snapshotGUIComponent(tpTouristExtTH);
         imgPassptRenew = snapshotGUIComponent(tpPsptTH);
 
         try
         {
             pdfImg90DayTH = LosslessFactory.createFromImage(pdfDoc, img90DayTH);
-            pdfImgVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgVisaExtTH);
+            pdfImgNonImmVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgNonImmVisaExtTH);
+            pdfImgTouristVisaExtTH = LosslessFactory.createFromImage(pdfDoc, imgTouristVisaExtTH);
             pdfImgPassptRenew = LosslessFactory.createFromImage(pdfDoc, imgPassptRenew);
 
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
@@ -915,13 +919,22 @@ public class CtrPDF
             contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImg90DayTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
 
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, 60 + pdfImgVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
-            contentStream.showText("Visa Extension");
+            contentStream.newLineAtOffset(50, 60 + pdfImgNonImmVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
+            contentStream.showText("Non-Immigrant Visa Extension");
             contentStream.endText();
-            contentStream.drawImage(pdfImgVisaExtTH, 50, 50, pdfImgVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
+            contentStream.drawImage(pdfImgNonImmVisaExtTH, 50, 50, pdfImgNonImmVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgNonImmVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
             contentStream.close();
 
-            contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+            contentStream.setFont(fontTitle, fontSizeTitle);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
+            contentStream.showText("Tourist Visa Extension");
+            contentStream.endText();
+            contentStream.drawImage(pdfImgTouristVisaExtTH,50, PAGE_A4_HEIGHT_PX - pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImgTouristVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
+            contentStream.close();
+            
+            contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);

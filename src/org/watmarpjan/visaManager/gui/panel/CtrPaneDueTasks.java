@@ -379,7 +379,7 @@ public class CtrPaneDueTasks extends AChildPaneController
     @FXML
     void actionPreviewDueTasksTH(ActionEvent ae)
     {
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHPassportRenewal, CtrPDF.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFDueTasksTH(tvTH90DayNotice, tvTHVisaExtension, tvTHTouristVisaExtension, tvTHPassportRenewal, CtrPDF.OPTION_PREVIEW_FORM);
     }
 //
 //    @FXML
