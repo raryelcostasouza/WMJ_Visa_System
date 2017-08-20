@@ -37,6 +37,13 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
     {
         return unsavedChangesCurrentForm;
     }
+    
+    public void setHasUnsavedChanges()
+    {
+        this.unsavedChangesCurrentForm = true;
+        ctrEditSave.enableSaveButton();
+        
+    }
 
     public void resetUnsavedChanges()
     {
