@@ -8,9 +8,7 @@ package org.watmarpjan.visaManager.util;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.chrono.ThaiBuddhistDate;
-import java.time.format.TextStyle;
 import java.util.Date;
-import java.util.Locale;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -122,7 +120,6 @@ public class ProfileUtil
     public static String getStrOrdinationDatePrawat(MonasticProfile p)
     {
         LocalDate ldOrdDate;
-        String monthNameThai;
         if (p.getBhikkhuOrdDate() != null)
         {
             ldOrdDate = Util.convertDateToLocalDate(p.getBhikkhuOrdDate());
@@ -138,8 +135,7 @@ public class ProfileUtil
 
         if (ldOrdDate != null)
         {
-            monthNameThai = ldOrdDate.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
-            return ldOrdDate.getDayOfMonth() + " " + monthNameThai + " " + Util.convertYearToThai(ldOrdDate.getYear());
+            return Util.toStringThaiDateFormatMonthText(ldOrdDate);
         }
         else
         {

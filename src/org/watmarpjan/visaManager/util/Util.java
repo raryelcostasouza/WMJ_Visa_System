@@ -11,10 +11,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -109,6 +111,36 @@ public class Util
         if (ld != null)
         {
             return ThaiBuddhistDate.from(ld).format(DEFAULT_DATE_FORMAT);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    public static String toStringThaiDateFormatMonthText(LocalDate ld)
+    {
+        String monthNameThai;
+        
+        if (ld != null)
+        {
+            monthNameThai = ld.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
+            return ld.getDayOfMonth() + " " + monthNameThai + " " + Util.convertYearToThai(ld.getYear());
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    public static String toStringThaiDateFormatMonthText(Date d)
+    {
+        LocalDate ld;
+        
+        if (d != null)
+        {
+            ld = Util.convertDateToLocalDate(d);
+            return toStringThaiDateFormatMonthText(ld);
         }
         else
         {
