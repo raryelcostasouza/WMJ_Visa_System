@@ -10,16 +10,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
@@ -28,8 +33,7 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
-import org.watmarpjan.visaManager.model.dueTask.TaskNotice90D;
-import org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -87,8 +91,9 @@ public class CtrPaneDueTasks extends AChildPaneController
         {
             final TableCell<EntryDueTask, String> cell = new TableCell<EntryDueTask, String>()
             {
-                final ImageView ivActionIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("action.png").toUri().toString());
-                final Button btn = new Button("");
+                final VBox vbox = new VBox();
+                final ImageView ivActionIcon = new ImageView(AppPaths.getPathToIconSubfolder().resolve("info.png").toUri().toString());
+                //final Button btn = new Button("");
 
                 @Override
                 public void updateItem(String item, boolean empty)
@@ -101,29 +106,68 @@ public class CtrPaneDueTasks extends AChildPaneController
                     }
                     else
                     {
-                        btn.setGraphic(ivActionIcon);
-                        btn.setScaleY(0.5);
-                        btn.setOnAction((ActionEvent event)
-                                ->
-                        {
-                            EntryDueTask objEntry;
+                        vbox.setAlignment(Pos.CENTER);
+                        vbox.getChildren().add(ivActionIcon);
 
-                            objEntry = getTableView().getItems().get(getIndex());
-                            ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
-                            if (objEntry instanceof TaskNotice90D)
+                        EntryDueTask objEntry;
+                        String entryProfileNickname;
+                        MonasticProfile p;
+                        Tooltip tt;
+
+                        objEntry = getTableView().getItems().get(getIndex());
+                        entryProfileNickname = objEntry.getProfileNickname();
+                        p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(entryProfileNickname);
+                        tt = new Tooltip(p.getRemark());
+
+                        if (p.getRemark() != null && !p.getRemark().isEmpty())
+                        {
+                            setGraphic(vbox);
+
+                            ivActionIcon.setOnMouseEntered(new EventHandler<MouseEvent>()
                             {
-                                ctrGUIMain.actionButton90DayNotice(null);
-                            }
-                            else if (objEntry instanceof TaskExtendNonImmVisaOld)
+                                @Override
+                                public void handle(MouseEvent event)
+                                {
+                                    System.out.println("1");
+                                    Tooltip.install(ivActionIcon, tt);
+                                }
+                            });
+
+                            ivActionIcon.setOnMouseExited(new EventHandler<MouseEvent>()
                             {
-                                ctrGUIMain.actionButtonVisaExt(null);
-                            }
-                            else
-                            {
-                                ctrGUIMain.actionButtonAddRenewPassport(null);
-                            }
-                        });
-                        setGraphic(btn);
+                                @Override
+                                public void handle(MouseEvent event)
+                                {
+                                    System.out.println("2");
+                                    Tooltip.uninstall(ivActionIcon, tt);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            setGraphic(null);
+                        }
+
+//                        setOnAction((ActionEvent event)
+//                                ->
+//                        {
+//                            EntryDueTask objEntry;
+//
+//                            objEntry = getTableView().getItems().get(getIndex());
+//                            ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
+//                            if (objEntry instanceof TaskNotice90D)
+//                            {
+//                                ctrGUIMain.actionButton90DayNotice(null);
+//                            }
+//                            else if (objEntry instanceof TaskExtendNonImmVisaOld)
+//                            {
+//                                ctrGUIMain.actionButtonVisaExt(null);
+//                            }
+//                            else
+//                            {
+//                                ctrGUIMain.actionButtonAddRenewPassport(null);
+//                            }
+//                        });
                         setText(null);
                     }
                 }
@@ -218,6 +262,7 @@ public class CtrPaneDueTasks extends AChildPaneController
     @Override
     public void init()
     {
+        GUIUtil.updateTooltipBehavior(0, 5000, 200, true);
 //        bPrintTH.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         bPreviewTH.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
