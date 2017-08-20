@@ -145,7 +145,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         MonasticProfile p;
         Date issueDate, pkOrdDate, snOrdDate, bkOrdDate;
@@ -188,6 +188,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
             CtrAlertDialog.infoDialog("Bysuddhi update", "The bysuddhi information was successfully updated.");
         }
+        return operationStatus;
     }
     
     @FXML

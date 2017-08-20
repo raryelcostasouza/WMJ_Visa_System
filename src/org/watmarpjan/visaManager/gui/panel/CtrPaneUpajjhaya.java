@@ -54,7 +54,7 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         Upajjhaya u;
         int opStatus;
@@ -86,7 +86,9 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Upajjhaya update", "The upajjhaya information was successfully updated.");
             }
+            return opStatus;
         }
+        return 0;
     }
 
     @Override

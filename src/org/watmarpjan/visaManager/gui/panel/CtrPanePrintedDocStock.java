@@ -190,7 +190,7 @@ public class CtrPanePrintedDocStock extends AChildPaneControllerExportPDF implem
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         MonasticProfile p;
         int operationStatus;
@@ -217,10 +217,11 @@ public class CtrPanePrintedDocStock extends AChildPaneControllerExportPDF implem
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 loadOverviewTableView();
                 CtrAlertDialog.infoDialog("Doc Stock Updated", "The document stock for this monastic was successfully updated");
-
             }
+            return operationStatus;
 
         }
+        return 0;
     }
 
     @FXML

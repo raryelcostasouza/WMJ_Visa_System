@@ -149,7 +149,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         int opStatus;
         String previousNameEn, newNameEn;
@@ -182,7 +182,9 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Embassy update", "The embassy information was successfully updated.");
             }
+            return opStatus;
         }
+        return 0;
     }
 
     @FXML

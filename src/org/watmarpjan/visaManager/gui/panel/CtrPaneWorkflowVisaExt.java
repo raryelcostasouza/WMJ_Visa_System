@@ -392,6 +392,9 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
         listFields.add(spTM7);
         listFields.add(spPhotocopiesIMM);
         listFields.add(spExtraIMM);
+        listFields.add(spLetterSNP);
+        listFields.add(spPrawat);
+        listFields.add(spPhotocopiesSNP);
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
     }
@@ -485,7 +488,7 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         MonasticProfile p;
         int opStatus;
@@ -521,7 +524,9 @@ public class CtrPaneWorkflowVisaExt extends AChildPaneControllerExportPDF implem
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Workflow Visa Extension Updated", "The visa workflow for this monastic was updated successfully.");
             }
+            return opStatus;
         }
+        return 0;
     }
 
     @Override

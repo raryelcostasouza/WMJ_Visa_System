@@ -109,7 +109,7 @@ public class CtrGUIMain
     private CtrPaneVisaExt ctrPaneVisaExt;
     @FXML
     private TabPane paneVisaExt;
-    
+
     @FXML
     private CtrPaneAddEntryReEntry ctrPaneReEntry;
     @FXML
@@ -154,7 +154,7 @@ public class CtrGUIMain
     private CtrPaneWorkflowVisaExt ctrPaneWFVisaExt;
     @FXML
     private VBox paneWFVisaExt;
-    
+
     @FXML
     private CtrPaneEmbassy ctrPaneEmbassy;
     @FXML
@@ -745,7 +745,7 @@ public class CtrGUIMain
             CtrAlertDialog.exceptionDialog(ex, "Error to load GUI Panel.");
         }
     }
-    
+
     private void initPaneEmbassy()
     {
         FXMLLoader loader;
@@ -780,335 +780,366 @@ public class CtrGUIMain
         }
     }
 
-    private void checkUnsavedChanges()
+    private int checkUnsavedChanges()
     {
         boolean actionSaveBefore;
+        int opStatus = 0;
         if ((currentPaneController instanceof IEditableGUIForm) && (ctrFieldChangeListener.hasUnsavedChanges()))
         {
             actionSaveBefore = CtrAlertDialog.confirmationUnsavedChanges();
             if (actionSaveBefore)
             {
-                ((IEditableGUIForm) currentPaneController).actionSave();
+                opStatus = ((IEditableGUIForm) currentPaneController).actionSave();
             }
-            ctrFieldChangeListener.resetUnsavedChanges();
+            //if there was a saving error keeps the flag for unsaved changes
+            if (opStatus == 0)
+            {
+                 ctrFieldChangeListener.resetUnsavedChanges();
+            }
+           
         }
+        return opStatus;
     }
 
     @FXML
     void actionDueTasksButton(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        topPane.setCenter(null);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneDueTasks);
-        currentPaneController = ctrPaneDueTasks;
+        if (checkUnsavedChanges() == 0)
+        {
+            topPane.setCenter(null);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneDueTasks);
+            currentPaneController = ctrPaneDueTasks;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneDueTasks.fillData();
-
+            ctrPaneDueTasks.fillData();
+        }
     }
 
     @FXML
     void actionMonasticProfileButton(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneMonasticProfile == null)
+        if (checkUnsavedChanges() == 0)
         {
-            initPaneMonasticProfile();
-        }
+            if (ctrPaneMonasticProfile == null)
+            {
+                initPaneMonasticProfile();
+            }
 
-        ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneMonasticProfile);
-        currentPaneController = ctrPaneMonasticProfile;
+            ctrPaneEditSave.setVisible_ButtonAddNew(true);
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneMonasticProfile);
+            currentPaneController = ctrPaneMonasticProfile;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneEditSave.actionLock();
-        fillMonasticProfileData();
+            ctrPaneEditSave.actionLock();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionButtonMonastery(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneMonastery == null)
+        if (checkUnsavedChanges() == 0)
         {
-            initPaneMonastery();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setCenter(null);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneMonastery);
-        currentPaneController = ctrPaneMonastery;
+            if (ctrPaneMonastery == null)
+            {
+                initPaneMonastery();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(true);
+            topPane.setCenter(null);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneMonastery);
+            currentPaneController = ctrPaneMonastery;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneEditSave.actionLock();
-        ctrPaneMonastery.fillMonasteryData(null);
+            ctrPaneEditSave.actionLock();
+            ctrPaneMonastery.fillMonasteryData(null);
+        }
+
     }
 
     @FXML
     void actionButtonUpajjhaya(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneUpajjhaya == null)
+        if (checkUnsavedChanges() == 0)
         {
-            initPaneUpajjhaya();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setCenter(null);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneUpajjhaya);
-        currentPaneController = ctrPaneUpajjhaya;
+            if (ctrPaneUpajjhaya == null)
+            {
+                initPaneUpajjhaya();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(true);
+            topPane.setCenter(null);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneUpajjhaya);
+            currentPaneController = ctrPaneUpajjhaya;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneEditSave.actionLock();
-        ctrPaneUpajjhaya.fillUpajjhayaData(null);
+            ctrPaneEditSave.actionLock();
+            ctrPaneUpajjhaya.fillUpajjhayaData(null);
+        }
+
     }
 
     @FXML
     void actionPassportButton(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPanePassport == null)
+         if (checkUnsavedChanges() == 0)
         {
-            initPanePassport();
-        }
+            if (ctrPanePassport == null)
+            {
+                initPanePassport();
+            }
 
-        ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(panePassport);
-        currentPaneController = ctrPanePassport;
+            ctrPaneEditSave.setVisible_ButtonAddNew(false);
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(panePassport);
+            currentPaneController = ctrPanePassport;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneEditSave.actionLock();
-        fillMonasticProfileData();
+            ctrPaneEditSave.actionLock();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionBysuddhiButton(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneBysuddhi == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneBysuddhi();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneBysuddhi);
-        currentPaneController = ctrPaneBysuddhi;
+            if (ctrPaneBysuddhi == null)
+            {
+                initPaneBysuddhi();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(false);
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneBysuddhi);
+            currentPaneController = ctrPaneBysuddhi;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneEditSave.actionLock();
-        fillMonasticProfileData();
+            ctrPaneEditSave.actionLock();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionButton90DayNotice(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPane90DayNotice == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPane90DayNotice();
-        }
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(null);
-        centerPane.setCenter(pane90DayNotice);
-        currentPaneController = ctrPane90DayNotice;
+            if (ctrPane90DayNotice == null)
+            {
+                initPane90DayNotice();
+            }
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(null);
+            centerPane.setCenter(pane90DayNotice);
+            currentPaneController = ctrPane90DayNotice;
 //        Init.MAIN_STAGE.sizeToScene();
-        fillMonasticProfileData();
-
+            fillMonasticProfileData(); 
+        }
     }
 
     @FXML
     void actionButtonVisaExt(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneVisaExt == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneVisaExt();
-        }
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneVisaExt);
-        currentPaneController = ctrPaneVisaExt;
+            if (ctrPaneVisaExt == null)
+            {
+                initPaneVisaExt();
+            }
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneVisaExt);
+            currentPaneController = ctrPaneVisaExt;
 //        Init.MAIN_STAGE.sizeToScene();
-        fillMonasticProfileData();
+            fillMonasticProfileData();
+        }
+
+   
     }
 
     @FXML
     void actionButtonReEntry(ActionEvent ae)
     {
-        checkUnsavedChanges();
-        if (ctrPaneReEntry == null)
+         if (checkUnsavedChanges() == 0)
         {
-            initPaneReEntry();
-        }
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneReEntry);
-        currentPaneController = ctrPaneReEntry;
+            if (ctrPaneReEntry == null)
+            {
+                initPaneReEntry();
+            }
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneReEntry);
+            currentPaneController = ctrPaneReEntry;
 //        Init.MAIN_STAGE.sizeToScene();
-        fillMonasticProfileData();
+            fillMonasticProfileData();
+        }
+      
     }
 
     @FXML
     void actionButtonAddRenewPassport(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneAddRenewPassport == null)
+         if (checkUnsavedChanges() == 0)
         {
-            initPaneAddRenewPassport();
-        }
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneAddRenewPassport);
-        currentPaneController = ctrPaneAddRenewPassport;
+            if (ctrPaneAddRenewPassport == null)
+            {
+                initPaneAddRenewPassport();
+            }
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneAddRenewPassport);
+            currentPaneController = ctrPaneAddRenewPassport;
 //        Init.MAIN_STAGE.sizeToScene();
-        fillMonasticProfileData();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionButtonAddChangeVisa(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneAddChangeVisa == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneAddChangeVisa();
-        }
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneAddChangeVisa);
-        currentPaneController = ctrPaneAddChangeVisa;
+            if (ctrPaneAddChangeVisa == null)
+            {
+                initPaneAddChangeVisa();
+            }
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneAddChangeVisa);
+            currentPaneController = ctrPaneAddChangeVisa;
 //        Init.MAIN_STAGE.sizeToScene();
-        fillMonasticProfileData();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionButtonTM30NotifResidence(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneTM30NotifResidence == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneTM30NotifResidence();
-        }
-        topPane.setCenter(null);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneTM30NotifResidence);
-        currentPaneController = ctrPaneTM30NotifResidence;
+            if (ctrPaneTM30NotifResidence == null)
+            {
+                initPaneTM30NotifResidence();
+            }
+            topPane.setCenter(null);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneTM30NotifResidence);
+            currentPaneController = ctrPaneTM30NotifResidence;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneTM30NotifResidence.fillData();
+            ctrPaneTM30NotifResidence.fillData();
+        }
     }
 
     @FXML
     void actionButtonChangelog(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneChangelog == null)
+         if (checkUnsavedChanges() == 0)
         {
-            initPaneChangelog();
-        }
-        topPane.setCenter(null);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneChangelog);
-        currentPaneController = ctrPaneChangelog;
+            if (ctrPaneChangelog == null)
+            {
+                initPaneChangelog();
+            }
+            topPane.setCenter(null);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneChangelog);
+            currentPaneController = ctrPaneChangelog;
 //        Init.MAIN_STAGE.sizeToScene();
-        ctrPaneChangelog.fillData();
+            ctrPaneChangelog.fillData();
+        }
+
+      
     }
 
     @FXML
     void actionButtonConversionTools(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneConvert == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneConvert();
+            if (ctrPaneConvert == null)
+            {
+                initPaneConvert();
+            }
+            topPane.setCenter(null);
+            topPane.setLeft(null);
+            centerPane.setCenter(paneConvert);
+            currentPaneController = ctrPaneConvert;
         }
-        topPane.setCenter(null);
-        topPane.setLeft(null);
-        centerPane.setCenter(paneConvert);
-        currentPaneController = ctrPaneConvert;
     }
 
     @FXML
     void actionButtonPhotoPagePrint(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPanePhotoPagePrint == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPanePhotoPagePrinting();
+            if (ctrPanePhotoPagePrint == null)
+            {
+                initPanePhotoPagePrinting();
+            }
+            topPane.setCenter(null);
+            topPane.setLeft(null);
+            centerPane.setCenter(panePhotoPagePrint);
+            currentPaneController = ctrPanePhotoPagePrint;
+            ctrPanePhotoPagePrint.fillData();
         }
-        topPane.setCenter(null);
-        topPane.setLeft(null);
-        centerPane.setCenter(panePhotoPagePrint);
-        currentPaneController = ctrPanePhotoPagePrint;
-        ctrPanePhotoPagePrint.fillData();
     }
 
     @FXML
     void actionButtonPrintedDocStock(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPanePrintedDocStock == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPanePrintedDocStock();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(panePrintedDocStock);
-        currentPaneController = ctrPanePrintedDocStock;
+            if (ctrPanePrintedDocStock == null)
+            {
+                initPanePrintedDocStock();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(false);
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(panePrintedDocStock);
+            currentPaneController = ctrPanePrintedDocStock;
 
-        ctrPaneEditSave.actionLock();
-        fillMonasticProfileData();
+            ctrPaneEditSave.actionLock();
+            fillMonasticProfileData();
+        }
     }
 
     @FXML
     void actionButtonWFVisaExt(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneWFVisaExt == null)
+          if (checkUnsavedChanges() == 0)
         {
-            initPaneWFVisaExt();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(false);
-        topPane.setCenter(paneMonasticSelection);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneWFVisaExt);
-        currentPaneController = ctrPaneWFVisaExt;
+            if (ctrPaneWFVisaExt == null)
+            {
+                initPaneWFVisaExt();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(false);
+            topPane.setCenter(paneMonasticSelection);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneWFVisaExt);
+            currentPaneController = ctrPaneWFVisaExt;
 
-        ctrPaneEditSave.actionLock();
-        fillMonasticProfileData();
+            ctrPaneEditSave.actionLock();
+            fillMonasticProfileData();
+        }
     }
-    
+
     @FXML
     void actionButtonEmbassy(ActionEvent ae)
     {
-        checkUnsavedChanges();
-
-        if (ctrPaneEmbassy == null)
+         if (checkUnsavedChanges() == 0)
         {
-            initPaneEmbassy();
-        }
-        ctrPaneEditSave.setVisible_ButtonAddNew(true);
-        topPane.setCenter(null);
-        topPane.setLeft(paneEditSave);
-        centerPane.setCenter(paneEmbassy);
-        currentPaneController = ctrPaneEmbassy;
+            if (ctrPaneEmbassy == null)
+            {
+                initPaneEmbassy();
+            }
+            ctrPaneEditSave.setVisible_ButtonAddNew(true);
+            topPane.setCenter(null);
+            topPane.setLeft(paneEditSave);
+            centerPane.setCenter(paneEmbassy);
+            currentPaneController = ctrPaneEmbassy;
 
-        ctrPaneEditSave.actionLock();
+            ctrPaneEditSave.actionLock();
+        }
     }
 
     public void initChildControllers()

@@ -619,7 +619,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         MonasticProfile p;
         int operationStatus, gradYear;
@@ -782,7 +782,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
+            return operationStatus;
         }
+        return 0;
     }
 
 }

@@ -143,7 +143,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     }
 
     @Override
-    public void actionSave()
+    public int actionSave()
     {
         int opStatus;
         Monastery m;
@@ -215,7 +215,9 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Monastery update", "The monastery information was successfully updated.");
             }
+            return opStatus;
         }
+        return 0;
     }
 
     @Override
