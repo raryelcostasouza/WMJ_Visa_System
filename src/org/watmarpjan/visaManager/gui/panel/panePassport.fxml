@@ -345,8 +345,7 @@
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
                                                                             <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                            <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
-                                                            <Button fx:id="bAddScan1" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
+                                                                            <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
                                                                         </children>
                                                                     </HBox>
                                                                 </children>
@@ -391,8 +390,7 @@
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
                                                                             <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                            <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
-                                                            <Button fx:id="bAddScan2" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
+                                                                            <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
                                                                         </children>
                                                                     </HBox>
                                                                 </children>
@@ -437,8 +435,7 @@
                                                                     <HBox alignment="CENTER" spacing="10.0">
                                                                         <children>
                                                                             <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                            <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionSelectExtraScan" text="Select file" />
-                                                            <Button fx:id="bAddScan3" disable="true" mnemonicParsing="false" onAction="#actionAddExtraScan" text="Add" />
+                                                                            <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
                                                                         </children>
                                                                     </HBox>
                                                                 </children>
