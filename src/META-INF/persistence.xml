@@ -8,8 +8,10 @@
     <class>org.watmarpjan.visaManager.model.hibernate.VisaExtension</class>
     <class>org.watmarpjan.visaManager.model.hibernate.MonasticProfile</class>
     <class>org.watmarpjan.visaManager.model.hibernate.PrintoutTm30</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.Embassy</class>
+    <class>org.watmarpjan.visaManager.model.hibernate.Test</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:DB"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\KroobaHariel\Desktop\WMJ_Visa_System\Data\DB"/>
       <property name="javax.persistence.jdbc.user" value="appVisaManager"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="3APeSV8eSZJ7xV8z"/>
