@@ -19,12 +19,12 @@ import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
  */
 public class Init extends Application
 {
-    public static final String APP_VERSION = "v1.3 - 24/04/2017";
+
+    public static final String APP_VERSION = "v1.5 - BETA - 21/08/2017";
     public static Stage MAIN_STAGE;
     public static HostServices HOST_SERVICES;
     public static Application APP;
 
-    
     public static Instant INSTANT_INIT_START = Instant.now();
 
     private void loadFXMLRootPanel()
@@ -52,7 +52,8 @@ public class Init extends Application
             HOST_SERVICES = getHostServices();
 
             loadFXMLRootPanel();
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to init app.");
         }
