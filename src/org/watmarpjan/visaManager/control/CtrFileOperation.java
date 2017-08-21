@@ -425,6 +425,7 @@ public class CtrFileOperation
                 Files.delete(pCSV);
             }
             Files.write(pCSV, linesCSV);
+            
             return 0;
         }
         catch (Exception ioex)
@@ -438,13 +439,12 @@ public class CtrFileOperation
     public static void generateLetter(String letterSelected, MonasticProfile p, String[][] data)
     {
         Process pCMD;
-        Path pFolderLetterTemplate, pCSV, pProfileLetterStorage;
+        Path pFolderLetterTemplate, pProfileLetterStorage;
         String fileName;
         int output;
 
         fileName = "NonImm" + letterSelected.replaceAll("[-  ]+", "") + ".dotm";
         pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
-        pCSV = pFolderLetterTemplate.resolve("letterInput.csv");
         pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
         
         output = generateCSV(p, data);
