@@ -1,0 +1,83 @@
+v1.5 BETA - 21/08/2017
+
+Bugs fixed:
+* Passport Panel -> after archiving departure card/passport first page, not enabling button to add new scan
+
+New features:
+* Letter automatic filling.
+* Changelog: entries for updated document stock, changed status thailand -> abroad / abroad -> thailand
+* TM 30: Show list of monastics who need a new TM 30 report.
+ * Visa Extension: Separation between Tourist Visas / NonImm
+* Due Tasks Panel -> Replace Action Button by hoverable info icon with profile remarks.
+* Passport Panel -> Removed Add button for extra scans. (Now they are saved by the Save Button).
+
+----------------------------------------------------------
+v1.4 - 28/04/2017
+
+New features:
+* Due Tasks Panel: Monastic count on tab name
+* Passport/Add Renew: Combobox for selecting passport issued at
+
+----------------------------------------------------------
+v1.3 - 24/04/2017
+
+Bugs fixed:
+* Monastery panel -> data disappearing
+* Error to generate pdf for passport scans when missing departure card
+
+New features
+* Support for adding multiple tm30 reports on the same date. (DB UPDATED)
+* Support for removing tm30 printout entries (files are archived)
+
+Removed
+* Print buttons
+
+----------------------------------------------------------
+v1.2 - 09/02/2017
+Patimokkha Chanter Field for Prawat
+Prawat form updated
+----------------------------------------------------------
+v1.1 - 16/01/2017
+Forms updated
+Libraries updated Hibernate/Derby/PDFBox 
+Workflow/Doc Stock -> Added export PDF
+Fixed bug - Not removing extensions when clearing visa
+----------------------------------------------------------
+2017-01-01
+Pane WorkflowVisaExtension
+
+2016-12-27
+TaskExtendVisaNew - Prawat - 3 months from Due Date
+                    SNP - 2 months from Due Date
+Due Tasks
+    -90 Day - Column for online accepted
+    -Passed dates with Red Text
+    
+2016-12-26
+Load on Demand GUI
+Fixed Bugs on Due Tasks tables
+
+2016-12-24
+Bugfixes
+Pane 90Day - checkbox for used signed form (decrease count on stock)
+Increase font size for Thai fields
+
+2016-12-22
+Bugfixes
+-DB Update
+    -Printed Doc Stock
+2016-12-19
+-Photo page printing
+2016-12-17
+-Conversion of month/year thai/western
+-Icon photo for selected monastic
+-Increase resolution Due Tasks pdf
+-Fixed bug not generating Immigration/Samnakput forms
+--------------------------------------
+2016-12-14
+-Visa Manager selection on 90 D online
+-Changelog added
+-DB update
+	-Flag visa manager
+	-Phone Number 1, Phone Number 2
+-migration to java64 bit

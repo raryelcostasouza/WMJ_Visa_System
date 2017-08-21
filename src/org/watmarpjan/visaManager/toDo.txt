@@ -1,13 +1,48 @@
+	* Replace Latest Changes sidebar with a collapsable "Help & Latest Changes" sidebar visible on all panels. PDF-files could be used to display each help chapter?
+
+
+
+Letter filling
+
+Form-Templates/letters/LetterName.dotm
+Data/MonasticName/Letters/Letter1.docx
+
+Create folder if not created yet
+Copy template to tmp folder
+generate csv file on tmp folder
+run script
+wait finish
+add timestamp
+copy back to profile folder
+
+whenever make a csv file create a copy on the template folder on appData (field list)
+    
+
+
+Question -> printout tm30 on 29/05???
+
+Next version:
+ Passport - add/renew
+        -enable edition for fields except passport number
+       
+       Profile Panel
+        -Printable
+       
+
+    Due Tasks
+        -Tab add number of monastics between ()
+
+* Re-entry form - decrease font-size, "passport issued at" value is longer than field width for U.S. monastics.
+
+
 ------------------------------------------------------------------------------
 Questions
-       Months conversion combobox?
        Dates on Tables need to be converted to Thai?
 
          Passport Panel  
             -spinner for page number
 
         -Prawat -> review thai fields
-                    --add patimokkha chanting
                     --review list of extensions
         -Prawat -> abbot name -> PDF
         -Prawat -> sponsor Thai -> fill on the form or the same as WatResidingAt
@@ -20,69 +55,41 @@ Questions
 
 ------------------------------------------------------------------------------
 Changes/Fixes
-    -Validation of numeric fields
     
-    -Increase Font Size
-
     -Connection pool not use hibernate native one
     --Check about Hibernate session use
         --leave open directly
         -- or open only when have transaction
 
-    90 Day
-        -> Online 15-7 days before due date 
-    Extension 
-        1) prawat 6 months before due date. For someone with new visa (3 month duration) 3 months before due date
-        2) sending to samnakput - 3 months. For someone with new visa 2 months
-        3) immigration - 1 month before
-        -> 1 month before due date
-
-    Project -> use local libraries on project folder
     -review update functionality on JPA
-    
-   Sort Receipts 90 Day by date desc
+   
 ------------------------------------------------------------------------------
 Current Working
-    Prawat 
-        
 
+    Database optimization 
+    Connection pool 
 
-    VisaExtension query need to merge and sort
+    
+    Sort Receipts 90 Day by date desc
+    Buttons for Pali characters input
 
-    Print Due Tasks
-        Duplicated TableViews with visible false
-        Line size
-
-    Prawat - request. Visa expiry and desired
-        Nathan - last ext is on first position
-    Graduation year check western year
-    Passport Scan - Rotate first page scan.
-
-    Change listener on DatePicker
-    Print Due Tasks - generate csv file?
-    Prawat - ordination date - month written in Thai
-            -Address adviser to come - jangwat. Add the country when not Thailand. Add comma
-            -Birth Country and birth place - add comma
-    TM8 - field name watResidingAtThai
-            -show name nameWatResidingAtThai
-
-------------------------------------------------------------------------------
-Validation/errors
-    -test scenario where there is no profile registered
-    -filter invalid characters out from 
-        -nickname
-        -passportnumber
-------------------------------------------------------------------------------
-Essential features
     
 
+    Due Tasks
+        Test number of entries. If to much create move data to new page. 
+        csv file 
+        NDays for processing should be changeable or stored in a table - yes
 
+    Forms 
+        Change implementation
+            -separate functions to fill according to field
+                fillField(PDField, fieldName)
+                fillPassportIssuedAt(acroForm.getField("passportIssuedAt))
 
-Generate printable page 
-    -photo
-    -due tasks
-
-
+    Bug - when DB is already open not showing exception message
+------------------------------------------------------------------------------
+Validation/errors
+    -filter invalid characters 
 ------------------------------------------------------------------------------
 Desirable features
 
@@ -90,41 +97,5 @@ Desirable features
     Ex: K.Raryel, 2016-09-09, 2016-09-09, 2016-09-09
                 90 Day      Visa Ext    Passport
 
-
-    Login timeout to close DB connection
-    -Entry/re-entry travel from and port of entry should be comboboxes with db data for selection
-
-    
-Number of signed copies 90 day notice
-    -show merged possible dates on calendar for multiple monastics
-
-quick update - only view mode
-            
-            
-
-90 day
-    -e-mail and phone number for online notice -> get from user profile
-
-
 DB
     -proper error messages for common SQL error - primary key, unique key etc
-
-Profile
-    -spinner for number of years certificate
-    -tootip for error message on number fields
-
-Dates on tables need to be formatted
-
--convertion box of names in months 	
-Directory Structure
-    ->when deleted or change nickname need to update foldername
-    
-Due tasks page
-        -option to print due tasks
-        -if sunday or saturday need to have special mark
-        NDays for processing should be changeable or stored in a table - yes
-http://docs.oracle.com/javafx/2/ui_controls/table-view.htm
-
-
-Profile panel 
-    -Thai field need increase font size

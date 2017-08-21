@@ -227,7 +227,7 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
+                acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
