@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppPaths;
@@ -99,6 +100,11 @@ public class CtrPaneDueTasks extends AChildPaneController
                 public void updateItem(String item, boolean empty)
                 {
                     super.updateItem(item, empty);
+                    EntryDueTask objEntry;
+                    String entryProfileNickname;
+                    MonasticProfile p;
+                    Tooltip tt;
+
                     if (empty)
                     {
                         setGraphic(null);
@@ -107,17 +113,16 @@ public class CtrPaneDueTasks extends AChildPaneController
                     else
                     {
                         vbox.setAlignment(Pos.CENTER);
-                        vbox.getChildren().add(ivActionIcon);
-
-                        EntryDueTask objEntry;
-                        String entryProfileNickname;
-                        MonasticProfile p;
-                        Tooltip tt;
+                        if (!vbox.getChildren().contains(ivActionIcon))
+                        {
+                            vbox.getChildren().add(ivActionIcon);
+                        }
 
                         objEntry = getTableView().getItems().get(getIndex());
                         entryProfileNickname = objEntry.getProfileNickname();
                         p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(entryProfileNickname);
                         tt = new Tooltip(p.getRemark());
+                        tt.setFont(new Font("Arial", 15));
 
                         if (p.getRemark() != null && !p.getRemark().isEmpty())
                         {
@@ -128,7 +133,6 @@ public class CtrPaneDueTasks extends AChildPaneController
                                 @Override
                                 public void handle(MouseEvent event)
                                 {
-                                    System.out.println("1");
                                     Tooltip.install(ivActionIcon, tt);
                                 }
                             });
@@ -138,7 +142,6 @@ public class CtrPaneDueTasks extends AChildPaneController
                                 @Override
                                 public void handle(MouseEvent event)
                                 {
-                                    System.out.println("2");
                                     Tooltip.uninstall(ivActionIcon, tt);
                                 }
                             });
@@ -147,27 +150,6 @@ public class CtrPaneDueTasks extends AChildPaneController
                         {
                             setGraphic(null);
                         }
-
-//                        setOnAction((ActionEvent event)
-//                                ->
-//                        {
-//                            EntryDueTask objEntry;
-//
-//                            objEntry = getTableView().getItems().get(getIndex());
-//                            ctrGUIMain.getCtrPaneSelection().setSelectedProfileByNickname(objEntry.getProfileNickname());
-//                            if (objEntry instanceof TaskNotice90D)
-//                            {
-//                                ctrGUIMain.actionButton90DayNotice(null);
-//                            }
-//                            else if (objEntry instanceof TaskExtendNonImmVisaOld)
-//                            {
-//                                ctrGUIMain.actionButtonVisaExt(null);
-//                            }
-//                            else
-//                            {
-//                                ctrGUIMain.actionButtonAddRenewPassport(null);
-//                            }
-//                        });
                         setText(null);
                     }
                 }
