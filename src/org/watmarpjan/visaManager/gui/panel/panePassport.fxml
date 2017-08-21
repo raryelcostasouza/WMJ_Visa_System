@@ -25,221 +25,225 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPanePassport">
     <left>
-        <VBox>
-            <children>
-                <TitledPane animated="false" collapsible="false" text="Passport">
-                    <content>
-                        <GridPane>
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="P. Number: ">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfpassportNumber" editable="false" GridPane.columnIndex="1" />
-                        <Label layoutX="32.0" layoutY="87.0" text="Pspt. Country:" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <TextField fx:id="tfpassportCountry" editable="false" layoutX="124.0" layoutY="22.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                           <children>
-                              <Label fx:id="labelLock2" />
-                                      <Label text="Issued at:">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
+      <ScrollPane>
+         <content>
+              <VBox>
+                  <children>
+                      <TitledPane animated="false" collapsible="false" text="Passport">
+                          <content>
+                              <GridPane>
+                                  <columnConstraints>
+                                      <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <Label text="P. Number: ">
+                                          <GridPane.margin>
+                                              <Insets left="10.0" />
+                                          </GridPane.margin>
                                       </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                           <children>
-                              <Label fx:id="labelLock3" />
-                              <Label text="Issue Date:">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
+                                      <TextField fx:id="tfpassportNumber" editable="false" GridPane.columnIndex="1" />
+                              <Label layoutX="32.0" layoutY="87.0" text="Pspt. Country:" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
                               </Label>
-                           </children>
-                        </HBox>
-                        <DatePicker fx:id="dpPassportIssueDate" disable="true" layoutX="112.0" layoutY="113.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
-                           <GridPane.margin>
+                              <TextField fx:id="tfpassportCountry" editable="false" layoutX="124.0" layoutY="22.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                                 <children>
+                                    <Label fx:id="labelLock2" />
+                                            <Label text="Issued at:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                            </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                                 <children>
+                                    <Label fx:id="labelLock3" />
+                                    <Label text="Issue Date:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <DatePicker fx:id="dpPassportIssueDate" disable="true" layoutX="112.0" layoutY="113.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <children>
+                                    <Label fx:id="labelLock4" />
+                                            <Label text="Expiry Date:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                            </Label>
+                                 </children>
+                              </HBox>
+                                      <DatePicker fx:id="dpPassportExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  </children>
+                           <opaqueInsets>
                               <Insets />
-                           </GridPane.margin>
-                           <children>
-                              <Label fx:id="labelLock4" />
-                                      <Label text="Expiry Date:">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                              </GridPane>
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="false" collapsible="false" text="Arrival/Departure Card">
+                          <content>
+                              <GridPane alignment="CENTER_LEFT">
+                                  <columnConstraints>
+                                      <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <Label text="TM6 Number:">
+                                          <GridPane.margin>
+                                              <Insets />
+                                          </GridPane.margin>
                                       </Label>
-                           </children>
-                        </HBox>
-                                <DatePicker fx:id="dpPassportExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                            </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                        </GridPane>
-                    </content>
-                </TitledPane>
-                <TitledPane animated="false" collapsible="false" text="Arrival/Departure Card">
-                    <content>
-                        <GridPane alignment="CENTER_LEFT">
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="TM6 Number:">
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfArrivalTMNumber" editable="false" GridPane.columnIndex="1" />
-                                <Label text="Last Entry:" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </Label>
-                                <DatePicker fx:id="dpLastEntry" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Travel from:" GridPane.rowIndex="2">
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfTravelFrom" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="Travel by:" GridPane.rowIndex="3">
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </Label>
-                                <ComboBox fx:id="cbTravelBy" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="Port of Entry:" GridPane.rowIndex="4">
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="tfPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="5">
-                           <children>
-                              <Label fx:id="labelLock" />
-                                      <Label text="First Entry:">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
+                                      <TextField fx:id="tfArrivalTMNumber" editable="false" GridPane.columnIndex="1" />
+                                      <Label text="Last Entry:" GridPane.rowIndex="1">
+                                          <GridPane.margin>
+                                              <Insets />
+                                          </GridPane.margin>
                                       </Label>
-                           </children>
-                           <GridPane.margin>
+                                      <DatePicker fx:id="dpLastEntry" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <Label text="Travel from:" GridPane.rowIndex="2">
+                                          <GridPane.margin>
+                                              <Insets />
+                                          </GridPane.margin>
+                                      </Label>
+                                      <TextField fx:id="tfTravelFrom" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                      <Label text="Travel by:" GridPane.rowIndex="3">
+                                          <GridPane.margin>
+                                              <Insets />
+                                          </GridPane.margin>
+                                      </Label>
+                                      <ComboBox fx:id="cbTravelBy" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                      <Label text="Port of Entry:" GridPane.rowIndex="4">
+                                          <GridPane.margin>
+                                              <Insets />
+                                          </GridPane.margin>
+                                      </Label>
+                                      <TextField fx:id="tfPortOfEntry" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <HBox alignment="CENTER_LEFT" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="labelLock" />
+                                            <Label text="First Entry:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                            </Label>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </HBox>
+                                      <DatePicker fx:id="dpFirstEntryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                  </children>
+                           <opaqueInsets>
                               <Insets />
-                           </GridPane.margin>
-                        </HBox>
-                                <DatePicker fx:id="dpFirstEntryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                            </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                        </GridPane>
-                    </content>
-                </TitledPane>
-                <TitledPane animated="false" collapsible="false" text="Visa">
-                    <content>
-                        <GridPane>
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="V. Number:">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </Label>
-                                <TextField fx:id="tfVisaNumber" editable="false" GridPane.columnIndex="1" />
-                                <Label text="Type:" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <ComboBox fx:id="cbVisaType" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Expiry Date:" GridPane.rowIndex="2">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </Label>
-                                <DatePicker fx:id="dpVisaExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="Next 90 day:" GridPane.rowIndex="3">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <DatePicker fx:id="dpNext90dayNotice" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                            </children>
-                        </GridPane>
-                    </content>
-                </TitledPane>
-                <TitledPane animated="false" collapsible="false" text=" Visa Extensions">
-                    <content>
-                        <VBox prefHeight="200.0">
-                            <children>
-                                <HBox alignment="CENTER">
-                                    <children>
-                                        <Label text="Number of  Extensions:" />
-                                        <TextField fx:id="tfNVisaExt" editable="false" prefWidth="50.0" />
-                                    </children>
-                                </HBox>
-                                <TableView fx:id="tvExtensions">
-                                    <columns>
-                                        <TableColumn editable="false" prefWidth="142.0" sortable="false" text="Extension Number" />
-                                        <TableColumn editable="false" prefWidth="140.0" sortable="false" text="Expiry Date" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </VBox>
-                    </content>
-                </TitledPane>
-            </children>
-        </VBox>
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                              </GridPane>
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="false" collapsible="false" text="Visa">
+                          <content>
+                              <GridPane>
+                                  <columnConstraints>
+                                      <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
+                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <Label text="V. Number:">
+                                          <padding>
+                                              <Insets left="10.0" />
+                                          </padding>
+                                      </Label>
+                                      <TextField fx:id="tfVisaNumber" editable="false" GridPane.columnIndex="1" />
+                                      <Label text="Type:" GridPane.rowIndex="1">
+                                          <GridPane.margin>
+                                              <Insets left="10.0" />
+                                          </GridPane.margin>
+                                      </Label>
+                                      <ComboBox fx:id="cbVisaType" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <Label text="Expiry Date:" GridPane.rowIndex="2">
+                                          <padding>
+                                              <Insets left="10.0" />
+                                          </padding>
+                                      </Label>
+                                      <DatePicker fx:id="dpVisaExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                      <Label text="Next 90 day:" GridPane.rowIndex="3">
+                                          <GridPane.margin>
+                                              <Insets left="10.0" />
+                                          </GridPane.margin>
+                                      </Label>
+                                      <DatePicker fx:id="dpNext90dayNotice" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                  </children>
+                              </GridPane>
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="false" collapsible="false" text=" Visa Extensions">
+                          <content>
+                              <VBox prefHeight="200.0">
+                                  <children>
+                                      <HBox alignment="CENTER">
+                                          <children>
+                                              <Label text="Number of  Extensions:" />
+                                              <TextField fx:id="tfNVisaExt" editable="false" prefWidth="50.0" />
+                                          </children>
+                                      </HBox>
+                                      <TableView fx:id="tvExtensions">
+                                          <columns>
+                                              <TableColumn editable="false" prefWidth="142.0" sortable="false" text="Extension Number" />
+                                              <TableColumn editable="false" prefWidth="140.0" sortable="false" text="Expiry Date" />
+                                          </columns>
+                                      </TableView>
+                                  </children>
+                              </VBox>
+                          </content>
+                      </TitledPane>
+                  </children>
+              </VBox>
+         </content>
+      </ScrollPane>
     </left>
    <center>
       <VBox BorderPane.alignment="CENTER">
