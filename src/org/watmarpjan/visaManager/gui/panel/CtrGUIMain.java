@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
@@ -73,7 +74,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneMonasticProfile ctrPaneMonasticProfile;
     @FXML
-    private VBox paneMonasticProfile;
+    private ScrollPane paneMonasticProfile;
 
     @FXML
     private CtrPaneMonastery ctrPaneMonastery;
@@ -153,7 +154,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneWorkflowVisaExt ctrPaneWFVisaExt;
     @FXML
-    private VBox paneWFVisaExt;
+    private ScrollPane paneWFVisaExt;
 
     @FXML
     private CtrPaneEmbassy ctrPaneEmbassy;
