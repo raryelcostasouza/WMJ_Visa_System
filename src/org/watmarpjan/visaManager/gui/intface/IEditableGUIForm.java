@@ -18,5 +18,5 @@ public interface IEditableGUIForm
 
     public void actionUnlockEdit();
 
-    public void actionSave();
+    public int actionSave();
 }
