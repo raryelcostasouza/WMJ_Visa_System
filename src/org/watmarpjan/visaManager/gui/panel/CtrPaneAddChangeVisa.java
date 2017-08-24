@@ -120,7 +120,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         {
             cbLetterType.setValue(null);
         }
-        
+
         dpDepartureDateFromThai.setValue(null);
         cbEmbassy.setValue(null);
         tfMonasticAddr1.setText("");
@@ -254,7 +254,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     void listenerCBLetter(ActionEvent ae)
     {
         String strLetterSelected;
-        
+
         clearFieldsVisaLetters(true);
         strLetterSelected = cbLetterType.getValue();
         if (strLetterSelected != null)
@@ -266,6 +266,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
                     vbExtraFields.getChildren().clear();
                     break;
                 case AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY_EN:
+                    bpLetterFields.setCenter(tbExtraFields);
                     vbExtraFields.getChildren().clear();
                     vbExtraFields.getChildren().add(gpEmbassy);
                     break;
@@ -297,6 +298,47 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         }
     }
 
+    private boolean requireEmbassySelected()
+    {
+        return (cbEmbassy.getValue() != null);
+    }
+
+    private boolean requireContactInfoAbroad()
+    {
+        return (!tfMonasticAddr1.getText().isEmpty())
+                && (!tfMonasticAddr2.getText().isEmpty())
+                && (!tfMonasticAddr3.getText().isEmpty())
+                && (!tfMonasticPhoneAbroad.getText().isEmpty());
+    }
+
+    private boolean requireDepartureDateThai()
+    {
+        return (dpDepartureDateFromThai.getValue() != null);
+    }
+
+    private boolean validateLetterInput(String strLetterSelected)
+    {
+        switch (strLetterSelected)
+        {
+            case AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY:
+                return true;
+            case AppConstants.LETTER_LAYPERSON_ABROAD_EMBASSY_EN:
+                return requireEmbassySelected();
+            case AppConstants.LETTER_LAYPERSON_THAILAND_VIENTIANE_EMBASSY:
+                return true;
+
+            case AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY:
+                return requireEmbassySelected() && requireDepartureDateThai();
+            case AppConstants.LETTER_MONASTIC_ABROAD_EMBASSY_EN:
+                return requireEmbassySelected();
+            case AppConstants.LETTER_MONASTIC_ABROAD_SAMNAKPUT:
+                return requireEmbassySelected() && requireContactInfoAbroad() && requireDepartureDateThai();
+            default:
+                return false;
+        }
+
+    }
+
     @FXML
     void actionGenerateLetter(ActionEvent ae)
     {
@@ -307,26 +349,33 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         strLetterSelected = cbLetterType.getValue();
-
-        strSelectedEmbassy = cbEmbassy.getValue();
-        if (cbEmbassy.getValue() != null)
+        if (validateLetterInput(strLetterSelected))
         {
-            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(strSelectedEmbassy);
+            strSelectedEmbassy = cbEmbassy.getValue();
+            if (cbEmbassy.getValue() != null)
+            {
+                e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(strSelectedEmbassy);
+            }
+            else
+            {
+                e = null;
+            }
+
+            objLetterInput = new LetterInputData(p, e);
+            objLetterInput.setAddrMonasticLine1(tfMonasticAddr1.getText());
+            objLetterInput.setAddrMonasticLine2(tfMonasticAddr2.getText());
+            objLetterInput.setAddrMonasticLine3(tfMonasticAddr3.getText());
+            objLetterInput.setAddrMonasticLine4(tfMonasticAddr4.getText());
+            objLetterInput.setPhoneAbroad(tfMonasticPhoneAbroad.getText());
+            objLetterInput.setLdDepartureDateThai(dpDepartureDateFromThai.getValue());
+
+            CtrLetter.generateLetter(strLetterSelected, p, objLetterInput);
         }
         else
         {
-            e = null;
+            CtrAlertDialog.errorDialog("Please fill all the required fields!");
         }
 
-        objLetterInput = new LetterInputData(p, e);
-        objLetterInput.setAddrMonasticLine1(tfMonasticAddr1.getText());
-        objLetterInput.setAddrMonasticLine2(tfMonasticAddr2.getText());
-        objLetterInput.setAddrMonasticLine3(tfMonasticAddr3.getText());
-        objLetterInput.setAddrMonasticLine4(tfMonasticAddr4.getText());
-        objLetterInput.setPhoneAbroad(tfMonasticPhoneAbroad.getText());
-        objLetterInput.setLdDepartureDateThai(dpDepartureDateFromThai.getValue());
-        
-        CtrLetter.generateLetter(strLetterSelected, p, objLetterInput);
     }
 //    @FXML
 //    void actionPrintFormTM86VisaChange(ActionEvent ae)
