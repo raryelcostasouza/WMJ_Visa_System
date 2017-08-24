@@ -188,4 +188,20 @@ public class Util
 
         return fileNameWithoutExtension;
     }
+    
+    //if the input string is null
+    //returns empty string
+    //otherwise
+    //returns the input string
+    public static String filterStringNull(String input)
+    {
+        if (input == null)
+        {
+            return "";
+        }
+        else
+        {
+            return input;
+        }
+    }
 }
