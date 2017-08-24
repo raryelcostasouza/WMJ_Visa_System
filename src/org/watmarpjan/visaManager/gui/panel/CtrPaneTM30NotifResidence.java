@@ -290,6 +290,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                 opStatusArchive = CtrFileOperation.archivePrintoutTM30(AppFiles.getPrintoutTM30(objTM30));
                 if (opStatusArchive == 0)
                 {
+                    fillData();
                     CtrAlertDialog.infoDialog("Archived successfully", "The TM30 Printout was archived successfully.");
                 }
             }
