@@ -38,8 +38,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.control.CtrPDF;
 import static java.lang.Integer.parseInt;
+import org.watmarpjan.visaManager.control.CtrPDF;
 
 /**
  *
@@ -840,13 +840,13 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         //if there is a passport registered allows the user to add other scans
 
         validationError = false;
+        copyError = false;
         if (fScan1Selected != null)
         {
             if (validateExtraScanContent(1))
             {
                 arrayPS[0] = new PassportScan(p, parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
                 arrayFSelected[0] = fScan1Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().create(arrayPS[0]);
                 arrayFDestination[0] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[0]);
             }
             else
@@ -862,7 +862,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 arrayPS[1] = new PassportScan(p, parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
                 arrayFSelected[1] = fScan2Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().create(arrayPS[1]);
                 arrayFDestination[1] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[1]);
             }
             else
@@ -878,26 +877,28 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 arrayPS[2] = new PassportScan(p, parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
                 arrayFSelected[2] = fScan3Selected;
-                ctrGUIMain.getCtrMain().getCtrPassportScan().create(arrayPS[2]);
                 arrayFDestination[2] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[2]);
             }
             else
             {
                 validationError = true;
             }
-
         }
 
         //if no validation error occurred for the scan information
         //copy the files to the app storages
         if (!validationError)
         {
-            copyError = false;
             for (int i = 0; i < arrayFSelected.length; i++)
             {
                 if (arrayFSelected[i] != null)
                 {
                     statusCopyOperation[i] = CtrFileOperation.copyOperation(arrayFSelected[i], arrayFDestination[i]);
+                    if (statusCopyOperation[i] == 0)
+                    {
+                        //if the copy was successful create the passport scan info on the DB
+                        ctrGUIMain.getCtrMain().getCtrPassportScan().create(arrayPS[i]);
+                    }
                 }
                 else
                 {
@@ -908,37 +909,29 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                 if (statusCopyOperation[i] == -1)
                 {
                     copyError = true;
+                    CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + i + ".");
                 }
             }
-
-            //if the filecopy was successful
-            //save the necessary information on DB
-            if (!copyError)
-            {
-                fScan1Selected = fScan2Selected = fScan3Selected = null;
-
-                //refresh the profile in DB because the passportScan list was updated
-                ctrGUIMain.getCtrMain().getCtrProfile().refresh(p);
-                loadIMGPreviews(p);
-                fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-                return 0;
-            }
-            else
-            {
-                CtrAlertDialog.errorDialog("Unable to copy the extra scan file.");
-                return -1;
-            }
+        }
+        //if the filecopy was successful
+        //save the necessary information on DB
+        if (!validationError && !copyError)
+        {
+            //refresh the profile in DB because the passportScan list was updated
+            ctrGUIMain.getCtrMain().getCtrProfile().refresh(p);
+            loadIMGPreviews(p);
+            fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+            return 0;
         }
         else
         {
-            CtrAlertDialog.errorDialog("Unable to save extra scans. \nPlease fill all the required scan fields (type/page numbers).");
             return -1;
         }
-
     }
 
     @FXML
-    void actionChooseExtraScan(ActionEvent ae)
+    void actionChooseExtraScan(ActionEvent ae
+    )
     {
         File fSelected;
         MonasticProfile p;
@@ -981,26 +974,37 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         //if the page number is not empty and at least one of the options is selected
         //returns true
+        boolean statusValid;
         switch (indexScan2Validate)
         {
             case 1:
-                return validatePageNumber(tfScan1LeftPageNumber.getText())
+                statusValid = validatePageNumber(tfScan1LeftPageNumber.getText())
                         && (rbScan1ArriveStamp.isSelected()
                         || rbScan1LastVisaExt.isSelected()
                         || rbScan1Visa.isSelected());
+                break;
             case 2:
-                return validatePageNumber(tfScan2LeftPageNumber.getText())
+                statusValid = validatePageNumber(tfScan2LeftPageNumber.getText())
                         && (rbScan2ArriveStamp.isSelected()
                         || rbScan2LastVisaExt.isSelected()
                         || rbScan2Visa.isSelected());
+                break;
             case 3:
-                return validatePageNumber(tfScan3LeftPageNumber.getText())
+                statusValid = validatePageNumber(tfScan3LeftPageNumber.getText())
                         && (rbScan3ArriveStamp.isSelected()
                         || rbScan3LastVisaExt.isSelected()
                         || rbScan3Visa.isSelected());
+                break;
             default:
-                return false;
+                statusValid = false;
+                break;
         }
+        if (!statusValid)
+        {
+            CtrAlertDialog.errorDialog("Please fill all the fields for Extra Scan  " + indexScan2Validate);
+        }
+
+        return statusValid;
     }
 
     private boolean validatePageNumber(String strPageNumber)
@@ -1012,7 +1016,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
         catch (NumberFormatException nfe)
         {
-            CtrAlertDialog.errorDialog("Invalid page number");
             return false;
         }
     }
