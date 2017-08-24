@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
@@ -383,89 +382,4 @@ public class CtrFileOperation
             return "";
         }
     }
-
-    private static String array2CSVString(String[] data)
-    {
-        String lineCSV;
-        int i;
-
-        lineCSV = "";
-        for (i = 0; i < data.length - 1; i++)
-        {
-            lineCSV += data[i] + ", ";
-        }
-        lineCSV += data[i];
-        return lineCSV;
-    }
-
-    private static List<String> matrix2CSVString(String[][] data)
-    {
-        LinkedList<String> linesCSV = new LinkedList<String>();
-
-        linesCSV.add(array2CSVString(data[0]));
-        linesCSV.add(array2CSVString(data[1]));
-
-        return linesCSV;
-    }
-
-    public static int generateCSV(MonasticProfile p, String[][] data)
-    {
-        Path pFolderLetterTemplate, pCSV;
-        List<String> linesCSV;
-
-        linesCSV = matrix2CSVString(data);
-        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
-        
-        pCSV = pFolderLetterTemplate.resolve("letterInput.csv");
-        try
-        {
-            //deletes the file if it previously exists
-            if (pCSV.toFile().exists())
-            {
-                Files.delete(pCSV);
-            }
-            Files.write(pCSV, linesCSV);
-            
-            return 0;
-        }
-        catch (Exception ioex)
-        {
-            CtrAlertDialog.exceptionDialog(ioex, "Unable to save letterInput.csv file.");
-            return -1;
-        }
-
-    }
-
-    public static void generateLetter(String letterSelected, MonasticProfile p, String[][] data)
-    {
-        Process pCMD;
-        Path pFolderLetterTemplate, pProfileLetterStorage;
-        String fileName;
-        int output;
-
-        fileName = "NonImm" + letterSelected.replaceAll("[-  ]+", "") + ".dotm";
-        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
-        pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
-        
-        output = generateCSV(p, data);
-        if (output == 0)
-        {
-            try
-            {
-                if (!pProfileLetterStorage.toFile().exists())
-                {
-                    pProfileLetterStorage.toFile().mkdirs();
-                }
-                
-               //Run the word macro
-                pCMD = Runtime.getRuntime().exec("cmd /c start /wait winword /embedded /q "+fileName +" /mvisaLetterGenerator", null, pFolderLetterTemplate.toFile());
-                pCMD.waitFor(5, TimeUnit.SECONDS);
-            }
-            catch (Exception ex)
-            {
-                CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
-            }
-        }
-    }
-
 }
