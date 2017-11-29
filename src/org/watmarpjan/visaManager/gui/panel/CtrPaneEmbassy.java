@@ -1,6 +1,8 @@
 package org.watmarpjan.visaManager.gui.panel;
 
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -56,6 +58,121 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
+        tfCountryTH.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfCountryTH.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfNameTH.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfNameTH.setText(strCommasRemoved);
+                }
+            }
+        });
+
+        tfNameEN.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfNameEN.setText(strCommasRemoved);
+                }
+            }
+        });
+
+        tfAddr1.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfAddr1.setText(strCommasRemoved);
+                }
+            }
+        });
+
+        tfAddr2.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfAddr2.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfAddr3.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfAddr3.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfAddr4.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                //if the textfield contains any commas
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfAddr4.setText(strCommasRemoved);
+                }
+            }
+        });
         fillEmbassyList();
     }
 
