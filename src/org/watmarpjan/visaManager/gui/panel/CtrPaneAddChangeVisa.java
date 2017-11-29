@@ -5,6 +5,8 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import javafx.event.ActionEvent;
@@ -112,6 +114,84 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
                 tfVisaNumber.setText(newValue.toUpperCase());
             }
         });
+
+        tfMonasticAddr1.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfMonasticAddr1.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfMonasticAddr2.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfMonasticAddr2.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfMonasticAddr3.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfMonasticAddr3.setText(strCommasRemoved);
+                }
+            }
+        });
+        tfMonasticAddr4.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfMonasticAddr4.setText(strCommasRemoved);
+                }
+            }
+        });
+
+        tfMonasticPhoneAbroad.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if ((newValue != null) && (newValue.contains(",")))
+                {
+                    String strCommasRemoved;
+
+                    //remove all commas
+                    strCommasRemoved = newValue.replace(",", "");
+                    tfMonasticPhoneAbroad.setText(strCommasRemoved);
+                }
+            }
+        });
+        
     }
 
     private void clearFieldsVisaLetters(boolean partialClear)
