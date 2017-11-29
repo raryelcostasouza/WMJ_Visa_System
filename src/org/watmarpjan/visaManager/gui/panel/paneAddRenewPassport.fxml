@@ -41,6 +41,9 @@
                                  </GridPane.margin>
                               </Label>
                               <TextField fx:id="tfpassportNumber" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="cbPassportCountry" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="dpPassportIssueDate" layoutX="120.0" layoutY="103.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Issued at:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
@@ -57,14 +60,11 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="dpPassportIssueDate" layoutX="120.0" layoutY="103.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Pspt. Country:" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="cbPassportCountry" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="cbPassportIssuedAt" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
