@@ -149,7 +149,7 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Departure Date From Thailand:" />
-                                          <DatePicker fx:id="dpDepartureDateFromThai" GridPane.columnIndex="1" />
+                                          <DatePicker fx:id="dpDepartureDateFromThai" editable="false" GridPane.columnIndex="1" />
                                        </children>
                                     </GridPane>
                                     <GridPane fx:id="gpMonasticPhone">
