@@ -13,7 +13,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author wmj_user
  */
-public class EntryReceipt90Day 
+public class EntryReceipt90Day  implements Comparable<EntryReceipt90Day>
 {
     private final SimpleStringProperty receiptDate;
     private final SimpleStringProperty receiptType;
@@ -48,6 +48,27 @@ public class EntryReceipt90Day
     public LocalDate getLdReceiptDate()
     {
         return ldReceiptDate;
+    }
+
+    @Override
+    public int compareTo(EntryReceipt90Day objOther)
+    {
+         if (objOther == null)
+        {
+            return -1;
+        }
+        else if (this.getLdReceiptDate().compareTo(objOther.getLdReceiptDate()) > 0)
+        {
+            return -1;
+        }
+        else if (this.getLdReceiptDate().compareTo(objOther.getLdReceiptDate()) < 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
     
 

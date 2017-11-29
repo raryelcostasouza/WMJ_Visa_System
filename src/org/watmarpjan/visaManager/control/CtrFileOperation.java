@@ -308,6 +308,7 @@ public class CtrFileOperation
                 objEntryReceipt = new EntryReceipt90Day(ldReceipt, refNumber, receiptStatus);
                 listReceipts90D.add(objEntryReceipt);
             }
+            listReceipts90D.sort(null);
             return listReceipts90D;
         }
         else
