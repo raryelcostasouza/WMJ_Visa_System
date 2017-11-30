@@ -53,7 +53,7 @@ public class CtrGUIMain
     private CtrDatePicker ctrDatePicker;
 
     @FXML
-    private VBox rootPane;
+    private BorderPane rootPane;
 
     @FXML
     private RadioButton rbDateFormatWestern;
@@ -74,7 +74,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneMonasticProfile ctrPaneMonasticProfile;
     @FXML
-    private ScrollPane paneMonasticProfile;
+    private VBox paneMonasticProfile;
 
     @FXML
     private CtrPaneMonastery ctrPaneMonastery;
@@ -154,7 +154,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneWorkflowVisaExt ctrPaneWFVisaExt;
     @FXML
-    private ScrollPane paneWFVisaExt;
+    private VBox paneWFVisaExt;
 
     @FXML
     private CtrPaneEmbassy ctrPaneEmbassy;
@@ -162,7 +162,7 @@ public class CtrGUIMain
     private VBox paneEmbassy;
 
     @FXML
-    private BorderPane centerPane;
+    private ScrollPane modulePane;
     @FXML
     private BorderPane topPane;
 
@@ -809,7 +809,7 @@ public class CtrGUIMain
         {
             topPane.setCenter(null);
             topPane.setLeft(null);
-            centerPane.setCenter(paneDueTasks);
+            modulePane.setContent(paneDueTasks);
             currentPaneController = ctrPaneDueTasks;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneDueTasks.fillData();
@@ -829,7 +829,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(true);
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneMonasticProfile);
+            modulePane.setContent(paneMonasticProfile);
             currentPaneController = ctrPaneMonasticProfile;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneEditSave.actionLock();
@@ -849,7 +849,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(true);
             topPane.setCenter(null);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneMonastery);
+            modulePane.setContent(paneMonastery);
             currentPaneController = ctrPaneMonastery;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneEditSave.actionLock();
@@ -870,7 +870,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(true);
             topPane.setCenter(null);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneUpajjhaya);
+            modulePane.setContent(paneUpajjhaya);
             currentPaneController = ctrPaneUpajjhaya;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneEditSave.actionLock();
@@ -892,7 +892,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(false);
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(panePassport);
+            modulePane.setContent(panePassport);
             currentPaneController = ctrPanePassport;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneEditSave.actionLock();
@@ -912,7 +912,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(false);
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneBysuddhi);
+            modulePane.setContent(paneBysuddhi);
             currentPaneController = ctrPaneBysuddhi;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneEditSave.actionLock();
@@ -931,7 +931,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(null);
-            centerPane.setCenter(pane90DayNotice);
+            modulePane.setContent(pane90DayNotice);
             currentPaneController = ctrPane90DayNotice;
 //        Init.MAIN_STAGE.sizeToScene();
             fillMonasticProfileData(); 
@@ -949,7 +949,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(null);
-            centerPane.setCenter(paneVisaExt);
+            modulePane.setContent(paneVisaExt);
             currentPaneController = ctrPaneVisaExt;
 //        Init.MAIN_STAGE.sizeToScene();
             fillMonasticProfileData();
@@ -969,7 +969,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(null);
-            centerPane.setCenter(paneReEntry);
+            modulePane.setContent(paneReEntry);
             currentPaneController = ctrPaneReEntry;
 //        Init.MAIN_STAGE.sizeToScene();
             fillMonasticProfileData();
@@ -988,7 +988,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(null);
-            centerPane.setCenter(paneAddRenewPassport);
+            modulePane.setContent(paneAddRenewPassport);
             currentPaneController = ctrPaneAddRenewPassport;
 //        Init.MAIN_STAGE.sizeToScene();
             fillMonasticProfileData();
@@ -1006,7 +1006,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(null);
-            centerPane.setCenter(paneAddChangeVisa);
+            modulePane.setContent(paneAddChangeVisa);
             currentPaneController = ctrPaneAddChangeVisa;
 //        Init.MAIN_STAGE.sizeToScene();
             fillMonasticProfileData();
@@ -1024,7 +1024,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(null);
             topPane.setLeft(null);
-            centerPane.setCenter(paneTM30NotifResidence);
+            modulePane.setContent(paneTM30NotifResidence);
             currentPaneController = ctrPaneTM30NotifResidence;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneTM30NotifResidence.fillData();
@@ -1042,7 +1042,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(null);
             topPane.setLeft(null);
-            centerPane.setCenter(paneChangelog);
+            modulePane.setContent(paneChangelog);
             currentPaneController = ctrPaneChangelog;
 //        Init.MAIN_STAGE.sizeToScene();
             ctrPaneChangelog.fillData();
@@ -1062,7 +1062,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(null);
             topPane.setLeft(null);
-            centerPane.setCenter(paneConvert);
+            modulePane.setContent(paneConvert);
             currentPaneController = ctrPaneConvert;
         }
     }
@@ -1078,7 +1078,7 @@ public class CtrGUIMain
             }
             topPane.setCenter(null);
             topPane.setLeft(null);
-            centerPane.setCenter(panePhotoPagePrint);
+            modulePane.setContent(panePhotoPagePrint);
             currentPaneController = ctrPanePhotoPagePrint;
             ctrPanePhotoPagePrint.fillData();
         }
@@ -1096,7 +1096,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(false);
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(panePrintedDocStock);
+            modulePane.setContent(panePrintedDocStock);
             currentPaneController = ctrPanePrintedDocStock;
 
             ctrPaneEditSave.actionLock();
@@ -1116,7 +1116,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(false);
             topPane.setCenter(paneMonasticSelection);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneWFVisaExt);
+            modulePane.setContent(paneWFVisaExt);
             currentPaneController = ctrPaneWFVisaExt;
 
             ctrPaneEditSave.actionLock();
@@ -1136,7 +1136,7 @@ public class CtrGUIMain
             ctrPaneEditSave.setVisible_ButtonAddNew(true);
             topPane.setCenter(null);
             topPane.setLeft(paneEditSave);
-            centerPane.setCenter(paneEmbassy);
+            modulePane.setContent(paneEmbassy);
             currentPaneController = ctrPaneEmbassy;
 
             ctrPaneEditSave.actionLock();
