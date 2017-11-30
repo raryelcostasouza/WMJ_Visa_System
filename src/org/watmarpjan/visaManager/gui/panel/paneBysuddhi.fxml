@@ -17,7 +17,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
+
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -26,13 +27,13 @@
                   <GridPane>
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Issue Date:">
@@ -69,13 +70,13 @@
                   <GridPane>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label text="Pali Name:">
@@ -119,19 +120,19 @@
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
-      <GridPane alignment="CENTER" gridLinesVisible="true">
+      <GridPane gridLinesVisible="true">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <StackPane GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="ivScan2" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan2" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
@@ -141,7 +142,7 @@
             </StackPane>
             <StackPane>
                <children>
-                  <ImageView fx:id="ivScan1" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan1" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
@@ -154,7 +155,7 @@
             </StackPane>
             <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <ImageView fx:id="ivScan4" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan4" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
@@ -165,7 +166,7 @@
             <StackPane GridPane.rowIndex="1">
                <children>
                   <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" StackPane.alignment="TOP_LEFT" />
-                  <ImageView fx:id="ivScan3" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivScan3" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>

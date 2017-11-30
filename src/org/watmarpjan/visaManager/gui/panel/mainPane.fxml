@@ -9,88 +9,86 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<ScrollPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
-   <content>
-      <VBox fx:id="rootPane">
-        
-          <children>
-              <BorderPane>
-                  <left>
-                      <VBox BorderPane.alignment="CENTER">
-                          <children>
-                              <TitledPane animated="false" collapsible="false" text="View Data">
-                                  <content>
-                                      <VBox alignment="CENTER" spacing="5.0">
-                                          <children>
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionDueTasksButton" text="Due Tasks" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionMonasticProfileButton" text="Monastic Profile" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionPassportButton" text="Passport" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBysuddhiButton" text="Bysuddhi" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonMonastery" text="Monastery" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonUpajjhaya" text="Upajjhaya" />
-                                    <Button layoutX="22.0" layoutY="227.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonEmbassy" text="Embassy" />
-                                          </children>
-                                      </VBox>
-                                  </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Visa Operations">
-                                  <content>
-                                      <VBox alignment="CENTER" spacing="5.0">
-                                          <children>
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButton90DayNotice" text="90 Day Notice" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonWFVisaExt" text="Workflow Visa Extension" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Visa Extension" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonReEntry" text="Entry/Re-entry" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="New Visa" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddRenewPassport" text="Add/Renew Passport" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonTM30NotifResidence" text="TM30 - Notif. Residence" />
-                                          </children>
-                                      </VBox>
-                                  </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Others">
-                                  <content>
-                                      <VBox alignment="CENTER" spacing="5.0">
-                                          <children>
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPhotoPagePrint" text="Photo Page Printing" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPrintedDocStock" text="Printed Documents Stock" />
-                                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonChangelog" text="ChangeLog" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonConversionTools" text="Conversion Tools" />
-                                          </children>
-                                      </VBox>
-                                  </content>
-                              </TitledPane>
-                                <TitledPane animated="false" collapsible="false" text="Date Format">
-                                    <content>
-                                        <VBox>
-                                            <children>
-                                                <RadioButton fx:id="rbDateFormatWestern" mnemonicParsing="false" onAction="#actionChangeDateFormat" selected="true" text="Western">
-                                                    <toggleGroup>
-                                                        <ToggleGroup fx:id="tgDateFormat" />
-                                                    </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="rbDateFormatThai" mnemonicParsing="false" onAction="#actionChangeDateFormat" text="Thai" toggleGroup="$tgDateFormat" />
-                                            </children>
-                                        </VBox>
-                                    </content>
-                                </TitledPane>
-                          </children>
-                      </VBox>
-                  </left>
-                  <center>
-                      <BorderPane fx:id="centerPane" BorderPane.alignment="CENTER">
-                          <center>                        
+  <BorderPane fx:id="rootPane" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrGUIMain">
+      <left>
+      <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
+         <content>
+                <VBox>
+                    <children>
+                        <TitledPane animated="false" collapsible="false" text="View Data">
+                            <content>
+                                <VBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionDueTasksButton" text="Due Tasks" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionMonasticProfileButton" text="Monastic Profile" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionPassportButton" text="Passport" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionBysuddhiButton" text="Bysuddhi" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonMonastery" text="Monastery" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonUpajjhaya" text="Upajjhaya" />
+                              <Button layoutX="22.0" layoutY="227.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonEmbassy" text="Embassy" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Visa Operations">
+                            <content>
+                                <VBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButton90DayNotice" text="90 Day Notice" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonWFVisaExt" text="Workflow Visa Extension" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonVisaExt" text="Visa Extension" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonReEntry" text="Entry/Re-entry" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddChangeVisa" text="New Visa" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonAddRenewPassport" text="Add/Renew Passport" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonTM30NotifResidence" text="TM30 - Notif. Residence" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Others">
+                            <content>
+                                <VBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPhotoPagePrint" text="Photo Page Printing" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonPrintedDocStock" text="Printed Documents Stock" />
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonChangelog" text="ChangeLog" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionButtonConversionTools" text="Conversion Tools" />
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                          <TitledPane animated="false" collapsible="false" text="Date Format">
+                              <content>
+                                  <VBox>
+                                      <children>
+                                          <RadioButton fx:id="rbDateFormatWestern" mnemonicParsing="false" onAction="#actionChangeDateFormat" selected="true" text="Western">
+                                              <toggleGroup>
+                                                  <ToggleGroup fx:id="tgDateFormat" />
+                                              </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="rbDateFormatThai" mnemonicParsing="false" onAction="#actionChangeDateFormat" text="Thai" toggleGroup="$tgDateFormat" />
+                                      </children>
+                                  </VBox>
+                              </content>
+                          </TitledPane>
+                    </children>
+                </VBox>
+         </content>
+      </ScrollPane>
+      </left>
+      <center>
+          <BorderPane BorderPane.alignment="TOP_LEFT">
+              <center>                        
                     </center>
-                          <top>
-                              <BorderPane fx:id="topPane" BorderPane.alignment="CENTER">
-                                  <right>
+              <top>
+                  <BorderPane fx:id="topPane" BorderPane.alignment="CENTER">
+                      <right>
                             </right>
-                              </BorderPane>
-                          </top>
-                      </BorderPane>
-                  </center>
-              </BorderPane>
-          </children>
-      </VBox>
-   </content>
-</ScrollPane>
+                  </BorderPane>
+              </top>
+         <center>
+            <ScrollPane fx:id="modulePane" fitToWidth="true" BorderPane.alignment="TOP_LEFT" />
+         </center>
+          </BorderPane>
+      </center>
+  </BorderPane>
