@@ -415,6 +415,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         fieldsScan2.reset(lockStatus);
         fieldsScan3.reset(lockStatus);
 
+        fScan1Selected = null;
+        fScan2Selected = null;
+        fScan3Selected = null;
+        
         if (p.getPassportScanSet() != null)
         {
             listPassportScans = new ArrayList<>();
@@ -930,8 +934,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     }
 
     @FXML
-    void actionChooseExtraScan(ActionEvent ae
-    )
+    void actionChooseExtraScan(ActionEvent ae)
     {
         File fSelected;
         MonasticProfile p;
