@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
   <tabs>
     <Tab text="Register 90 day Notice">
          <content>
@@ -159,14 +159,17 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
                                                 <TextField fx:id="tfArrivalTm6Number" editable="false" GridPane.columnIndex="1" />
-                                                <Label text="Arrived  in Thailand:" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="dpArrivalDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <RadioButton fx:id="rbTravelBy" mnemonicParsing="false" selected="true" text="ByTransportation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label layoutX="55.0" layoutY="47.0" text="By Transportation:" GridPane.rowIndex="2" />
+                                                <Label text="Arrived  in Thailand:" GridPane.rowIndex="2" />
+                                                <DatePicker fx:id="dpArrivalDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <RadioButton fx:id="rbTravelBy" mnemonicParsing="false" selected="true" text="ByTransportation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label layoutX="55.0" layoutY="47.0" text="By Transportation:" GridPane.rowIndex="3" />
                                                 <Label text="TM6 Number:" />
+                                                <Label layoutX="10.0" layoutY="75.0" text="Stay permitted until:" GridPane.rowIndex="1" />
+                                                <DatePicker fx:id="dpStayPermittedUntil" layoutX="145.0" layoutY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
                                        </children>
