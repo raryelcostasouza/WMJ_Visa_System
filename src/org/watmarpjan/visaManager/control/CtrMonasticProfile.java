@@ -105,10 +105,9 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
         else
         {
-            hql = "select p "
-                    + "from MonasticProfile p "
+            hql = "select p from MonasticProfile p "
                     + "order by "
-                    + "p.bhikkhuOrdDate asc nulls last "
+                    + "p.bhikkhuOrdDate asc nulls last, "
                     + "p.samaneraOrdDate asc nulls last, "
                     + "p.pahkahwOrdDate asc nulls last";
 
@@ -130,7 +129,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         hql = "from MonasticProfile p "
                 + "order by "
-                + "p.bhikkhuOrdDate asc nulls last "
+                + "p.bhikkhuOrdDate asc nulls last, "
                 + "p.samaneraOrdDate asc nulls last,"
                 + "p.pahkahwOrdDate asc nulls last";
 
@@ -406,7 +405,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " from MonasticProfile p "
                 + " where p.status <> '" +AppConstants.STATUS_INACTIVE+ "'"
                 + " order by "
-                + " p.bhikkhuOrdDate asc nulls last"
+                + " p.bhikkhuOrdDate asc nulls last,"
                 + " p.samaneraOrdDate asc nulls last,"
                 + " p.pahkahwOrdDate asc nulls last";
 
