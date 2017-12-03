@@ -13,23 +13,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneChangelog">
+<TabPane maxHeight="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneChangelog">
   <tabs>
-    <Tab text="Recent Changes">
+    <Tab closable="false" text="Recent Changes">
          <content>
-            <VBox>
+            <HBox maxHeight="1.7976931348623157E308">
                <children>
-                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                     <children>
-                        <TextArea fx:id="taChangelogPreview" editable="false" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
+                  <TextArea fx:id="taChangelogPreview" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" HBox.hgrow="ALWAYS" />
                </children>
-            </VBox>
+            </HBox>
          </content></Tab>
-    <Tab text="Add Changelog Entry">
+    <Tab closable="false" text="Add Changelog Entry">
          <content>
-            <VBox>
+            <VBox maxHeight="1.7976931348623157E308">
                <children>
                   <TitledPane collapsible="false" text="User Visa Manager">
                      <content>
