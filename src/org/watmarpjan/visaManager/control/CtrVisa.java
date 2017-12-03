@@ -5,13 +5,16 @@
  */
 package org.watmarpjan.visaManager.control;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
+import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -65,6 +68,29 @@ public class CtrVisa extends AbstractControllerDB
     public VisaExtension loadVisaExtensionByNumber(String extNumber)
     {
         return (VisaExtension) ctrDB.loadEntityByUniqueProperty("VisaExtension", "extNumber", extNumber);
+    }
+
+    public LocalDate getStayPermittedUntil(MonasticProfile p)
+    {
+        String hql;
+        Date dStayPermittedUntil;
+
+        //if the visa was not extended yet
+        if (p.getVisaExtensionSet().size() == 0)
+        {
+          dStayPermittedUntil = p.getVisaExpiryDate();
+        }
+        //if the visa already has been extended
+        else
+        {
+            hql = "select  max(vext.expiryDate)"
+                    + " from MonasticProfile p"
+                    + " inner join p.visaExtensionSet vext"
+                    + " where p.idProfile = " + p.getIdProfile()
+                    + " order by max(vext.expiryDate)";
+        dStayPermittedUntil  = ctrDB.getSession().createQuery(hql, Date.class).getSingleResult();   
+        }
+        return Util.convertDateToLocalDate(dStayPermittedUntil);
     }
 
     public ArrayList<EntryVisaExt> loadListExtensions(Integer idProfile)

@@ -82,6 +82,8 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
     @FXML
     private DatePicker dpArrivalDate;
     @FXML
+    private DatePicker dpStayPermittedUntil;
+    @FXML
     private RadioButton rbTravelBy;
 
     @FXML
@@ -146,6 +148,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpDateOfBirth);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpArrivalDate);
+        ctrGUIMain.getCtrDatePicker().registerDatePicker(dpStayPermittedUntil);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpReceiptDate);
 
         tcSelected.setCellValueFactory(new PropertyValueFactory<EntryUpdate90DayNotice, Boolean>("selected"));
@@ -309,12 +312,14 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
     public void fillData(MonasticProfile p)
     {
         Monastery monastery;
+        LocalDate ldStayPermittedUntil;
 
         fillData();
         if (p != null)
         {
             fillDataReceipts(p);
-
+            
+            ldStayPermittedUntil = ctrGUIMain.getCtrMain().getCtrVisa().getStayPermittedUntil(p);
             tfPassportNumber.setText(p.getPassportNumber());
             tfSurname.setText(p.getLastName());
             tfMiddleName.setText(p.getMiddleName());
@@ -324,6 +329,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
 
             tfArrivalTm6Number.setText(p.getArrivalCardNumber());
             dpArrivalDate.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
+            dpStayPermittedUntil.setValue(ldStayPermittedUntil);
             rbTravelBy.setText(p.getArrivalTravelBy());
 
             if (p.getMonasteryResidingAt() != null)
