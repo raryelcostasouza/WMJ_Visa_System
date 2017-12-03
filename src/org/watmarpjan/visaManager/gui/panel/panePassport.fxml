@@ -30,15 +30,15 @@
                     <content>
                         <GridPane>
                             <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" />
+                                <ColumnConstraints hgrow="SOMETIMES" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Label text="P. Number: ">
@@ -109,16 +109,16 @@
                     <content>
                         <GridPane alignment="CENTER_LEFT">
                             <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
+                                <ColumnConstraints fillWidth="false" hgrow="NEVER" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Label text="TM6 Number:">
@@ -175,48 +175,55 @@
                         </GridPane>
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" collapsible="false" text="Visa">
-                    <content>
-                        <GridPane>
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="V. Number:">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </Label>
-                                <TextField fx:id="tfVisaNumber" editable="false" GridPane.columnIndex="1" />
-                                <Label text="Type:" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <ComboBox fx:id="cbVisaType" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Expiry Date:" GridPane.rowIndex="2">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </Label>
-                                <DatePicker fx:id="dpVisaExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="Next 90 day:" GridPane.rowIndex="3">
-                                    <GridPane.margin>
-                                        <Insets left="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                                <DatePicker fx:id="dpNext90dayNotice" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                            </children>
-                        </GridPane>
-                    </content>
-                </TitledPane>
+            <TitledPane animated="false" collapsible="false" layoutX="10.0" layoutY="217.0" text="Visa">
+               <content>
+                  <GridPane alignment="CENTER_LEFT">
+                     <columnConstraints>
+                        <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="V. Number:">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="tfVisaNumber" editable="false" GridPane.columnIndex="1" />
+                        <Label text="Type:" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="dpVisaExpiryDate" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Expiry Date:" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Next 90 day:" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cbVisaType" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <DatePicker fx:id="dpNext90dayNotice" disable="true" layoutX="103.0" layoutY="82.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </TitledPane>
                 <TitledPane animated="false" collapsible="false" text=" Visa Extensions">
                     <content>
                         <VBox prefHeight="200.0">
