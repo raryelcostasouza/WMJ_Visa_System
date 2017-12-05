@@ -83,8 +83,9 @@ public class CtrPaneMonasticSelection extends AChildPaneController
     {
         fillNicknameList();
         cbSelectedMonastic.setValue(selectedNickname);
+        //loadIMGProfile(selectedNickname);
     }
-
+    
     public Integer getIDSelectedProfile()
     {
         return IDSelectedProfile;

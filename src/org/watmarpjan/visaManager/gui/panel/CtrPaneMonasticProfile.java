@@ -776,8 +776,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                 //if the nickname was changed refresh nickname list
                 if (!previousNickName.equals(newNickName))
                 {
-                    ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
+                    ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
