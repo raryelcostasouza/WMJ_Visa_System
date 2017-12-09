@@ -1,5 +1,10 @@
 ----------------------------------------------------------
 v1.6 - 09/12/2017
+Updated:
+* Java Runtime Environment
+* Hibernate Library
+* Derby DB
+
 Bugs fixed:
 * New Visa::Letters: Field height sometimes shrinks (Embassy, Address, Phone Number) on section "Monastic Abroad - Samnak Put". However it shows normally after moving to Forms/Register Visa tab and back.
 * Embassy panel: Unsaved changes are saved even when choosing to discard changes.
