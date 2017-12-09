@@ -1,3 +1,26 @@
+2017-12-08
+	* New Visa::Letters: Field height sometimes shrinks (Embassy, Address, Phone Number) on section "Monastic Abroad - Samnak Put". However it shows normally after moving to Forms/Register Visa tab and back.
+	* Embassy panel: Unsaved changes are saved even when choosing to discard changes.
+
+2017-11-13
+	* Embassy panel: adjust tab order for Name (English) and Name (Thai) fields.
+	* 90 Day Notice panel::Receipts Online Notice: Receipts Online should be ordered by Date descending.
+	* Baisuddhi panel & 
+	  Printed Documents Stock panel: Vertical scrollbar missing.
+									 Set min height for the fields on top section. (They shrink when resizing the window, especially when fields are empty.)
+
+2017-10-31
+	* Embassy panel: Increase field length to be long enough for thai names.
+	* Embassy panel: Do not allow comma in fields that will be exported into csv file.
+	* Add passport panel: adjust tab order.
+	* New Visa::Letters: Do not allow comma in fields that will be exported into csv file.
+
+2017-08-27
+	* 90 Day Notice panel::Online Notification: Add field "Stay Permitted Date วันที่หมดอายุ (ค.ศ.) " which is used in the online 90 day form.
+
+2017-08-22
+	* Profile panel: When changing nickname, the photo on profile panel as well as the top monastic selector does not update properly, it shows no photo. After changing panel back and forth the photo shows normally again.
+
 2017-08-08
 	* Passport Panel: When adding an extra scan, Check whether the user have clicked the Add button and give a warning if not.
 	* Replace Latest Changes sidebar with a collapsable "Help & Latest Changes" sidebar visible on all panels. PDF-files could be used to display each help chapter?
