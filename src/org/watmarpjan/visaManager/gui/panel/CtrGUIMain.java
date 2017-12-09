@@ -1140,6 +1140,7 @@ public class CtrGUIMain
             currentPaneController = ctrPaneEmbassy;
 
             ctrPaneEditSave.actionLock();
+            ctrPaneEmbassy.fillEmbassyData(null);
         }
     }
 
