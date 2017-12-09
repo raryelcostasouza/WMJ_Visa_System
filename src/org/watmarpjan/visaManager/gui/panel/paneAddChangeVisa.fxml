@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddChangeVisa">
+<TabPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddChangeVisa">
    <tabs>
       <Tab closable="false" text="Forms/Register Visa">
          <content>
@@ -132,7 +132,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <Label text="Embassy:" />
@@ -145,7 +145,7 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
                                           <Label text="Departure Date From Thailand:" />
@@ -158,7 +158,7 @@
                                           <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
                                           <Label text="Phone Number Abroad:" />
@@ -175,10 +175,10 @@
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" />
                                                    </columnConstraints>
                                                    <rowConstraints>
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                      <RowConstraints vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
                                                       <Label text="Address Line 2:" GridPane.rowIndex="1" />
