@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
@@ -37,6 +38,9 @@ import org.watmarpjan.visaManager.util.Util;
 public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implements IFormMonasticProfile
 {
 
+    @FXML
+    private TabPane  tpAddChangeVisa;
+    
     @FXML
     private TextField tfVisaNumber;
 
@@ -373,6 +377,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
                     vbExtraFields.getChildren().add(tbMonasticAddr);
                     vbExtraFields.getChildren().add(gpMonasticPhone);
                     vbExtraFields.getChildren().add(gpDeparture);
+                    tpAddChangeVisa.requestLayout();
                     break;
             }
         }
