@@ -28,6 +28,7 @@ public class Util
     public final static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public final static DateTimeFormatter CHANGELOG_DATE_TIME_FORMAT_ = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    public final static DateTimeFormatter TIMESTAMP_FILE_NAME = DateTimeFormatter.ofPattern("yyyy-MM-dd-kk'h'mm'm'ss's'");
 
     public static String getLastElement(List<String> list)
     {
