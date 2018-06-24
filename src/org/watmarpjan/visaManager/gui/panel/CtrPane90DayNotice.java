@@ -197,7 +197,7 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
 
                                 mp = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
                                 clickedEntry = getTableView().getItems().get(getIndex());
-                                CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getReceiptOnline90d(mp.getNickname(),
+                                CtrFileOperation.openFileOnDefaultProgram(AppFiles.getReceiptOnline90d(mp.getNickname(),
                                         clickedEntry.getRefNumber(),
                                         clickedEntry.getLdReceiptDate(),
                                         clickedEntry.getReceiptType()));

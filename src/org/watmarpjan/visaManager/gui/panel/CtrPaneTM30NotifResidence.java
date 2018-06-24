@@ -113,7 +113,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
                             {
                                 EntryPrintoutTM30 clickedEntry;
                                 clickedEntry = getTableView().getItems().get(getIndex());
-                                CtrFileOperation.openPDFOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getPrintoutTM30()));
+                                CtrFileOperation.openFileOnDefaultProgram(AppFiles.getPrintoutTM30(clickedEntry.getPrintoutTM30()));
                             });
                             setGraphic(btn);
                             setText(null);
