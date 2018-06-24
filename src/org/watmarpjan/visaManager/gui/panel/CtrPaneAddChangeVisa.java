@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrLetter;
+import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
@@ -454,7 +455,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
             objLetterInput.setPhoneAbroad(tfMonasticPhoneAbroad.getText());
             objLetterInput.setLdDepartureDateThai(dpDepartureDateFromThai.getValue());
 
-            CtrLetter.generateLetter(strLetterSelected, p, objLetterInput);
+            CtrLetterODF.generateLetter(strLetterSelected, p, objLetterInput);
         }
         else
         {
