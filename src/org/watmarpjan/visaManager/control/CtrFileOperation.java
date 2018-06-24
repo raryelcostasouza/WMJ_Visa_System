@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -106,7 +105,6 @@ public class CtrFileOperation
         File fDestArchive;
         Path pSourceFile, pDestFile;
         String fileNameWithoutExtension, fExtension;
-        DateTimeFormatter dFFileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-kk'h'mm'm'ss's'");
 
         fileNameWithoutExtension = Util.getFileNameWithoutExtension(f2Archive);
         fExtension = Util.getFileExtension(f2Archive);
@@ -117,7 +115,7 @@ public class CtrFileOperation
         fDestArchive = pDestArchive.toFile();
 
         //add a timestamp of the archiving time to the beginning of the fileName
-        pDestFile = pDestArchive.resolve(LocalDateTime.now().format(dFFileName) + "-" + fileNameWithoutExtension + "." + fExtension);
+        pDestFile = pDestArchive.resolve(LocalDateTime.now().format(Util.TIMESTAMP_FILE_NAME) + "-" + fileNameWithoutExtension + "." + fExtension);
 
         try
         {
@@ -257,7 +255,7 @@ public class CtrFileOperation
         fTMPFolder.delete();
     }
 
-    public static void openPDFOnDefaultProgram(File f)
+    public static void openFileOnDefaultProgram(File f)
     {
         //show the generated form on the default pdf viewer
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
@@ -268,7 +266,7 @@ public class CtrFileOperation
             }
             catch (IOException ex)
             {
-                CtrAlertDialog.exceptionDialog(ex, "Error to open PDF file.");
+                CtrAlertDialog.exceptionDialog(ex, "Error to open file.");
             }
 
         }
