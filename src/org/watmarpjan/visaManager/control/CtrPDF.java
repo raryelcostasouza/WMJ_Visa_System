@@ -227,7 +227,7 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-                acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
+            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
@@ -707,7 +707,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
 
         }
@@ -952,7 +952,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
 
@@ -1014,7 +1014,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
 
@@ -1111,7 +1111,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
 
@@ -1220,7 +1220,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
 
@@ -1256,7 +1256,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
 
@@ -1449,7 +1449,7 @@ public class CtrPDF
             }
             else
             {
-                CtrFileOperation.openPDFOnDefaultProgram(outputFile);
+                CtrFileOperation.openFileOnDefaultProgram(outputFile);
             }
             pdfDoc.close();
         }
@@ -1512,7 +1512,7 @@ public class CtrPDF
             //but keeping the other appearance settings like size etc.
             //so the final result would be something like "/F1 50 Tf 0 g"
             afterFieldAppearance = "/" + loadedThaiFontName.getName() + subStringAppearance;
-
+            
             thaiTextField.setDefaultAppearance(afterFieldAppearance);
         }
 
