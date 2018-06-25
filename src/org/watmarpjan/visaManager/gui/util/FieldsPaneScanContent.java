@@ -111,10 +111,6 @@ public class FieldsPaneScanContent
     //if there is scan content to show on this pane
     public void setContentTrue(boolean lockStatus)
     {
-        rbArriveStamp.setDisable(true);
-        rbVisa.setDisable(true);
-        rbLastVisaExt.setDisable(true);
-
         tfLeftPageNumber.setEditable(false);
         bSelectFile.setDisable(true);
         
