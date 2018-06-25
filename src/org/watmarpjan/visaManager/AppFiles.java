@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.ExtraPassportScan;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -47,7 +48,7 @@ public class AppFiles
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
 
-    public static File getExtraScan(String nickName, String passportNumber, PassportScan ps)
+    public static File getExtraScan(String nickName, String passportNumber, ExtraPassportScanNew ps)
     {
         Path pSubfolder;
         String strFileName;
@@ -65,11 +66,11 @@ public class AppFiles
 
     }
 
-    public static ArrayList<ExtraPassportScan> getListExtraScans(String nickName, String passportNumber)
+    public static ArrayList<ExtraPassportScanLoaded> getListExtraScans(String nickName, String passportNumber)
     {
         Path pSubfolder;
         File[] listFScans = null;
-        ArrayList<ExtraPassportScan> listFExtraScan;
+        ArrayList<ExtraPassportScanLoaded> listFExtraScan;
 
         listFExtraScan = new ArrayList<>();
         pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
@@ -78,7 +79,7 @@ public class AppFiles
             listFScans = pSubfolder.toFile().listFiles(new ExtraScanFileNameFilter());
             for (File f : listFScans)
             {
-                listFExtraScan.add(new ExtraPassportScan(f));
+                listFExtraScan.add(new ExtraPassportScanLoaded(f));
             }
         }
 

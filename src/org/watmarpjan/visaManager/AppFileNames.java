@@ -7,6 +7,8 @@ package org.watmarpjan.visaManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
@@ -39,24 +41,24 @@ public class AppFileNames
         return "departure-card.jpg";
     }
 
-    public static String getExtraScan(String passportNumber, PassportScan ps)
+    public static String getExtraScan(String passportNumber, ExtraPassportScanNew ps)
     {
-        return passportNumber + "-page" + ps.getPageNumber() + generateExtraScanSuffix(ps) + ".jpg";
+        return passportNumber + "-page" + ps.getLeftPageNumber()+ generateExtraScanSuffix(ps) + ".jpg";
     }
 
-    private static String generateExtraScanSuffix(PassportScan ps)
+    private static String generateExtraScanSuffix(ExtraPassportScanNew ps)
     {
         String suffix = "";
 
-        if (ps.getContentArriveStamp())
+        if (ps.containsScanArriveStamp())
         {
             suffix += "-ArriveStamp";
         }
-        if (ps.getContentVisaScan())
+        if (ps.containsScanVisa())
         {
             suffix += "-Visa";
         }
-        if (ps.getContentLastVisaExt())
+        if (ps.containsScanLastVisaExt())
         {
             suffix += "-VisaExt";
         }
