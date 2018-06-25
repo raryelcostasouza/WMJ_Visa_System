@@ -45,6 +45,7 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
@@ -1234,7 +1235,7 @@ public class CtrPDF
     public void generatePDFPassportScans(MonasticProfile p, int option)
     {
         //passport size 17cm X 12.5 cm
-
+        ArrayList<ExtraPassportScanLoaded> listEPS;
         PDDocument pdfDoc;
         File outputFile;
 
@@ -1244,9 +1245,10 @@ public class CtrPDF
 
         try
         {
+            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
             generateScansPage1(pdfDoc, p);
-            generateScansPage2(pdfDoc, p);
-            generateScansPage3(pdfDoc, p);
+            generateScansPage2(pdfDoc, p, listEPS);
+            generateScansPage3(pdfDoc, p, listEPS);
 
             pdfDoc.save(outputFile);
 
@@ -1323,13 +1325,10 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
     {
         File fScan1, fScan2;
-        PassportScan ps1;
-        PassportScan ps2;
         PDPageContentStream contentStream;
-        ArrayList<PassportScan> listPassportScan;
         PDImageXObject imgScan1, imgScan2;
         PDPage page2;
 
@@ -1338,20 +1337,17 @@ public class CtrPDF
             page2 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page2);
 
-            listPassportScan = new ArrayList<>();
-            listPassportScan.addAll(p.getPassportScanSet());
+            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
 
-            ps1 = listPassportScan.get(0);
-            fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
+            fScan1 = listEPS.get(0).getFileScan();
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
             contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
 
-            if (listPassportScan.size() >= 2)
+            if (listEPS.size() >= 2)
             {
-                ps2 = listPassportScan.get(1);
-                fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
+                fScan2 = listEPS.get(1).getFileScan();
                 imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
                 contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
             }
@@ -1361,12 +1357,10 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p) throws IOException
+    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
     {
         File fScan3;
-        PassportScan ps3;
         PDPageContentStream contentStream;
-        ArrayList<PassportScan> listPassportScan;
         PDImageXObject imgScan3;
         PDPage page3;
 
@@ -1375,11 +1369,7 @@ public class CtrPDF
             page3 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page3);
 
-            listPassportScan = new ArrayList<>();
-            listPassportScan.addAll(p.getPassportScanSet());
-            ps3 = listPassportScan.get(2);
-
-            fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
+            fScan3 = listEPS.get(2).getFileScan();
             imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
 
             contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
