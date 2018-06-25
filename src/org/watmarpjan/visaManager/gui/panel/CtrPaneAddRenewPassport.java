@@ -120,8 +120,6 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
             {
                 //archives the scan files
                 CtrFileOperation.archiveAllPassportScans(p);
-                //clears the DB entries for the Extra Scans
-                ctrGUIMain.getCtrMain().getCtrPassportScan().removeExtraScans(p.getPassportScanSet());
             }
 
             p.setPassportNumber(null);
