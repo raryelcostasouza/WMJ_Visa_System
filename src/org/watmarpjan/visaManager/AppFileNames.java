@@ -41,7 +41,7 @@ public class AppFileNames
         return "departure-card.jpg";
     }
 
-    public static String getExtraScan(String passportNumber, ExtraPassportScanNew ps)
+    public static String generateFileNameExtraScan(String passportNumber, ExtraPassportScanNew ps)
     {
         return passportNumber + "-page" + ps.getLeftPageNumber()+ generateExtraScanSuffix(ps) + ".jpg";
     }

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -48,7 +47,7 @@ public class AppFiles
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
 
-    public static File getExtraScan(String nickName, String passportNumber, ExtraPassportScanNew ps)
+    public static File generateFileNameExtraScan(String nickName, String passportNumber, ExtraPassportScanNew ps)
     {
         Path pSubfolder;
         String strFileName;
@@ -56,7 +55,7 @@ public class AppFiles
         if (ps != null)
         {
             pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
-            strFileName = AppFileNames.getExtraScan(passportNumber, ps);
+            strFileName = AppFileNames.generateFileNameExtraScan(passportNumber, ps);
 
             return new File(pSubfolder.resolve(strFileName).toUri());
         } else
