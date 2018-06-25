@@ -11,7 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.FileExtraPassportScan;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -61,6 +63,26 @@ public class AppFiles
             return null;
         }
 
+    }
+
+    public static ArrayList<FileExtraPassportScan> getListExtraScans(String nickName, String passportNumber)
+    {
+        Path pSubfolder;
+        File[] listFScans = null;
+        ArrayList<FileExtraPassportScan> listFExtraScan;
+
+        listFExtraScan = new ArrayList<>();
+        pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
+        if (pSubfolder.toFile().exists())
+        {
+            listFScans = pSubfolder.toFile().listFiles(new ExtraScanFileNameFilter());
+            for (File f : listFScans)
+            {
+                listFExtraScan.add(new FileExtraPassportScan(f));
+            }
+        }
+
+        return listFExtraScan;
     }
 
     public static File getScanBysuddhi(String nickName, int scanNumber)
@@ -125,7 +147,7 @@ public class AppFiles
     {
         return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
     }
-    
+
     public static File getFormPrawatPatimokkhaChanter()
     {
         return AppPaths.getPathToForms().resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
@@ -136,31 +158,31 @@ public class AppFiles
         String fileName;
         LocalDate ldNotifDate;
         Integer auxIndex;
-        
+
         ldNotifDate = Util.convertDateToLocalDate(objTM30.getNotifDate());
         auxIndex = objTM30.getAuxIndex();
-        
+
         fileName = "TM30-" + ldNotifDate.format(DateTimeFormatter.ISO_DATE);
-        
+
         //if there is more than one printout for a certain date
         //it is necessary to add the auxIndex to the filename
         if (auxIndex != null && auxIndex != 0)
         {
-            fileName += "-"+auxIndex;
+            fileName += "-" + auxIndex;
         }
-        fileName+= ".pdf";
-        
-       return AppPaths.getPathToTM30Printout().resolve(fileName).toFile(); 
+        fileName += ".pdf";
+
+        return AppPaths.getPathToTM30Printout().resolve(fileName).toFile();
     }
-    
+
     public static File getPrintoutTM30(LocalDate ldNotif, int auxIndex)
     {
         PrintoutTm30 objTM30;
-        
+
         objTM30 = new PrintoutTm30();
         objTM30.setNotifDate(Util.convertLocalDateToDate(ldNotif));
         objTM30.setAuxIndex(auxIndex);
-        
+
         return getPrintoutTM30(objTM30);
     }
 
@@ -173,18 +195,16 @@ public class AppFiles
     {
         return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();
     }
-    
+
     public static File getFormTM8Reentry()
     {
         return AppPaths.getPathToForms().resolve("TM8-Reentry.pdf").toFile();
     }
-    
+
     public static File getFormTM86VisaChange()
     {
         return AppPaths.getPathToForms().resolve("TM86-VisaChange.pdf").toFile();
     }
-    
-    
 
     public static File getFormOverstay()
     {
