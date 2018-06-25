@@ -40,7 +40,7 @@ import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
 import static java.lang.Integer.parseInt;
 import org.watmarpjan.visaManager.control.CtrPDF;
-import org.watmarpjan.visaManager.model.FileExtraPassportScan;
+import org.watmarpjan.visaManager.model.ExtraPassportScan;
 
 /**
  *
@@ -402,8 +402,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
     {
-        ArrayList<FileExtraPassportScan> listFExtraPScan;
-        FileExtraPassportScan fPs1, fPs2, fPs3;
+        ArrayList<ExtraPassportScan> listFExtraPScan;
+        ExtraPassportScan fPs1;
+        FileExtraPassportScan fPs2, fPs3;
         fieldsScan1.reset(lockStatus);
         fieldsScan2.reset(lockStatus);
         fieldsScan3.reset(lockStatus);
@@ -548,43 +549,34 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private void loadIMGPreviews(MonasticProfile p)
     {
-        File fPassportScan, fDepartureCard, fScan1, fScan2, fScan3;
-        PassportScan ps1 = null, ps2 = null, ps3 = null;
-        ArrayList<PassportScan> listPassportScans;
+        File fPassportScan, fDepartureCard, fScan1 = null, fScan2 = null, fScan3 = null;
+        ArrayList<ExtraPassportScan> listFExtraPScan;
+        
 
         if (p != null)
         {
             fPassportScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
             fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
 
-            if (p.getPassportScanSet() != null)
+            listFExtraPScan = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
+            if (!listFExtraPScan.isEmpty())
             {
-                listPassportScans = new ArrayList();
-                listPassportScans.addAll(p.getPassportScanSet());
-                if (listPassportScans.size() >= 1)
+                if (listFExtraPScan.size() >= 1)
                 {
-                    ps1 = listPassportScans.get(0);
+                    fScan1 = listFExtraPScan.get(0).getFileScan();
                 }
-                if (listPassportScans.size() >= 2)
+                if (listFExtraPScan.size() >= 2)
                 {
-                    ps2 = listPassportScans.get(1);
+                    fScan2 = listFExtraPScan.get(1).getFileScan();
                 }
-                if (listPassportScans.size() >= 3)
+                if (listFExtraPScan.size() >= 3)
                 {
-                    ps3 = listPassportScans.get(2);
+                    fScan3 = listFExtraPScan.get(2).getFileScan();
                 }
-
-                fScan1 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps1);
-                fScan2 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps2);
-                fScan3 = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps3);
-
-            } else
-            {
-                fScan1 = fScan2 = fScan3 = null;
             }
         } else
         {
-            fPassportScan = fDepartureCard = fScan1 = fScan2 = fScan3 = null;
+            fPassportScan = fDepartureCard  = null;
         }
 
         GUIUtil.loadImageView(ivPassportScan, GUIUtil.IMG_TYPE_PASSPORT, fPassportScan);
