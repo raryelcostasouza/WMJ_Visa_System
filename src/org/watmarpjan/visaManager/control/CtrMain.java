@@ -23,7 +23,6 @@ public class CtrMain
     private final CtrPDF ctrPDF;
     private final CtrEmbassy ctrEmbassy;
     private final CtrVisa ctrVisa;
-    private final CtrPassportScan ctrPassportScan;
     private final CtrUpajjhaya ctrUpajjhaya;
     private final CtrPrintoutTM30 ctrPrintoutTM30;
 
@@ -35,7 +34,6 @@ public class CtrMain
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
         ctrEmbassy = new CtrEmbassy(ctrDB);
         ctrVisa = new CtrVisa(ctrDB);
-        ctrPassportScan = new CtrPassportScan(ctrDB);
         ctrPDF = new CtrPDF(this);
         ctrPrintoutTM30 = new CtrPrintoutTM30(ctrDB, ctrProfile);
     }
@@ -97,8 +95,4 @@ public class CtrMain
         return ctrUpajjhaya;
     }
 
-    public CtrPassportScan getCtrPassportScan()
-    {
-        return ctrPassportScan;
-    }
 }
