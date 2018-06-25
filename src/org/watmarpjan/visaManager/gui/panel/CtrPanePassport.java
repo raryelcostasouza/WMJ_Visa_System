@@ -178,7 +178,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private File fScan1Selected;
     private File fScan2Selected;
     private File fScan3Selected;
-    
+
     private ExtraPassportScanLoaded objEPS1;
     private ExtraPassportScanLoaded objEPS2;
     private ExtraPassportScanLoaded objEPS3;
@@ -404,23 +404,23 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
-    
+
     private void registerExtraPassportScan(ArrayList<ExtraPassportScanLoaded> listExtraPScan)
     {
-       objEPS1 = objEPS2 = objEPS3 =  null;
-       
-       if (listExtraPScan.size()>=1) 
-       {
-           objEPS1 = listExtraPScan.get(0);
-       }
-       if (listExtraPScan.size()>=2)
-       {
-           objEPS2 = listExtraPScan.get(1);
-       }
-       if (listExtraPScan.size()>=3)
-       {
-           objEPS3 = listExtraPScan.get(2);
-       }
+        objEPS1 = objEPS2 = objEPS3 = null;
+
+        if (listExtraPScan.size() >= 1)
+        {
+            objEPS1 = listExtraPScan.get(0);
+        }
+        if (listExtraPScan.size() >= 2)
+        {
+            objEPS2 = listExtraPScan.get(1);
+        }
+        if (listExtraPScan.size() >= 3)
+        {
+            objEPS3 = listExtraPScan.get(2);
+        }
     }
 
     private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
@@ -569,7 +569,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         File fPassportScan, fDepartureCard, fScan1 = null, fScan2 = null, fScan3 = null;
         ArrayList<ExtraPassportScanLoaded> listFExtraPScan;
-        
 
         if (p != null)
         {
@@ -594,7 +593,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             }
         } else
         {
-            fPassportScan = fDepartureCard  = null;
+            fPassportScan = fDepartureCard = null;
         }
 
         GUIUtil.loadImageView(ivPassportScan, GUIUtil.IMG_TYPE_PASSPORT, fPassportScan);
@@ -794,13 +793,83 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
+    private boolean checkIfNeedRenameScanFile(ExtraPassportScanLoaded objPES, FieldsPaneScanContent objFS)
+    {
+        boolean stateScanArriveStamp;
+        boolean stateScanVisa;
+        boolean stateScanLastVisaExt;
+
+        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
+        stateScanVisa = objFS.getRbVisa().isSelected();
+        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
+
+        //if there was any change on the radio buttons for the scan type
+        if ((stateScanArriveStamp != objPES.containsScanArriveStamp())
+                || (stateScanVisa != objPES.containsScanVisa())
+                || (stateScanLastVisaExt != objPES.containsScanLastVisaExt()))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private int renameExtraScan(MonasticProfile p, ExtraPassportScanLoaded objPES, FieldsPaneScanContent objFS)
+    {
+        boolean stateScanArriveStamp;
+        boolean stateScanVisa;
+        boolean stateScanLastVisaExt;
+        File fScanUpdated;
+        int ret;
+
+        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
+        stateScanVisa = objFS.getRbVisa().isSelected();
+        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
+
+        //if there was any change on the radio buttons for the scan type
+        //save the changes by updating the name of the scan file
+        ExtraPassportScanNew objPSNew = new ExtraPassportScanNew(objPES.getLeftPageNumber(), stateScanArriveStamp, stateScanVisa, stateScanLastVisaExt);
+        fScanUpdated = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), objPSNew);
+
+        ret = CtrFileOperation.copyOperation(objPES.getFileScan(), fScanUpdated);
+        if (ret == -1)
+        {
+            CtrAlertDialog.errorDialog("Unable to rename the extra scan file.");
+        }
+        
+        return ret;
+
+    }
+
+    private int addNewExtraScan(MonasticProfile p, FieldsPaneScanContent objFS, File fScanSelected)
+    {
+        ExtraPassportScanNew objPS;
+        int leftPageNumber, ret;
+        boolean stateScanArriveStamp;
+        boolean stateScanVisa;
+        boolean stateScanLastVisaExt;
+        File fDestination;
+
+        leftPageNumber = parseInt(objFS.getTfPLeftPageNumber().getText());
+        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
+        stateScanVisa = objFS.getRbVisa().isSelected();
+        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
+
+        objPS = new ExtraPassportScanNew(leftPageNumber, stateScanArriveStamp, stateScanVisa, stateScanLastVisaExt);
+        fDestination = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), objPS);
+
+        ret = CtrFileOperation.copyOperation(fScanSelected, fDestination);
+        //if the operation was unsuccessful
+        if (ret == -1)
+        {
+            CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + fScanSelected.getName().toString() + ".");
+        }
+        return ret;
+    }
+
     private int saveExtraScans()
     {
         boolean copyError, validationError;
         MonasticProfile p;
-        ExtraPassportScanNew[] arrayPS = new ExtraPassportScanNew[3];
-        File[] arrayFSelected = new File[3];
-        File[] arrayFDestination = new File[3];
         Integer[] statusCopyOperation = new Integer[]
         {
             1, 1, 1
@@ -815,67 +884,38 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         {
             if (validateExtraScanContent(1))
             {
-                arrayPS[0] = new ExtraPassportScanNew(parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
-                arrayFSelected[0] = fScan1Selected;
-                arrayFDestination[0] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[0]);
-            } else
-            {
-                validationError = true;
-            }
-
+                statusCopyOperation[0] =  addNewExtraScan(p, fieldsScan1, fScan1Selected);
+            } 
+        } //if there was no scan added need to check if there was change on the selected scan types
+        else if (checkIfNeedRenameScanFile(objEPS1, fieldsScan1))
+        {
+           statusCopyOperation[0] =  renameExtraScan(p, objEPS1, fieldsScan1);
         }
 
         if (fScan2Selected != null)
         {
             if (validateExtraScanContent(2))
             {
-                arrayPS[1] = new ExtraPassportScanNew(parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
-                arrayFSelected[1] = fScan2Selected;
-                arrayFDestination[1] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[1]);
-            } else
-            {
-                validationError = true;
+               statusCopyOperation[1] = addNewExtraScan(p, fieldsScan2, fScan2Selected);
             }
-
+        } else if (checkIfNeedRenameScanFile(objEPS2, fieldsScan2))
+        {
+            statusCopyOperation[1] = renameExtraScan(p, objEPS2, fieldsScan2);
         }
 
         if (fScan3Selected != null)
         {
             if (validateExtraScanContent(3))
             {
-                arrayPS[2] = new ExtraPassportScanNew(parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
-                arrayFSelected[2] = fScan3Selected;
-                arrayFDestination[2] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[2]);
-            } else
-            {
-                validationError = true;
-            }
-        }
-
-        //if no validation error occurred for the scan information
-        //copy the files to the app storages
-        if (!validationError)
+                statusCopyOperation[2] = addNewExtraScan(p, fieldsScan3, fScan3Selected);
+            } 
+        } else if (checkIfNeedRenameScanFile(objEPS3, fieldsScan3))
         {
-            for (int i = 0; i < arrayFSelected.length; i++)
-            {
-                if (arrayFSelected[i] != null)
-                {
-                    statusCopyOperation[i] = CtrFileOperation.copyOperation(arrayFSelected[i], arrayFDestination[i]);
-                } else
-                {
-                    statusCopyOperation[i] = 0;
-                }
-
-                //if the operation was unsuccessful
-                if (statusCopyOperation[i] == -1)
-                {
-                    copyError = true;
-                    CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + i + ".");
-                }
-            }
+            statusCopyOperation[2] = renameExtraScan(p, objEPS3, fieldsScan3);
         }
+
         //if the filecopy was successful
-        //save the necessary information on DB
+        //reloads the GUI
         if (!validationError && !copyError)
         {
             loadIMGPreviews(p);
