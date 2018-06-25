@@ -177,6 +177,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private File fScan1Selected;
     private File fScan2Selected;
     private File fScan3Selected;
+    
+    private ExtraPassportScan objEPS1;
+    private ExtraPassportScan objEPS2;
+    private ExtraPassportScan objEPS3;
 
     private FieldsPaneScanContent fieldsScan1;
     private FieldsPaneScanContent fieldsScan2;
@@ -399,12 +403,29 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         return ctrGUIMain.getCtrPaneSelection().isSelectionEmpty();
     }
+    
+    private void registerExtraPassportScan(ArrayList<ExtraPassportScan> listExtraPScan)
+    {
+       objEPS1 = objEPS2 = objEPS3 =  null;
+       
+       if (listExtraPScan.size()>=1) 
+       {
+           objEPS1 = listExtraPScan.get(0);
+       }
+       if (listExtraPScan.size()>=2)
+       {
+           objEPS2 = listExtraPScan.get(1);
+       }
+       if (listExtraPScan.size()>=3)
+       {
+           objEPS3 = listExtraPScan.get(2);
+       }
+    }
 
     private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
     {
         ArrayList<ExtraPassportScan> listFExtraPScan;
-        ExtraPassportScan fPs1;
-        FileExtraPassportScan fPs2, fPs3;
+        ExtraPassportScan fPs1, fPs2, fPs3;
         fieldsScan1.reset(lockStatus);
         fieldsScan2.reset(lockStatus);
         fieldsScan3.reset(lockStatus);
@@ -414,7 +435,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         fScan3Selected = null;
 
         listFExtraPScan = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
-
+        registerExtraPassportScan(listFExtraPScan);
         //if the system is on edit mode
         if (!lockStatus)
         {
@@ -447,13 +468,12 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             bScanPassport.setDisable(true);
         }
 
-        if (listFExtraPScan.size() >= 1)
+        if (objEPS1 != null)
         {
-            fPs1 = listFExtraPScan.get(0);
             fieldsScan1.setContentTrue(lockStatus);
 
-            tfScan1LeftPageNumber.setText(fPs1.getLeftPageNumber() + "");
-            if (fPs1.containsScanArriveStamp())
+            tfScan1LeftPageNumber.setText(objEPS1.getLeftPageNumber() + "");
+            if (objEPS1.containsScanArriveStamp())
             {
                 /*
                      * if this scan contains the Arrive Stamp blocks the
@@ -461,10 +481,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                  */
                 rbScan1ArriveStamp.setSelected(true);
 
-                rbScan2ArriveStamp.setDisable(true);
-                rbScan3ArriveStamp.setDisable(true);
+                //rbScan2ArriveStamp.setDisable(true);
+                //rbScan3ArriveStamp.setDisable(true);
             }
-            if (fPs1.containsScanVisa())
+            if (objEPS1.containsScanVisa())
             {
                 /*
                      * if this scan contains the Visa page blocks the selection
@@ -472,10 +492,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                  */
                 rbScan1Visa.setSelected(true);
 
-                rbScan2Visa.setDisable(true);
-                rbScan3Visa.setDisable(true);
+                //rbScan2Visa.setDisable(true);
+                //rbScan3Visa.setDisable(true);
             }
-            if (fPs1.containsScanLastVisaExt())
+            if (objEPS1.containsScanLastVisaExt())
             {
                 /*
                      * if this scan contains the Last Visa Ext blocks the
@@ -483,66 +503,64 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                  */
                 rbScan1LastVisaExt.setSelected(true);
 
-                rbScan2LastVisaExt.setDisable(true);
-                rbScan3LastVisaExt.setDisable(true);
+                //rbScan2LastVisaExt.setDisable(true);
+                //rbScan3LastVisaExt.setDisable(true);
             }
         }
 
-        if (listFExtraPScan.size() >= 2)
+        if (objEPS2 != null)
         {
-            fPs2 = listFExtraPScan.get(1);
             fieldsScan2.setContentTrue(lockStatus);
 
-            tfScan2LeftPageNumber.setText(fPs2.getLeftPageNumber() + "");
-            if (fPs2.containsScanArriveStamp())
+            tfScan2LeftPageNumber.setText(objEPS2.getLeftPageNumber() + "");
+            if (objEPS2.containsScanArriveStamp())
             {
                 rbScan2ArriveStamp.setSelected(true);
 
-                rbScan1ArriveStamp.setDisable(true);
-                rbScan3ArriveStamp.setDisable(true);
+                //rbScan1ArriveStamp.setDisable(true);
+                //rbScan3ArriveStamp.setDisable(true);
             }
-            if (fPs2.containsScanVisa())
+            if (objEPS2.containsScanVisa())
             {
                 rbScan2Visa.setSelected(true);
 
-                rbScan1Visa.setDisable(true);
-                rbScan3Visa.setDisable(true);
+                //rbScan1Visa.setDisable(true);
+                //rbScan3Visa.setDisable(true);
             }
-            if (fPs2.containsScanLastVisaExt())
+            if (objEPS2.containsScanLastVisaExt())
             {
                 rbScan2LastVisaExt.setSelected(true);
 
-                rbScan1LastVisaExt.setDisable(true);
-                rbScan3LastVisaExt.setDisable(true);
+                //rbScan1LastVisaExt.setDisable(true);
+                //rbScan3LastVisaExt.setDisable(true);
             }
         }
 
-        if (listFExtraPScan.size() >= 3)
+        if (objEPS3 != null)
         {
-            fPs3 = listFExtraPScan.get(2);
             fieldsScan3.setContentTrue(lockStatus);
 
-            tfScan3LeftPageNumber.setText(fPs3.getLeftPageNumber() + "");
-            if (fPs3.containsScanArriveStamp())
+            tfScan3LeftPageNumber.setText(objEPS3.getLeftPageNumber() + "");
+            if (objEPS3.containsScanArriveStamp())
             {
                 rbScan3ArriveStamp.setSelected(true);
 
-                rbScan1ArriveStamp.setDisable(true);
-                rbScan2ArriveStamp.setDisable(true);
+                //rbScan1ArriveStamp.setDisable(true);
+                //rbScan2ArriveStamp.setDisable(true);
             }
-            if (fPs3.containsScanVisa())
+            if (objEPS3.containsScanVisa())
             {
                 rbScan3Visa.setSelected(true);
 
-                rbScan1Visa.setDisable(true);
-                rbScan2Visa.setDisable(true);
+                //rbScan1Visa.setDisable(true);
+                //rbScan2Visa.setDisable(true);
             }
-            if (fPs3.containsScanLastVisaExt())
+            if (objEPS3.containsScanLastVisaExt())
             {
                 rbScan3LastVisaExt.setSelected(true);
 
-                rbScan1LastVisaExt.setDisable(true);
-                rbScan2LastVisaExt.setDisable(true);
+                //rbScan1LastVisaExt.setDisable(true);
+                //rbScan2LastVisaExt.setDisable(true);
             }
         }
     }
@@ -591,27 +609,21 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     void actionArchiveExtraScan(ActionEvent ae)
     {
         MonasticProfile p;
-        PassportScan ps;
-        ArrayList<PassportScan> listPassportScan;
+        File fScan2Archive;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        listPassportScan = new ArrayList<>();
-        listPassportScan.addAll(p.getPassportScanSet());
-
         if (ae.getSource().equals(bArchive1))
         {
-            ps = listPassportScan.get(0);
+            fScan2Archive = objEPS1.getFileScan();
         } else if (ae.getSource().equals(bArchive2))
         {
-            ps = listPassportScan.get(1);
+            fScan2Archive = objEPS2.getFileScan();
         } else
         {
-            ps = listPassportScan.get(2);
+            fScan2Archive = objEPS3.getFileScan();
         }
-        p.getPassportScanSet().remove(ps);
 
-        CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
-        ctrGUIMain.getCtrMain().getCtrPassportScan().remove(ps);
+        CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScan2Archive);
 
         fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
         loadIMGPreviews(p);
