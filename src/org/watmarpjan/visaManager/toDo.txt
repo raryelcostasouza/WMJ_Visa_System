@@ -1,79 +1,18 @@
-	* Replace Latest Changes sidebar with a collapsable "Help & Latest Changes" sidebar visible on all panels. PDF-files could be used to display each help chapter?
 
+* Replace Latest Changes sidebar with a collapsable "Help & Latest Changes" sidebar visible on all panels. PDF-files could be used to display each help chapter?
 
-
-Letter filling
-
-Form-Templates/letters/LetterName.dotm
-Data/MonasticName/Letters/Letter1.docx
-
-Create folder if not created yet
-Copy template to tmp folder
-generate csv file on tmp folder
-run script
-wait finish
-add timestamp
-copy back to profile folder
-
-whenever make a csv file create a copy on the template folder on appData (field list)
-    
-
-
-Question -> printout tm30 on 29/05???
-
-Next version:
- Passport - add/renew
-        -enable edition for fields except passport number
-       
        Profile Panel
         -Printable
-       
-
-    Due Tasks
-        -Tab add number of monastics between ()
-
-* Re-entry form - decrease font-size, "passport issued at" value is longer than field width for U.S. monastics.
-
-
-------------------------------------------------------------------------------
-Questions
-       Dates on Tables need to be converted to Thai?
-
-         Passport Panel  
-            -spinner for page number
-
-        -Prawat -> review thai fields
-                    --review list of extensions
-        -Prawat -> abbot name -> PDF
-        -Prawat -> sponsor Thai -> fill on the form or the same as WatResidingAt
-
-        - Form SNP Request 
-            -Full Name -> order of the names
-
-       -When change visa does the number change as well??
-       -Does the limit of extensions reset?
 
 ------------------------------------------------------------------------------
 Changes/Fixes
     
     -Connection pool not use hibernate native one
     --Check about Hibernate session use
-        --leave open directly
-        -- or open only when have transaction
-
-    -review update functionality on JPA
-   
 ------------------------------------------------------------------------------
 Current Working
 
-    Database optimization 
-    Connection pool 
-
-    
-    Sort Receipts 90 Day by date desc
     Buttons for Pali characters input
-
-    
 
     Due Tasks
         Test number of entries. If to much create move data to new page. 
@@ -87,9 +26,6 @@ Current Working
                 fillPassportIssuedAt(acroForm.getField("passportIssuedAt))
 
     Bug - when DB is already open not showing exception message
-------------------------------------------------------------------------------
-Validation/errors
-    -filter invalid characters 
 ------------------------------------------------------------------------------
 Desirable features
 
