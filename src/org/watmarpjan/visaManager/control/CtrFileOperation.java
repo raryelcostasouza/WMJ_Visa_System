@@ -25,6 +25,7 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryReceipt90Day;
+import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PassportScan;
@@ -58,19 +59,20 @@ public class CtrFileOperation
     public static int archiveAllPassportScans(MonasticProfile p)
     {
         ArrayList<File> listFiles2Archive;
+        ArrayList<ExtraPassportScanLoaded> listExtraPS;
         int opStatus, opStatusAux;
 
         if (p.getPassportNumber() != null)
         {
             listFiles2Archive = new ArrayList<>();
             listFiles2Archive.add(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
-
-            if (p.getPassportScanSet() != null)
+            
+            listExtraPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
+            if (!listExtraPS.isEmpty())
             {
-                for (Iterator<PassportScan> iterator = p.getPassportScanSet().iterator(); iterator.hasNext();)
+                for (ExtraPassportScanLoaded objEPS : listExtraPS)
                 {
-                    PassportScan ps = iterator.next();
-                    listFiles2Archive.add(AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), ps));
+                     listFiles2Archive.add(objEPS.getFileScan());
                 }
             }
 
