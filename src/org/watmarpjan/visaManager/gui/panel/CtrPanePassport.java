@@ -817,7 +817,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 arrayPS[0] = new ExtraPassportScanNew(parseInt(tfScan1LeftPageNumber.getText()), rbScan1ArriveStamp.isSelected(), rbScan1Visa.isSelected(), rbScan1LastVisaExt.isSelected());
                 arrayFSelected[0] = fScan1Selected;
-                arrayFDestination[0] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[0]);
+                arrayFDestination[0] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[0]);
             } else
             {
                 validationError = true;
@@ -831,7 +831,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 arrayPS[1] = new ExtraPassportScanNew(parseInt(tfScan2LeftPageNumber.getText()), rbScan2ArriveStamp.isSelected(), rbScan2Visa.isSelected(), rbScan2LastVisaExt.isSelected());
                 arrayFSelected[1] = fScan2Selected;
-                arrayFDestination[1] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[1]);
+                arrayFDestination[1] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[1]);
             } else
             {
                 validationError = true;
@@ -845,7 +845,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 arrayPS[2] = new ExtraPassportScanNew(parseInt(tfScan3LeftPageNumber.getText()), rbScan3ArriveStamp.isSelected(), rbScan3Visa.isSelected(), rbScan3LastVisaExt.isSelected());
                 arrayFSelected[2] = fScan3Selected;
-                arrayFDestination[2] = AppFiles.getExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[2]);
+                arrayFDestination[2] = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), arrayPS[2]);
             } else
             {
                 validationError = true;
