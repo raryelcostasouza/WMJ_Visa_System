@@ -429,28 +429,37 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
-    private void fillDataContentScanGeneric(FieldsPaneScanContent objPScanContent, ExtraPassportScanLoaded objExtraScan)
+    private void fillDataContentScanGeneric(FieldsPaneScanContent fieldScan, ExtraPassportScanLoaded objExtraScan, boolean lockStatus)
     {
+        if (lockStatus)
+        {
+            fieldScan.actionLockEdit();
+        }
+        else
+        {
+            fieldScan.actionUnlockEdit();
+        }
+               
         if (objExtraScan != null)
         {
-            objPScanContent.setPaneContentNotEmpty();
+            fieldScan.setPaneContentNotEmpty();
 
-            objPScanContent.getTfPLeftPageNumber().setText(objExtraScan.getLeftPageNumber() + "");
+            fieldScan.getTfPLeftPageNumber().setText(objExtraScan.getLeftPageNumber() + "");
             if (objExtraScan.containsScanArriveStamp())
             {
-                objPScanContent.getRbArriveStamp().setSelected(true);
+                fieldScan.getRbArriveStamp().setSelected(true);
             }
             if (objExtraScan.containsScanVisa())
             {
-                objPScanContent.getRbVisa().setSelected(true);
+                fieldScan.getRbVisa().setSelected(true);
             }
             if (objExtraScan.containsScanLastVisaExt())
             {
-                objPScanContent.getRbLastVisaExt().setSelected(true);
+                fieldScan.getRbLastVisaExt().setSelected(true);
             }
         } else
         {
-            objPScanContent.setPaneContentEmpty();
+            fieldScan.setPaneContentEmpty();
         }
     }
 
@@ -498,9 +507,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             bScanPassport.setDisable(true);
         }
 
-        fillDataContentScanGeneric(fieldsScan1, objEPS1);
-        fillDataContentScanGeneric(fieldsScan2, objEPS2);
-        fillDataContentScanGeneric(fieldsScan3, objEPS3);
+        fillDataContentScanGeneric(fieldsScan1, objEPS1, lockStatus);
+        fillDataContentScanGeneric(fieldsScan2, objEPS2, lockStatus);
+        fillDataContentScanGeneric(fieldsScan3, objEPS3, lockStatus);
     }
 
     private void loadIMGPreviews(MonasticProfile p)
