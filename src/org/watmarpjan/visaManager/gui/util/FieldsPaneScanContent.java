@@ -24,6 +24,8 @@ public class FieldsPaneScanContent
     private final RadioButton rbVisa;
     private final RadioButton rbLastVisaExt;
 
+    private boolean scanContent;
+
     public FieldsPaneScanContent(Button bSelectFile, Button bArchive, TextField tfLeftPageNumber, TextField tfRightPageNumber, RadioButton rbArriveStamp, RadioButton rbVisa, RadioButton rbLastVisaExt)
     {
         this.bSelectFile = bSelectFile;
@@ -33,6 +35,7 @@ public class FieldsPaneScanContent
         this.rbArriveStamp = rbArriveStamp;
         this.rbVisa = rbVisa;
         this.rbLastVisaExt = rbLastVisaExt;
+        scanContent = false;
     }
 
     public Button getbSelectFile()
@@ -65,64 +68,65 @@ public class FieldsPaneScanContent
         return rbLastVisaExt;
     }
 
-    public void reset(boolean lockStatus)
+    public void reset()
     {
-        if (!lockStatus)
-        {
-            tfLeftPageNumber.setEditable(true);
-            rbArriveStamp.setDisable(false);
-            rbVisa.setDisable(false);
-            rbLastVisaExt.setDisable(false);
+        scanContent = false;
 
-            tfLeftPageNumber.setText("");
-            tfRightPageNumber.setText("");
+        tfLeftPageNumber.setEditable(false);
+        rbArriveStamp.setDisable(true);
+        rbVisa.setDisable(true);
+        rbLastVisaExt.setDisable(true);
 
-            rbArriveStamp.setSelected(false);
-            rbVisa.setSelected(false);
-            rbLastVisaExt.setSelected(false);
+        tfLeftPageNumber.setText("");
+        tfRightPageNumber.setText("");
 
-            bSelectFile.setDisable(false);
-            bArchive.setDisable(true);
-        }
-        else
-        {
-            tfLeftPageNumber.setEditable(false);
-            rbArriveStamp.setDisable(true);
-            rbVisa.setDisable(true);
-            rbLastVisaExt.setDisable(true);
+        rbArriveStamp.setDisable(true);
+        rbVisa.setDisable(true);
+        rbLastVisaExt.setDisable(true);
 
-            tfLeftPageNumber.setText("");
-            tfRightPageNumber.setText("");
+        rbArriveStamp.setSelected(false);
+        rbVisa.setSelected(false);
+        rbLastVisaExt.setSelected(false);
 
-            rbArriveStamp.setDisable(true);
-            rbVisa.setDisable(true);
-            rbLastVisaExt.setDisable(true);
-
-            rbArriveStamp.setSelected(false);
-            rbVisa.setSelected(false);
-            rbLastVisaExt.setSelected(false);
-
-            bSelectFile.setDisable(true);
-            bArchive.setDisable(true);
-        }
-
+        bSelectFile.setDisable(true);
+        bArchive.setDisable(true);
     }
 
     //if there is scan content to show on this pane
-    public void setContentTrue(boolean lockStatus)
+    public void setContentTrue()
     {
+        scanContent = true;
         tfLeftPageNumber.setEditable(false);
-        bSelectFile.setDisable(true);
-        
-        if (lockStatus)
-        {
-            bArchive.setDisable(true);
-        }
-        else
+    }
+
+    public void actionUnlockEdit()
+    {
+        rbArriveStamp.setDisable(false);
+        rbLastVisaExt.setDisable(false);
+        rbVisa.setDisable(false);
+
+        if (scanContent)
         {
             bArchive.setDisable(false);
+        } else
+        {
+            bSelectFile.setDisable(false);
         }
+    }
 
+    public void actionLockEdit()
+    {
+        rbArriveStamp.setDisable(true);
+        rbLastVisaExt.setDisable(true);
+        rbVisa.setDisable(true);
+
+        if (scanContent)
+        {
+            bArchive.setDisable(true);
+        } else
+        {
+            bSelectFile.setDisable(true);
+        }
     }
 
 }
