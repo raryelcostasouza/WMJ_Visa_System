@@ -433,7 +433,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         if (objExtraScan != null)
         {
-            objPScanContent.setContentTrue();
+            objPScanContent.setPaneContentNotEmpty();
 
             objPScanContent.getTfPLeftPageNumber().setText(objExtraScan.getLeftPageNumber() + "");
             if (objExtraScan.containsScanArriveStamp())
@@ -448,6 +448,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 objPScanContent.getRbLastVisaExt().setSelected(true);
             }
+        } else
+        {
+            objPScanContent.setPaneContentEmpty();
         }
     }
 
@@ -804,14 +807,32 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         return false;
     }
 
+    private boolean validateNewExtraScanAdded()
+    {
+        boolean valid1, valid2, valid3;
+
+        valid1 = valid2 = valid3 = true;
+        if (fScan1Selected != null)
+        {
+            valid1 = validateExtraScanContent(fieldsScan1);
+        }
+        if (fScan2Selected != null)
+        {
+            valid2 = validateExtraScanContent(fieldsScan2);
+        }
+        if (fScan3Selected != null)
+        {
+            valid3 = validateExtraScanContent(fieldsScan3);
+        }
+
+        return valid1 && valid2 && valid3;
+    }
+
     private boolean saveExtraScanGeneric(MonasticProfile p, ExtraPassportScanLoaded objEPS, File fScanSelected, FieldsPaneScanContent fieldsScan)
     {
         if (fScanSelected != null)
         {
-            if (validateExtraScanContent(fieldsScan))
-            {
-                return addNewExtraScan(p, fieldsScan, fScanSelected);
-            }
+            return addNewExtraScan(p, fieldsScan, fScanSelected);
         } //if there was no scan added need to check if there was change on the selected scan types
         else if ((objEPS != null) && checkIfNeedRenameScanFile(objEPS, fieldsScan))
         {
@@ -829,20 +850,30 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         //if there is a passport registered allows the user to add other scans
 
         error1 = error2 = error3 = false;
-        error1 = saveExtraScanGeneric(p, objEPS1, fScan1Selected, fieldsScan1);
-        error2 = saveExtraScanGeneric(p, objEPS2, fScan2Selected, fieldsScan2);
-        error3 = saveExtraScanGeneric(p, objEPS3, fScan3Selected, fieldsScan3);
 
-        fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-        loadIMGPreviews(p);
-        //if there was any error on file copying process
-        if (error1 || error2 || error3)
+        //if there are any new extra scans added
+        //only run the save operation if they are fully validated
+        //in other cases... can just go ahead and save
+        if (validateNewExtraScanAdded())
+        {
+            error1 = saveExtraScanGeneric(p, objEPS1, fScan1Selected, fieldsScan1);
+            error2 = saveExtraScanGeneric(p, objEPS2, fScan2Selected, fieldsScan2);
+            error3 = saveExtraScanGeneric(p, objEPS3, fScan3Selected, fieldsScan3);
+            fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+            loadIMGPreviews(p);
+            //if there was any error on file copying process
+            if (error1 || error2 || error3)
+            {
+                return -1;
+
+            } else
+            {
+                return 0;
+            }
+        }
+        else
         {
             return -1;
-
-        } else
-        {
-            return 0;
         }
     }
 
