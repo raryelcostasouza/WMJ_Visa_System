@@ -922,19 +922,34 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
         }
     }
+    
+    private boolean checkPageNumberNewScanAlreadyExists(int pageNumberNewScan)
+    {
+        if ((objEPS1 != null && objEPS1.getLeftPageNumber() == pageNumberNewScan) ||
+                (objEPS2 != null && objEPS2.getLeftPageNumber() == pageNumberNewScan) ||
+                (objEPS3 != null && objEPS3.getLeftPageNumber() == pageNumberNewScan))
+        {
+            return true;
+        }
+        return false;
+    }
+            
 
     private boolean validateExtraScanContent(FieldsPaneScanContent fieldsScan)
     {
         //if the page number is not empty and at least one of the options is selected
         //returns true
         boolean statusValid;
+        boolean validationPageNumber;
 
-        statusValid = validatePageNumber(fieldsScan.getTfPLeftPageNumber().getText())
+        validationPageNumber = validatePageNumber(fieldsScan.getTfPLeftPageNumber().getText());
+        
+        statusValid = validationPageNumber
                 && (fieldsScan.getRbArriveStamp().isSelected()
                 || fieldsScan.getRbLastVisaExt().isSelected()
                 || fieldsScan.getRbVisa().isSelected());
 
-        if (!statusValid)
+        if (!statusValid && validationPageNumber)
         {
             CtrAlertDialog.errorDialog("Please fill all the fields for Extra Scan.");
         }
@@ -944,14 +959,26 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private boolean validatePageNumber(String strPageNumber)
     {
+        int i;
         if (!strPageNumber.isEmpty())
         {
             try
             {
-                Integer.parseInt(strPageNumber);
-                return true;
+                i = Integer.parseInt(strPageNumber);
+                //if the page number of the new scan is repeated somewhere else refuses the operation
+                if (checkPageNumberNewScanAlreadyExists(i))
+                {
+                    CtrAlertDialog.errorDialog("The page number for the newly added scan already exists at another scan.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
             } catch (NumberFormatException nfe)
             {
+                CtrAlertDialog.errorDialog("Invalid page number.");
                 return false;
             }
         }
