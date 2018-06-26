@@ -19,7 +19,7 @@ public class ExtraScanFileNameFilter implements FilenameFilter
     public boolean accept(File dir, String name)
     {
         //if matches the filename regex format for the extra scans
-        return name.matches("(\\w)+(-page)[0-9]+-(\\S)+");
+        return name.matches("(\\w)+(-page)[0-9]+-(\\S)*");
     }
     
 }
