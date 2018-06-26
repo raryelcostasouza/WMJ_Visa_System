@@ -254,7 +254,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         listFields.add(tgArriveStamp);
         listFields.add(tgLastVisaExt);
         listFields.add(tgVisa);
-        
+
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
         tfScan1LeftPageNumber.textProperty().addListener(new ChangeListener<String>()
@@ -450,7 +450,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             }
         }
     }
-    
+
     private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
     {
         ArrayList<ExtraPassportScanLoaded> listFExtraPScan;
@@ -803,19 +803,19 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         return false;
     }
-    
+
     private boolean saveExtraScanGeneric(MonasticProfile p, ExtraPassportScanLoaded objEPS, File fScanSelected, FieldsPaneScanContent fieldsScan)
     {
-        if (fScan1Selected != null)
+        if (fScanSelected != null)
         {
-            if (validateExtraScanContent(1))
+            if (validateExtraScanContent(fieldsScan))
             {
-                return addNewExtraScan(p, fieldsScan1, fScan1Selected);
+                return addNewExtraScan(p, fieldsScan, fScanSelected);
             }
         } //if there was no scan added need to check if there was change on the selected scan types
-        else if ((objEPS1 != null) && checkIfNeedRenameScanFile(objEPS1, fieldsScan1))
+        else if ((objEPS != null) && checkIfNeedRenameScanFile(objEPS, fieldsScan))
         {
-            return renameExtraScan(p, objEPS1, fieldsScan1);
+            return renameExtraScan(p, objEPS, fieldsScan);
         }
         return false;
     }
@@ -883,38 +883,20 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
-    private boolean validateExtraScanContent(int indexScan2Validate)
+    private boolean validateExtraScanContent(FieldsPaneScanContent fieldsScan)
     {
         //if the page number is not empty and at least one of the options is selected
         //returns true
         boolean statusValid;
-        switch (indexScan2Validate)
-        {
-            case 1:
-                statusValid = validatePageNumber(tfScan1LeftPageNumber.getText())
-                        && (rbScan1ArriveStamp.isSelected()
-                        || rbScan1LastVisaExt.isSelected()
-                        || rbScan1Visa.isSelected());
-                break;
-            case 2:
-                statusValid = validatePageNumber(tfScan2LeftPageNumber.getText())
-                        && (rbScan2ArriveStamp.isSelected()
-                        || rbScan2LastVisaExt.isSelected()
-                        || rbScan2Visa.isSelected());
-                break;
-            case 3:
-                statusValid = validatePageNumber(tfScan3LeftPageNumber.getText())
-                        && (rbScan3ArriveStamp.isSelected()
-                        || rbScan3LastVisaExt.isSelected()
-                        || rbScan3Visa.isSelected());
-                break;
-            default:
-                statusValid = false;
-                break;
-        }
+
+        statusValid = validatePageNumber(fieldsScan.getTfPLeftPageNumber().getText())
+                && (fieldsScan.getRbArriveStamp().isSelected()
+                || fieldsScan.getRbLastVisaExt().isSelected()
+                || fieldsScan.getRbVisa().isSelected());
+
         if (!statusValid)
         {
-            CtrAlertDialog.errorDialog("Please fill all the fields for Extra Scan  " + indexScan2Validate);
+            CtrAlertDialog.errorDialog("Please fill all the fields for Extra Scan.");
         }
 
         return statusValid;
@@ -922,14 +904,18 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private boolean validatePageNumber(String strPageNumber)
     {
-        try
+        if (!strPageNumber.isEmpty())
         {
-            Integer.parseInt(strPageNumber);
-            return true;
-        } catch (NumberFormatException nfe)
-        {
-            return false;
+            try
+            {
+                Integer.parseInt(strPageNumber);
+                return true;
+            } catch (NumberFormatException nfe)
+            {
+                return false;
+            }
         }
+        return false;
     }
 
     @Override
