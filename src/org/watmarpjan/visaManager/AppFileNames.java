@@ -7,9 +7,7 @@ package org.watmarpjan.visaManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
  *
@@ -49,20 +47,31 @@ public class AppFileNames
     private static String generateExtraScanSuffix(ExtraPassportScanNew ps)
     {
         String suffix = "";
+        boolean noSuffix;
 
+        noSuffix = true;
         if (ps.containsScanArriveStamp())
         {
             suffix += "-ArriveStamp";
+            noSuffix = false;
         }
         if (ps.containsScanVisa())
         {
             suffix += "-Visa";
+            noSuffix = false;
         }
         if (ps.containsScanLastVisaExt())
         {
             suffix += "-VisaExt";
+            noSuffix = false;
         }
-
+        
+        //if no scan type is selected add an extra dash just for compatibility for the function that detects the page number
+        if (noSuffix)
+        {
+            suffix = "-";
+        }
+       
         return suffix;
     }
 
