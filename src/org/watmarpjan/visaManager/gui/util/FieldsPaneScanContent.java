@@ -93,10 +93,16 @@ public class FieldsPaneScanContent
     }
 
     //if there is scan content to show on this pane
-    public void setContentTrue()
+    public void setPaneContentNotEmpty()
     {
         scanContent = true;
         tfLeftPageNumber.setEditable(false);
+    }
+    
+    public void setPaneContentEmpty()
+    {
+        scanContent = false;
+        tfLeftPageNumber.setEditable(true);
     }
 
     public void actionUnlockEdit()
