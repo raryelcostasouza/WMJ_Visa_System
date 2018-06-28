@@ -14,7 +14,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,7 +27,6 @@ import org.watmarpjan.visaManager.model.EntryReceipt90Day;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 
 /**
  *
@@ -42,7 +40,6 @@ public class CtrFileOperation
     public static final String SCAN_TYPE_PHOTO = "photo";
 
     private static FileChooser STATIC_FILE_CHOOSER;
-    private static FileChooser FILE_CHOOSER_PDF_FILE;
     private static File LAST_FOLDER;
     public static final String FILE_CHOOSER_TYPE_PDF = "PDF";
     public static final String FILE_CHOOSER_TYPE_JPG = "JPG";
