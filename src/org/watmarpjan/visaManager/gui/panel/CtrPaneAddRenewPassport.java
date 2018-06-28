@@ -49,15 +49,15 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
 
         tfpassportNumber.textProperty().addListener((observable, oldValue, newValue)
-                -> 
-                {
-                    if (newValue != null)
-                    {
-                        String filteredString;
-                        //removes any non-word characters
-                        filteredString = newValue.replaceAll("\\W", "");
-                        tfpassportNumber.setText(filteredString.toUpperCase());
-                    }
+                ->
+        {
+            if (newValue != null)
+            {
+                String filteredString;
+                //removes any non-word characters
+                filteredString = newValue.replaceAll("\\W", "");
+                tfpassportNumber.setText(filteredString.toUpperCase());
+            }
         });
     }
 
@@ -87,7 +87,8 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
                 cbPassportIssuedAt.setDisable(true);
                 dpPassportExpiryDate.setDisable(true);
                 dpPassportIssueDate.setDisable(true);
-            } else
+            }
+            else
             {
                 //unlocks edition and enables select scan button
                 bClear.setDisable(true);
@@ -115,12 +116,8 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-            //archive passport scans
-            if (p.getPassportScanSet() != null)
-            {
-                //archives the scan files
-                CtrFileOperation.archiveAllPassportScans(p);
-            }
+            //archives the scan files
+            CtrFileOperation.archiveAllPassportScans(p);
 
             p.setPassportNumber(null);
             p.setPassportCountry(null);
@@ -159,7 +156,8 @@ public class CtrPaneAddRenewPassport extends AChildPaneController implements IFo
                 fillData(p);
                 CtrAlertDialog.infoDialog("Passport Added/Renewed", "The passport data was sucessfully updated.");
             }
-        } else
+        }
+        else
         {
             CtrAlertDialog.errorDialog("Please fill out the ALL passport information before registering.");
         }
