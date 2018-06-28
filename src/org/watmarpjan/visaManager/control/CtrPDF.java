@@ -48,7 +48,6 @@ import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.ProfileUtil;
@@ -1332,7 +1331,7 @@ public class CtrPDF
         PDImageXObject imgScan1, imgScan2;
         PDPage page2;
 
-        if (p.getPassportScanSet().size() >= 1)
+        if (listEPS.size() >= 1)
         {
             page2 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page2);
@@ -1364,7 +1363,7 @@ public class CtrPDF
         PDImageXObject imgScan3;
         PDPage page3;
 
-        if (p.getPassportScanSet().size() == 3)
+        if (listEPS.size() == 3)
         {
             page3 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page3);
