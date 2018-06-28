@@ -42,6 +42,7 @@ import static java.lang.Integer.parseInt;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
  *
@@ -326,6 +327,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
+        VisaExtension lastVisaExt;
+        LocalDate ldExpLastVisaExt;
 
         GUIUtil.loadContentComboboxGeneric(cbPassportIssuedAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportIssuedAt());
         loadIMGPreviews(p);
@@ -369,8 +372,21 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
             if (p.getVisaExpiryDate() != null)
             {
-                ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-                dpVisaExpiryDate.setValue(ldVisaExp);
+                lastVisaExt = ctrGUIMain.getCtrMain().getCtrVisa().getLastExtension(p);
+                //if the visa was already extend
+                if (lastVisaExt != null)
+                {
+                    //show the expiry date of the latest extension
+                    ldExpLastVisaExt = Util.convertDateToLocalDate(lastVisaExt.getExpiryDate());
+                    dpVisaExpiryDate.setValue(ldExpLastVisaExt);
+
+                } else
+                {
+                    //otherwise show the expiry date of the original visa
+                    ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+                    dpVisaExpiryDate.setValue(ldVisaExp);
+                }
+
             } else
             {
                 dpVisaExpiryDate.setValue(null);
