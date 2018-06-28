@@ -292,7 +292,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
             tfVisaNumber.setText(p.getVisaNumber());
             cbVisaType.setValue(p.getVisaType());
-            dpVisaExpiryDate.setValue(Util.convertDateToLocalDate(p.getVisaExpiryDate()));
+            dpVisaExpiryDate.setValue(ctrGUIMain.getCtrMain().getCtrVisa().getVisaOrExtExpiryDate(p));
             dpNext90DayNotice.setValue(Util.convertDateToLocalDate(p.getNext90DayNotice()));
 
             if (p.getVisaNumber() != null)

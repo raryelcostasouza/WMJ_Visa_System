@@ -370,28 +370,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             tfVisaNumber.setText(p.getVisaNumber());
             cbVisaType.setValue(p.getVisaType());
 
-            if (p.getVisaExpiryDate() != null)
-            {
-                lastVisaExt = ctrGUIMain.getCtrMain().getCtrVisa().getLastExtension(p);
-                //if the visa was already extend
-                if (lastVisaExt != null)
-                {
-                    //show the expiry date of the latest extension
-                    ldExpLastVisaExt = Util.convertDateToLocalDate(lastVisaExt.getExpiryDate());
-                    dpVisaExpiryDate.setValue(ldExpLastVisaExt);
-
-                } else
-                {
-                    //otherwise show the expiry date of the original visa
-                    ldVisaExp = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-                    dpVisaExpiryDate.setValue(ldVisaExp);
-                }
-
-            } else
-            {
-                dpVisaExpiryDate.setValue(null);
-            }
-
+            dpVisaExpiryDate.setValue(ctrGUIMain.getCtrMain().getCtrVisa().getVisaOrExtExpiryDate(p));
+            
             if (p.getNext90DayNotice() != null)
             {
                 ldNext90day = Util.convertDateToLocalDate(p.getNext90DayNotice());

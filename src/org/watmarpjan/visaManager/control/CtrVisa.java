@@ -39,8 +39,7 @@ public class CtrVisa extends AbstractControllerDB
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        }
-        catch (PersistenceException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.handleException(hex, errorMessage);
             return -1;
@@ -57,8 +56,7 @@ public class CtrVisa extends AbstractControllerDB
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        }
-        catch (PersistenceException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.handleException(hex, errorMessage);
             return -1;
@@ -78,9 +76,8 @@ public class CtrVisa extends AbstractControllerDB
         //if the visa was not extended yet
         if (p.getVisaExtensionSet().size() == 0)
         {
-          dStayPermittedUntil = p.getVisaExpiryDate();
-        }
-        //if the visa already has been extended
+            dStayPermittedUntil = p.getVisaExpiryDate();
+        } //if the visa already has been extended
         else
         {
             hql = "select  max(vext.expiryDate)"
@@ -88,7 +85,7 @@ public class CtrVisa extends AbstractControllerDB
                     + " inner join p.visaExtensionSet vext"
                     + " where p.idProfile = " + p.getIdProfile()
                     + " order by max(vext.expiryDate)";
-        dStayPermittedUntil  = ctrDB.getSession().createQuery(hql, Date.class).getSingleResult();   
+            dStayPermittedUntil = ctrDB.getSession().createQuery(hql, Date.class).getSingleResult();
         }
         return Util.convertDateToLocalDate(dStayPermittedUntil);
     }
@@ -127,6 +124,30 @@ public class CtrVisa extends AbstractControllerDB
         return listVisaExt;
     }
 
+    public LocalDate getVisaOrExtExpiryDate(MonasticProfile p)
+    {
+        VisaExtension lastVisaExt;
+        
+        if (p.getVisaExpiryDate() != null)
+        {
+            lastVisaExt = getLastExtension(p);
+            //if the visa was already extend
+            if (lastVisaExt != null)
+            {
+                //show the expiry date of the latest extension
+                return Util.convertDateToLocalDate(lastVisaExt.getExpiryDate());
+            } else
+            {
+                //otherwise show the expiry date of the original visa
+                return Util.convertDateToLocalDate(p.getVisaExpiryDate());
+            }
+
+        } else
+        {
+            return null;
+        }
+    }
+
     public VisaExtension getLastExtension(MonasticProfile p)
     {
         ArrayList<VisaExtension> listVisaExt;
@@ -136,8 +157,7 @@ public class CtrVisa extends AbstractControllerDB
         if (!listVisaExt.isEmpty())
         {
             lastVext = listVisaExt.get(listVisaExt.size() - 1);
-        }
-        else
+        } else
         {
             lastVext = null;
         }
@@ -156,8 +176,7 @@ public class CtrVisa extends AbstractControllerDB
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        }
-        catch (PersistenceException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.handleException(hex, errorMessage);
             return -1;
@@ -193,8 +212,7 @@ public class CtrVisa extends AbstractControllerDB
             ctrDB.commitCurrentTransaction();
             return 0;
 
-        }
-        catch (PersistenceException hex)
+        } catch (PersistenceException hex)
         {
             ctrDB.handleException(hex, errorMessage);
             return -1;
