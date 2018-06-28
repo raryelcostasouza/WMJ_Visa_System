@@ -27,15 +27,18 @@ public class CtrLetterODF
     {
         TextNavigation search2 = null;
 
-        search2 = new TextNavigation(search, doc);
-
-        while (search2.hasNext())
+        if (replace != null)
         {
-            TextSelection item = (TextSelection) search2.nextSelection();
+            search2 = new TextNavigation(search, doc);
 
-            item.replaceWith(replace);
+            while (search2.hasNext())
+            {
+                TextSelection item = (TextSelection) search2.nextSelection();
 
+                item.replaceWith(replace);
+            }
         }
+
     }
 
     private static String generateLetterFileNameSuffix(MonasticProfile p)
@@ -54,6 +57,7 @@ public class CtrLetterODF
         searchNReplace(objTD, "«lastName»", p.getLastName());
         searchNReplace(objTD, "«nationality»", p.getNationality());
         searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
+
     }
 
     private static void generateLetterCommonEmbassyFields(TextDocument objTD, LetterInputData objLetterInput) throws InvalidNavigationException
@@ -132,7 +136,7 @@ public class CtrLetterODF
     {
         Embassy e;
         MonasticProfile p;
-        
+
         e = objLetterInput.getEmbassy();
         p = objLetterInput.getMonasticProfile();
 
@@ -165,7 +169,8 @@ public class CtrLetterODF
             }
             objTD.save(fDestination);
             CtrFileOperation.openFileOnDefaultProgram(fDestination);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Unable to save generated Letter.");
         }
@@ -204,10 +209,12 @@ public class CtrLetterODF
             }
             saveLetter(objTD, objLetterInput.getMonasticProfile(), fileNameTemplateWithoutExtension);
 
-        } catch (InvalidNavigationException ex)
+        }
+        catch (InvalidNavigationException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error while search/replacing fields on letter template.");
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
         }
