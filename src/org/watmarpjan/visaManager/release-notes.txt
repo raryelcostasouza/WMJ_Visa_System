@@ -2,9 +2,14 @@ v1.7 BETA
 Updated:
 * PDFBox Library
 * Hibernate Library
-* Derby Library
+* Derby DB Library
+* Java JVM
+
+*** DB Changed: Removed passport scan table.
 
 Changes:
+* Passport Panel and Panel New Visa - If the visa has already been extended show the last extension expiry date instead.
+* Passport scan information is not saved on database anymore. More flexibility on adding, changing and removing scans.
 * Letter generation from Word Macros to ODF template files.
 * PDF forms Prawat, PrawatPatimokkhaChanter, ReqLetterSNP, ReqLetterIMM. 
     Fix bug not working with newer PDFBox (the only change was that some thai fields needed to be copied and pasted back) 
