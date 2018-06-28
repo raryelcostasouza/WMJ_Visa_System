@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KroobaHariel
+ * @author Adhipanyo
  */
 @Entity
 @Table(name = "PRINTOUT_TM30")

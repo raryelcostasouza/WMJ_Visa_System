@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author KroobaHariel
+ * @author Adhipanyo
  */
 @Entity
 @Table(name = "VISA_EXTENSION")

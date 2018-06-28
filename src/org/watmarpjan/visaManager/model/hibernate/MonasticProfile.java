@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KroobaHariel
+ * @author Adhipanyo
  */
 @Entity
 @Table(name = "MONASTIC_PROFILE")
@@ -237,8 +237,6 @@ public class MonasticProfile implements Serializable
     private String wfExtPhotocopiesSnp;
     @Column(name = "WF_EXT_PHOTOCOPIES_IMM")
     private String wfExtPhotocopiesImm;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monasticProfile")
-    private Set<PassportScan> passportScanSet;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryAdviserToCome;
@@ -891,17 +889,6 @@ public class MonasticProfile implements Serializable
     public void setWfExtPhotocopiesImm(String wfExtPhotocopiesImm)
     {
         this.wfExtPhotocopiesImm = wfExtPhotocopiesImm;
-    }
-
-    @XmlTransient
-    public Set<PassportScan> getPassportScanSet()
-    {
-        return passportScanSet;
-    }
-
-    public void setPassportScanSet(Set<PassportScan> passportScanSet)
-    {
-        this.passportScanSet = passportScanSet;
     }
 
     public Monastery getMonasteryAdviserToCome()
