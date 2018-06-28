@@ -28,7 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.model.EntryVisaExt;
-import org.watmarpjan.visaManager.model.hibernate.PassportScan;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.AppFiles;
@@ -744,15 +743,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
         stateScanVisa = objFS.getRbVisa().isSelected();
         stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
-
         //if there was any change on the radio buttons for the scan type
-        if ((stateScanArriveStamp != objPES.containsScanArriveStamp())
+
+        return (stateScanArriveStamp != objPES.containsScanArriveStamp())
                 || (stateScanVisa != objPES.containsScanVisa())
-                || (stateScanLastVisaExt != objPES.containsScanLastVisaExt()))
-        {
-            return true;
-        }
-        return false;
+                || (stateScanLastVisaExt != objPES.containsScanLastVisaExt());
     }
 
     private boolean renameExtraScan(MonasticProfile p, ExtraPassportScanLoaded objPES, FieldsPaneScanContent objFS)
@@ -804,7 +799,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         //if the operation was unsuccessful
         if (ret == -1)
         {
-            CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + fScanSelected.getName().toString() + ".");
+            CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + fScanSelected.getName() + ".");
             return true;
         }
 
@@ -919,13 +914,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private boolean checkPageNumberNewScanAlreadyExists(int pageNumberNewScan)
     {
-        if ((objEPS1 != null && objEPS1.getLeftPageNumber() == pageNumberNewScan)
+        return (objEPS1 != null && objEPS1.getLeftPageNumber() == pageNumberNewScan)
                 || (objEPS2 != null && objEPS2.getLeftPageNumber() == pageNumberNewScan)
-                || (objEPS3 != null && objEPS3.getLeftPageNumber() == pageNumberNewScan))
-        {
-            return true;
-        }
-        return false;
+                || (objEPS3 != null && objEPS3.getLeftPageNumber() == pageNumberNewScan);
     }
 
     private boolean validateExtraScanContent(FieldsPaneScanContent fieldsScan)
