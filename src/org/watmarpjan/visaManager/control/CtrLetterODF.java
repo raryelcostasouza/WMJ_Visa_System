@@ -113,8 +113,8 @@ public class CtrLetterODF
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
 
         searchNReplace(objTD, "«OrdinationTypeThai»", ProfileUtil.getOrdinationType(p));
-        searchNReplace(objTD, "«firstArrivalDateThai»", Util.toStringThaiDateFormat(p.getFirstEntryDate()));
-        searchNReplace(objTD, "«departureDateThai»", Util.toStringThaiDateFormat(objLetterInput.getLdDepartureDateThai()));
+        searchNReplace(objTD, "«firstArrivalDateThai»", Util.toStringThaiDateFormatMonthText(p.getFirstEntryDate()));
+        searchNReplace(objTD, "«departureDateThai»", Util.toStringThaiDateFormatMonthText(objLetterInput.getLdDepartureDateThai()));
         searchNReplace(objTD, "«countryEmbassyThai»", e.getCountry());
     }
 
