@@ -38,6 +38,10 @@ public class CtrLetterODF
                 item.replaceWith(replace);
             }
         }
+        else
+        {
+            CtrAlertDialog.warningDialog("Field Missing: " + search);
+        }
 
     }
 
@@ -53,7 +57,15 @@ public class CtrLetterODF
         p = objLetterInput.getMonasticProfile();
 
         searchNReplace(objTD, "«name»", p.getMonasticName());
-        searchNReplace(objTD, "«middleName»", p.getMiddleName());
+        if (p.getMiddleName() != null)
+        {
+            searchNReplace(objTD, "«middleName»", p.getMiddleName());
+        }
+        else
+        {
+            searchNReplace(objTD, "«middleName»", "");
+        }
+        
         searchNReplace(objTD, "«lastName»", p.getLastName());
         searchNReplace(objTD, "«nationality»", p.getNationality());
         searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
@@ -68,8 +80,24 @@ public class CtrLetterODF
         searchNReplace(objTD, "«nameEmbassyEnglish»", e.getNameEn());
         searchNReplace(objTD, "«addressEmbassyLine1»", e.getAddressLine1());
         searchNReplace(objTD, "«addressEmbassyLine2»", e.getAddressLine2());
-        searchNReplace(objTD, "«addressEmbassyLine3»", e.getAddressLine3());
-        searchNReplace(objTD, "«addressEmbassyLine4»", e.getAddressLine4());
+        
+        if (e.getAddressLine3() != null)
+        {
+            searchNReplace(objTD, "«addressEmbassyLine3»", e.getAddressLine3());
+        }
+        else
+        {
+            searchNReplace(objTD, "«addressEmbassyLine3»", "");
+        }
+        if (e.getAddressLine4() != null)
+        {
+            searchNReplace(objTD, "«addressEmbassyLine4»", e.getAddressLine4());
+        }
+        else
+        {
+            searchNReplace(objTD, "«addressEmbassyLine4»", "");
+        }
+        
     }
 
     private static void generateLetterLaypersonAbroadEmbassy(TextDocument objTD, LetterInputData objLetterInput) throws InvalidNavigationException
