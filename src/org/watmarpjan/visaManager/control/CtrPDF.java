@@ -94,6 +94,7 @@ public class CtrPDF
 
     public CtrPDF(CtrMain pCtrMain)
     {
+        System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
         this.ctrMain = pCtrMain;
     }
 
