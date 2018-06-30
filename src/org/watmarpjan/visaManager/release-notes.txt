@@ -1,4 +1,4 @@
-v1.7 BETA 
+v1.7 BETA_3
 Updated:
 * PDFBox Library
 * Hibernate Library
@@ -11,10 +11,11 @@ Changes:
 * Passport Panel and Panel New Visa - If the visa has already been extended show the last extension expiry date instead.
 * Passport scan information is not saved on database anymore. More flexibility on adding, changing and removing scans.
 * Letter generation from Word Macros to ODF template files.
-* PDF forms Prawat, PrawatPatimokkhaChanter, ReqLetterSNP, ReqLetterIMM. 
+* PDF forms Prawat, PrawatPatimokkhaChanter, ReqLetterSNP, ReqLetterIMM and Reentry. 
     Fix bug not working with newer PDFBox (the only change was that some thai fields needed to be copied and pasted back) 
 * 90 Day Online: Moved "Stay permitted until" to second column
- 
+* Start app maximized by default
+
 ----------------------------------------------------------
 v1.6 - 09/12/2017
 Updated:
