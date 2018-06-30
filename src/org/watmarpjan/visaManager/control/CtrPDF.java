@@ -1276,16 +1276,17 @@ public class CtrPDF
         PDPageContentStream contentStream;
         PDImageXObject imgPassportScan, imgDepartureCardScan;
         PDPage page1;
-        float departureCardScanWidth, departureCardScanHeight;
+        float departureCardScanWidthOld, departureCardScanWidthNew, departureCardScanWidth, departureCardScanHeight, proportionDimensions;
         Matrix tMatrix;
         AffineTransform at;
 
         //Departure Card Real size 185mm x 80mm
         //Converts the departure card width to pixels
-        //Departure card real Width  185mm
+        //Departure card real Width  185mm (for old version) and 92mm (for new version)
         //A4 Width pixel size: PDRectangle.A4.getWidth() 
         //A4 Width real size 210mm
-        departureCardScanWidth = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+        departureCardScanWidthOld = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+        departureCardScanWidthNew = (PDRectangle.A4.getWidth() * 92) / 210.0f;
 
         //Converts the departure card height to pixels
         //Departure card real Height 80mm
@@ -1317,7 +1318,19 @@ public class CtrPDF
             if (fScanDepartureCard.exists())
             {
                 imgDepartureCardScan = PDImageXObject.createFromFile(AppFiles.getScanDepartureCard(p.getNickname()).toString(), pdfDoc);
-                contentStream.drawImage(imgDepartureCardScan, 40, 50, departureCardScanWidth, departureCardScanHeight);
+                proportionDimensions = imgDepartureCardScan.getWidth()/(float)imgDepartureCardScan.getHeight();
+                
+                if (Math.round(proportionDimensions) == 2)
+                {
+                    departureCardScanWidth = departureCardScanWidthOld;
+                }
+                else
+                {
+                    departureCardScanWidth = departureCardScanWidthNew;
+                }
+                        
+                contentStream.drawImage(imgDepartureCardScan, 40, 50,departureCardScanWidth, departureCardScanHeight);
+                
             }
 
             contentStream.close();
