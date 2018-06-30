@@ -1,4 +1,4 @@
-v1.7 BETA_3
+v1.7 BETA_4
 Updated:
 * PDFBox Library
 * Hibernate Library
@@ -8,6 +8,8 @@ Updated:
 *** DB Changed: Removed passport scan table.
 
 Changes:
+* Fixed bug on passport panel (buttons for add/archive passport first page and departure card not enable after unlock GUI)
+* Added compatibility with new departure card format
 * Passport Panel and Panel New Visa - If the visa has already been extended show the last extension expiry date instead.
 * Passport scan information is not saved on database anymore. More flexibility on adding, changing and removing scans.
 * Letter generation from Word Macros to ODF template files.
