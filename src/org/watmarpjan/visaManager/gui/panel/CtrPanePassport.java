@@ -459,7 +459,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
     {
-        ArrayList<ExtraPassportScanLoaded> listFExtraPScan;
         fieldsScan1.reset();
         fieldsScan2.reset();
         fieldsScan3.reset();
@@ -998,14 +997,15 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     @Override
     public void actionUnlockEdit()
     {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         cbPassportIssuedAt.setDisable(false);
         dpPassportIssueDate.setDisable(false);
         dpPassportExpiryDate.setDisable(false);
         dpFirstEntryDate.setDisable(false);
-
-        fieldsScan1.actionUnlockEdit();
-        fieldsScan2.actionUnlockEdit();
-        fieldsScan3.actionUnlockEdit();
+        
+        fillDataContentScans(p, false);
     }
 
     @Override
