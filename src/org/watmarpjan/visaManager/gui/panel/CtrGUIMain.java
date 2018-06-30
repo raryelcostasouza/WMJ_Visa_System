@@ -307,6 +307,7 @@ public class CtrGUIMain
                 primaryStage.setTitle("WMJ Visa System - " + Init.APP_VERSION);
                 primaryStage.setWidth(1600);
                 primaryStage.setHeight(990);
+                primaryStage.setMaximized(true);
 
                 primaryStage.show();
                 //System.out.println("LoadTime: " + Duration.between(Init.INSTANT_INIT_START, Instant.now()));
