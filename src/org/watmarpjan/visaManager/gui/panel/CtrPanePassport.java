@@ -457,17 +457,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
-    private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
+    private void toggleLockButtonsScanFirstPageNDepartureCard(boolean lockStatus, MonasticProfile p)
     {
-        fieldsScan1.reset();
-        fieldsScan2.reset();
-        fieldsScan3.reset();
-
-        fScan1Selected = null;
-        fScan2Selected = null;
-        fScan3Selected = null;
-
-        refreshExtraPassportScan(p);
         //if the system is on edit mode
         if (!lockStatus)
         {
@@ -499,6 +490,20 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             bArchivePassport.setDisable(true);
             bScanPassport.setDisable(true);
         }
+    }
+    
+    private void fillDataContentScans(MonasticProfile p, boolean lockStatus)
+    {
+        fieldsScan1.reset();
+        fieldsScan2.reset();
+        fieldsScan3.reset();
+
+        fScan1Selected = null;
+        fScan2Selected = null;
+        fScan3Selected = null;
+
+        refreshExtraPassportScan(p);
+        toggleLockButtonsScanFirstPageNDepartureCard(lockStatus, p);
 
         fillDataContentScanGeneric(fieldsScan1, objEPS1, lockStatus);
         fillDataContentScanGeneric(fieldsScan2, objEPS2, lockStatus);
@@ -971,23 +976,15 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     @Override
     public void actionLockEdit()
     {
+        MonasticProfile p;
+        
         cbPassportIssuedAt.setDisable(true);
         dpPassportIssueDate.setDisable(true);
         dpPassportExpiryDate.setDisable(true);
         dpFirstEntryDate.setDisable(true);
 
-        bScanPassport.setDisable(true);
-        bScanDepartureCard.setDisable(true);
-
-        bSelectScan1.setDisable(true);
-        bSelectScan2.setDisable(true);
-        bSelectScan3.setDisable(true);
-
-        bArchive1.setDisable(true);
-        bArchive2.setDisable(true);
-        bArchive3.setDisable(true);
-        bArchivePassport.setDisable(true);
-        bArchiveDepartureCard.setDisable(true);
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        toggleLockButtonsScanFirstPageNDepartureCard(true, p);
 
         fieldsScan1.actionLockEdit();
         fieldsScan2.actionLockEdit();
@@ -1005,7 +1002,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         dpPassportExpiryDate.setDisable(false);
         dpFirstEntryDate.setDisable(false);
         
-        fillDataContentScans(p, false);
+        toggleLockButtonsScanFirstPageNDepartureCard(false, p);
+        fieldsScan1.actionUnlockEdit();
+        fieldsScan2.actionUnlockEdit();
+        fieldsScan3.actionUnlockEdit();        
     }
 
     @Override
