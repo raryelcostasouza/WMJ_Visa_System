@@ -426,14 +426,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private void fillDataContentScanGeneric(FieldsPaneScanContent fieldScan, ExtraPassportScanLoaded objExtraScan, boolean lockStatus)
     {
-        if (lockStatus)
-        {
-            fieldScan.actionLockEdit();
-        } else
-        {
-            fieldScan.actionUnlockEdit();
-        }
-
         if (objExtraScan != null)
         {
             fieldScan.setPaneContentNotEmpty();
@@ -454,6 +446,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         } else
         {
             fieldScan.setPaneContentEmpty();
+        }
+        
+        if (lockStatus)
+        {
+            fieldScan.actionLockEdit();
+        } else
+        {
+            fieldScan.actionUnlockEdit();
         }
     }
 
