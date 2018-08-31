@@ -296,6 +296,14 @@ public class CtrGUIMain
             {
                 Stage primaryStage;
                 Scene mainScene = new Scene(rootPane);
+                String os;
+                
+                os = System.getProperty("os.name").toLowerCase();
+                if (!os.contains("win"))
+                {
+                    //for non windows os uses a different font setting
+                    mainScene.getStylesheets().add(getClass().getResource("root.css").toExternalForm());
+                }
 
                 ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
                 initChildControllers();
