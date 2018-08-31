@@ -259,15 +259,17 @@ public class CtrFileOperation
         //show the generated form on the default pdf viewer
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
         {
-            try
-            {
-                Desktop.getDesktop().open(f);
-            }
-            catch (IOException ex)
-            {
-                CtrAlertDialog.exceptionDialog(ex, "Error to open file.");
-            }
-
+            
+            new Thread(() -> {
+                try 
+                {
+                   Desktop.getDesktop().open(f) ;
+                } 
+                catch (IOException ex)
+                {
+                    CtrAlertDialog.exceptionDialog(ex, "Error to open file.");
+                }
+                }).start();
         }
         else
         {
