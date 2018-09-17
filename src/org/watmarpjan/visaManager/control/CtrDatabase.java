@@ -37,7 +37,7 @@ public class CtrDatabase
         Instant start, finish;
         Path pathDB;
 
-        pathDB = Paths.get(System.getProperty("user.dir")).resolve("../Data");
+        pathDB = Paths.get(System.getProperty("user.dir")).resolve("../../Data");
         System.setProperty("derby.system.home", pathDB.toString());
         try
         {
