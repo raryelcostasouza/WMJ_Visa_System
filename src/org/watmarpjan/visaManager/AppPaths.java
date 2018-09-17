@@ -22,12 +22,12 @@ public class AppPaths
 
     public static Path getPathProfileFolder(String nickName)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName);
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data" + nickName);
     }
 
     private static Path getPathArchiveFolder()
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Archive/");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Archive");
     }
 
     public static Path getPathArchiveScan(String nickName, String scanType)
@@ -42,27 +42,27 @@ public class AppPaths
 
     public static Path getPathToPassportSubFolder(String nickName)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName + "/Scans/Passport");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data" + nickName + "/Scans/Passport");
     }
 
     public static Path getPathToBysuddhiSubFolder(String nickName)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName + "/Scans/Bysuddhi");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data" + nickName + "/Scans/Bysuddhi");
     }
 
     public static Path getPathToProfilePhotoSubFolder(String nickName)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName + "/Scans/Profile");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data" + nickName + "/Scans/Profile");
     }
 
     public static Path getPathToTM30Printout()
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/TM30-Printout");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../DataTM30-Printout");
     }
     
     public static Path getPathToProfileLetters(String nickname)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/"+nickname + "/Letters");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data"+nickname + "/Letters");
     }
 
     public static Path getPathToForms()
@@ -92,12 +92,12 @@ public class AppPaths
 
     public static Path getPathChangelog()
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/changelog.txt");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Datachangelog.txt");
     }
 
     public static Path getPathToReceiptsOnline90dNotice(String nickName)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../Data/" + nickName + "/Receipts-Online-90day");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../Data" + nickName + "/Receipts-Online-90day");
     }
 
     public static Path getPathAppTMPFolder()
