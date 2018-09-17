@@ -298,6 +298,8 @@ public class CtrGUIMain
                 Scene mainScene = new Scene(rootPane);
                 String os;
                 
+                System.setProperty("prism.text", "t2k");
+                System.setProperty("prism.lcdtext", "true");
                 os = System.getProperty("os.name").toLowerCase();
                 if (!os.contains("win"))
                 {
