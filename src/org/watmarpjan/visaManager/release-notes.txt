@@ -1,3 +1,9 @@
+v1.7.1 - 17/09/2018
+
+New features:
+* Added Linux compatible version
+
+----------------------------------------------------------
 v1.7 BETA_4
 Updated:
 * PDFBox Library
