@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Sep 22 17:25:23 ICT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0157-516d-a88f-0000006f4220 
+on database directory C:\Users\WMJ_user\Desktop\K Raryel\WMJ_Visa_Manager\DB_WMJ_Visa_Manager with class loader sun.misc.Launcher$AppClassLoader@1f96302 
+Loaded from file:/C:/Users/WMJ_user/Desktop/K%20Raryel/WMJ_Visa_Manager/WMJ_Visa_Manager/dist/run93740135/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_102-b14
+user.dir=C:\Users\WMJ_user\Desktop\K Raryel\WMJ_Visa_Manager\WMJ_Visa_Manager
+os.name=Windows 8.1
+os.arch=x86
+os.version=6.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
