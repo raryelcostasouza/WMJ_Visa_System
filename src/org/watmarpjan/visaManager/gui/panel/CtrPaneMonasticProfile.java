@@ -493,7 +493,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             fIMG = AppFiles.getProfilePhoto(p.getNickname());
             if (fIMG != null)
             {
-                GUIUtil.openClickedIMG(fIMG);
+                CtrFileOperation.openFileOnDefaultProgram(fIMG);
             }
         }
 

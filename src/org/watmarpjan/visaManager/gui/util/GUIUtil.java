@@ -31,23 +31,6 @@ public class GUIUtil
     public static final String IMG_TYPE_PASSPORT = "passport";
     public static final String IMG_TYPE_BYSUDDHI = "bysuddhi";
 
-    public static void openClickedIMG(File fImg)
-    {
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
-        {
-            if (fImg != null && fImg.exists())
-            {
-                try
-                {
-                    Desktop.getDesktop().open(fImg);
-                } catch (IOException ex)
-                {
-                    CtrAlertDialog.exceptionDialog(ex, "Error to open image preview.");
-                }
-            }
-        }
-    }
-
     public static void loadImageView(ImageView iv, String imgType, File fImg)
     {
         File fDefaultIMG;

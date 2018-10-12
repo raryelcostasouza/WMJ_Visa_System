@@ -376,7 +376,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 4);
         }
 
-        GUIUtil.openClickedIMG(fImg);
+        CtrFileOperation.openFileOnDefaultProgram(fImg);
     }
 
     private void loadContentsCBWat()

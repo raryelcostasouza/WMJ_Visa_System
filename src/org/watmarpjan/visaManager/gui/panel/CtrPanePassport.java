@@ -676,7 +676,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             }
         }
 
-        GUIUtil.openClickedIMG(fImgScan);
+        CtrFileOperation.openFileOnDefaultProgram(fImgScan);
     }
 
     @FXML

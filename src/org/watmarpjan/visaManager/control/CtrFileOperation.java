@@ -63,13 +63,13 @@ public class CtrFileOperation
         {
             listFiles2Archive = new ArrayList<>();
             listFiles2Archive.add(AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
-            
+
             listExtraPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
             if (!listExtraPS.isEmpty())
             {
                 for (ExtraPassportScanLoaded objEPS : listExtraPS)
                 {
-                     listFiles2Archive.add(objEPS.getFileScan());
+                    listFiles2Archive.add(objEPS.getFileScan());
                 }
             }
 
@@ -126,8 +126,7 @@ public class CtrFileOperation
             Files.move(pSourceFile, pDestFile);
             return 0;
 
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             CtrAlertDialog.errorDialog("Error to archive. Details:\n\n" + ex.getMessage());
             return -1;
@@ -140,8 +139,7 @@ public class CtrFileOperation
         {
             Files.delete(fScan.toPath());
             return 0;
-        }
-        catch (IOException ioe)
+        } catch (IOException ioe)
         {
             CtrAlertDialog.errorDialog("Unable to delete scan file. Details:\n\n" + ioe.getMessage());
             return -1;
@@ -154,8 +152,7 @@ public class CtrFileOperation
         {
             fBefore.renameTo(fAfter);
             return 0;
-        }
-        catch (SecurityException ex)
+        } catch (SecurityException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Unable to rename scan file.");
             return -1;
@@ -178,13 +175,11 @@ public class CtrFileOperation
             //copy the selected file to the proper application folder with a internally generated filename
             Files.copy(fSelected.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             return 0;
-        }
-        catch (IOException ioe)
+        } catch (IOException ioe)
         {
             CtrAlertDialog.exceptionDialog(ioe, errorMessage);
             return -1;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             CtrAlertDialog.exceptionDialog(e, errorMessage);
             return -1;
@@ -256,24 +251,29 @@ public class CtrFileOperation
 
     public static void openFileOnDefaultProgram(File f)
     {
-        //show the generated form on the default pdf viewer
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+        //if is a valid and existent file
+        if ((f != null) && f.exists())
         {
-            
-            new Thread(() -> {
-                try 
+            //show the generated form on the default pdf viewer
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+            {
+                new Thread(() ->
                 {
-                   Desktop.getDesktop().open(f) ;
-                } 
-                catch (IOException ex)
-                {
-                    CtrAlertDialog.exceptionDialog(ex, "Error to open file.");
-                }
+                    try
+                    {
+                        Desktop.getDesktop().open(f);
+                    } catch (IOException ex)
+                    {
+                        CtrAlertDialog.exceptionDialog(ex, "Error to open file.");
+                    }
                 }).start();
-        }
-        else
+            } else
+            {
+                CtrAlertDialog.errorDialog("No support for opening files on this OS.");
+            }
+        } else
         {
-            CtrAlertDialog.errorDialog("No support for opening files on this OS.");
+            CtrAlertDialog.errorDialog("The requested file does not exist!");
         }
     }
 
@@ -309,8 +309,7 @@ public class CtrFileOperation
             }
             listReceipts90D.sort(null);
             return listReceipts90D;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -330,8 +329,7 @@ public class CtrFileOperation
             if (pFileChangelog.toFile().exists())
             {
                 listLinesBeforeUpdate = Files.readAllLines(pFileChangelog);
-            }
-            else
+            } else
             {
                 listLinesBeforeUpdate = null;
             }
@@ -343,8 +341,7 @@ public class CtrFileOperation
             }
 
             Files.write(pFileChangelog, listLinesUpdated);
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -370,13 +367,11 @@ public class CtrFileOperation
                     strChangelog += line + "\n";
                 }
                 return strChangelog;
-            }
-            else
+            } else
             {
                 return "";
             }
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(CtrFileOperation.class.getName()).log(Level.SEVERE, null, ex);
             return "";
