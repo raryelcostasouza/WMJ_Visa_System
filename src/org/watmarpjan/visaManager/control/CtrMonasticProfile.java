@@ -385,14 +385,13 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         return queryDueTaskEntry(hql);
     }
-
+    
     public ArrayList<EntryUpdate90DayNotice> loadListUpdate90DayNotice()
     {
         String hql;
         hql = "select new org.watmarpjan.visaManager.model.EntryUpdate90DayNotice(p.idProfile, p.nickname, p.next90DayNotice, p.nSigned90dForms)"
                 + " from MonasticProfile p "
                 + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
-                 + " and p.next90DayNotice is not null "
                 + " order by p.next90DayNotice";
 
         return (ArrayList<EntryUpdate90DayNotice>) ctrDB.getSession().createQuery(hql).getResultList();

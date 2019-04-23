@@ -35,7 +35,16 @@ public class EntryUpdate90DayNotice
 
         ld = Util.convertDateToLocalDate(dueDate);
         this.dueDate = dueDate;
-        this.strDueDate = new SimpleStringProperty(ld.format(Util.DEFAULT_DATE_FORMAT));
+        
+        if (ld != null)
+        {
+            this.strDueDate = new SimpleStringProperty(ld.format(Util.DEFAULT_DATE_FORMAT));
+        }
+        else
+        {
+            this.strDueDate = new SimpleStringProperty("");
+        }        
+        
         this.selected = new SimpleBooleanProperty(false);
         if (nPrinted90DForms != null)
         {
