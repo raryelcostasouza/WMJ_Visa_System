@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneAddEntryReEntry">
    <children>
       <TitledPane collapsible="false" text="Forms">
          <content>
@@ -53,6 +53,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
                               <Label text="TM6 Number:">
@@ -85,6 +86,8 @@
                                  </GridPane.margin>
                               </Label>
                               <ComboBox fx:id="cbPortOfEntry" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Next 90 Day:" GridPane.rowIndex="5" />
+                              <DatePicker fx:id="dpNext90Day" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
                      </children>

@@ -5,9 +5,12 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.time.LocalDate;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,6 +38,9 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
     private CheckBox cbReentryTogetherExtension;
     @FXML
     private DatePicker dpLastEntry;
+    
+    @FXML
+    private DatePicker dpNext90Day;
 
     @FXML
     private ComboBox<String> cbTravelFrom;
@@ -56,6 +62,26 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
         super.init();
         cbTravelBy.getItems().addAll(AppConstants.LIST_TRAVEL_BY);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpLastEntry);
+        
+        dpLastEntry.valueProperty().addListener(new ChangeListener<LocalDate>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue)
+            {
+                LocalDate next90Day;
+                
+                //calculates the next 90 day as 90 days after last entry
+                if (dpLastEntry.getValue() != null)
+                {
+                    next90Day = dpLastEntry.getValue().plusDays(90);
+                    dpNext90Day.setValue(next90Day);
+                }
+                else
+                {
+                    dpNext90Day.setValue(null);
+                }
+            }
+        });
 
         tfTM6Number.textProperty().addListener((observable, oldValue, newValue) ->
         {
@@ -80,6 +106,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
             cbTravelFrom.setValue(p.getArrivalTravelFrom());
             cbTravelBy.setValue(p.getArrivalTravelBy());
             cbPortOfEntry.setValue(p.getArrivalPortOfEntry());
+            dpNext90Day.setValue(Util.convertDateToLocalDate(p.getNext90DayNotice()));
 
             if (p.getArrivalCardNumber() != null)
             {
@@ -92,6 +119,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
                 cbTravelFrom.setDisable(true);
                 cbTravelBy.setDisable(true);
                 cbPortOfEntry.setDisable(true);
+                dpNext90Day.setDisable(true);
             }
             else
             {
@@ -103,6 +131,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
                 cbTravelFrom.setDisable(false);
                 cbTravelBy.setDisable(false);
                 cbPortOfEntry.setDisable(false);
+                dpNext90Day.setDisable(false);
             }
         }
     }
@@ -143,6 +172,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
             p.setArrivalTravelFrom(null);
             p.setArrivalTravelBy(null);
             p.setArrivalPortOfEntry(null);
+            p.setNext90DayNotice(null);
 
             operationStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (operationStatus == 0)
@@ -167,6 +197,7 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
             p.setArrivalTravelFrom(cbTravelFrom.getValue());
             p.setArrivalTravelBy(cbTravelBy.getValue());
             p.setArrivalPortOfEntry(cbPortOfEntry.getValue());
+            p.setNext90DayNotice(Util.convertLocalDateToDate(dpNext90Day.getValue()));
 
             opStatus = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
             if (opStatus == 0)
