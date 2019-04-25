@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.TableView;
@@ -139,6 +143,17 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaJangwatThai"));
 
         alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF1"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension01Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension02Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension03Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension04Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension05Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension06Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension07Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension08Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension09Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaExtension10Thai"));
+        
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
         adjustFontThaiField(alThaiFields);
@@ -273,7 +288,44 @@ public class CtrPDF
             acroForm.getField("addrJangwatJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getAddrJangwat());
             acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getMonasteryName());
         }
-
+        
+        
+        if (p.getVisaExtensionSet() != null)
+        {
+            String countString, periodString;
+            LocalDate ldExtensionExpiry;
+            int count = 1;
+            
+            //sorts the list of extensions according to expiry date
+            List<VisaExtension> listExt = p.getVisaExtensionSet().stream().collect(Collectors.toList());
+            listExt.sort(new Comparator<VisaExtension>()
+            {
+                //order by expiry date
+                @Override
+                public int compare(VisaExtension o1, VisaExtension o2)
+                {
+                    return o1.getExpiryDate().compareTo(o2.getExpiryDate());
+                }
+            });
+            
+            //print all the extensions periods in order of expiry date
+            for (VisaExtension vext : listExt)
+            {   
+                if (count < 10)
+                {
+                    countString = "0"+count;
+                }
+                else
+                {
+                    countString = ""+count;
+                }
+                
+                ldExtensionExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
+                periodString = Util.toStringThaiDateFormatMonthText(ldExtensionExpiry.minusYears(1)) + " - " + Util.toStringThaiDateFormatMonthText(ldExtensionExpiry);
+                acroForm.getField("visaExtension"+countString+"Thai").setValue(periodString);
+                count++;
+            }
+        }
     }
 
     private void addProfilePhotoPrawat(PDDocument pdfDoc, MonasticProfile p) throws IOException
