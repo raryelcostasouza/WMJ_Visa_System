@@ -222,8 +222,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
             //only enable certificate button if file exists and dhamma studies is set to something else than 
             //REGULAR
             levelDhammaStudies = p.getDhammaStudies();
-            if ((levelDhammaStudies.compareTo(AppConstants.STUDIES_REGULAR) == 0) &&
-                    (AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies).exists()))
+            if ((levelDhammaStudies.compareTo(AppConstants.STUDIES_REGULAR) == 0) ||
+                    (!AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies).exists()))
             {                
                 bPreviewNaktamCertificate.setDisable(true);
             }
