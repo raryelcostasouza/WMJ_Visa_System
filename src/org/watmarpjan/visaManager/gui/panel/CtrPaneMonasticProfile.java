@@ -651,13 +651,13 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     @FXML    
     void actionRemoveCertificatePDFNaktamTri(ActionEvent ae)
     {
-        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
+        actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
     }
     
     @FXML    
     void actionRemoveCertificatePDFNaktamToh(ActionEvent ae)
     {
-        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
+        actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
     }
     
     @FXML    
@@ -669,9 +669,25 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     private void actionRemoveCertificatePDFGeneric(String level)
     {
         MonasticProfile p;
+        String msg;
+        boolean confirmation;
+        int opStatusArchive;
 
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), level));
+         msg = "Are you sure that you want to remove the "+ level +" certificate?\n"
+                + "(Note: The certificate file will be archived)\n ";
+                
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
+        if (confirmation)
+        {
+           p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+           opStatusArchive = CtrFileOperation.archiveNaktamCertificate(AppFiles.getNaktamCertificate(p.getNickname(), level));
+           if (opStatusArchive == 0)
+           {
+               fillData(p);
+               CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
+           }   
+        }   
     }
 
     @Override
@@ -990,8 +1006,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
-                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 fillData(p);
+                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
             return operationStatus;

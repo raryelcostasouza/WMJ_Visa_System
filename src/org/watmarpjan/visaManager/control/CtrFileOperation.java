@@ -98,6 +98,11 @@ public class CtrFileOperation
     {
         return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
     }
+    
+    public static int archiveNaktamCertificate(File fCertificate)
+    {
+        return archiveFile(fCertificate, AppPaths.getPathArchiveNaktamCertificate());
+    }
 
     private static int archiveFile(File f2Archive, Path pDestArchive)
     {
