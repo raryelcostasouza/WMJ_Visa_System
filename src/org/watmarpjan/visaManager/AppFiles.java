@@ -101,8 +101,19 @@ public class AppFiles
         Path pSubfolder;
         String strFileName;
 
-        pSubfolder = AppPaths.getPathToProfilePhotoSubFolder(nickName);
+        pSubfolder = AppPaths.getPathToProfileScansSubFolder(nickName);
         strFileName = AppFileNames.getProfilePhoto();
+
+        return new File(pSubfolder.resolve(strFileName).toUri());
+    }
+    
+    public static File getNaktamCertificate(String nickName, String level)
+    {
+        Path pSubfolder;
+        String strFileName;
+
+        pSubfolder = AppPaths.getPathToProfileScansSubFolder(nickName);
+        strFileName = AppFileNames.getNaktamCertificate(level);
 
         return new File(pSubfolder.resolve(strFileName).toUri());
     }

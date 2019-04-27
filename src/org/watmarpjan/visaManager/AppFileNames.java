@@ -23,6 +23,21 @@ public class AppFileNames
     {
         return "profile.jpg";
     }
+    
+    public static String getNaktamCertificate(String level)
+    {
+        switch(level)
+        {
+            case AppConstants.STUDIES_NAKTAM_TRI:
+                return "certificate-naktam-tri.pdf";
+            case AppConstants.STUDIES_NAKTAM_TOH:
+                return "certificate-naktam-toh.pdf";
+            case AppConstants.STUDIES_NAKTAM_EK:
+                return "certificate-naktam-ek.pdf";
+        }
+        return "";  
+        
+    }
 
     public static String getScanBysuddhi(int number)
     {

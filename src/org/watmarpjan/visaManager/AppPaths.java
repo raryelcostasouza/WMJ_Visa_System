@@ -50,7 +50,7 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../../Data/" + nickName + "/Scans/Bysuddhi");
     }
 
-    public static Path getPathToProfilePhotoSubFolder(String nickName)
+    public static Path getPathToProfileScansSubFolder(String nickName)
     {
         return Paths.get(System.getProperty("user.dir")).resolve("../../Data/" + nickName + "/Scans/Profile");
     }
