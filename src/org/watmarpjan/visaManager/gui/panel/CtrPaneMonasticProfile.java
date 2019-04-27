@@ -35,6 +35,7 @@ import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
 import javafx.scene.input.MouseEvent;
+import org.watmarpjan.visaManager.AppPaths;
 
 /**
  *
@@ -165,6 +166,48 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     @FXML
     private ImageView ivProfilePhoto;
 
+    @FXML
+    private TextField tfPathPDFNaktamTri;
+
+    @FXML
+    private TextField tfPathPDFNaktamToh;
+
+    @FXML
+    private TextField tfPathPDFNaktamEk;
+
+    
+    @FXML
+    private Button bAddCertificateNaktamTri;
+
+    @FXML
+    private Button bAddCertificateNaktamToh;
+
+    @FXML
+    private Button bAddCertificateNaktamEk;
+
+    @FXML
+    private Button bRemoveCertificateNaktamTri;
+
+    @FXML
+    private Button bRemoveCertificateNaktamToh;
+
+    @FXML
+    private Button bRemoveCertificateNaktamEk;
+    
+    @FXML
+    private Button bCurrentCertificateNaktamTri;
+
+    @FXML
+    private Button bCurrentCertificateNaktamToh;
+
+    @FXML
+    private Button bCurrentCertificateNaktamEk;
+
+    File fPDFSelectedNaktamTri;
+    File fPDFSelectedNaktamToh;
+    File fPDFSelectedNaktamEk;
+    
+
     @Override
     public void init()
     {
@@ -204,6 +247,19 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         listFields.add(tfPhoneNumber1);
         listFields.add(tfPhoneNumber2);
         listFields.add(taRemark);
+
+        bCurrentCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bCurrentCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bCurrentCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        
+        bAddCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
+        bAddCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
+        bAddCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
+        
+        bRemoveCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
+        bRemoveCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
+        bRemoveCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
+
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
         tfNickname.textProperty().addListener(new ChangeListener<String>()
@@ -431,8 +487,42 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                     rbInactive.setSelected(true);
                     break;
             }
-        }
 
+            initNaktamCertificateButtons(p);
+        }
+    }
+
+    private void initNaktamCertificateButtons(MonasticProfile p)
+    {
+        tfPathPDFNaktamEk.setText("");
+        tfPathPDFNaktamToh.setText("");
+        tfPathPDFNaktamTri.setText("");
+        
+        initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamTri, bAddCertificateNaktamTri, bRemoveCertificateNaktamTri, AppConstants.STUDIES_NAKTAM_TRI, tfPathPDFNaktamTri);
+        initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamToh, bAddCertificateNaktamToh, bRemoveCertificateNaktamToh, AppConstants.STUDIES_NAKTAM_TOH, tfPathPDFNaktamToh);
+        initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamEk, bAddCertificateNaktamEk, bRemoveCertificateNaktamEk, AppConstants.STUDIES_NAKTAM_EK, tfPathPDFNaktamEk);
+    }
+    
+    private void initButtonNaktamCertificateGeneric(MonasticProfile p, Button bCurrentCertificate, Button bAddCertificate, Button bRemoveCertificate, String level, TextField tfPathPDF)
+    {
+        if (AppFiles.getNaktamCertificate(p.getNickname(), level).exists())
+        {
+            bCurrentCertificate.setDisable(false);
+            
+            tfPathPDF.setVisible(false);
+            bAddCertificate.setVisible(false);
+                        
+            bRemoveCertificate.setVisible(true);
+        }
+        else
+        {
+            bCurrentCertificate.setDisable(true);
+            
+            tfPathPDF.setVisible(true);
+            bAddCertificate.setVisible(true);
+            
+            bRemoveCertificate.setVisible(false);
+        }
     }
 
     private void loadProfilePhoto(MonasticProfile p)
@@ -499,6 +589,91 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     }
 
+    @FXML
+    void actionSelectCertificatePDFNaktamTri(ActionEvent ae)
+    {
+        fPDFSelectedNaktamTri = CtrFileOperation.selectFile("Select Certificate File", CtrFileOperation.FILE_CHOOSER_TYPE_PDF);
+        if (fPDFSelectedNaktamTri != null)
+        {
+            tfPathPDFNaktamTri.setText(fPDFSelectedNaktamTri.getAbsolutePath().toString());
+            ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
+        }
+    }
+    
+    @FXML
+    void actionSelectCertificatePDFNaktamToh(ActionEvent ae)
+    {        
+        fPDFSelectedNaktamToh = CtrFileOperation.selectFile("Select Certificate File", CtrFileOperation.FILE_CHOOSER_TYPE_PDF);
+        if (fPDFSelectedNaktamToh != null)
+        {
+            tfPathPDFNaktamToh.setText(fPDFSelectedNaktamToh.getAbsolutePath().toString());
+            ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
+        }
+    }
+    
+    @FXML
+    void actionSelectCertificatePDFNaktamEk(ActionEvent ae)
+    {
+        fPDFSelectedNaktamEk = CtrFileOperation.selectFile("Select Certificate File", CtrFileOperation.FILE_CHOOSER_TYPE_PDF);
+        if (fPDFSelectedNaktamEk != null)
+        {
+            tfPathPDFNaktamEk.setText(fPDFSelectedNaktamEk.getAbsolutePath().toString());
+            ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
+        }
+    }
+
+    @FXML    
+    void actionOpenCertificatePDFNaktamTri(ActionEvent ae)
+    {
+        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
+    }
+    
+    @FXML    
+    void actionOpenCertificatePDFNaktamToh(ActionEvent ae)
+    {
+        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
+    }
+    
+    @FXML    
+    void actionOpenCertificatePDFNaktamEk(ActionEvent ae)
+    {
+        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_EK);
+    }
+    
+    private void actionOpenCertificatePDFGeneric(String level)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), level));
+    }
+    
+    @FXML    
+    void actionRemoveCertificatePDFNaktamTri(ActionEvent ae)
+    {
+        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
+    }
+    
+    @FXML    
+    void actionRemoveCertificatePDFNaktamToh(ActionEvent ae)
+    {
+        actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
+    }
+    
+    @FXML    
+    void actionRemoveCertificatePDFNaktamEk(ActionEvent ae)
+    {
+        actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_EK);
+    }
+    
+    private void actionRemoveCertificatePDFGeneric(String level)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), level));
+    }
+
     @Override
     public void actionLockEdit()
     {
@@ -556,6 +731,14 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber1.setEditable(false);
         tfPhoneNumber2.setEditable(false);
         taRemark.setEditable(false);
+
+        bAddCertificateNaktamTri.setDisable(true);
+        bAddCertificateNaktamToh.setDisable(true);
+        bAddCertificateNaktamEk.setDisable(true);
+        
+        bRemoveCertificateNaktamTri.setDisable(true);
+        bRemoveCertificateNaktamToh.setDisable(true);
+        bRemoveCertificateNaktamEk.setDisable(true);
     }
 
     @Override
@@ -616,8 +799,33 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber1.setEditable(true);
         tfPhoneNumber2.setEditable(true);
         taRemark.setEditable(true);
+
+        bAddCertificateNaktamTri.setDisable(false);
+        bAddCertificateNaktamToh.setDisable(false);
+        bAddCertificateNaktamEk.setDisable(false);
+        
+        bRemoveCertificateNaktamTri.setDisable(false);
+        bRemoveCertificateNaktamToh.setDisable(false);
+        bRemoveCertificateNaktamEk.setDisable(false);
     }
 
+    private void actionSaveNaktamCertificates(MonasticProfile p)
+    {
+        actionSaveNaktamCertificateGeneric(p, fPDFSelectedNaktamTri, AppConstants.STUDIES_NAKTAM_TRI);
+        actionSaveNaktamCertificateGeneric(p, fPDFSelectedNaktamToh, AppConstants.STUDIES_NAKTAM_TOH);
+        actionSaveNaktamCertificateGeneric(p, fPDFSelectedNaktamEk, AppConstants.STUDIES_NAKTAM_EK);
+    }
+    
+    private void actionSaveNaktamCertificateGeneric(MonasticProfile p, File fPDFSelected, String level)
+    {
+        if (fPDFSelected != null && fPDFSelected.exists()) 
+        {
+            CtrFileOperation.copyOperation(fPDFSelected, AppFiles.getNaktamCertificate(p.getNickname(), level));
+        }       
+        //reset temp variable after save
+        fPDFSelected = null;
+    }
+    
     @Override
     public int actionSave()
     {
@@ -630,6 +838,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
         error = false;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        actionSaveNaktamCertificates(p);
+
         previousNickName = p.getNickname();
         newNickName = tfNickname.getText();
 
@@ -780,6 +991,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+                fillData(p);
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
             return operationStatus;

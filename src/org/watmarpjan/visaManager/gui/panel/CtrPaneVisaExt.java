@@ -25,8 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
@@ -68,6 +70,9 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     private Button bPreview6;
     @FXML
     private Button bPreview7;
+    
+    @FXML
+    private Button bPreviewNaktamCertificate;
 
 //    @FXML
 //    private Button bPrint1;
@@ -96,6 +101,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         bPreview5.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        
+        bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
 //        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 //        bPrint2.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
@@ -164,7 +171,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         LocalDate ldExpVisa, ldExpLastExtension;
         Date dLastExt;
         VisaExtension lastExt;
-
+        String levelDhammaStudies;
+        
         if (p != null)
         {
             if (p.getVisaNumber() != null)
@@ -209,6 +217,19 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
             else
             {
                 dpExpiryDate.setValue(null);
+            }
+            
+            //only enable certificate button if file exists and dhamma studies is set to something else than 
+            //REGULAR
+            levelDhammaStudies = p.getDhammaStudies();
+            if ((levelDhammaStudies.compareTo(AppConstants.STUDIES_REGULAR) == 0) &&
+                    (AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies).exists()))
+            {                
+                bPreviewNaktamCertificate.setDisable(true);
+            }
+            else
+            {
+                bPreviewNaktamCertificate.setDisable(false);
             }
         }
 
@@ -299,6 +320,18 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         
         fPrawatTemplate = getPrawatTemplate(p);
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PREVIEW_FORM, false);
+    }
+    
+    @FXML
+    void actionPreviewNaktamCertificate(ActionEvent ae)
+    {
+        MonasticProfile p;
+        String levelDhammaStudies;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        levelDhammaStudies = p.getDhammaStudies();
+        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies));                
     }
 
     @FXML

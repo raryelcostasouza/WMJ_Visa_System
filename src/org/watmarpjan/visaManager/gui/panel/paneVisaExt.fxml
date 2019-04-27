@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneVisaExt">
+<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneVisaExt">
   <tabs>
     <Tab text="Forms">
          <content>
@@ -29,6 +29,7 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -42,33 +43,35 @@
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
                         <Label text="Prawat:" />
-                        <Label text="Samnakput Request Letter:" GridPane.rowIndex="1" />
-                        <Label text="Immigration Request Letter:" GridPane.rowIndex="2" />
-                        <Label text="TM 7 - Application for Extension:" GridPane.rowIndex="3" />
-                        <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="4" />
-                        <Label text="Acknowledgments Penalties Overstay:" GridPane.rowIndex="5" />
-                        <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="6" />
-                        <Button fx:id="bPreview2" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="Samnakput Request Letter:" GridPane.rowIndex="2" />
+                        <Label text="Immigration Request Letter:" GridPane.rowIndex="3" />
+                        <Label text="TM 7 - Application for Extension:" GridPane.rowIndex="4" />
+                        <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="5" />
+                        <Label text="Acknowledgments Penalties Overstay:" GridPane.rowIndex="6" />
+                        <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="7" />
+                        <Button fx:id="bPreview2" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview3" layoutX="266.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="bPreview3" layoutX="266.0" layoutY="43.0" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview4" layoutX="266.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="bPreview4" layoutX="266.0" layoutY="73.0" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview5" layoutX="266.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="bPreview5" layoutX="266.0" layoutY="103.0" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview6" layoutX="266.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Button fx:id="bPreview6" layoutX="266.0" layoutY="133.0" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></Button>
-                        <Button fx:id="bPreview7" layoutX="266.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button fx:id="bPreview7" layoutX="266.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label layoutX="10.0" layoutY="18.0" text="Naktam Certificate:" GridPane.rowIndex="1" />
+                        <Button fx:id="bPreviewNaktamCertificate" layoutX="304.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionPreviewNaktamCertificate" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
