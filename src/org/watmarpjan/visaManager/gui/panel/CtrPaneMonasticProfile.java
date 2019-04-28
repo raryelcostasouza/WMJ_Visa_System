@@ -684,7 +684,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
            opStatusArchive = CtrFileOperation.archiveNaktamCertificate(AppFiles.getNaktamCertificate(p.getNickname(), level));
            if (opStatusArchive == 0)
            {
-               fillData(p);
+               initNaktamCertificateButtons(p);
                CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
            }   
         }   
@@ -1006,7 +1006,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
-                fillData(p);
+                initNaktamCertificateButtons(p);
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
