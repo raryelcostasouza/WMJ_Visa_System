@@ -672,6 +672,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         String msg;
         boolean confirmation;
         int opStatusArchive;
+        File f2Archive;
 
          msg = "Are you sure that you want to remove the "+ level +" certificate?\n"
                 + "(Note: The certificate file will be archived)\n ";
@@ -681,7 +682,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-           opStatusArchive = CtrFileOperation.archiveNaktamCertificate(AppFiles.getNaktamCertificate(p.getNickname(), level));
+           f2Archive = AppFiles.getNaktamCertificate(p.getNickname(),level);
+           opStatusArchive = CtrFileOperation.archiveNaktamCertificate(f2Archive, p.getNickname());
            if (opStatusArchive == 0)
            {
                initNaktamCertificateButtons(p);

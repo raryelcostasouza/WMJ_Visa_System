@@ -37,7 +37,7 @@ public class CtrFileOperation
 
     public static final String SCAN_TYPE_PASSPORT = "passport";
     public static final String SCAN_TYPE_BYSUDDHI = "bysuddhi";
-    public static final String SCAN_TYPE_PHOTO = "photo";
+    public static final String SCAN_TYPE_PROFILE = "profile";
 
     private static FileChooser STATIC_FILE_CHOOSER;
     private static File LAST_FOLDER;
@@ -99,9 +99,9 @@ public class CtrFileOperation
         return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
     }
     
-    public static int archiveNaktamCertificate(File fCertificate)
+    public static int archiveNaktamCertificate(File fCertificate, String nickname)
     {
-        return archiveFile(fCertificate, AppPaths.getPathArchiveNaktamCertificate());
+        return archiveFile(fCertificate, AppPaths.getPathArchiveNaktamCertificate(nickname));
     }
 
     private static int archiveFile(File f2Archive, Path pDestArchive)

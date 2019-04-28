@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 
 /**
@@ -40,9 +41,9 @@ public class AppPaths
         return getPathArchiveFolder().resolve("TM30-Printout/");
     }
     
-    public static Path getPathArchiveNaktamCertificate()
+    public static Path getPathArchiveNaktamCertificate(String nickName)
     {
-        return getPathArchiveFolder().resolve("Naktam-Certificate/");
+        return getPathArchiveScan(nickName, CtrFileOperation.SCAN_TYPE_PROFILE);
     }
 
     public static Path getPathToPassportSubFolder(String nickName)
