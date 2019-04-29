@@ -99,11 +99,16 @@ public class CtrFileOperation
         return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
     }
     
-    public static int archiveNaktamCertificate(File fCertificate, String nickname)
+    public static int archiveProfilePhotoOrCertificate(File f2Archive, String nickname)
     {
-        return archiveFile(fCertificate, AppPaths.getPathArchiveNaktamCertificate(nickname));
+        return archiveFile(f2Archive, AppPaths.getPathArchiveProfileInfo(nickname));
     }
-
+    
+    public static int archiveBysuddhiScan(File fScan, String nickname)
+    {
+        return archiveFile(fScan, AppPaths.getPathArchiveBysuddhiScan(nickname));
+    }
+  
     private static int archiveFile(File f2Archive, Path pDestArchive)
     {
         File fDestArchive;

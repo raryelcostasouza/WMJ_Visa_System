@@ -41,9 +41,14 @@ public class AppPaths
         return getPathArchiveFolder().resolve("TM30-Printout/");
     }
     
-    public static Path getPathArchiveNaktamCertificate(String nickName)
+    public static Path getPathArchiveProfilePhotoOrCertificates(String nickName)
     {
         return getPathArchiveScan(nickName, CtrFileOperation.SCAN_TYPE_PROFILE);
+    }
+    
+    public static Path getPathArchiveBysuddhiScan(String nickName)
+    {
+        return getPathArchiveScan(nickName, CtrFileOperation.SCAN_TYPE_BYSUDDHI);
     }
 
     public static Path getPathToPassportSubFolder(String nickName)
