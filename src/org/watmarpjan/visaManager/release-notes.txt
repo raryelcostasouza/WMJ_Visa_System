@@ -1,3 +1,16 @@
+v1.8.1 - 29/04/2019
+
+New features:
+* Support for naktam certificates
+* Archive of profile photos and bysuddhi scans
+* Filling details of extension periods on prawats
+* Added field to set next 90 notice when add a reentry
+
+Bug fixes:
+* Resetting next 90 day when clear reeentry
+* Photo on selection panel not updated immediately when changed.
+
+----------------------------------------------------------
 v1.7.2 - 12/10/2018
 
 New features:
