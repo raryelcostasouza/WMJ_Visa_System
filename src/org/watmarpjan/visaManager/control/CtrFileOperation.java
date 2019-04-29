@@ -101,7 +101,7 @@ public class CtrFileOperation
     
     public static int archiveProfilePhotoOrCertificate(File f2Archive, String nickname)
     {
-        return archiveFile(f2Archive, AppPaths.getPathArchiveProfileInfo(nickname));
+        return archiveFile(f2Archive, AppPaths.getPathArchiveProfilePhotoOrCertificates(nickname));
     }
     
     public static int archiveBysuddhiScan(File fScan, String nickname)
