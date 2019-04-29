@@ -22,7 +22,7 @@
     <children>
         <HBox VBox.vgrow="NEVER">
             <children>
-                <VBox alignment="CENTER">
+                <VBox alignment="CENTER" HBox.hgrow="NEVER">
                     <children>
                         <ImageView fx:id="ivProfilePhoto" fitHeight="150.0" fitWidth="175.0" onMouseClicked="#actionIMGProfileClicked" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -41,7 +41,7 @@
                   </HBox>
                     </children>
                 </VBox>
-                <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Name/Family" HBox.hgrow="ALWAYS">
+                <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="Name/Family" HBox.hgrow="NEVER">
                <content>
                   <HBox spacing="20.0">
                      <children>
@@ -77,7 +77,7 @@
                   </HBox>
                </content>
                 </TitledPane>
-            <TitledPane collapsible="false" prefWidth="500.0" text="Remark">
+            <TitledPane collapsible="false" prefWidth="500.0" text="Remark" HBox.hgrow="ALWAYS">
                <content>
                   <TextArea fx:id="taRemark" prefHeight="150.0" />
                </content>
