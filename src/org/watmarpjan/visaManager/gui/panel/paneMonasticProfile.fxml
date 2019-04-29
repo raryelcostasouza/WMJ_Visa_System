@@ -77,9 +77,14 @@
                   </HBox>
                </content>
                 </TitledPane>
+            <TitledPane collapsible="false" prefWidth="500.0" text="Remark">
+               <content>
+                  <TextArea fx:id="taRemark" prefHeight="150.0" />
+               </content>
+            </TitledPane>
             </children>
         </HBox>
-        <TitledPane animated="false" collapsible="false" text="Birth" VBox.vgrow="NEVER">
+        <TitledPane animated="false" collapsible="false" text="Birth">
             <content>
                 <VBox>
                     <children>
@@ -355,44 +360,44 @@
             </TitledPane>
          </children>
       </HBox>
-      <HBox VBox.vgrow="NEVER">
+      <HBox>
          <children>
-              <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefWidth="413.0" text="Contact" HBox.hgrow="NEVER">
-                  <content>
-                      <VBox>
-                          <children>
-                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                                  <children>
-                                      <Label text="Personal e-mail:" />
-                                      <TextField fx:id="tfEmail" HBox.hgrow="ALWAYS" />
-                                  </children>
-                              </HBox>
-                        <HBox alignment="CENTER" layoutX="22.0" layoutY="97.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="Phone Number 1:" />
-                              <TextField fx:id="tfPhoneNumber1" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="22.0" layoutY="215.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="Phone Number 2:" />
-                              <TextField fx:id="tfPhoneNumber2" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                              <VBox VBox.vgrow="ALWAYS">
-                                  <children>
-                                      <Label text="Emergency Contact:" />
-                                      <TextArea fx:id="taEmergencyContact" editable="false" prefHeight="70.0" />
-                                  </children>
-                              </VBox>
-                          </children>
-                      </VBox>
-                  </content>
-              </TitledPane>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <HBox VBox.vgrow="NEVER">
+                  <HBox>
                      <children>
+                          <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" prefWidth="413.0" text="Contact">
+                              <content>
+                                  <VBox>
+                                      <children>
+                                          <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                              <children>
+                                                  <Label text="Personal e-mail:" />
+                                                  <TextField fx:id="tfEmail" HBox.hgrow="ALWAYS" />
+                                              </children>
+                                          </HBox>
+                                    <HBox alignment="CENTER" layoutX="22.0" layoutY="97.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Phone Number 1:" />
+                                          <TextField fx:id="tfPhoneNumber1" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="22.0" layoutY="215.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Phone Number 2:" />
+                                          <TextField fx:id="tfPhoneNumber2" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                          <VBox VBox.vgrow="ALWAYS">
+                                              <children>
+                                                  <Label text="Emergency Contact:" />
+                                                  <TextArea fx:id="taEmergencyContact" editable="false" prefHeight="70.0" />
+                                              </children>
+                                          </VBox>
+                                      </children>
+                                  </VBox>
+                              </content>
+                          </TitledPane>
                           <TitledPane animated="false" collapsible="false" text="Status">
                               <content>
                                   <HBox alignment="CENTER_LEFT">
@@ -438,11 +443,6 @@
                         </TitledPane>
                      </children>
                   </HBox>
-                  <TitledPane collapsible="false" text="Remark">
-                     <content>
-                        <TextArea fx:id="taRemark" prefHeight="130.0" />
-                     </content>
-                  </TitledPane>
                </children>
             </VBox>
          </children>
