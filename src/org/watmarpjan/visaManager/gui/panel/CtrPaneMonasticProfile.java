@@ -569,7 +569,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         if (fSource != null)
         {
             CtrFileOperation.copyOperation(fSource, fDestination);
-            loadProfilePhoto(p);
+            ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
         }
 
     }
@@ -583,7 +583,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         int opStatusArchive;
         File f2Archive;
 
-        msg = "Are you sure that you want to archive this profile photo?";
+        msg = "Are you sure that you want to archive this profile photo?\n";
                 
         confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
         if (confirmation)
@@ -594,7 +594,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
            opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
            if (opStatusArchive == 0)
            {
-               loadProfilePhoto(p);
+               ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
                CtrAlertDialog.infoDialog("Archived successfully", "The profile photo was archived successfully.");
            }   
         }   

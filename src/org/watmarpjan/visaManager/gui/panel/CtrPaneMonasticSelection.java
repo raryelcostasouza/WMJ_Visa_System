@@ -109,6 +109,15 @@ public class CtrPaneMonasticSelection extends AChildPaneController
             cbSelectedMonastic.setValue(nickname);
         }
     }
+    
+    public void reloadCurrentProfile()
+    {
+        MonasticProfile p; 
+        
+        p = getSelectedProfile();
+        cbSelectedMonastic.setValue(null);
+        cbSelectedMonastic.setValue(p.getNickname());
+    }
 
     @FXML
     void listenerCbSelectedMonastic(ActionEvent ae)
