@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
    <children>
       <HBox alignment="CENTER">
          <children>
@@ -137,7 +136,16 @@
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="b2" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 2" StackPane.alignment="TOP_LEFT" />
+                  <HBox StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <Button fx:id="b2" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 2" />
+                        <Button fx:id="b2Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan2" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </StackPane>
             <StackPane>
@@ -150,7 +158,16 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Button fx:id="b1" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 1" StackPane.alignment="TOP_LEFT" />
+                  <HBox StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <Button fx:id="b1" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 1" />
+                        <Button fx:id="b1Archive" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan1" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </StackPane>
             <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -160,12 +177,30 @@
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="b4" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 4" StackPane.alignment="TOP_LEFT" />
+                  <HBox StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <Button fx:id="b4" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 4" />
+                        <Button fx:id="b4Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan4" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </StackPane>
             <StackPane GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" StackPane.alignment="TOP_LEFT" />
+                  <HBox StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" />
+                        <Button fx:id="b3Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan3" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                   <ImageView fx:id="ivScan3" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />

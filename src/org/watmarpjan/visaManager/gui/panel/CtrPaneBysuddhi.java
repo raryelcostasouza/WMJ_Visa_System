@@ -76,6 +76,15 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     private Button b4;
     
     @FXML
+    private Button b1Archive;
+    @FXML
+    private Button b2Archive;
+    @FXML
+    private Button b3Archive;
+    @FXML
+    private Button b4Archive;
+    
+    @FXML
     private Button bPreview;
     
 //    @FXML
@@ -309,11 +318,30 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         {
             f1 = f2 = f3 = f4 = null;
         }
+        
+        initScanButtonsGeneric(f1, b1, b1Archive);
+        initScanButtonsGeneric(f2, b2, b2Archive);
+        initScanButtonsGeneric(f3, b3, b3Archive);
+        initScanButtonsGeneric(f4, b4, b4Archive);
 
         GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_BYSUDDHI, f1);
         GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_BYSUDDHI, f2);
         GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_BYSUDDHI, f3);
         GUIUtil.loadImageView(ivScan4, GUIUtil.IMG_TYPE_BYSUDDHI, f4);
+    }
+    
+    private void initScanButtonsGeneric(File f, Button bScan, Button bArchive)
+    {
+        if (f != null && f.exists())
+        {
+            bScan.setDisable(true);
+            bArchive.setDisable(false);
+        }
+        else
+        {
+            bScan.setDisable(false);
+            bArchive.setDisable(true);
+        }
     }
 
     @FXML
@@ -348,6 +376,55 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             loadIMGPreviews(p);
         }
 
+    }
+    
+    @FXML
+    void actionArchiveBysuddhiScan1(ActionEvent ae)
+    {
+        actionArchiveBysuddhiScanGeneric(1);
+    }
+    
+    @FXML
+    void actionArchiveBysuddhiScan2(ActionEvent ae)
+    {
+        actionArchiveBysuddhiScanGeneric(2);
+    }
+    
+    @FXML
+    void actionArchiveBysuddhiScan3(ActionEvent ae)
+    {
+        actionArchiveBysuddhiScanGeneric(3);
+    }
+    
+    @FXML
+    void actionArchiveBysuddhiScan4(ActionEvent ae)
+    {
+        actionArchiveBysuddhiScanGeneric(4);
+    }
+    
+    private void actionArchiveBysuddhiScanGeneric(int scanNumber)
+    {
+        MonasticProfile p;
+        String msg;
+        boolean confirmation;
+        int opStatusArchive;
+        File f2Archive;
+
+        msg = "Are you sure that you want to archive this bysuddhi scan?";
+                
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
+        if (confirmation)
+        {
+           p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+           f2Archive = AppFiles.getScanBysuddhi(p.getNickname(), scanNumber);
+           opStatusArchive = CtrFileOperation.archiveBysuddhiScan(f2Archive, p.getNickname());
+           if (opStatusArchive == 0)
+           {
+               loadIMGPreviews(p);
+               CtrAlertDialog.infoDialog("Archived successfully", "The bysuddhi scan was archived successfully.");
+           }   
+        }   
     }
 
     @FXML
