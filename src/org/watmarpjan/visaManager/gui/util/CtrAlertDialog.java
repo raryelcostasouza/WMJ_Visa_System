@@ -38,10 +38,14 @@ public class CtrAlertDialog
     {
         Alert a;
         Optional<ButtonType> op;
-
+        Label lbMsg;
+        
+        lbMsg = new Label(msg);
+        lbMsg.setWrapText(false);
+        
         a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle(title);
-        a.setContentText(msg);
+        a.getDialogPane().setContent(lbMsg);
         op = a.showAndWait();
         if (op.get() == ButtonType.OK)
         {
