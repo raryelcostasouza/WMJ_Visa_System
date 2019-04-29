@@ -162,6 +162,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     @FXML
     private Button bChangeProfilePhoto;
+    
+    @FXML
+    private Button bArchiveProfilePhoto;
 
     @FXML
     private ImageView ivProfilePhoto;
@@ -537,6 +540,17 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
             fileProfilePhoto = null;
         }
+        
+        if (fileProfilePhoto != null && fileProfilePhoto.exists())
+        {
+            bChangeProfilePhoto.setDisable(true);
+            bArchiveProfilePhoto.setDisable(false);
+        }
+        else
+        {
+            bChangeProfilePhoto.setDisable(false);
+            bArchiveProfilePhoto.setDisable(true);
+        }
 
         GUIUtil.loadImageView(ivProfilePhoto, GUIUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
     }
@@ -558,6 +572,32 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             loadProfilePhoto(p);
         }
 
+    }
+    
+    @FXML
+    void actionArchiveProfilePhoto(ActionEvent ae)
+    {
+        MonasticProfile p;
+        String msg;
+        boolean confirmation;
+        int opStatusArchive;
+        File f2Archive;
+
+        msg = "Are you sure that you want to archive this profile photo?";
+                
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
+        if (confirmation)
+        {
+           p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+           f2Archive = AppFiles.getProfilePhoto(p.getNickname());
+           opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
+           if (opStatusArchive == 0)
+           {
+               loadProfilePhoto(p);
+               CtrAlertDialog.infoDialog("Archived successfully", "The profile photo was archived successfully.");
+           }   
+        }   
     }
 
     @Override
@@ -674,7 +714,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         int opStatusArchive;
         File f2Archive;
 
-         msg = "Are you sure that you want to remove the "+ level +" certificate?\n"
+        msg = "Are you sure that you want to remove the "+ level +" certificate?\n"
                 + "(Note: The certificate file will be archived)\n ";
                 
         confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
@@ -683,7 +723,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
            f2Archive = AppFiles.getNaktamCertificate(p.getNickname(),level);
-           opStatusArchive = CtrFileOperation.archiveNaktamCertificate(f2Archive, p.getNickname());
+           opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
            if (opStatusArchive == 0)
            {
                initNaktamCertificateButtons(p);
