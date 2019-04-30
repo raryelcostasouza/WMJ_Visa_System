@@ -27,10 +27,14 @@ public class CtrAlertDialog
     public static void infoDialog(String title, String msg)
     {
         Alert a;
-
+        Label lbMsg;
+        
+        lbMsg = new Label(msg);
+        lbMsg.setWrapText(false);
+        
         a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(title);
-        a.setContentText(msg);
+        a.getDialogPane().setContent(lbMsg);
         a.showAndWait();
     }
 
@@ -60,13 +64,17 @@ public class CtrAlertDialog
     {
         Alert a;
         Optional<ButtonType> op;
+        Label lbMsg;
 
+        lbMsg = new Label("There are unsaved changes on the current form. Would you like to save or discard them?");
+        lbMsg.setWrapText(false);
+        
         ButtonType saveButtonType = new ButtonType("Save", ButtonData.OK_DONE);
         ButtonType discardButtonType = new ButtonType("Discard", ButtonData.CANCEL_CLOSE);
 
         a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Unsaved Changes");
-        a.setContentText("There are unsaved changes on the current form. Would you like to save or discard them?");
+        a.getDialogPane().setContent(lbMsg);
         a.getDialogPane().getButtonTypes().setAll(saveButtonType, discardButtonType);
 
         op = a.showAndWait();
