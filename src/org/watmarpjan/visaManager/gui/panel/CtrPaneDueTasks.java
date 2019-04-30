@@ -313,7 +313,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcLastDayOffice.setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
         tcLastDayOffice.setCellFactory(dateCellFactory);
 
-        GUIUtil.initAutoHeightResize(tv, 2.7);
+        GUIUtil.initAutoHeightResize(tv, 3);
     }
 
     private void initTableNonImmVisaExtension(TableView<EntryDueTask> tv)
@@ -333,7 +333,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
         tcImmigration.setCellFactory(dateCellFactory);
 
-        GUIUtil.initAutoHeightResize(tv, 3);
+        GUIUtil.initAutoHeightResize(tv, 3.5);
     }
 
     private void initTableTouristVisaExtension(TableView<EntryDueTask> tv)

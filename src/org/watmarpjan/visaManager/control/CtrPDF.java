@@ -966,10 +966,10 @@ public class CtrPDF
 
             contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
+            contentStream.newLineAtOffset(25, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("90 Day Notice");
             contentStream.endText();
-            contentStream.drawImage(pdfImg90DayTH, 50, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImg90DayTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
+            contentStream.drawImage(pdfImg90DayTH, 25, PAGE_A4_HEIGHT_PX - pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImg90DayTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImg90DayTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
 
             contentStream.beginText();
             contentStream.newLineAtOffset(50, 60 + pdfImgNonImmVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
@@ -981,10 +981,10 @@ public class CtrPDF
              contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.setFont(fontTitle, fontSizeTitle);
             contentStream.beginText();
-            contentStream.newLineAtOffset(50, PAGE_A4_HEIGHT_PX - 40);
+            contentStream.newLineAtOffset(25, PAGE_A4_HEIGHT_PX - 40);
             contentStream.showText("Tourist Visa Extension");
             contentStream.endText();
-            contentStream.drawImage(pdfImgTouristVisaExtTH,50, PAGE_A4_HEIGHT_PX - pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImgTouristVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
+            contentStream.drawImage(pdfImgTouristVisaExtTH,25, PAGE_A4_HEIGHT_PX - pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT - 50, pdfImgTouristVisaExtTH.getWidth() * SCALE_DUE_TASKS_SNAPSHOT, pdfImgTouristVisaExtTH.getHeight() * SCALE_DUE_TASKS_SNAPSHOT);
             contentStream.close();
             
             contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
