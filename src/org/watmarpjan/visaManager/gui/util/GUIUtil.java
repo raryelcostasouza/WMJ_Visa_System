@@ -50,6 +50,7 @@ public class GUIUtil
     
     public static void initAutoHeightResize(TableView tv, double headerAdjust)
     {
+        tv.setFixedCellSize(25);
         tv.prefHeightProperty().bind(tv.fixedCellSizeProperty().multiply(Bindings.size(tv.getItems()).add(headerAdjust)));
         tv.minHeightProperty().bind(tv.prefHeightProperty());
         tv.maxHeightProperty().bind(tv.prefHeightProperty());

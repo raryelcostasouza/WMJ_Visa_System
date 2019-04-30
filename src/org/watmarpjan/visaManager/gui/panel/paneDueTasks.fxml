@@ -49,12 +49,12 @@
                                                                                           <TableColumn minWidth="-1.0" prefWidth="140.0" text="Monastic" />
                                                                                           <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                                           <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
-                                                                                          <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
+                                                                                          <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
                                                                         <TableColumn prefWidth="60.0" text="Online" />
                                                                                           <TableColumn minWidth="-1.0" prefWidth="400.0" text="Acceptable Dates">
                                                                                               <columns>
                                                                                                   <TableColumn fx:id="tcFirstDay" minWidth="-1.0" prefWidth="90.0" text="First Day" />
-                                                                                                  <TableColumn fx:id="tcLastDayOnline" minWidth="-1.0" prefWidth="110.0" text="Last Day Online" />
+                                                                                                  <TableColumn fx:id="tcLastDayOnline" minWidth="-1.0" prefWidth="140.0" text="Last Day Online" />
                                                                                                   <TableColumn fx:id="tcLastDayOffice" minWidth="-1.0" prefWidth="140.0" text="Last Day Office" />
                                                                                               </columns>
                                                                                           </TableColumn>
@@ -89,7 +89,7 @@
                                                                               <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                               <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                               <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
-                                                                              <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
+                                                                              <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
                                                                               <TableColumn minWidth="-1.0" prefWidth="400.0" text="Begin processing">
                                                                                   <columns>
                                                                                       <TableColumn minWidth="-1.0" prefWidth="90.0" text="Prawat" />
@@ -124,7 +124,7 @@
                                                             <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                             <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                             <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
-                                                            <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
+                                                            <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
                                                             <TableColumn minWidth="-1.0" prefWidth="250.0" text="30 Day Extension - Immigration">
                                                                <columns>
                                                                   <TableColumn minWidth="-1.0" prefWidth="250.0" text="First Possible Date" />
@@ -157,7 +157,7 @@
                                                                               <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                               <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                               <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                              <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
+                                                                              <TableColumn minWidth="-Infinity" prefWidth="170.0" text="Remaining Time" />
                                                                               <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                                                           </columns>
                                                                       </TableView>
@@ -196,11 +196,11 @@
                                                                   <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                  <TableColumn minWidth="-1.0" prefWidth="155.0" text="Remaining Time" />
+                                                                  <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
                                                                   <TableColumn prefWidth="260.0" text="Begin processing">
                                                                       <columns>
                                                                           <TableColumn prefWidth="85.0" text="Prawat" />
-                                                                          <TableColumn prefWidth="85.0" text="Samnakput" />
+                                                                          <TableColumn prefWidth="110.0" text="Samnakput" />
                                                                           <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Immigration" />
                                                                       </columns>
                                                                   </TableColumn>
@@ -223,7 +223,7 @@
                                                                   <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
-                                                                  <TableColumn minWidth="-Infinity" prefWidth="155.0" text="Remaining Time" />
+                                                                  <TableColumn minWidth="-Infinity" prefWidth="170.0" text="Remaining Time" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="138.0" text="Begin processing" />
                                                               </columns>
                                                           </TableView>
