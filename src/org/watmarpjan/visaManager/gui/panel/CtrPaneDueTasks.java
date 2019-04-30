@@ -333,7 +333,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
         tcImmigration.setCellFactory(dateCellFactory);
 
-        GUIUtil.initAutoHeightResize(tv, 2.5);
+        GUIUtil.initAutoHeightResize(tv, 3);
     }
 
     private void initTableTouristVisaExtension(TableView<EntryDueTask> tv)
@@ -358,7 +358,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcBeginProcBy.setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
         tcBeginProcBy.setCellFactory(dateCellFactory);
 
-        GUIUtil.initAutoHeightResize(tv, 1.01);
+        GUIUtil.initAutoHeightResize(tv, 2.5);
     }
 
     public void fillData()

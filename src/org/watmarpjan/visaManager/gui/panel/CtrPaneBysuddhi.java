@@ -410,7 +410,6 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             CtrFileOperation.copyOperation(fSource, fDestination);
             loadIMGPreviews(p);
         }
-
     }
 
     @FXML

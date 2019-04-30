@@ -5,9 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.util;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
