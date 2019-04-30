@@ -162,7 +162,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     @FXML
     private Button bChangeProfilePhoto;
-    
+
     @FXML
     private Button bArchiveProfilePhoto;
 
@@ -178,7 +178,6 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     @FXML
     private TextField tfPathPDFNaktamEk;
 
-    
     @FXML
     private Button bAddCertificateNaktamTri;
 
@@ -196,7 +195,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     @FXML
     private Button bRemoveCertificateNaktamEk;
-    
+
     @FXML
     private Button bCurrentCertificateNaktamTri;
 
@@ -209,7 +208,6 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     File fPDFSelectedNaktamTri;
     File fPDFSelectedNaktamToh;
     File fPDFSelectedNaktamEk;
-    
 
     @Override
     public void init()
@@ -254,11 +252,11 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         bCurrentCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bCurrentCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bCurrentCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        
+
         bAddCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
         bAddCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
         bAddCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
-        
+
         bRemoveCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
         bRemoveCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
         bRemoveCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
@@ -349,7 +347,6 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
         GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
 
-        loadProfilePhoto(p);
         if (p != null)
         {
             tfNickname.setText(p.getNickname());
@@ -490,7 +487,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
                     rbInactive.setSelected(true);
                     break;
             }
-
+            loadProfilePhoto(p);
             initNaktamCertificateButtons(p);
         }
     }
@@ -500,30 +497,30 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPathPDFNaktamEk.setText("");
         tfPathPDFNaktamToh.setText("");
         tfPathPDFNaktamTri.setText("");
-        
+
         initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamTri, bAddCertificateNaktamTri, bRemoveCertificateNaktamTri, AppConstants.STUDIES_NAKTAM_TRI, tfPathPDFNaktamTri);
         initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamToh, bAddCertificateNaktamToh, bRemoveCertificateNaktamToh, AppConstants.STUDIES_NAKTAM_TOH, tfPathPDFNaktamToh);
         initButtonNaktamCertificateGeneric(p, bCurrentCertificateNaktamEk, bAddCertificateNaktamEk, bRemoveCertificateNaktamEk, AppConstants.STUDIES_NAKTAM_EK, tfPathPDFNaktamEk);
     }
-    
+
     private void initButtonNaktamCertificateGeneric(MonasticProfile p, Button bCurrentCertificate, Button bAddCertificate, Button bRemoveCertificate, String level, TextField tfPathPDF)
     {
         if (AppFiles.getNaktamCertificate(p.getNickname(), level).exists())
         {
             bCurrentCertificate.setDisable(false);
-            
+
             tfPathPDF.setVisible(false);
             bAddCertificate.setVisible(false);
-                        
+
             bRemoveCertificate.setVisible(true);
         }
         else
         {
             bCurrentCertificate.setDisable(true);
-            
+
             tfPathPDF.setVisible(true);
             bAddCertificate.setVisible(true);
-            
+
             bRemoveCertificate.setVisible(false);
         }
     }
@@ -540,19 +537,38 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
             fileProfilePhoto = null;
         }
+
+        reloadButtonsProfilePhoto();
+
+        GUIUtil.loadImageView(ivProfilePhoto, GUIUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
+    }
+
+    private void reloadButtonsProfilePhoto()
+    {
+        File fPhoto;
+        MonasticProfile p;
         
-        if (fileProfilePhoto != null && fileProfilePhoto.exists())
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        fPhoto = AppFiles.getProfilePhoto(p.getNickname());
+        
+        if (ctrGUIMain.getPaneEditSaveController().getLockStatus())
         {
             bChangeProfilePhoto.setDisable(true);
-            bArchiveProfilePhoto.setDisable(false);
+            bArchiveProfilePhoto.setDisable(true);
         }
         else
         {
-            bChangeProfilePhoto.setDisable(false);
-            bArchiveProfilePhoto.setDisable(true);
+            if (fPhoto != null && fPhoto.exists())
+            {
+                bChangeProfilePhoto.setDisable(true);
+                bArchiveProfilePhoto.setDisable(false);
+            }
+            else
+            {
+                bChangeProfilePhoto.setDisable(false);
+                bArchiveProfilePhoto.setDisable(true);
+            }
         }
-
-        GUIUtil.loadImageView(ivProfilePhoto, GUIUtil.IMG_TYPE_PROFILE, fileProfilePhoto);
     }
 
     @FXML
@@ -571,9 +587,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             CtrFileOperation.copyOperation(fSource, fDestination);
             ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
         }
-
     }
-    
+
     @FXML
     void actionArchiveProfilePhoto(ActionEvent ae)
     {
@@ -584,20 +599,20 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         File f2Archive;
 
         msg = "Are you sure that you want to archive this profile photo?\n";
-                
+
         confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
         if (confirmation)
         {
-           p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-           f2Archive = AppFiles.getProfilePhoto(p.getNickname());
-           opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
-           if (opStatusArchive == 0)
-           {
-               ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
-               CtrAlertDialog.infoDialog("Archived successfully", "The profile photo was archived successfully.");
-           }   
-        }   
+            f2Archive = AppFiles.getProfilePhoto(p.getNickname());
+            opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
+            if (opStatusArchive == 0)
+            {
+                ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
+                CtrAlertDialog.infoDialog("Archived successfully", "The profile photo was archived successfully.");
+            }
+        }
     }
 
     @Override
@@ -639,10 +654,10 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
         }
     }
-    
+
     @FXML
     void actionSelectCertificatePDFNaktamToh(ActionEvent ae)
-    {        
+    {
         fPDFSelectedNaktamToh = CtrFileOperation.selectFile("Select Certificate File", CtrFileOperation.FILE_CHOOSER_TYPE_PDF);
         if (fPDFSelectedNaktamToh != null)
         {
@@ -650,7 +665,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
         }
     }
-    
+
     @FXML
     void actionSelectCertificatePDFNaktamEk(ActionEvent ae)
     {
@@ -662,24 +677,24 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         }
     }
 
-    @FXML    
+    @FXML
     void actionOpenCertificatePDFNaktamTri(ActionEvent ae)
     {
         actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
     }
-    
-    @FXML    
+
+    @FXML
     void actionOpenCertificatePDFNaktamToh(ActionEvent ae)
     {
         actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
     }
-    
-    @FXML    
+
+    @FXML
     void actionOpenCertificatePDFNaktamEk(ActionEvent ae)
     {
         actionOpenCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_EK);
     }
-    
+
     private void actionOpenCertificatePDFGeneric(String level)
     {
         MonasticProfile p;
@@ -687,25 +702,25 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), level));
     }
-    
-    @FXML    
+
+    @FXML
     void actionRemoveCertificatePDFNaktamTri(ActionEvent ae)
     {
         actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TRI);
     }
-    
-    @FXML    
+
+    @FXML
     void actionRemoveCertificatePDFNaktamToh(ActionEvent ae)
     {
         actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_TOH);
     }
-    
-    @FXML    
+
+    @FXML
     void actionRemoveCertificatePDFNaktamEk(ActionEvent ae)
     {
         actionRemoveCertificatePDFGeneric(AppConstants.STUDIES_NAKTAM_EK);
     }
-    
+
     private void actionRemoveCertificatePDFGeneric(String level)
     {
         MonasticProfile p;
@@ -714,28 +729,30 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         int opStatusArchive;
         File f2Archive;
 
-        msg = "Are you sure that you want to remove the "+ level +" certificate?\n"
+        msg = "Are you sure that you want to remove the " + level + " certificate?\n"
                 + "(Note: The certificate file will be archived)\n ";
-                
+
         confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
         if (confirmation)
         {
-           p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-           f2Archive = AppFiles.getNaktamCertificate(p.getNickname(),level);
-           opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
-           if (opStatusArchive == 0)
-           {
-               initNaktamCertificateButtons(p);
-               CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
-           }   
-        }   
+            f2Archive = AppFiles.getNaktamCertificate(p.getNickname(), level);
+            opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
+            if (opStatusArchive == 0)
+            {
+                initNaktamCertificateButtons(p);
+                CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
+            }
+        }
     }
 
     @Override
     public void actionLockEdit()
     {
         bChangeProfilePhoto.setDisable(true);
+        bArchiveProfilePhoto.setDisable(true);
+
         tfNickname.setEditable(false);
         tfName.setEditable(false);
         tfMiddleName.setEditable(false);
@@ -793,16 +810,17 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         bAddCertificateNaktamTri.setDisable(true);
         bAddCertificateNaktamToh.setDisable(true);
         bAddCertificateNaktamEk.setDisable(true);
-        
+
         bRemoveCertificateNaktamTri.setDisable(true);
         bRemoveCertificateNaktamToh.setDisable(true);
         bRemoveCertificateNaktamEk.setDisable(true);
+        
+        reloadButtonsProfilePhoto();
     }
 
     @Override
     public void actionUnlockEdit()
     {
-        bChangeProfilePhoto.setDisable(false);
         tfNickname.setEditable(true);
         tfName.setEditable(true);
         tfMiddleName.setEditable(true);
@@ -861,10 +879,12 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         bAddCertificateNaktamTri.setDisable(false);
         bAddCertificateNaktamToh.setDisable(false);
         bAddCertificateNaktamEk.setDisable(false);
-        
+
         bRemoveCertificateNaktamTri.setDisable(false);
         bRemoveCertificateNaktamToh.setDisable(false);
         bRemoveCertificateNaktamEk.setDisable(false);
+        
+        reloadButtonsProfilePhoto();
     }
 
     private void actionSaveNaktamCertificates(MonasticProfile p)
@@ -873,17 +893,17 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         actionSaveNaktamCertificateGeneric(p, fPDFSelectedNaktamToh, AppConstants.STUDIES_NAKTAM_TOH);
         actionSaveNaktamCertificateGeneric(p, fPDFSelectedNaktamEk, AppConstants.STUDIES_NAKTAM_EK);
     }
-    
+
     private void actionSaveNaktamCertificateGeneric(MonasticProfile p, File fPDFSelected, String level)
     {
-        if (fPDFSelected != null && fPDFSelected.exists()) 
+        if (fPDFSelected != null && fPDFSelected.exists())
         {
             CtrFileOperation.copyOperation(fPDFSelected, AppFiles.getNaktamCertificate(p.getNickname(), level));
-        }       
+        }
         //reset temp variable after save
         fPDFSelected = null;
     }
-    
+
     @Override
     public int actionSave()
     {
