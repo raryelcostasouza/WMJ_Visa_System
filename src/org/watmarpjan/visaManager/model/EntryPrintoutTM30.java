@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -19,6 +20,7 @@ import org.watmarpjan.visaManager.util.Util;
 public class EntryPrintoutTM30 {
 
     private final SimpleStringProperty pNotifDate;
+    private final SimpleStringProperty pNicknameResidenceMonastery;
     private final SimpleStringProperty pListMonasticNickname;
 
     private String strListMonasticNickname;
@@ -30,6 +32,7 @@ public class EntryPrintoutTM30 {
         ArrayList<MonasticProfile> listMonasticProfile;
         MonasticProfile mp;
         LocalDate ldNotifDate;
+        String monasteryNickname = "";
         
         this.objTM30 = objTM30;
         
@@ -37,10 +40,17 @@ public class EntryPrintoutTM30 {
         this.pNotifDate = new SimpleStringProperty(ldNotifDate.format(Util.DEFAULT_DATE_FORMAT));
 
         strListMonasticNickname = "";
+        
         listMonasticProfile = new ArrayList<>();
         if (objTM30.getMonasticProfileSet() != null)
         {
             listMonasticProfile.addAll(objTM30.getMonasticProfileSet());
+            
+            //all monastic profiles in one report should have the same residence monastery
+            //so can retrieve the monastery from the first one
+            mp = listMonasticProfile.get(0);
+            monasteryNickname = mp.getMonasteryResidingAt().getMonasteryNickname(); 
+                    
             for (int i = 0; i < listMonasticProfile.size(); i++)
             {
                 mp = listMonasticProfile.get(i);
@@ -53,6 +63,7 @@ public class EntryPrintoutTM30 {
             }
         }
 
+        this.pNicknameResidenceMonastery = new SimpleStringProperty(monasteryNickname);
         this.pListMonasticNickname = new SimpleStringProperty(strListMonasticNickname);
     }
 
@@ -61,6 +72,11 @@ public class EntryPrintoutTM30 {
         return pNotifDate.get();
     }
 
+    public String getPNicknameResidenceMonastery()
+    {
+        return pNicknameResidenceMonastery.get();
+    }
+    
     public String getPListMonasticNickname()
     {
         return pListMonasticNickname.get();

@@ -77,7 +77,8 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         bMonasticSelection = new BlockMonasticSelection(tvMonastics);
 
         tvSavedNotifications.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("pNotifDate"));
-        tvSavedNotifications.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
+        tvSavedNotifications.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("pNicknameResidenceMonastery"));
+        tvSavedNotifications.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("pListMonasticNickname"));
 
         tcOpenPDF.setCellValueFactory(new PropertyValueFactory<>(""));
         tcRemovePrintout.setCellValueFactory(new PropertyValueFactory<>(""));
