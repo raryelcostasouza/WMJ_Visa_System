@@ -923,7 +923,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         boolean error;
         Monastery wResidingAt, wAdviserToCome;
         Date birthDate;
-        String previousNickName, newNickName;
+        String previousNickName, newNickName, previousStatus, newStatus;
 
         error = false;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -1053,6 +1053,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         p.setEmail(tfEmail.getText());
         p.setEmergencyContact(taEmergencyContact.getText());
 
+        previousStatus = p.getStatus();
         if (rbInThailand.isSelected())
         {
             p.setStatus(AppConstants.STATUS_THAILAND);
@@ -1065,6 +1066,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }
+        newStatus = p.getStatus();
 
         p.setRemark(taRemark.getText());
 
@@ -1075,12 +1077,22 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             //if the update operation was successful
             if (operationStatus == 0)
             {
-                //if the nickname was changed refresh nickname list
-                if (!previousNickName.equals(newNickName))
+                //if the nickname was changed              
+                //refresh nickname list and rename folder
+                if (!previousNickName.equals(newNickName) ||
+                        !previousStatus.equals(newStatus))
                 {
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
+                
+                //if there was a status change 
+                //refresh nickname list
+                if (!previousStatus.equals(newStatus))
+                {
+                    ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
+                }
+                    
                 initNaktamCertificateButtons(p);
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
