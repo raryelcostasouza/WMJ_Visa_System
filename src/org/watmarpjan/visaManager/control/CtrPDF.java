@@ -105,7 +105,7 @@ public class CtrPDF
     private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
-        Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
+        Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat, mResidence;
         Upajjhaya u;
         LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
         Date dVisaExpiry;
@@ -274,15 +274,16 @@ public class CtrPDF
             }
 
         }
-
-        mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher();
+        
+        mResidence = p.getMonasteryResidingAt();
+        mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
         if (mJaoKanaAmpher != null)
         {
             acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getAddrAmpher() + " " + mJaoKanaAmpher.getAddrJangwat());
             acroForm.getField("watJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getMonasteryName());
         }
 
-        mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat();
+        mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat(mResidence);
         if (mJaoKanaJangwat != null)
         {
             acroForm.getField("addrJangwatJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getAddrJangwat());

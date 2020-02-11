@@ -75,32 +75,51 @@ public class CtrMonastery extends AbstractControllerDB
         return (Monastery) ctrDB.loadEntityByUniqueProperty("Monastery", "monasteryName", name);
     }
 
-    public Monastery loadMonasteryJaoKanaAmpher()
+    public Monastery loadMonasteryJaoKanaAmpher(Monastery residenceMonastery)
     {
-        TypedQuery<Monastery> tq;
-
+        String hql;
+        Monastery mJaokanaAmpher;
+        
         try
         {
-            tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-            tq.setParameter("monasteryOfJaokana", "AMPHER");
+            
+            //looks for the jaokana ampher in the DB that is on the same Province and Ampher
+            //as the Residence Monatery of the Monastic
+            hql = "select m "
+                    + " from Monastery m"
+                    + " where m.monasteryOfJaokana = 'AMPHER' "
+                    
+                    + " and m.addrAmpher = '" + residenceMonastery.getAddrAmpher() +"'"
+                    + " and m.addrJangwat = '" + residenceMonastery.getAddrJangwat()+"'";
+            
+            mJaokanaAmpher = ctrDB.getSession().createQuery(hql, Monastery.class).getSingleResult();
+            
 
-            return tq.getSingleResult();
+            return mJaokanaAmpher;
         } catch (NoResultException ex)
         {
             return null;
         }
     }
 
-    public Monastery loadMonasteryJaoKanaJangwat()
+    public Monastery loadMonasteryJaoKanaJangwat(Monastery residenceMonastery)
     {
-        TypedQuery<Monastery> tq;
+        String hql;
+        Monastery mJaokanaJangwat;
 
         try
         {
-            tq = ctrDB.getSession().createNamedQuery("Monastery.findByMonasteryOfJaokana", Monastery.class);
-            tq.setParameter("monasteryOfJaokana", "JANGWAT");
+             //looks for the jaokana jangwat in the DB that is on the same province
+            //as the Residence Monatery of the Monastic
+           hql = "select m "
+                    + " from Monastery m"
+                    + " where m.monasteryOfJaokana = 'JANGWAT' "
+                    + " and m.addrJangwat = '" + residenceMonastery.getAddrJangwat() +"'";
+            
+            mJaokanaJangwat = ctrDB.getSession().createQuery(hql, Monastery.class).getSingleResult();
+            
 
-            return tq.getSingleResult();
+            return mJaokanaJangwat;
         } catch (NoResultException ex)
         {
             return null;
