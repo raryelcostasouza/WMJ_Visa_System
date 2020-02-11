@@ -204,6 +204,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     @FXML
     private Button bCurrentCertificateNaktamEk;
+    
+    @FXML
+    private ComboBox<String> cbPassportKeptAt;
 
     File fPDFSelectedNaktamTri;
     File fPDFSelectedNaktamToh;
@@ -248,6 +251,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         listFields.add(tfPhoneNumber1);
         listFields.add(tfPhoneNumber2);
         listFields.add(taRemark);
+        listFields.add(cbPassportKeptAt);
 
         bCurrentCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bCurrentCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
@@ -344,6 +348,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         GUIUtil.loadContentComboboxGeneric(cbCertificate, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateEngList());
         GUIUtil.loadContentComboboxGeneric(cbCertificateThai, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateThaiList());
 
+        GUIUtil.loadContentComboboxGeneric(cbPassportKeptAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportKeptAt());
+        
         GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
         GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
 
@@ -374,6 +380,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             tfSchool.setText(p.getSchool());
             cbCertificate.setValue(p.getCertificateEnglish());
             cbCertificateThai.setValue(p.getCertificateThai());
+            cbPassportKeptAt.setValue(p.getPassportKeptAt());
             if (p.getCertificateDuration() != null)
             {
                 tfDuration.setText(p.getCertificateDuration() + "");
@@ -806,6 +813,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber1.setEditable(false);
         tfPhoneNumber2.setEditable(false);
         taRemark.setEditable(false);
+        
+        cbPassportKeptAt.setDisable(true);
 
         bAddCertificateNaktamTri.setDisable(true);
         bAddCertificateNaktamToh.setDisable(true);
@@ -876,6 +885,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber2.setEditable(true);
         taRemark.setEditable(true);
 
+        cbPassportKeptAt.setDisable(false);
+        
         bAddCertificateNaktamTri.setDisable(false);
         bAddCertificateNaktamToh.setDisable(false);
         bAddCertificateNaktamEk.setDisable(false);
@@ -945,6 +956,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         p.setCertificateEnglish(cbCertificate.getValue());
 
         p.setCertificateThai(cbCertificateThai.getValue());
+        
+        p.setPassportKeptAt(cbPassportKeptAt.getValue());
 
         //if the duration changed and the text field is not empty
         if ((!tfDuration.getText().equals(p.getCertificateDuration())
