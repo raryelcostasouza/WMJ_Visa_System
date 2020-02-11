@@ -372,12 +372,25 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.passportIssuedAt";
         return queryStringField(hql);
     }
+    
+    public ArrayList<String> loadListPassportKeptAt()
+    {
+        String hql;
+
+        hql = "select p.passportKeptAt"
+                + " from MonasticProfile p "
+                + " where p.passportKeptAt is not null"
+                + " group by p.passportKeptAt"
+                + " order by p.passportKeptAt";
+
+        return queryStringField(hql);
+    }
 
     public ArrayList<EntryDueTask> loadListDue90DayNotice()
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt)"
                 + " from MonasticProfile p "
                 + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + "and p.next90DayNotice is not null "
