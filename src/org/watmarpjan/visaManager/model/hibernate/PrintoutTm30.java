@@ -25,17 +25,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adhipanyo
+ * @author adhipanyo
  */
 @Entity
 @Table(name = "PRINTOUT_TM30")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p")
-    , @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout")
-    , @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
-    , @NamedQuery(name = "PrintoutTm30.findByAuxIndex", query = "SELECT p FROM PrintoutTm30 p WHERE p.auxIndex = :auxIndex")
+    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p"),
+    @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout"),
+    @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate"),
+    @NamedQuery(name = "PrintoutTm30.findByAuxIndex", query = "SELECT p FROM PrintoutTm30 p WHERE p.auxIndex = :auxIndex")
 })
 public class PrintoutTm30 implements Serializable
 {

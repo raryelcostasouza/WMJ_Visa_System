@@ -16,28 +16,32 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adhipanyo
+ * @author adhipanyo
  */
 @Entity
+@Table(name = "MONASTERY")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Monastery.findAll", query = "SELECT m FROM Monastery m")
-    , @NamedQuery(name = "Monastery.findByIdMonastery", query = "SELECT m FROM Monastery m WHERE m.idMonastery = :idMonastery")
-    , @NamedQuery(name = "Monastery.findByAddrAmpher", query = "SELECT m FROM Monastery m WHERE m.addrAmpher = :addrAmpher")
-    , @NamedQuery(name = "Monastery.findByAddrCountry", query = "SELECT m FROM Monastery m WHERE m.addrCountry = :addrCountry")
-    , @NamedQuery(name = "Monastery.findByAddrJangwat", query = "SELECT m FROM Monastery m WHERE m.addrJangwat = :addrJangwat")
-    , @NamedQuery(name = "Monastery.findByAddrNumber", query = "SELECT m FROM Monastery m WHERE m.addrNumber = :addrNumber")
-    , @NamedQuery(name = "Monastery.findByAddrRoad", query = "SELECT m FROM Monastery m WHERE m.addrRoad = :addrRoad")
-    , @NamedQuery(name = "Monastery.findByAddrTambon", query = "SELECT m FROM Monastery m WHERE m.addrTambon = :addrTambon")
-    , @NamedQuery(name = "Monastery.findByMonasteryOfJaokana", query = "SELECT m FROM Monastery m WHERE m.monasteryOfJaokana = :monasteryOfJaokana")
-    , @NamedQuery(name = "Monastery.findByMonasteryName", query = "SELECT m FROM Monastery m WHERE m.monasteryName = :monasteryName")
-    , @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber")
+    @NamedQuery(name = "Monastery.findAll", query = "SELECT m FROM Monastery m"),
+    @NamedQuery(name = "Monastery.findByIdMonastery", query = "SELECT m FROM Monastery m WHERE m.idMonastery = :idMonastery"),
+    @NamedQuery(name = "Monastery.findByAddrAmpher", query = "SELECT m FROM Monastery m WHERE m.addrAmpher = :addrAmpher"),
+    @NamedQuery(name = "Monastery.findByAddrCountry", query = "SELECT m FROM Monastery m WHERE m.addrCountry = :addrCountry"),
+    @NamedQuery(name = "Monastery.findByAddrJangwat", query = "SELECT m FROM Monastery m WHERE m.addrJangwat = :addrJangwat"),
+    @NamedQuery(name = "Monastery.findByAddrNumber", query = "SELECT m FROM Monastery m WHERE m.addrNumber = :addrNumber"),
+    @NamedQuery(name = "Monastery.findByAddrRoad", query = "SELECT m FROM Monastery m WHERE m.addrRoad = :addrRoad"),
+    @NamedQuery(name = "Monastery.findByAddrTambon", query = "SELECT m FROM Monastery m WHERE m.addrTambon = :addrTambon"),
+    @NamedQuery(name = "Monastery.findByMonasteryOfJaokana", query = "SELECT m FROM Monastery m WHERE m.monasteryOfJaokana = :monasteryOfJaokana"),
+    @NamedQuery(name = "Monastery.findByMonasteryName", query = "SELECT m FROM Monastery m WHERE m.monasteryName = :monasteryName"),
+    @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber"),
+    @NamedQuery(name = "Monastery.findByMonasteryNickname", query = "SELECT m FROM Monastery m WHERE m.monasteryNickname = :monasteryNickname"),
+    @NamedQuery(name = "Monastery.findByAbbotName", query = "SELECT m FROM Monastery m WHERE m.abbotName = :abbotName")
 })
 public class Monastery implements Serializable
 {
@@ -67,6 +71,10 @@ public class Monastery implements Serializable
     private String monasteryName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+    @Column(name = "MONASTERY_NICKNAME")
+    private String monasteryNickname;
+    @Column(name = "ABBOT_NAME")
+    private String abbotName;
     @OneToMany(mappedBy = "monastery")
     private Set<Upajjhaya> upajjhayaSet;
     @OneToMany(mappedBy = "monasteryAdviserToCome")
@@ -189,6 +197,26 @@ public class Monastery implements Serializable
     public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getMonasteryNickname()
+    {
+        return monasteryNickname;
+    }
+
+    public void setMonasteryNickname(String monasteryNickname)
+    {
+        this.monasteryNickname = monasteryNickname;
+    }
+
+    public String getAbbotName()
+    {
+        return abbotName;
+    }
+
+    public void setAbbotName(String abbotName)
+    {
+        this.abbotName = abbotName;
     }
 
     @XmlTransient
