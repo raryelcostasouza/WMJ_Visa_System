@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
    <children>
       <TitledPane animated="false" collapsible="false" text="Monastery List">
          <content>
@@ -34,17 +34,19 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Name:" />
-                        <Label text="Phone Number:" GridPane.rowIndex="1" />
+                        <Label text="Phone Number:" GridPane.rowIndex="3" />
                         <TextField fx:id="tfName" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
-                        <TextField fx:id="tfPhoneNumber" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label layoutX="10.0" layoutY="108.0" text="Wat of JaoKana:" GridPane.rowIndex="2" />
-                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="tfPhoneNumber" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label layoutX="10.0" layoutY="108.0" text="Wat of JaoKana:" GridPane.rowIndex="4" />
+                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <RadioButton fx:id="rbNo" mnemonicParsing="false" selected="true" text="No">
                                  <toggleGroup>
@@ -55,6 +57,10 @@
                               <RadioButton fx:id="rbJKTambol" mnemonicParsing="false" text="Jaokana Tambol" toggleGroup="$tgJaokana" />
                            </children>
                         </VBox>
+                        <Label text="Nickname:" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfNickname" layoutX="114.0" layoutY="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="52.0" text="Abbot Name (Thai):" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfAbbotName" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
