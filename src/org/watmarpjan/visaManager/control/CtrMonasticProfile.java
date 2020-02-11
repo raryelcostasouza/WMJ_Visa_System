@@ -97,7 +97,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         {
             hql = "select p from MonasticProfile p"
                     + " where p.status <> 'INACTIVE'"
-                    + " order by"
+                    + " order by"   
                     + " p.bhikkhuOrdDate asc nulls last,"
                     + " p.samaneraOrdDate asc nulls last,"
                     + " p.pahkahwOrdDate asc nulls last";
@@ -122,12 +122,13 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return listNickname;
     }
 
-    public MonasticProfile loadByIndex(int index)
+    public MonasticProfile loadFirstProfile(boolean onlyActive)
     {
         ArrayList<MonasticProfile> alProfile;
         String hql;
 
         hql = "from MonasticProfile p "
+                + "where p.status <> 'INACTIVE' "
                 + "order by "
                 + "p.bhikkhuOrdDate asc nulls last, "
                 + "p.samaneraOrdDate asc nulls last,"
@@ -137,7 +138,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         if (!alProfile.isEmpty())
         {
-            return alProfile.get(index);
+            return alProfile.get(0);
         }
         else
         {

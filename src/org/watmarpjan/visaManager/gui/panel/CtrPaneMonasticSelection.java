@@ -43,7 +43,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         MonasticProfile firstProfile;
 
         fillNicknameList();
-        firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadByIndex(0);
+        firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadFirstProfile(cbShowOnlyActive.isSelected());
 
         if (firstProfile != null)
         {
@@ -169,7 +169,7 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         if (cbShowOnlyActive.isSelected() && selectedProfile.getStatus().equals("INACTIVE"))
         {
             //one choice is to select to the first profile on the DB
-            firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadByIndex(0);
+            firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadFirstProfile(cbShowOnlyActive.isSelected());
             //if there is at least one active profile on the DB
             if (firstProfile != null)
             {
