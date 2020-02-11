@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.model.dueTask;
 
 import java.time.LocalDate;
 import java.util.Date;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
  *
@@ -15,9 +16,9 @@ import java.util.Date;
 public class TaskExtendNonImmVisaNew extends TaskExtendNonImmVisaGeneric
 {
     //used when the visa has NOT been EXTENDED YET.
-    public TaskExtendNonImmVisaNew(String profileNickname, Date dDueDate)
+    public TaskExtendNonImmVisaNew(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
     {
-        super(profileNickname, dDueDate);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
         LocalDate ldPrawat, ldSamnakput;
 
         ldPrawat = ldDueDate.minusMonths(3);

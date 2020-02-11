@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.model.dueTask;
 
 import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
  *
@@ -14,9 +15,9 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class TaskExtendTouristVisaExtended extends TaskExtendTouristGeneric
 {
-    public TaskExtendTouristVisaExtended(String profileNickname, Date dDueDate)
+    public TaskExtendTouristVisaExtended(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
     {
-        super(profileNickname, dDueDate);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
         immigration = new SimpleStringProperty("Already Extended");
     }
 }
