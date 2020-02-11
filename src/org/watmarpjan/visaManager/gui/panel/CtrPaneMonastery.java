@@ -33,6 +33,12 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     private TextField tfName;
 
     @FXML
+    private TextField tfNickname;
+    
+    @FXML
+    private TextField tfAbbotName;
+
+    @FXML
     private TextField tfPhoneNumber;
 
     @FXML
@@ -103,6 +109,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields.add(tfAddrTambol);
         listFields.add(tfAddrRoad);
         listFields.add(tfAddrNumber);
+        listFields.add(tfNickname);
+        listFields.add(tfAbbotName);
         listFields.add(tfPhoneNumber);
         listFields.add(tgJaokana);
         listFields.add(tgCountry);
@@ -118,6 +126,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionLockEdit()
     {
         tfName.setEditable(false);
+        tfNickname.setEditable(false);
+        tfAbbotName.setEditable(false);
         tfPhoneNumber.setEditable(false);
 
         rbCountryOther.setDisable(true);
@@ -157,6 +167,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
             newName = tfName.getText();
 
             m.setMonasteryName(tfName.getText());
+            m.setMonasteryNickname(tfNickname.getText());
+            m.setAbbotName(tfAbbotName.getText());
             m.setPhoneNumber(tfPhoneNumber.getText());
 
             if (rbJkJangwat.isSelected())
@@ -251,6 +263,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionUnlockEdit()
     {
         tfName.setEditable(true);
+        tfNickname.setEditable(true);
+        tfAbbotName.setEditable(true);
         tfPhoneNumber.setEditable(true);
 
         rbCountryOther.setDisable(false);
@@ -290,6 +304,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         {
             tfName.setText(m.getMonasteryName());
             tfPhoneNumber.setText(m.getPhoneNumber());
+            tfNickname.setText(m.getMonasteryNickname());
+            tfAbbotName.setText(m.getAbbotName());
             clearAddrTextFields();
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
