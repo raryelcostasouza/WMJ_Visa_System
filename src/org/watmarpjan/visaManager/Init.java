@@ -20,7 +20,7 @@ import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 public class Init extends Application
 {
 
-    public static final String APP_VERSION = "v1.8.3 - 30/04/2019";
+    public static final String APP_VERSION = "v1.9 - ALPHA - 10/02/2020";
     public static Stage MAIN_STAGE;
     public static HostServices HOST_SERVICES;
     public static Application APP;
