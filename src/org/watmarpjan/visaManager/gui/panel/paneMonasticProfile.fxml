@@ -398,49 +398,66 @@
                                   </VBox>
                               </content>
                           </TitledPane>
-                          <TitledPane animated="false" collapsible="false" text="Status">
-                              <content>
-                                  <HBox alignment="CENTER_LEFT">
-                                      <children>
-                                          <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
-                                              <toggleGroup>
-                                                  <ToggleGroup fx:id="tgStatus" />
-                                              </toggleGroup>
-                                          </RadioButton>
-                                          <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
-                                          <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
-                                      </children>
-                                  </HBox>
-                              </content>
-                          </TitledPane>
-                        <TitledPane collapsible="false" text="Online 90 Day Notice Accepted?" HBox.hgrow="ALWAYS">
-                           <content>
-                              <HBox spacing="10.0">
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox maxWidth="1.7976931348623157E308">
                                  <children>
-                                    <RadioButton fx:id="rbOnlineNoticeYes" disable="true" mnemonicParsing="false" text="Yes">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="tgOnlineNotice" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rbOnlineNoticeNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgOnlineNotice" />
+                                      <TitledPane animated="false" collapsible="false" text="Status">
+                                          <content>
+                                              <HBox alignment="CENTER_LEFT">
+                                                  <children>
+                                                      <RadioButton fx:id="rbInThailand" disable="true" mnemonicParsing="false" selected="true" text="Thailand">
+                                                          <toggleGroup>
+                                                              <ToggleGroup fx:id="tgStatus" />
+                                                          </toggleGroup>
+                                                      </RadioButton>
+                                                      <RadioButton fx:id="rbAbroad" disable="true" mnemonicParsing="false" text="Abroad" toggleGroup="$tgStatus" />
+                                                      <RadioButton fx:id="rbInactive" disable="true" mnemonicParsing="false" text="Inactive" toggleGroup="$tgStatus" />
+                                                  </children>
+                                              </HBox>
+                                          </content>
+                                      </TitledPane>
+                                    <TitledPane collapsible="false" text="Online 90 Day Notice Accepted?">
+                                       <content>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <RadioButton fx:id="rbOnlineNoticeYes" disable="true" mnemonicParsing="false" text="Yes">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="tgOnlineNotice" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rbOnlineNoticeNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgOnlineNotice" />
+                                             </children>
+                                          </HBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane collapsible="false" text="Visa Manager?" HBox.hgrow="ALWAYS">
+                                       <content>
+                                          <HBox spacing="10.0">
+                                             <children>
+                                                <RadioButton fx:id="rbVisaManagerYes" disable="true" mnemonicParsing="false" text="Yes">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="tgVisaManager" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rbVisaManagerNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgVisaManager" />
+                                             </children>
+                                          </HBox>
+                                       </content>
+                                    </TitledPane>
                                  </children>
                               </HBox>
-                           </content>
-                        </TitledPane>
-                        <TitledPane collapsible="false" text="Visa Manager?">
-                           <content>
-                              <HBox spacing="10.0">
-                                 <children>
-                                    <RadioButton fx:id="rbVisaManagerYes" disable="true" mnemonicParsing="false" text="Yes">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="tgVisaManager" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rbVisaManagerNo" disable="true" mnemonicParsing="false" selected="true" text="No" toggleGroup="$tgVisaManager" />
-                                 </children>
-                              </HBox>
-                           </content>
-                        </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Passport Kept at/with:">
+                                 <content>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <ComboBox fx:id="cbPassportKeptAt" disable="true" editable="true" prefWidth="210.0" />
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </children>
