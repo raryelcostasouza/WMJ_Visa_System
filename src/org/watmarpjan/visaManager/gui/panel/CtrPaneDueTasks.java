@@ -278,20 +278,23 @@ public class CtrPaneDueTasks extends AChildPaneController
     {
         TableColumn<EntryDueTask, String> tcAction, tcWeekDay, tcDueDate;
 
-        tcDueDate = (TableColumn<EntryDueTask, String>) tv.getColumns().get(2);
+        tcDueDate = (TableColumn<EntryDueTask, String>) tv.getColumns().get(4);
         tcDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         tcDueDate.setCellFactory(dateCellFactory);
 
         tv.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("profileNickname"));
-
-        tv.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("weekDayDueDate"));
-        tv.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
+        tv.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("nicknameMonasteryResidingAt"));
+        tv.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("passportKeptAt"));
+        
+        
+        tv.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("weekDayDueDate"));
+        tv.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
 
         tcAction = (TableColumn<EntryDueTask, String>) tv.getColumns().get(0);
         tcAction.setCellValueFactory(new PropertyValueFactory<>(""));
         tcAction.setCellFactory(actionCellFactory);
 
-        tcWeekDay = (TableColumn<EntryDueTask, String>) tv.getColumns().get(3);
+        tcWeekDay = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5);
         tcWeekDay.setCellFactory(weekDayCellFactory);
     }
 
@@ -300,7 +303,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         TableColumn<EntryDueTask, Boolean> tcOnline;
         initTableGeneric(tv);
 
-        tcOnline = (TableColumn<EntryDueTask, Boolean>) tv.getColumns().get(5);
+        tcOnline = (TableColumn<EntryDueTask, Boolean>) tv.getColumns().get(7);
         tcOnline.setCellFactory(CheckBoxTableCell.forTableColumn(tcOnline));
         tcOnline.setCellValueFactory(new PropertyValueFactory<>("onlineNoticeAccepted"));
 
@@ -321,15 +324,15 @@ public class CtrPaneDueTasks extends AChildPaneController
         TableColumn<EntryDueTask, String> tcPrawat, tcSamnakput, tcImmigration;
         initTableGeneric(tv);
 
-        tcPrawat = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(0);
+        tcPrawat = (TableColumn<EntryDueTask, String>) tv.getColumns().get(7).getColumns().get(0);
         tcPrawat.setCellValueFactory(new PropertyValueFactory<>("prawat"));
         tcPrawat.setCellFactory(dateCellFactory);
 
-        tcSamnakput = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(1);
+        tcSamnakput = (TableColumn<EntryDueTask, String>) tv.getColumns().get(7).getColumns().get(1);
         tcSamnakput.setCellValueFactory(new PropertyValueFactory<>("samnakput"));
         tcSamnakput.setCellFactory(dateCellFactory);
 
-        tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(2);
+        tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(7).getColumns().get(2);
         tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
         tcImmigration.setCellFactory(dateCellFactory);
 
@@ -341,7 +344,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         TableColumn<EntryDueTask, String> tcImmigration;
         initTableGeneric(tv);
 
-        tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5).getColumns().get(0);
+        tcImmigration = (TableColumn<EntryDueTask, String>) tv.getColumns().get(7).getColumns().get(0);
         tcImmigration.setCellValueFactory(new PropertyValueFactory<>("immigration"));
         tcImmigration.setCellFactory(dateCellFactory);
 
@@ -354,7 +357,7 @@ public class CtrPaneDueTasks extends AChildPaneController
 
         initTableGeneric(tv);
 
-        tcBeginProcBy = (TableColumn<EntryDueTask, String>) tv.getColumns().get(5);
+        tcBeginProcBy = (TableColumn<EntryDueTask, String>) tv.getColumns().get(7);
         tcBeginProcBy.setCellValueFactory(new PropertyValueFactory<>("beginProcessingBy"));
         tcBeginProcBy.setCellFactory(dateCellFactory);
 
