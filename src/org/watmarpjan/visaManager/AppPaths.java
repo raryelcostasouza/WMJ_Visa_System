@@ -81,9 +81,9 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Forms-Templates");
     }
     
-    public static Path getPathToLetterTemplate()
+    public static Path getPathToLetterTemplate(String monasteryNickname)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Letter-Templates");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Letter-Templates/" + monasteryNickname);
     }
 
     public static Path getPathToIconSubfolder()

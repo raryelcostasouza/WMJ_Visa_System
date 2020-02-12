@@ -207,10 +207,12 @@ public class CtrLetterODF
     public static void generateLetter(String letterSelected, MonasticProfile p, LetterInputData objLetterInput)
     {
         File fLetterTemplate;
+        String monasteryNickname;
         String fileNameTemplateWithoutExtension;
 
+        monasteryNickname = objLetterInput.getMonasticProfile().getMonasteryResidingAt().getMonasteryNickname();
         fileNameTemplateWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
-        fLetterTemplate = AppPaths.getPathToLetterTemplate().resolve(fileNameTemplateWithoutExtension + ".odt").toFile();
+        fLetterTemplate = AppPaths.getPathToLetterTemplate(monasteryNickname).resolve(fileNameTemplateWithoutExtension + ".odt").toFile();
         try
         {
             TextDocument objTD = TextDocument.loadDocument(fLetterTemplate);
