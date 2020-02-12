@@ -110,6 +110,7 @@ public class CtrPDF
         LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
         Date dVisaExpiry;
         String str_jangwat_country;
+        String abbotName;
 
         addProfilePhotoPrawat(pdfDoc, p);
 
@@ -136,6 +137,7 @@ public class CtrPDF
 
         alThaiFields.add((PDTextField) acroForm.getField("certificateThai"));
 
+        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThaiPDF"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaAmpherThai"));
 
@@ -276,6 +278,13 @@ public class CtrPDF
         }
         
         mResidence = p.getMonasteryResidingAt();
+        abbotName = mResidence.getAbbotName();
+        
+        if (abbotName != null)
+        {
+            acroForm.getField("nameAbbotWatResidingAtThaiPDF").setValue(abbotName);
+        }
+        
         mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
         if (mJaoKanaAmpher != null)
         {
