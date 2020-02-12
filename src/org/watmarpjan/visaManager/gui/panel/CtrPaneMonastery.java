@@ -9,6 +9,8 @@ import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -115,6 +117,22 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields.add(tgJaokana);
         listFields.add(tgCountry);
         
+        tfNickname.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    //as the monastery nickname will be used as a subfolder name for letter templates better to prevent
+                    //special characters input
+                    
+                    //this listener
+                    //removes any character except letters, number, dot and space
+                    tfNickname.setText(newValue.replaceAll("[^a-zA-Z0-9\\. ]", ""));
+                }
+            }
+        });
         
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
