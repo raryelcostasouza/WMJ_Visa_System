@@ -201,41 +201,24 @@ public class CtrLetterODF
             CtrAlertDialog.exceptionDialog(ex, "Unable to save generated Letter.");
         }
     }
-
-    public static void generateLetter(String letterSelected, MonasticProfile p, LetterInputData objLetterInput)
+    
+    public static void generateLetterGeneric(File fTemplate, MonasticProfile p, LetterInputData objLetterInput)
     {
-        File fLetterTemplate;
-        String monasteryNickname;
-        String fileNameTemplateWithoutExtension;
-
-        monasteryNickname = objLetterInput.getMonasticProfile().getMonasteryResidingAt().getMonasteryNickname();
-        fileNameTemplateWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
-        fLetterTemplate = AppPaths.getPathToLetterTemplate(monasteryNickname).resolve(fileNameTemplateWithoutExtension + ".odt").toFile();
         try
         {
-            TextDocument objTD = TextDocument.loadDocument(fLetterTemplate);
-            switch (fileNameTemplateWithoutExtension)
-            {
-                case "NonImmLaypersonAbroadEmbassy":
-                    generateLetterLaypersonAbroadEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmLaypersonAbroadEmbassyEN":
-                    generateLetterLaypersonAbroadEmbassyEN(objTD, objLetterInput);
-                    break;
-                case "NonImmLaypersonThailandVientianeEmbassy":
-                    generateLetterLaypersonThailandVientianeEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadEmbassy":
-                    generateLetterMonasticAbroadEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadEmbassyEN":
-                    generateLetterMonasticAbroadEmbassyEN(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadSamnakPut":
-                    generateLetterMonasticAbroadSamnakPut(objTD, objLetterInput);
-                    break;
-            }
-            saveLetter(objTD, objLetterInput.getMonasticProfile(), fileNameTemplateWithoutExtension);
+            TextDocument objTD;
+           
+            // LetterInput Object is only set for new visa because of extra data needed
+           if (objLetterInput != null)
+           {
+               objTD = generateLetterNewVisa(fTemplate, objLetterInput);
+           }
+           else
+           {
+               objTD = generateLetterVisaExt(p, fTemplate);
+           }
+            
+            saveLetter(objTD, p, fTemplate);
 
         }
         catch (InvalidNavigationException ex)
@@ -247,5 +230,68 @@ public class CtrLetterODF
             CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
         }
 
+    }
+     
+    private static TextDocument generateLetterVisaExt(MonasticProfile p, File fTemplate) throws InvalidNavigationException, Exception
+    {
+        TextDocument objTD = TextDocument.loadDocument(fTemplate);
+        switch(fTemplate.getName())
+        {
+            case AppFileNames.ODT_LETTER_GUARANTEE_SNP:
+                generateLetterGuaranteeSNP(objTD, p);
+                break;
+            case AppFileNames.ODT_LETTER_EXT_SNP:
+                break;
+            case AppFileNames.ODT_LETTER_EXT_IMM:
+                break;
+        }
+        
+        return objTD;
+    }
+    
+    public static void generateLetterGuaranteeSNP(TextDocument objTD, MonasticProfile p) throws InvalidNavigationException
+    {
+        Monastery mResidence;
+        String monasteryAddr;
+        
+        generateLetterCommonMonasticFields(objTD, p);
+        
+        mResidence = p.getMonasteryResidingAt();
+        monasteryAddr = mResidence.getMonasteryName() + " " 
+                        + mResidence.getAddrTambon() + " "
+                        + mResidence.getAddrAmpher() + " "
+                        + mResidence.getAddrJangwat();
+       
+        //need to use thai numbers
+        searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
+        searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAge(p.getBirthDate()));
+        searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
+    }
+    
+    private static TextDocument generateLetterNewVisa(File fTemplate, LetterInputData objLetterInput) throws InvalidNavigationException, Exception
+    {
+        TextDocument objTD = TextDocument.loadDocument(fTemplate);
+        switch (fTemplate.getName())
+        {
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY:
+                generateLetterLaypersonAbroadEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY_EN:
+                generateLetterLaypersonAbroadEmbassyEN(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_THAILAND_VIENTIANE_EMBASSY:
+                generateLetterLaypersonThailandVientianeEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY:
+                generateLetterMonasticAbroadEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY_EN:
+                generateLetterMonasticAbroadEmbassyEN(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_SNP:
+                generateLetterMonasticAbroadSamnakPut(objTD, objLetterInput);
+                break;
+        }    
+        return objTD;
     }
 }
