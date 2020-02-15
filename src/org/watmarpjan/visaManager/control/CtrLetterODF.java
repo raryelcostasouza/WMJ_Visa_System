@@ -12,10 +12,12 @@ import org.odftoolkit.simple.TextDocument;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.odftoolkit.simple.common.navigation.TextNavigation;
 import org.odftoolkit.simple.common.navigation.TextSelection;
+import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.LetterInputData;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
@@ -50,12 +52,8 @@ public class CtrLetterODF
         return p.getMonasticName() + p.getLastName() + "-" + LocalDateTime.now().format(Util.TIMESTAMP_FILE_NAME);
     }
 
-    private static void generateLetterCommonMonasticFields(TextDocument objTD, LetterInputData objLetterInput) throws InvalidNavigationException
+    private static void generateLetterCommonMonasticFields(TextDocument objTD, MonasticProfile p) throws InvalidNavigationException
     {
-        MonasticProfile p;
-
-        p = objLetterInput.getMonasticProfile();
-
         searchNReplace(objTD, "«name»", p.getMonasticName());
         if (p.getMiddleName() != null)
         {
@@ -106,7 +104,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
     }
 
@@ -116,7 +114,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         generateLetterCommonEmbassyFields(objTD, objLetterInput);
 
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
@@ -136,7 +134,7 @@ public class CtrLetterODF
         p = objLetterInput.getMonasticProfile();
         e = objLetterInput.getEmbassy();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         searchNReplace(objTD, "«titleTH»", ProfileUtil.getTitleTH(p));
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
 
@@ -152,7 +150,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         generateLetterCommonEmbassyFields(objTD, objLetterInput);
 
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
