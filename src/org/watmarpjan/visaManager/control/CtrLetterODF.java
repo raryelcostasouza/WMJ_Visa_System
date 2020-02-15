@@ -177,13 +177,13 @@ public class CtrLetterODF
         searchNReplace(objTD, "«addressLine4»", objLetterInput.getAddrMonasticLine4());
     }
 
-    private static void saveLetter(TextDocument objTD, MonasticProfile p, String fileNameTemplateWithoutExtension)
+    private static void saveLetter(TextDocument objTD, MonasticProfile p, File fTemplate)
     {
         Path pProfileLetterStorage;
         String fileNameGeneratedLetter;
         File fDestination;
 
-        fileNameGeneratedLetter = fileNameTemplateWithoutExtension + generateLetterFileNameSuffix(p) + ".odt";
+        fileNameGeneratedLetter = Util.getFileNameWithoutExtension(fTemplate) + generateLetterFileNameSuffix(p) + ".odt";
         pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
         fDestination = pProfileLetterStorage.resolve(fileNameGeneratedLetter).toFile();
 
