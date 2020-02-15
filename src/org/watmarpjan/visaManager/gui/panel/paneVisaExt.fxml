@@ -36,6 +36,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Button fx:id="bPreview1" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1">
@@ -72,6 +73,8 @@
                         <Button fx:id="bPreview7" layoutX="266.0" layoutY="163.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Label layoutX="10.0" layoutY="18.0" text="Naktam Certificate:" GridPane.rowIndex="1" />
                         <Button fx:id="bPreviewNaktamCertificate" layoutX="304.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionPreviewNaktamCertificate" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="227.0" text="Residence Guarantee Letter for Samnakput:" GridPane.rowIndex="8" />
+                        <Button fx:id="bPreview8" layoutX="304.0" layoutY="222.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                      </children>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />

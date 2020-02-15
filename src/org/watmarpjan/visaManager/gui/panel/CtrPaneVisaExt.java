@@ -29,6 +29,7 @@ import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
@@ -70,6 +71,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     private Button bPreview6;
     @FXML
     private Button bPreview7;
+    @FXML
+    private Button bPreview8;
     
     @FXML
     private Button bPreviewNaktamCertificate;
@@ -101,6 +104,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         bPreview5.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview8.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         
         bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
@@ -391,6 +395,17 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
+    {
+        File fLetter;
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        fLetter = AppFiles.getODTGuaranteeLetterSNP(p.getMonasteryResidingAt());
+        CtrLetterODF.generateLetterGeneric(fLetter, p, null);
     }
 
 //    @FXML
