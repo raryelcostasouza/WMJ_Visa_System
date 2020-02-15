@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -240,6 +241,22 @@ public class AppFiles
     public static File getExtReqLetterIMM()
     {
         return AppPaths.getPathToForms().resolve("ExtReqLetterIMM.pdf").toFile();
+    }
+    
+    public static File getODTGuaranteeLetterSNP(Monastery mResidence)
+    {
+        String filename;
+        
+        filename = AppFileNames.ODT_LETTER_GUARANTEE_SNP;
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(filename).toFile();
+    }
+    
+    public static File getODTNewVisaLetter(Monastery mResidence, String letterSelected)
+    {
+        String fileNameWithoutExtension;
+        
+        fileNameWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(fileNameWithoutExtension + ".odt").toFile();
     }
 
     public static File getThaiFont()

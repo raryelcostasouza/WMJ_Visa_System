@@ -18,6 +18,18 @@ public class AppFileNames
 
     public static final String RECEIPT_STATUS_PENDING = "PENDING";
     public static final String RECEIPT_STATUS_APPROVED = "APPROVED";
+    
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY = "NonImmLaypersonAbroadEmbassy.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY_EN = "NonImmLaypersonAbroadEmbassyEN.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_THAILAND_VIENTIANE_EMBASSY = "NonImmLaypersonThailandVientianeEmbassy.odt";
+    
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY = "NonImmMonasticAbroadEmbassy.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY_EN = "NonImmMonasticAbroadEmbassyEN.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_SNP = "NonImmMonasticAbroadSamnakPut.odt";
+    
+    public static final String ODT_LETTER_GUARANTEE_SNP = "ResidenceGuaranteeLetterSNP.odt";
+    public static final String ODT_LETTER_EXT_SNP = "ExtReqLetterSNP.odt";
+    public static final String ODT_LETTER_EXT_IMM = "ExtReqLetterIMM.odt";
 
     public static String getProfilePhoto()
     {
