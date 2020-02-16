@@ -7,7 +7,9 @@ package org.watmarpjan.visaManager.control;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import org.odftoolkit.simple.TextDocument;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.odftoolkit.simple.common.navigation.TextNavigation;
@@ -19,6 +21,7 @@ import org.watmarpjan.visaManager.model.LetterInputData;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.util.MonasteryUtil;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -202,7 +205,7 @@ public class CtrLetterODF
         }
     }
     
-    public static void generateLetterGeneric(File fTemplate, MonasticProfile p, LetterInputData objLetterInput)
+    public static void generateLetterGeneric(File fTemplate, MonasticProfile p, LetterInputData objLetterInput, CtrVisa objCtrVisa)
     {
         try
         {
@@ -215,7 +218,7 @@ public class CtrLetterODF
            }
            else
            {
-               objTD = generateLetterVisaExt(p, fTemplate);
+               objTD = generateLetterVisaExt(p, fTemplate, objCtrVisa);
            }
             
             saveLetter(objTD, p, fTemplate);
@@ -232,7 +235,7 @@ public class CtrLetterODF
 
     }
      
-    private static TextDocument generateLetterVisaExt(MonasticProfile p, File fTemplate) throws InvalidNavigationException, Exception
+    private static TextDocument generateLetterVisaExt(MonasticProfile p, File fTemplate, CtrVisa objCtrVisa) throws InvalidNavigationException, Exception
     {
         TextDocument objTD = TextDocument.loadDocument(fTemplate);
         switch(fTemplate.getName())
@@ -241,8 +244,10 @@ public class CtrLetterODF
                 generateLetterGuaranteeSNP(objTD, p);
                 break;
             case AppFileNames.ODT_LETTER_EXT_SNP:
+                generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
                 break;
             case AppFileNames.ODT_LETTER_EXT_IMM:
+                generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
                 break;
         }
         
@@ -257,15 +262,82 @@ public class CtrLetterODF
         generateLetterCommonMonasticFields(objTD, p);
         
         mResidence = p.getMonasteryResidingAt();
-        monasteryAddr = mResidence.getMonasteryName() + " " 
-                        + mResidence.getAddrTambon() + " "
-                        + mResidence.getAddrAmpher() + " "
-                        + mResidence.getAddrJangwat();
-       
+        monasteryAddr = MonasteryUtil.getStringWatAddrFull(mResidence, false, true);
         //need to use thai numbers
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
         searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAge(p.getBirthDate()));
         searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
+    }
+    
+    public static void generateLetterReqExt(TextDocument objTD, MonasticProfile p, CtrVisa objCtrVisa, String filenameTemplateODT) throws InvalidNavigationException
+    {
+        String strFullName, strTitle, strMOrdainedAt, strMResidingAt;
+        Monastery mOrdainedAt, mResidingAt;
+        Date dVisaExpiry, dArrivalLastEntry;
+        LocalDate ldVisaExpiry, ldVisaExpiryDateDesired;
+        int extensionsCount;
+
+        strTitle = ProfileUtil.getTitleTH(p);
+        strFullName = ProfileUtil.getFullName(p);
+        mOrdainedAt = p.getMonasteryOrdainedAt();
+        mResidingAt = p.getMonasteryResidingAt();
+
+        searchNReplace(objTD, "<<titleThai>>", strTitle);
+        
+        searchNReplace(objTD, "<<fullName>>", strFullName);
+        searchNReplace(objTD, "<<nationality>>", p.getNationality());
+        searchNReplace(objTD, "<<passportNumber>>", p.getPassportNumber());
+        searchNReplace(objTD, "<<ordinationTypeThai>>", ProfileUtil.getOrdinationType(p));
+        searchNReplace(objTD, "<<ordinationDate>>", ProfileUtil.getStrOrdinationDate(p));
+        
+        dArrivalLastEntry = p.getArrivalLastEntryDate();
+        if (dArrivalLastEntry != null)
+        {
+            searchNReplace(objTD, "<<arrivalLastEntryDate>>", Util.toStringThaiDateFormat(dArrivalLastEntry));
+        }
+
+        //if the visa for this monastic has already been extended
+        //retrieves the expiry date of the most recent extension
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
+        {
+            dVisaExpiry = objCtrVisa.getLastExtension(p).getExpiryDate();
+            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
+        } //otherwise retrieves the expiry date of the original visa
+        else
+        {
+            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        }
+        
+        searchNReplace(objTD, "<<visaExpiryDate>>", Util.toStringThaiDateFormat(ldVisaExpiry));
+        
+        if (ldVisaExpiry != null)
+        {
+            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
+            searchNReplace(objTD, "<<visaExpiryDateDesired>>", Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
+        }
+
+        if (mOrdainedAt != null)
+        {
+            strMOrdainedAt = MonasteryUtil.getStringWatAddrFull(mOrdainedAt, true, false);
+            searchNReplace(objTD, "<<WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry>>", strMOrdainedAt);
+        }
+
+        if (mResidingAt != null)
+        {
+            strMResidingAt = MonasteryUtil.getStringWatAddrFull(mResidingAt, false, false);
+            searchNReplace(objTD, "<<WatResidingAtThai_addrAmpher_addrJangwat>>", strMResidingAt);
+        }
+
+        if (filenameTemplateODT.equals(AppFileNames.ODT_LETTER_EXT_SNP))
+        {
+            if (p.getVisaExtensionSet() != null)
+            {
+                extensionsCount = p.getVisaExtensionSet().size();
+                searchNReplace(objTD, "<<visaExtensionsCount>>", extensionsCount+"");
+            }
+        }
+
+
     }
     
     private static TextDocument generateLetterNewVisa(File fTemplate, LetterInputData objLetterInput) throws InvalidNavigationException, Exception
