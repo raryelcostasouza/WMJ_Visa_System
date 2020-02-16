@@ -77,6 +77,8 @@ public class Monastery implements Serializable
     private String abbotName;
     @OneToMany(mappedBy = "monastery")
     private Set<Upajjhaya> upajjhayaSet;
+    @OneToMany(mappedBy = "monasteryResidence")
+    private Set<PrintoutTm30> printoutTm30Set;
     @OneToMany(mappedBy = "monasteryAdviserToCome")
     private Set<MonasticProfile> monasticProfileSet;
     @OneToMany(mappedBy = "monasteryResidingAt")
@@ -228,6 +230,17 @@ public class Monastery implements Serializable
     public void setUpajjhayaSet(Set<Upajjhaya> upajjhayaSet)
     {
         this.upajjhayaSet = upajjhayaSet;
+    }
+
+    @XmlTransient
+    public Set<PrintoutTm30> getPrintoutTm30Set()
+    {
+        return printoutTm30Set;
+    }
+
+    public void setPrintoutTm30Set(Set<PrintoutTm30> printoutTm30Set)
+    {
+        this.printoutTm30Set = printoutTm30Set;
     }
 
     @XmlTransient

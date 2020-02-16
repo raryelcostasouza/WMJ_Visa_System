@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -52,6 +54,9 @@ public class PrintoutTm30 implements Serializable
     private Date notifDate;
     @Column(name = "AUX_INDEX")
     private Integer auxIndex;
+    @JoinColumn(name = "MONASTERY_RESIDENCE", referencedColumnName = "ID_MONASTERY")
+    @ManyToOne
+    private Monastery monasteryResidence;
     @OneToMany(mappedBy = "printoutTm30")
     private Set<MonasticProfile> monasticProfileSet;
 
@@ -98,6 +103,16 @@ public class PrintoutTm30 implements Serializable
     public void setAuxIndex(Integer auxIndex)
     {
         this.auxIndex = auxIndex;
+    }
+
+    public Monastery getMonasteryResidence()
+    {
+        return monasteryResidence;
+    }
+
+    public void setMonasteryResidence(Monastery monasteryResidence)
+    {
+        this.monasteryResidence = monasteryResidence;
     }
 
     @XmlTransient
