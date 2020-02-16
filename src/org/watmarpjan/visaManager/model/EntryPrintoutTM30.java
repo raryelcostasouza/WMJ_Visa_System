@@ -46,10 +46,12 @@ public class EntryPrintoutTM30 {
         {
             listMonasticProfile.addAll(objTM30.getMonasticProfileSet());
             
-            //all monastic profiles in one report should have the same residence monastery
-            //so can retrieve the monastery from the first one
-            mp = listMonasticProfile.get(0);
-            monasteryNickname = mp.getMonasteryResidingAt().getMonasteryNickname(); 
+            //if monastery residence was set for the report
+            //in older reports this field is empty
+            if (objTM30.getMonasteryResidence() != null)
+            {
+                monasteryNickname = objTM30.getMonasteryResidence().getMonasteryNickname(); 
+            }            
                     
             for (int i = 0; i < listMonasticProfile.size(); i++)
             {
