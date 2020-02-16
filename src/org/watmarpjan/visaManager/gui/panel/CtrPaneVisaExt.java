@@ -26,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
@@ -341,17 +342,33 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     @FXML
     void actionPreviewLetterSamnakput(ActionEvent ae)
     {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        //old version for PDF form
+        //MonasticProfile p;
+        //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_SNP);
     }
 
     @FXML
     void actionPreviewLetterImmigration(ActionEvent ae)
     {
+        //old version for PDF form
+        //MonasticProfile p;
+        //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_IMM);
+    }
+    
+    private void actionPreviewLetterODTGeneric(String letterFilename)
+    {
+        File fLetter;
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), letterFilename);
+        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
     }
 
     @FXML
@@ -404,8 +421,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
-        fLetter = AppFiles.getODTGuaranteeLetterSNP(p.getMonasteryResidingAt());
-        CtrLetterODF.generateLetterGeneric(fLetter, p, null);
+        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), AppFileNames.ODT_LETTER_GUARANTEE_SNP);
+        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
     }
 
 //    @FXML
