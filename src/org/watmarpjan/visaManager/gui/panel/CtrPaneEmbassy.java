@@ -55,6 +55,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         listFields.add(tfAddr2);
         listFields.add(tfAddr3);
         listFields.add(tfAddr4);
+        listFields.add(tfCountryTH);
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
 
