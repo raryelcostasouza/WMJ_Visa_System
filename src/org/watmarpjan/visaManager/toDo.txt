@@ -1,3 +1,6 @@
+Recent changes collapsable to the right
+Passport location at due tasks or at due tasks table
+
 
 * Replace Latest Changes sidebar with a collapsable "Help & Latest Changes" sidebar visible on all panels. PDF-files could be used to display each help chapter?
 
