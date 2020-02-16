@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
@@ -30,6 +31,7 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.model.BlockMonasticSelection;
 import org.watmarpjan.visaManager.model.EntryPrintoutTM30;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 
 /**
@@ -58,6 +60,9 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
 
     @FXML
     private DatePicker dpNotification;
+
+    @FXML
+    private ComboBox<String> cbResidenceMonastery;
 
     @FXML
     private TextField tfPathPDF;
@@ -187,14 +192,25 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             lvMonasticsMissingNewReport.getItems().clear();
         }
     }
+    
+    private void loadCBMonasteryResidence()
+    {
+        ArrayList<String> alMonasteryNickname;
+        
+        alMonasteryNickname = ctrGUIMain.getCtrMain().getCtrMonastery().loadMonasteryNicknameList();
+        cbResidenceMonastery.getItems().clear();
+        cbResidenceMonastery.getItems().addAll(alMonasteryNickname);
+    }
 
     public void fillData()
     {
         loadListMonasticsNeedNewReport();
         loadTableNotifResidence();
+        loadCBMonasteryResidence();
         ctrGUIMain.getCtrGUISharedUtil().loadMonasticTree(bMonasticSelection);
 
         dpNotification.setValue(null);
+        cbResidenceMonastery.setValue(null);
         tfPathPDF.setText("");
 
         tvMonastics.getSelectionModel().clearSelection();
@@ -225,11 +241,13 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         LocalDate ldNotifDate;
         int opStatus2, opStatus1, auxIndex;
         Integer nMaxAuxIndex;
+        Monastery mResidence;
 
         ldNotifDate = dpNotification.getValue();
-
+      
         if (validateFields())
         {
+            mResidence = ctrGUIMain.getCtrMain().getCtrMonastery().loadByNickname(cbResidenceMonastery.getValue());
             //if there is more than one printout on the same date
             //they will have different auxIndex values
             nMaxAuxIndex = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().getMaxAuxIndexPrintoutForNotifDate(ldNotifDate);
@@ -248,7 +266,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
             //if the file copy was successfull
             if (opStatus1 == 0)
             {
-                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().create(ldNotifDate, getNicknameSelectedMonastics(), auxIndex);
+                opStatus2 = ctrGUIMain.getCtrMain().getCtrPrintoutTM30().create(ldNotifDate, getNicknameSelectedMonastics(), auxIndex, mResidence);
                 //if the DB update was successfull
                 if (opStatus2 == 0)
                 {
@@ -326,6 +344,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
     private boolean validateFields()
     {
         return (fSelected != null)
-                && (dpNotification.getValue() != null);
+                && (dpNotification.getValue() != null)
+                && (cbResidenceMonastery.getValue() != null);
     }
 }
