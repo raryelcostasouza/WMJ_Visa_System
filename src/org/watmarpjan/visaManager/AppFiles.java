@@ -243,11 +243,8 @@ public class AppFiles
         return AppPaths.getPathToForms().resolve("ExtReqLetterIMM.pdf").toFile();
     }
     
-    public static File getODTGuaranteeLetterSNP(Monastery mResidence)
-    {
-        String filename;
-        
-        filename = AppFileNames.ODT_LETTER_GUARANTEE_SNP;
+    public static File getODTVisaExtLetterGeneric(Monastery mResidence, String filename)
+    {        
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(filename).toFile();
     }
     
