@@ -69,10 +69,26 @@ public class CtrMonastery extends AbstractControllerDB
 
         return alMonastery;
     }
+    
+    public ArrayList<String> loadMonasteryNicknameList()
+    {
+        ArrayList<String> alMonastery;
+        String hql;
+
+        hql = "select m.monasteryNickname from Monastery m where m.monasteryNickname is not null";
+        alMonastery = (ArrayList<String>) ctrDB.getSession().createQuery(hql).getResultList();
+
+        return alMonastery;
+    }
 
     public Monastery loadByName(String name)
     {
         return (Monastery) ctrDB.loadEntityByUniqueProperty("Monastery", "monasteryName", name);
+    }
+    
+    public Monastery loadByNickname(String nickname)
+    {
+        return (Monastery) ctrDB.loadEntityByUniqueProperty("Monastery", "monasteryNickname", nickname);
     }
 
     public Monastery loadMonasteryJaoKanaAmpher(Monastery residenceMonastery)
