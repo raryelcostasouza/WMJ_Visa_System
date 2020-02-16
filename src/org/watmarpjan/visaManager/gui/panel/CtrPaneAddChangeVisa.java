@@ -458,7 +458,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
             objLetterInput.setLdDepartureDateThai(dpDepartureDateFromThai.getValue());
 
             fTemplateODT = AppFiles.getODTNewVisaLetter(p.getMonasteryResidingAt(), strLetterSelected);
-            CtrLetterODF.generateLetterGeneric(fTemplateODT, p, objLetterInput);
+            CtrLetterODF.generateLetterGeneric(fTemplateODT, p, objLetterInput, null);
         }
         else
         {
