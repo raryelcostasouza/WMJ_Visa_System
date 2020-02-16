@@ -98,13 +98,13 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         TableColumn<EntryVisaExt, String> tc;
 
         bPreview1.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPreview2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPreview3.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview2.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bPreview3.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bPreview4.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview5.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPreview8.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview8.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         
         bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
