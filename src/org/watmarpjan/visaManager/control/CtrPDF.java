@@ -366,7 +366,7 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldPassportIssue, ldPassportExp, ldBirthDate, ldLastEntry;
         Monastery mResidingAt;
-        String immOffice;
+        String immOffice, strFullName;
 
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
@@ -445,6 +445,8 @@ public class CtrPDF
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
         }
+        strFullName = ProfileUtil.getFullName(p);
+        acroForm.getField("fullName").setValue(strFullName);
     }
 
     private void fillFormTM47_90DayNotice(PDAcroForm acroForm, MonasticProfile p) throws IOException
