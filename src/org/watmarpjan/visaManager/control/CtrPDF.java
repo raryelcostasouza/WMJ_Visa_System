@@ -366,8 +366,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldPassportIssue, ldPassportExp, ldBirthDate, ldLastEntry;
         Monastery mResidingAt;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -432,13 +434,16 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+             //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
-
         }
     }
 
@@ -447,8 +452,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldArrival;
         Monastery mResidingAt;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -482,7 +489,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-
+            //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
@@ -513,8 +523,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         Monastery mResidingAt;
         LocalDate ldBirthDate, ldPassportIssue, ldPassportExpiry, ldLastEntry;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -577,6 +589,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+             //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
@@ -593,8 +609,10 @@ public class CtrPDF
         LocalDate ldBirthDate, ldLastEntry, ldVisaExpiry, ldPassportIssue,
                 ldPassportExpiry;
         Date dVisaExpiry;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -625,6 +643,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+            //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+            
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
