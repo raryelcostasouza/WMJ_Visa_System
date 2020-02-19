@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<TitledPane fx:id="tpMain" collapsible="false" text="Extra Scan 1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrModulePassportPageScan">
+   <content>
+      <VBox>
+         <children>
+            <ImageView fx:id="ivScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../icons/passport.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Page number:" />
+                  <TextField fx:id="tfLeftPage" editable="false" prefWidth="50.0" />
+                  <Label text="-" />
+                  <TextField fx:id="tfRightPage" editable="false" prefWidth="50.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="bArchive" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
+                  <Button fx:id="bSelectFile" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</TitledPane>
