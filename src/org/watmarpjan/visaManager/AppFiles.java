@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
+import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
 import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
@@ -66,20 +67,20 @@ public class AppFiles
 
     }
 
-    public static ArrayList<ExtraPassportScanLoaded> getListExtraScans(String nickName, String passportNumber)
+    public static ArrayList<InfoPassportScanStampedPage> getListInfoPassportScansStampedPage(String nickName, String passportNumber, FilenameFilter objFF)
     {
         Path pSubfolder;
         File[] listFScans = null;
-        ArrayList<ExtraPassportScanLoaded> listFExtraScan;
+        ArrayList<InfoPassportScanStampedPage> listFExtraScan;
 
         listFExtraScan = new ArrayList<>();
         pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
         if (pSubfolder.toFile().exists())
         {
-            listFScans = pSubfolder.toFile().listFiles(new ExtraScanFileNameFilter());
+            listFScans = pSubfolder.toFile().listFiles(objFF);
             for (File f : listFScans)
             {
-                listFExtraScan.add(new ExtraPassportScanLoaded(f));
+                listFExtraScan.add(new InfoPassportScanStampedPage(f));
             }
         }
 
