@@ -2,11 +2,11 @@ package org.watmarpjan.visaManager.model.eps;
 
 import java.io.File;
 
-public class ExtraPassportScanLoaded
+public class InfoPassportScanStampedPage
 {
     private File fileScan;
     
-    public ExtraPassportScanLoaded(File fileScan)
+    public InfoPassportScanStampedPage(File fileScan)
     {
         this.fileScan = fileScan;
     }
