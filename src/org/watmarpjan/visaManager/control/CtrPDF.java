@@ -47,9 +47,10 @@ import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.util.Matrix;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
+import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
@@ -1321,7 +1322,7 @@ public class CtrPDF
     public void generatePDFPassportScans(MonasticProfile p, int option)
     {
         //passport size 17cm X 12.5 cm
-        ArrayList<ExtraPassportScanLoaded> listEPS;
+        ArrayList<InfoPassportScanStampedPage> listEPS;
         PDDocument pdfDoc;
         File outputFile;
 
@@ -1331,7 +1332,7 @@ public class CtrPDF
 
         try
         {
-            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
+            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
             generateScansPage1(pdfDoc, p);
             generateScansPage2(pdfDoc, p, listEPS);
             generateScansPage3(pdfDoc, p, listEPS);
@@ -1424,7 +1425,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
+    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoPassportScanStampedPage> listEPS) throws IOException
     {
         File fScan1, fScan2;
         PDPageContentStream contentStream;
@@ -1436,7 +1437,7 @@ public class CtrPDF
             page2 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page2);
 
-            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
+            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
 
@@ -1456,7 +1457,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
+    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoPassportScanStampedPage> listEPS) throws IOException
     {
         File fScan3;
         PDPageContentStream contentStream;
