@@ -604,6 +604,28 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     }
 
+    private void loadGUITabAllStampedPages(MonasticProfile p)
+    {
+        CtrModuleGenericScanStampedPage objCtr;
+        
+        listGenericScans = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new GenericScanStampedPageFilenameFilter());
+        
+        //resets the stamped pages interface
+        vboxAllStampedPages.getChildren().clear();
+        listHBox.clear();
+        
+        //one loop for creating all the GUI Modules
+        for (InfoPassportScanStampedPage objPS1 : listGenericScans)
+        {
+            //for each scan found add a GUI Module for managing the stamped page scan
+            actionAddGUIModuleStampedPageScan();
+            
+            //retrieve the last controller added with the module and fills it with the data
+            objCtr = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size()-1);
+            objCtr.fillData(objPS1, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+        }
+    }
+
     @FXML
     void actionArchiveExtraScan(ActionEvent ae)
     {
@@ -874,6 +896,65 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
 
         return false;
+    }
+    
+    @FXML
+    private void actionAddGUIModuleStampedPageScan()
+    {
+        CtrModuleGenericScanStampedPage ctrModule;
+        FXMLLoader objLoader;
+        TitledPane loadedPane;
+        HBox lastHBox, newHbox;
+        
+        try
+        {
+            objLoader = new FXMLLoader(getClass().getResource("modulePassportStampedPagesScan.fxml"));
+
+            //loads the gui element
+            loadedPane = objLoader.load();
+
+            //loads the controller for the module
+            ctrModule = (CtrModuleGenericScanStampedPage) objLoader.getController();
+            ctrModule.init(this);
+            listCtrModulePassportStampedPage.add(ctrModule);
+
+            //gets the HBox on the last line of the GUI
+            //if there are no lines of HBox
+            //or if the number of elements per line did already reach 3 create a new HBox line
+            if (listHBox.isEmpty() || listHBox.get(listHBox.size()-1).getChildren().size() >=3)
+            {
+                newHbox = new HBox();
+                listHBox.add(newHbox);
+                newHbox.getChildren().add(loadedPane);
+                vboxAllStampedPages.getChildren().add(newHbox);
+                
+                //switch tabs and come back to reupdate tab height for scrolling
+                tAllStampedPages.getTabPane().getSelectionModel().select(0);
+                tAllStampedPages.getTabPane().getSelectionModel().select(1);
+            }
+            //add on the last line
+            else
+            {
+                lastHBox = listHBox.get(listHBox.size() - 1);
+                lastHBox.getChildren().add(loadedPane);                
+            }
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to load Stamped Page Scan GUI Panel");
+        }
+    }
+
+    private void initAddedStampedPage(TitledPane loadedPane)
+    {
+        CtrModuleGenericScanStampedPage ctrModule;
+        InfoPassportScanStampedPage objPS;
+
+        ctrModule = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size() - 1);
+        ctrModule.init(this);
+
+        
+        ///ctrModule.fillData(objPS, ctrGUIMain.getPaneEditSaveController().getLockStatus());
     }
 
     private boolean validateNewExtraScanAdded()
