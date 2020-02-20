@@ -609,8 +609,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         CtrModuleGenericScanStampedPage objCtr;
         
         listGenericScans = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new GenericScanStampedPageFilenameFilter());
+        //sort according to page number
+        listGenericScans.sort(new ComparableComparator<InfoPassportScanStampedPage>());
         
-        //resets the stamped pages interface
+        //resets the stamped pages 
+        listCtrModulePassportStampedPage.clear();
         vboxAllStampedPages.getChildren().clear();
         listHBox.clear();
         
