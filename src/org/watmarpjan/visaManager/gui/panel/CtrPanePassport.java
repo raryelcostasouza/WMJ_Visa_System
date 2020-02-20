@@ -929,8 +929,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                 vboxAllStampedPages.getChildren().add(newHbox);
                 
                 //switch tabs and come back to reupdate tab height for scrolling
-                tAllStampedPages.getTabPane().getSelectionModel().select(0);
-                tAllStampedPages.getTabPane().getSelectionModel().select(1);
+                tabSelectedIndex = tAllStampedPages.getTabPane().getSelectionModel().getSelectedIndex();
+                tAllStampedPages.getTabPane().getSelectionModel().clearSelection();
+                tAllStampedPages.getTabPane().getSelectionModel().select(tabSelectedIndex);
             }
             //add on the last line
             else
