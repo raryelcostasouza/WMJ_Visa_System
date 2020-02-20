@@ -918,8 +918,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
             //loads the controller for the module
             ctrModule = (CtrModuleGenericScanStampedPage) objLoader.getController();
-            ctrModule.init(this);
             listCtrModulePassportStampedPage.add(ctrModule);
+            
+            index = listCtrModulePassportStampedPage.size();
+            ctrModule.init(this, index);
 
             //gets the HBox on the last line of the GUI
             //if there are no lines of HBox
@@ -947,18 +949,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         {
             CtrAlertDialog.exceptionDialog(ex, "Error to load Stamped Page Scan GUI Panel");
         }
-    }
-
-    private void initAddedStampedPage(TitledPane loadedPane)
-    {
-        CtrModuleGenericScanStampedPage ctrModule;
-        InfoPassportScanStampedPage objPS;
-
-        ctrModule = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size() - 1);
-        ctrModule.init(this);
-
-        
-        ///ctrModule.fillData(objPS, ctrGUIMain.getPaneEditSaveController().getLockStatus());
     }
 
     private boolean validateNewExtraScanAdded()
