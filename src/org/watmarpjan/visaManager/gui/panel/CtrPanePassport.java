@@ -39,6 +39,7 @@ import javafx.scene.control.Label;
 import org.watmarpjan.visaManager.AppPaths;
 import static java.lang.Integer.parseInt;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -47,6 +48,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.GenericScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.control.CtrPDF;
@@ -453,6 +455,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         objEPS1 = objEPS2 = objEPS3 = null;
         listExtraPScan = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
+        listExtraPScan.sort(new ComparableComparator<InfoPassportScanStampedPage>());
         
         if (listExtraPScan.size() >= 1)
         {
@@ -575,6 +578,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
 
             listFExtraPScan = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
+            listFExtraPScan.sort(new ComparableComparator<InfoPassportScanStampedPage>());
             if (!listFExtraPScan.isEmpty())
             {
                 if (listFExtraPScan.size() >= 1)
@@ -908,6 +912,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         FXMLLoader objLoader;
         TitledPane loadedPane;
         HBox lastHBox, newHbox;
+        int index, tabSelectedIndex;
+        
         
         try
         {
