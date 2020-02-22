@@ -2,11 +2,11 @@ package org.watmarpjan.visaManager.model.eps;
 
 import java.io.File;
 
-public class InfoPassportScanStampedPage implements Comparable<InfoPassportScanStampedPage>
+public class InfoFileScanStampedPage implements Comparable<InfoFileScanStampedPage>
 {
     private File fileScan;
     
-    public InfoPassportScanStampedPage(File fileScan)
+    public InfoFileScanStampedPage(File fileScan)
     {
         this.fileScan = fileScan;
     }
@@ -48,7 +48,7 @@ public class InfoPassportScanStampedPage implements Comparable<InfoPassportScanS
     }
     
     @Override
-    public int compareTo(InfoPassportScanStampedPage objPS)
+    public int compareTo(InfoFileScanStampedPage objPS)
     {
         if (objPS == null)
         {
