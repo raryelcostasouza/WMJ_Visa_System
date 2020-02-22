@@ -966,10 +966,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         p.setFirstEntryDate(Util.convertLocalDateToDate(dpFirstEntryDate.getValue()));
 
         opStatus1 = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
-        opStatus2 = saveExtraScans();
+        errorHappenedOp2 = saveMainExtraScans();
+        errorHappenedOp3 = saveGenericExtraScans();
 
-        if ((opStatus1 == 0) && (opStatus2 == 0))
+        //only shows success message if all saving procedures were successful
+        if ((opStatus1 == 0) && !errorHappenedOp2 && !errorHappenedOp3)
         {
+            //reload img Scans
+            fillDataScans();
             ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
             CtrAlertDialog.infoDialog("Passport update", "The passport information was successfully updated.");
             return 0;
