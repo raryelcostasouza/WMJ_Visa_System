@@ -161,78 +161,82 @@ public class CtrModuleGenericScanStampedPage
         return tfLeftPage;
     }
 
-    
-    public void reset()
+    public void clearData()
     {
-        scanContent = false;
-
-        tfLeftPage.setEditable(false);
+        objInfoScanLoaded = null;
+        fScan = null;
         tfLeftPage.setText("");
         tfRightPage.setText("");
+    }
 
+    public void resetLockStatus()
+    {
+        tfLeftPage.setEditable(false);
         bSelectFile.setDisable(true);
         bArchive.setDisable(true);
     }
 
-    //if there is scan content to show on this pane
-    public void setPaneContentNotEmpty()
-    {
-        scanContent = true;
-        tfLeftPage.setEditable(false);
-    }
-    
-    public void setPaneContentEmpty()
-    {
-        scanContent = false;
-        tfLeftPage.setEditable(true);
-    }
-
     public void actionUnlockEdit()
     {
-        if (scanContent)
+        if (fScan != null)
         {
             bArchive.setDisable(false);
-        } else
+        }
+        else
         {
             bSelectFile.setDisable(false);
+            tfLeftPage.setEditable(true);
         }
+
     }
 
     public void actionLockEdit()
     {
-        if (scanContent)
+        if (fScan != null)
         {
             bArchive.setDisable(true);
-        } else
-        {
-            bSelectFile.setDisable(true);
-        }
-    }
-    
-    public void fillData(InfoPassportScanStampedPage objPS, boolean lockStatus)
-    {
-        reset();
-        
-        fScan = objPS.getFileScan();
-        GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, fScan);
-        
-        getTfPLeftPageNumber().setText(objPS.getLeftPageNumber() + "");
-        
-        
-        if (lockStatus)
-        {
-            actionLockEdit();
         }
         else
         {
-            actionUnlockEdit();
+            bSelectFile.setDisable(true);
         }
-        
+
     }
-    
+
+    public void fillData(InfoFileScanStampedPage objPS)
+    {
+        if (objPS != null)
+        {
+            objInfoScanLoaded = objPS;
+            fScan = objPS.getFileScan();
+
+            GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, fScan);
+
+            getTfPLeftPageNumber().setText(objPS.getLeftPageNumber() + "");
+        }
+        else
+        {
+            GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, null);
+            fScan = null;
+        }
+
+    }
+
     @FXML
     void actionArchiveExtraScan(ActionEvent ae)
     {
+        MonasticProfile p;
+        boolean confirmation;
+
+        p = objCtrPanePassport.getCtrGUIMain().getCtrPaneSelection().getSelectedProfile();
+
+        confirmation = CtrAlertDialog.confirmationDialog("Archive passport scan", "This passport scan will be archived. \nDo you want to continue?");
+        if (confirmation)
+        {
+            CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScan);
+            objCtrPanePassport.fillDataScans();
+        }
+        
 //        MonasticProfile p;
 //        File fScan2Archive;
 //
