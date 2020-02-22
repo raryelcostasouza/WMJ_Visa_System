@@ -762,84 +762,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             {
                 //refresh the profile because the passportScan list was updated
                 ctrGUIMain.getCtrMain().getCtrProfile().refresh(profile);
-                loadIMGPreviewsScans(profile);
-                fillDataMain3ScansStampedPage(profile, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+                fillDataScans();
             }
         }
     }
 
-    private boolean checkIfNeedRenameScanFile(InfoPassportScanStampedPage objPES, CtrModuleMainScanStampedPage objFS)
-    {
-        boolean stateScanArriveStamp;
-        boolean stateScanVisa;
-        boolean stateScanLastVisaExt;
-
-        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
-        stateScanVisa = objFS.getRbVisa().isSelected();
-        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
-        //if there was any change on the radio buttons for the scan type
-
-        return (stateScanArriveStamp != objPES.containsScanArriveStamp())
-                || (stateScanVisa != objPES.containsScanVisa())
-                || (stateScanLastVisaExt != objPES.containsScanLastVisaExt());
-    }
-
-    private boolean renameExtraScan(MonasticProfile p, InfoPassportScanStampedPage objPES, CtrModuleMainScanStampedPage objFS)
-    {
-        boolean stateScanArriveStamp;
-        boolean stateScanVisa;
-        boolean stateScanLastVisaExt;
-        File fScanUpdated;
-        int ret;
-
-        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
-        stateScanVisa = objFS.getRbVisa().isSelected();
-        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
-
-        //if there was any change on the radio buttons for the scan type
-        //save the changes by updating the name of the scan file
-        ExtraPassportScanNew objPSNew = new ExtraPassportScanNew(objPES.getLeftPageNumber(), stateScanArriveStamp, stateScanVisa, stateScanLastVisaExt);
-        fScanUpdated = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), objPSNew);
-
-        ret = CtrFileOperation.renameFile(objPES.getFileScan(), fScanUpdated);
-        if (ret == -1)
-        {
-            CtrAlertDialog.errorDialog("Unable to rename the extra scan file.");
-            return true;
-        }
-
-        return false;
-
-    }
-
-    private boolean addNewExtraScan(MonasticProfile p, CtrModuleMainScanStampedPage objFS, File fScanSelected)
-    {
-        ExtraPassportScanNew objPS;
-        int leftPageNumber, ret;
-        boolean stateScanArriveStamp;
-        boolean stateScanVisa;
-        boolean stateScanLastVisaExt;
-        File fDestination;
-
-        leftPageNumber = parseInt(objFS.getTfPLeftPageNumber().getText());
-        stateScanArriveStamp = objFS.getRbArriveStamp().isSelected();
-        stateScanVisa = objFS.getRbVisa().isSelected();
-        stateScanLastVisaExt = objFS.getRbLastVisaExt().isSelected();
-
-        objPS = new ExtraPassportScanNew(leftPageNumber, stateScanArriveStamp, stateScanVisa, stateScanLastVisaExt);
-        fDestination = AppFiles.generateFileNameExtraScan(p.getNickname(), p.getPassportNumber(), objPS);
-
-        ret = CtrFileOperation.copyOperation(fScanSelected, fDestination);
-        //if the operation was unsuccessful
-        if (ret == -1)
-        {
-            CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + fScanSelected.getName() + ".");
-            return true;
-        }
-
-        return false;
-    }
-    
     @FXML
     private void actionAddGUIModuleStampedPageScan()
     {
