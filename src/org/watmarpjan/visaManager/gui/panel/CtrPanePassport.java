@@ -818,43 +818,28 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
-    private boolean validateNewExtraScanAdded()
+    private boolean saveGenericExtraScans()
     {
-        boolean valid1, valid2, valid3;
+        boolean ret, errorHappened;
 
-        valid1 = valid2 = valid3 = true;
-        if (fScan1Selected != null)
-        {
-            valid1 = validateExtraScanContent(fieldsScan1);
-        }
-        if (fScan2Selected != null)
-        {
-            valid2 = validateExtraScanContent(fieldsScan2);
-        }
-        if (fScan3Selected != null)
-        {
-            valid3 = validateExtraScanContent(fieldsScan3);
-        }
+        errorHappened = false;
 
-        return valid1 && valid2 && valid3;
+        for (CtrModuleGenericScanStampedPage objCtr : listCtrModulePassportStampedPage)
+        {
+
+            ret = objCtr.saveScan(listCtrModulePassportStampedPage);
+            if (ret)
+            {
+                errorHappened = true;
+            }
+        }
+        return errorHappened;
+
     }
 
-    private boolean saveExtraScanGeneric(MonasticProfile p, InfoPassportScanStampedPage objEPS, File fScanSelected, CtrModuleMainScanStampedPage fieldsScan)
+    private boolean saveMainExtraScans()
     {
-        if (fScanSelected != null)
-        {
-            return addNewExtraScan(p, fieldsScan, fScanSelected);
-        } //if there was no scan added need to check if there was change on the selected scan types
-        else if ((objEPS != null) && checkIfNeedRenameScanFile(objEPS, fieldsScan))
-        {
-            return renameExtraScan(p, objEPS, fieldsScan);
-        }
-        return false;
-    }
-
-    private int saveExtraScans()
-    {
-        boolean error1, error2, error3;
+        boolean error1, error2, error3, errorHappened;
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
