@@ -447,58 +447,23 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
     private void refreshInfoPassportScanStampedPages(MonasticProfile p)
     {
-        ArrayList<InfoPassportScanStampedPage> listExtraPScan;
+        ArrayList<InfoFileScanStampedPage> listExtraPScan;
 
-        objEPS1 = objEPS2 = objEPS3 = null;
+        objInfoScanLoaded1 = objInfoScanLoaded2 = objInfoScanLoaded3 = null;
         listExtraPScan = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
-        listExtraPScan.sort(new ComparableComparator<InfoPassportScanStampedPage>());
-        
+        listExtraPScan.sort(new ComparableComparator<InfoFileScanStampedPage>());
+
         if (listExtraPScan.size() >= 1)
         {
-            objEPS1 = listExtraPScan.get(0);
+            objInfoScanLoaded1 = listExtraPScan.get(0);
         }
         if (listExtraPScan.size() >= 2)
         {
-            objEPS2 = listExtraPScan.get(1);
+            objInfoScanLoaded2 = listExtraPScan.get(1);
         }
         if (listExtraPScan.size() >= 3)
         {
-            objEPS3 = listExtraPScan.get(2);
-        }
-    }
-
-    private void fillDataMainScanStampedPage(CtrModuleMainScanStampedPage ctrMainScan, InfoPassportScanStampedPage objExtraScan, boolean lockStatus)
-    {
-        if (objExtraScan != null)
-        {
-            ctrMainScan.setPaneContentNotEmpty();
-
-            ctrMainScan.getTfPLeftPageNumber().setText(objExtraScan.getLeftPageNumber() + "");
-            if (objExtraScan.containsScanArriveStamp())
-            {
-                ctrMainScan.getRbArriveStamp().setSelected(true);
-            }
-            if (objExtraScan.containsScanVisa())
-            {
-                ctrMainScan.getRbVisa().setSelected(true);
-            }
-            if (objExtraScan.containsScanLastVisaExt())
-            {
-                ctrMainScan.getRbLastVisaExt().setSelected(true);
-            }
-        }
-        else
-        {
-            ctrMainScan.setPaneContentEmpty();
-        }
-
-        if (lockStatus)
-        {
-            ctrMainScan.actionLockEdit();
-        }
-        else
-        {
-            ctrMainScan.actionUnlockEdit();
+            objInfoScanLoaded3 = listExtraPScan.get(2);
         }
     }
 
@@ -539,120 +504,93 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
     }
 
-    private void fillDataMain3ScansStampedPage(MonasticProfile p, boolean lockStatus)
+    private void fillDataTabMainScans(MonasticProfile p, boolean lockStatus)
     {
-        fieldsScan1.reset();
-        fieldsScan2.reset();
-        fieldsScan3.reset();
+        File fPassportScan, fDepartureCard;
 
-        fScan1Selected = null;
-        fScan2Selected = null;
-        fScan3Selected = null;
+        ctrPaneScan1.clearData();
+        ctrPaneScan2.clearData();
+        ctrPaneScan3.clearData();
+
+        ctrPaneScan1.resetLockStatus();
+        ctrPaneScan2.resetLockStatus();
+        ctrPaneScan3.resetLockStatus();
+
+        ctrPaneScan1.setFileScanSelectedButUnsaved(null);
+        ctrPaneScan2.setFileScanSelectedButUnsaved(null);
+        ctrPaneScan3.setFileScanSelectedButUnsaved(null);
 
         refreshInfoPassportScanStampedPages(p);
         toggleLockButtonsScanFirstPageNDepartureCard(lockStatus, p);
 
-        fillDataMainScanStampedPage(fieldsScan1, objEPS1, lockStatus);
-        fillDataMainScanStampedPage(fieldsScan2, objEPS2, lockStatus);
-        fillDataMainScanStampedPage(fieldsScan3, objEPS3, lockStatus);
-    }
+        ctrPaneScan1.fillData(objInfoScanLoaded1, lockStatus);
+        ctrPaneScan2.fillData(objInfoScanLoaded2, lockStatus);
+        ctrPaneScan3.fillData(objInfoScanLoaded3, lockStatus);
 
-    private void loadIMGPreviewsScans(MonasticProfile p)
-    {
-        loadIMGPreviewMainScans(p);
-        loadGUITabAllStampedPages(p);
-    }
-
-    private void loadIMGPreviewMainScans(MonasticProfile p)
-    {
-        File fPassportScan, fDepartureCard, fScan1 = null, fScan2 = null, fScan3 = null;
-        ArrayList<InfoPassportScanStampedPage> listFExtraPScan;
-
+        fPassportScan = fDepartureCard = null;
         if (p != null)
         {
             fPassportScan = AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber());
             fDepartureCard = AppFiles.getScanDepartureCard(p.getNickname());
-
-            listFExtraPScan = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
-            listFExtraPScan.sort(new ComparableComparator<InfoPassportScanStampedPage>());
-            if (!listFExtraPScan.isEmpty())
-            {
-                if (listFExtraPScan.size() >= 1)
-                {
-                    fScan1 = listFExtraPScan.get(0).getFileScan();
-                }
-                if (listFExtraPScan.size() >= 2)
-                {
-                    fScan2 = listFExtraPScan.get(1).getFileScan();
-                }
-                if (listFExtraPScan.size() >= 3)
-                {
-                    fScan3 = listFExtraPScan.get(2).getFileScan();
-                }
-            }
-        }
-        else
-        {
-            fPassportScan = fDepartureCard = null;
         }
 
         GUIUtil.loadImageView(ivPassportScan, GUIUtil.IMG_TYPE_PASSPORT, fPassportScan);
         GUIUtil.loadImageView(ivDepartureCardScan, GUIUtil.IMG_TYPE_PASSPORT, fDepartureCard);
-        GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_PASSPORT, fScan1);
-        GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_PASSPORT, fScan2);
-        GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_PASSPORT, fScan3);
-
     }
 
-    private void loadGUITabAllStampedPages(MonasticProfile p)
+    private void fillDataTabAllStampedPages(MonasticProfile p)
     {
         CtrModuleGenericScanStampedPage objCtr;
-        
+
         listGenericScans = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new GenericScanStampedPageFilenameFilter());
         //sort according to page number
-        listGenericScans.sort(new ComparableComparator<InfoPassportScanStampedPage>());
-        
+        listGenericScans.sort(new ComparableComparator<InfoFileScanStampedPage>());
+
         //resets the stamped pages 
         listCtrModulePassportStampedPage.clear();
         vboxAllStampedPages.getChildren().clear();
         listHBox.clear();
-        
+
         //one loop for creating all the GUI Modules
-        for (InfoPassportScanStampedPage objPS1 : listGenericScans)
+        for (InfoFileScanStampedPage objPS1 : listGenericScans)
         {
             //for each scan found add a GUI Module for managing the stamped page scan
             actionAddGUIModuleStampedPageScan();
-            
+
             //retrieve the last controller added with the module and fills it with the data
-            objCtr = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size()-1);
-            objCtr.fillData(objPS1, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+            objCtr = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size() - 1);
+            objCtr.fillData(objPS1);
         }
+    }
+    
+    public void fillDataScans()
+    {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        fillDataTabMainScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+        fillDataTabAllStampedPages(p);
     }
 
     @FXML
     void actionArchiveExtraScan(ActionEvent ae)
     {
         MonasticProfile p;
-        File fScan2Archive;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         if (ae.getSource().equals(bArchive1))
         {
-            fScan2Archive = objEPS1.getFileScan();
+            ctrPaneScan1.archiveScan(p);
         }
         else if (ae.getSource().equals(bArchive2))
         {
-            fScan2Archive = objEPS2.getFileScan();
+            ctrPaneScan2.archiveScan(p);
         }
         else
         {
-            fScan2Archive = objEPS3.getFileScan();
+            ctrPaneScan3.archiveScan(p);
         }
-
-        CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, fScan2Archive);
-
-        fillDataMain3ScansStampedPage(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-        loadIMGPreviewsScans(p);
     }
 
     @FXML
