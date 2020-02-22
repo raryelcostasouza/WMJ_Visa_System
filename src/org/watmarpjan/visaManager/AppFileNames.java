@@ -7,7 +7,7 @@ package org.watmarpjan.visaManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
 
 /**
  *
@@ -66,12 +66,17 @@ public class AppFileNames
         return "departure-card.jpg";
     }
 
-    public static String generateFileNameExtraScan(String passportNumber, ExtraPassportScanNew ps)
+    public static String generateFileNameMain3StampedPageScan(String passportNumber, InfoMainScanStampedPage ps)
     {
         return passportNumber + "-page" + ps.getLeftPageNumber()+ generateExtraScanSuffix(ps) + ".jpg";
     }
+    
+    public static String generateFileNameGenericStampedPageScan(String passportNumber, String pagenumber)
+    {
+        return passportNumber + "-page" + pagenumber +"-.jpg";
+    }
 
-    private static String generateExtraScanSuffix(ExtraPassportScanNew ps)
+    private static String generateExtraScanSuffix(InfoMainScanStampedPage ps)
     {
         String suffix = "";
         boolean noSuffix;
