@@ -775,8 +775,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         TitledPane loadedPane;
         HBox lastHBox, newHbox;
         int index, tabSelectedIndex;
-        
-        
+
         try
         {
             objLoader = new FXMLLoader(getClass().getResource("modulePassportStampedPagesScan.fxml"));
@@ -787,20 +786,20 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             //loads the controller for the module
             ctrModule = (CtrModuleGenericScanStampedPage) objLoader.getController();
             listCtrModulePassportStampedPage.add(ctrModule);
-            
+
             index = listCtrModulePassportStampedPage.size();
             ctrModule.init(this, index);
 
             //gets the HBox on the last line of the GUI
             //if there are no lines of HBox
             //or if the number of elements per line did already reach 3 create a new HBox line
-            if (listHBox.isEmpty() || listHBox.get(listHBox.size()-1).getChildren().size() >=3)
+            if (listHBox.isEmpty() || listHBox.get(listHBox.size() - 1).getChildren().size() >= 3)
             {
                 newHbox = new HBox();
                 listHBox.add(newHbox);
                 newHbox.getChildren().add(loadedPane);
                 vboxAllStampedPages.getChildren().add(newHbox);
-                
+
                 //switch tabs and come back to reupdate tab height for scrolling
                 tabSelectedIndex = tAllStampedPages.getTabPane().getSelectionModel().getSelectedIndex();
                 tAllStampedPages.getTabPane().getSelectionModel().clearSelection();
@@ -810,7 +809,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             else
             {
                 lastHBox = listHBox.get(listHBox.size() - 1);
-                lastHBox.getChildren().add(loadedPane);                
+                lastHBox.getChildren().add(loadedPane);
             }
         }
         catch (IOException ex)
@@ -1029,7 +1028,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         MonasticProfile p;
 
-        int opStatus1, opStatus2;
+        int opStatus1;
+        boolean errorHappenedOp2, errorHappenedOp3;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
@@ -1069,4 +1069,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 //        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 //        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PRINT_FORM);
 //    }
+    public CtrGUIMain getCtrGUIMain()
+    {
+        return ctrGUIMain;
+    }
 }
