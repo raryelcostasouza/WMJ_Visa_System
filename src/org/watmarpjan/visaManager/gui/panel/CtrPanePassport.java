@@ -53,8 +53,8 @@ import org.watmarpjan.visaManager.GenericScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.gui.util.CtrModuleMainScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
@@ -189,17 +189,13 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     @FXML
     private Button bArchive3;
 
-    private File fScan1Selected;
-    private File fScan2Selected;
-    private File fScan3Selected;
+    private InfoFileScanStampedPage objInfoScanLoaded1;
+    private InfoFileScanStampedPage objInfoScanLoaded2;
+    private InfoFileScanStampedPage objInfoScanLoaded3;
 
-    private InfoPassportScanStampedPage objEPS1;
-    private InfoPassportScanStampedPage objEPS2;
-    private InfoPassportScanStampedPage objEPS3;
-
-    private CtrModuleMainScanStampedPage fieldsScan1;
-    private CtrModuleMainScanStampedPage fieldsScan2;
-    private CtrModuleMainScanStampedPage fieldsScan3;
+    private CtrModuleMainScanStampedPage ctrPaneScan1;
+    private CtrModuleMainScanStampedPage ctrPaneScan2;
+    private CtrModuleMainScanStampedPage ctrPaneScan3;
 
     @FXML
     private VBox vboxAllStampedPages;
@@ -214,9 +210,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private Tab tAllStampedPages;
 
     private ArrayList<CtrModuleGenericScanStampedPage> listCtrModulePassportStampedPage;
-    private ArrayList<InfoPassportScanStampedPage> listGenericScans;
+    private ArrayList<InfoFileScanStampedPage> listGenericScans;
 
-    private final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
+    public final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
 
     @Override
     public void init()
