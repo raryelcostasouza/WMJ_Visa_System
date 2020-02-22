@@ -628,7 +628,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     void actionIMGPassportScanClicked(MouseEvent me)
     {
         MonasticProfile p;
-        File fImgScan;
+        File fImgScan, fScan1Selected, fScan2Selected, fScan3Selected;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
@@ -642,6 +642,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
         else if (me.getSource().equals(ivScan1))
         {
+            fScan1Selected = ctrPaneScan1.getFileScanSelectedButUnsaved();
             //if there is a scan selected, but not yet added
             if (fScan1Selected != null)
             {
@@ -649,9 +650,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             } //for a registered scan
             else
             {
-                if (objEPS1 != null)
+                if (objInfoScanLoaded1 != null)
                 {
-                    fImgScan = objEPS1.getFileScan();
+                    fImgScan = objInfoScanLoaded1.getFileScan();
                 }
                 else
                 {
@@ -661,6 +662,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
         else if (me.getSource().equals(ivScan2))
         {
+            fScan2Selected = ctrPaneScan2.getFileScanSelectedButUnsaved();
             //if there is a scan selected, but not yet added
             if (fScan2Selected != null)
             {
@@ -668,9 +670,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             } //for a registered scan
             else
             {
-                if (objEPS2 != null)
+                if (objInfoScanLoaded2 != null)
                 {
-                    fImgScan = objEPS2.getFileScan();
+                    fImgScan = objInfoScanLoaded2.getFileScan();
                 }
                 else
                 {
@@ -681,6 +683,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         }
         else
         {
+            fScan3Selected = ctrPaneScan3.getFileScanSelectedButUnsaved();
+
             //if there is a scan selected, but not yet added
             if (fScan3Selected != null)
             {
@@ -688,9 +692,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             } //for a registered scan
             else
             {
-                if (objEPS3 != null)
+                if (objInfoScanLoaded3 != null)
                 {
-                    fImgScan = objEPS3.getFileScan();
+                    fImgScan = objInfoScanLoaded3.getFileScan();
                 }
                 else
                 {
