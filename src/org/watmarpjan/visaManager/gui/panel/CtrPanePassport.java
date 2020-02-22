@@ -850,28 +850,22 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         //if there are any new extra scans added
         //only run the save operation if they are fully validated
         //in other cases... can just go ahead and save
-        if (validateNewExtraScanAdded())
+        error1 = ctrPaneScan1.saveScan(p, listCtrModulePassportStampedPage);
+        error2 = ctrPaneScan2.saveScan(p, listCtrModulePassportStampedPage);
+        error3 = ctrPaneScan3.saveScan(p, listCtrModulePassportStampedPage);
+        fillDataTabMainScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+        //if there was any error on file copying process
+        if (error1 || error2 || error3)
         {
-            error1 = saveExtraScanGeneric(p, objEPS1, fScan1Selected, fieldsScan1);
-            error2 = saveExtraScanGeneric(p, objEPS2, fScan2Selected, fieldsScan2);
-            error3 = saveExtraScanGeneric(p, objEPS3, fScan3Selected, fieldsScan3);
-            fillDataMain3ScansStampedPage(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-            loadIMGPreviewsScans(p);
-            //if there was any error on file copying process
-            if (error1 || error2 || error3)
-            {
-                return -1;
+            errorHappened = true;
 
-            }
-            else
-            {
-                return 0;
-            }
         }
         else
         {
-            return -1;
+            errorHappened = false;
         }
+
+        return errorHappened;
     }
 
     @FXML
