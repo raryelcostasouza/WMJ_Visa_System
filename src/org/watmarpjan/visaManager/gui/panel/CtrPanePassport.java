@@ -884,21 +884,18 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
                 ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
                 if (ae.getSource().equals(bSelectScan1))
                 {
-                    fScan1Selected = fSelected;
+                    ctrPaneScan1.setFileScanSelectedButUnsaved(fSelected);
                     GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-                    //bAddScan1.setDisable(false);
                 }
                 else if (ae.getSource().equals(bSelectScan2))
                 {
-                    fScan2Selected = fSelected;
+                    ctrPaneScan2.setFileScanSelectedButUnsaved(fSelected);
                     GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-                    //bAddScan2.setDisable(false);
                 }
                 else
                 {
-                    fScan3Selected = fSelected;
+                    ctrPaneScan3.setFileScanSelectedButUnsaved(fSelected);
                     GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-                    //bAddScan3.setDisable(false);
                 }
             }
         }
@@ -906,65 +903,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         {
             CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
         }
-    }
-
-    private boolean checkPageNumberNewScanAlreadyExists(int pageNumberNewScan)
-    {
-        return (objEPS1 != null && objEPS1.getLeftPageNumber() == pageNumberNewScan)
-                || (objEPS2 != null && objEPS2.getLeftPageNumber() == pageNumberNewScan)
-                || (objEPS3 != null && objEPS3.getLeftPageNumber() == pageNumberNewScan);
-    }
-
-    private boolean validateExtraScanContent(CtrModuleMainScanStampedPage fieldsScan)
-    {
-        //if the page number is not empty and at least one of the options is selected
-        //returns true
-        boolean statusValid;
-        boolean validationPageNumber;
-        boolean scanTypeSelected;
-
-        validationPageNumber = validatePageNumber(fieldsScan.getTfPLeftPageNumber().getText());
-        scanTypeSelected = (fieldsScan.getRbArriveStamp().isSelected()
-                || fieldsScan.getRbLastVisaExt().isSelected()
-                || fieldsScan.getRbVisa().isSelected());
-
-        statusValid = validationPageNumber && scanTypeSelected;
-        //if the scan type or the page number is empty
-        if (!scanTypeSelected || fieldsScan.getTfPLeftPageNumber().getText().isEmpty())
-        {
-            CtrAlertDialog.errorDialog("Please fill all the fields for Extra Scan.");
-        }
-
-        return statusValid;
-    }
-
-    private boolean validatePageNumber(String strPageNumber)
-    {
-        int i;
-        if (!strPageNumber.isEmpty())
-        {
-            try
-            {
-                i = Integer.parseInt(strPageNumber);
-                //if the page number of the new scan is repeated somewhere else refuses the operation
-                if (checkPageNumberNewScanAlreadyExists(i))
-                {
-                    CtrAlertDialog.errorDialog("The page number for the newly added scan already exists at another scan.");
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-
-            }
-            catch (NumberFormatException nfe)
-            {
-                CtrAlertDialog.errorDialog("Invalid page number.");
-                return false;
-            }
-        }
-        return false;
     }
 
     @Override
