@@ -14,8 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoGenericScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -49,7 +50,7 @@ public class AppFiles
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
 
-    public static File generateFileNameExtraScan(String nickName, String passportNumber, ExtraPassportScanNew ps)
+    public static File generateFileNameMain3StampedPageScan(String nickName, String passportNumber, InfoMainScanStampedPage ps)
     {
         Path pSubfolder;
         String strFileName;
@@ -57,7 +58,7 @@ public class AppFiles
         if (ps != null)
         {
             pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
-            strFileName = AppFileNames.generateFileNameExtraScan(passportNumber, ps);
+            strFileName = AppFileNames.generateFileNameMain3StampedPageScan(passportNumber, ps);
 
             return new File(pSubfolder.resolve(strFileName).toUri());
         } else
@@ -67,11 +68,29 @@ public class AppFiles
 
     }
 
-    public static ArrayList<InfoPassportScanStampedPage> getListInfoPassportScansStampedPage(String nickName, String passportNumber, FilenameFilter objFF)
+    public static File generateFileNameGenericStampedPageScan(String nickName, String passportNumber, InfoGenericScanStampedPage objInfoScan)
+    {
+        Path pSubfolder;
+        String strFileName;
+
+        if (passportNumber != null && objInfoScan != null)
+        {
+            pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
+            strFileName = AppFileNames.generateFileNameGenericStampedPageScan(passportNumber, objInfoScan.getLeftPageNumber());
+
+            return new File(pSubfolder.resolve(strFileName).toUri());
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    public static ArrayList<InfoFileScanStampedPage> getListInfoPassportScansStampedPage(String nickName, String passportNumber, FilenameFilter objFF)
     {
         Path pSubfolder;
         File[] listFScans = null;
-        ArrayList<InfoPassportScanStampedPage> listFExtraScan;
+        ArrayList<InfoFileScanStampedPage> listFExtraScan;
 
         listFExtraScan = new ArrayList<>();
         pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
@@ -80,7 +99,7 @@ public class AppFiles
             listFScans = pSubfolder.toFile().listFiles(objFF);
             for (File f : listFScans)
             {
-                listFExtraScan.add(new InfoPassportScanStampedPage(f));
+                listFExtraScan.add(new InfoFileScanStampedPage(f));
             }
         }
 
