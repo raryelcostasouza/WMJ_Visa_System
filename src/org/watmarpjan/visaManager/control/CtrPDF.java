@@ -50,7 +50,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
-import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
@@ -1322,7 +1322,7 @@ public class CtrPDF
     public void generatePDFPassportScans(MonasticProfile p, int option)
     {
         //passport size 17cm X 12.5 cm
-        ArrayList<InfoPassportScanStampedPage> listEPS;
+        ArrayList<InfoFileScanStampedPage> listEPS;
         PDDocument pdfDoc;
         File outputFile;
 
@@ -1425,7 +1425,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoPassportScanStampedPage> listEPS) throws IOException
+    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
     {
         File fScan1, fScan2;
         PDPageContentStream contentStream;
@@ -1457,7 +1457,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoPassportScanStampedPage> listEPS) throws IOException
+    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
     {
         File fScan3;
         PDPageContentStream contentStream;
