@@ -918,9 +918,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         toggleLockButtonsScanFirstPageNDepartureCard(true, p);
 
-        fieldsScan1.actionLockEdit();
-        fieldsScan2.actionLockEdit();
-        fieldsScan3.actionLockEdit();
+        ctrPaneScan1.actionLockEdit();
+        ctrPaneScan2.actionLockEdit();
+        ctrPaneScan3.actionLockEdit();
+
+        for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
+        {
+            objCtrStampedPage.actionLockEdit();
+        }
     }
 
     @Override
@@ -935,9 +940,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         dpFirstEntryDate.setDisable(false);
 
         toggleLockButtonsScanFirstPageNDepartureCard(false, p);
-        fieldsScan1.actionUnlockEdit();
-        fieldsScan2.actionUnlockEdit();
-        fieldsScan3.actionUnlockEdit();
+        ctrPaneScan1.actionUnlockEdit();
+        ctrPaneScan2.actionUnlockEdit();
+        ctrPaneScan3.actionUnlockEdit();
+
+        for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
+        {
+            objCtrStampedPage.actionUnlockEdit();
+        }
     }
 
     @Override
