@@ -7,19 +7,22 @@ package org.watmarpjan.visaManager.gui.panel;
 
 import java.io.File;
 import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
-import org.watmarpjan.visaManager.model.eps.InfoPassportScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.eps.InfoGenericScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -28,49 +31,73 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class CtrModuleGenericScanStampedPage
 {
+
     @FXML
     private Button bSelectFile;
-    
+
     @FXML
     private Button bArchive;
-    
+
     @FXML
     private TextField tfLeftPage;
-    
+
     @FXML
-    private TextField tfRightPage; 
-    
+    private TextField tfRightPage;
+
     @FXML
     private TitledPane tpMain;
-    
+
     @FXML
     private ImageView ivScan;
-    
-    private boolean scanContent;
-    
-    private CtrPanePassport objCtrPanePassport;
+
+    protected CtrPanePassport objCtrPanePassport;
     private File fScan;
+    protected File fSelectedButUnsaved;
+
+    //original data loaded from file
+    //used to compare for changes and need of renaming
+    protected InfoFileScanStampedPage objInfoScanLoaded;
 
     public CtrModuleGenericScanStampedPage()
     {
-        
+
     }
-    
-    public CtrModuleGenericScanStampedPage(Button pBSelectFile, Button pBArchive, TextField pTFLeftPageNumber, TextField pTFRightPageNumber)
+
+    public CtrModuleGenericScanStampedPage(Button pBSelectFile, Button pBArchive, TextField pTFLeftPageNumber, TextField pTFRightPageNumber, ImageView pIVScan, CtrPanePassport pObjCtrPassport)
     {
+        this.objCtrPanePassport = pObjCtrPassport;
+        
         bSelectFile = pBSelectFile;
         bArchive = pBArchive;
-        
+
         tfLeftPage = pTFLeftPageNumber;
         tfRightPage = pTFRightPageNumber;
+        ivScan = pIVScan;
     }
-    
+
     public void init(CtrPanePassport pCtrPanePassport, int index)
     {
-        scanContent = false;
+        fScan = null;
+        fSelectedButUnsaved = null;
+        objInfoScanLoaded = null;
         objCtrPanePassport = pCtrPanePassport;
-      
+
         tpMain.setText("Stamped Page Scan " + index);
+
+        //listener to filter out invalid characters from left page field
+        tfLeftPage.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    tfLeftPage.setText(newValue.replaceAll("\\D", ""));
+                }
+            }
+        });
+
+        //listener to fill the right page automatically
         tfLeftPage.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
