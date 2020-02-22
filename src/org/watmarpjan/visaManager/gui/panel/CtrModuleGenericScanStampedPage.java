@@ -119,15 +119,31 @@ public class CtrModuleGenericScanStampedPage
                 }
             }
         });
-        
-        
+
         GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, null);
+        if (objCtrPanePassport.getCtrGUIMain().getPaneEditSaveController().getLockStatus())
+        {
+            actionLockEdit();
+        }
+        else
+        {
+            actionUnlockEdit();
+        }
     }
-    
+
     @FXML
     public void actionIMGClicked(MouseEvent me)
     {
-        CtrFileOperation.openFileOnDefaultProgram(fScan);
+        File f2Open;
+        if (fSelectedButUnsaved != null)
+        {
+            f2Open = fSelectedButUnsaved;
+        }
+        else
+        {
+            f2Open = fScan;
+        }
+        CtrFileOperation.openFileOnDefaultProgram(f2Open);
     }
 
     public Button getbSelectFile()
