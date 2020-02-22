@@ -364,18 +364,17 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         ArrayList<EntryVisaExt> alVisaExtensions;
         LocalDate ldPassportExp, ldPassptIssue, ldVisaExp, ldNext90day, ldLastEntry, ldFirstEntry;
-        VisaExtension lastVisaExt;
-        LocalDate ldExpLastVisaExt;
 
         GUIUtil.loadContentComboboxGeneric(cbPassportIssuedAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportIssuedAt());
-        loadIMGPreviewsScans(p);
+        //loadIMGPreviewsScans(p);
         if (p != null)
         {
             tfpassportNumber.setText(p.getPassportNumber());
             tfpassportCountry.setText(p.getPassportCountry());
             cbPassportIssuedAt.setValue(p.getPassportIssuedAt());
 
-            fillDataMain3ScansStampedPage(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+            fillDataTabMainScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
+            fillDataTabAllStampedPages(p);
 
             if (p.getPassportExpiryDate() != null)
             {
@@ -603,8 +602,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         opStatus = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getScanPassportFirstPage(p.getNickname(), p.getPassportNumber()));
         if (opStatus == 0)
         {
-            fillDataMain3ScansStampedPage(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-            loadIMGPreviewsScans(p);
+            fillDataScans();
             CtrAlertDialog.infoDialog("Archived successfully", "Passport scan archived successfully.");
         }
 
@@ -620,8 +618,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         opStatus = CtrFileOperation.archiveScanFile(p.getNickname(), CtrFileOperation.SCAN_TYPE_PASSPORT, AppFiles.getScanDepartureCard(p.getNickname()));
         if (opStatus == 0)
         {
-            fillDataMain3ScansStampedPage(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-            loadIMGPreviewsScans(p);
+            fillDataScans();
             CtrAlertDialog.infoDialog("Archived successfully", "Departure card scan archived successfully.");
         }
 
