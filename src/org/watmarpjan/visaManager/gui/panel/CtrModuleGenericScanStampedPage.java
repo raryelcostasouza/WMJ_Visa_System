@@ -253,41 +253,147 @@ public class CtrModuleGenericScanStampedPage
 //        fillDataContentScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
 //        loadIMGPreviews(p);
     }
-    
+
     @FXML
     void actionChooseExtraScan(ActionEvent ae)
     {
-//        File fSelected;
-//        MonasticProfile p;
-//
-//        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-//        //if there is a passport registered allows the user to add other scans
-//        if (p.getPassportNumber() != null)
-//        {
-//            fSelected = CtrFileOperation.selectFile("Extra Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
-//            if (fSelected != null)
-//            {
-//                ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
-//                if (ae.getSource().equals(bSelectScan1))
-//                {
-//                    fScan1Selected = fSelected;
-//                    GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-//                    //bAddScan1.setDisable(false);
-//                } else if (ae.getSource().equals(bSelectScan2))
-//                {
-//                    fScan2Selected = fSelected;
-//                    GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-//                    //bAddScan2.setDisable(false);
-//                } else
-//                {
-//                    fScan3Selected = fSelected;
-//                    GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_PASSPORT, fSelected);
-//                    //bAddScan3.setDisable(false);
-//                }
-//            }
-//        } else
-//        {
-//            CtrAlertDialog.errorDialog(ERROR_NO_PASSPORT_REGISTERED);
-//        }
+        MonasticProfile p;
+
+        p = objCtrPanePassport.getCtrGUIMain().getCtrPaneSelection().getSelectedProfile();
+        //if there is a passport registered allows the user to add other scans
+        if (p.getPassportNumber() != null)
+        {
+            fSelectedButUnsaved = CtrFileOperation.selectFile("Extra Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
+            if (fSelectedButUnsaved != null)
+            {
+                objCtrPanePassport.getCtrGUIMain().getCtrFieldChangeListener().setHasUnsavedChanges();
+                GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, fSelectedButUnsaved);
+            }
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog(objCtrPanePassport.ERROR_NO_PASSPORT_REGISTERED);
+        }
     }
+
+    protected boolean validateScanInfo(ArrayList<CtrModuleGenericScanStampedPage> listCtrModules)
+    {
+        //if the page number is not empty and is a valid number returns true
+        boolean isValid;
+
+        isValid = true;
+        //if page number is empty
+        if (getTfPLeftPageNumber().getText().isEmpty())
+        {
+            CtrAlertDialog.errorDialog("Please fill all the fields for Stamped Page Scan.");
+            isValid = false;
+        }
+        else
+        {
+            //test if the page number input is valid
+            isValid = validatePageNumber(listCtrModules);
+        }
+
+        return isValid;
+    }
+
+    public boolean saveScan(ArrayList<CtrModuleGenericScanStampedPage> listCtrModules)
+    {
+        MonasticProfile p;
+        int ret;
+        File fDestination;
+        boolean errorHappened;
+        InfoGenericScanStampedPage objInfoScan;
+        String strLeftPageNumber;
+
+        //only need to try to save if there is a file chosen to be added on the module
+        if (fSelectedButUnsaved != null)
+        {
+            //if the page number information is not empty and valid number
+            if (validateScanInfo(listCtrModules))
+            {
+                p = objCtrPanePassport.getCtrGUIMain().getCtrPaneSelection().getSelectedProfile();
+
+                strLeftPageNumber = getTfPLeftPageNumber().getText();
+                objInfoScan = new InfoGenericScanStampedPage(strLeftPageNumber);
+                fDestination = AppFiles.generateFileNameGenericStampedPageScan(p.getNickname(), p.getPassportNumber(), objInfoScan);
+
+                ret = CtrFileOperation.copyOperation(fSelectedButUnsaved, fDestination);
+
+                //if the operation was unsuccessful
+                if (ret == -1)
+                {
+                    CtrAlertDialog.errorDialog("Unable to copy the file for Extra Scan " + fSelectedButUnsaved.getName() + ".");
+                    errorHappened = true;
+                }
+                //if no error on copying the files
+                else
+                {
+                    errorHappened = false;
+                }
+            }
+            //if page number validation error happened
+            else
+            {
+                errorHappened = true;
+            }
+        }
+        //if not the case no error happened ... it is just the case that nothing need to be done
+        else
+        {
+            errorHappened = false;
+        }
+
+        return errorHappened;
+    }
+
+    private boolean validatePageNumber(ArrayList<CtrModuleGenericScanStampedPage> listCtrModules)
+    {
+        int currentScanPageNumber, otherScanPageNumber;
+        try
+        {
+            currentScanPageNumber = Integer.parseInt(getTfPLeftPageNumber().getText());
+
+            //if the page number of the new scan is repeated somewhere else refuses the operation
+            //check if the page number is repeated on other scan
+            for (CtrModuleGenericScanStampedPage otherCtrModule : listCtrModules)
+            {
+                //check to avoid comparing the pagenumber with the same scan
+                if (this != otherCtrModule)
+                {
+                    otherScanPageNumber = Integer.parseInt(otherCtrModule.getTfPLeftPageNumber().getText());
+                    if (otherScanPageNumber == currentScanPageNumber)
+                    {
+                        CtrAlertDialog.errorDialog("The page number for the newly added scan already exists at another scan.");
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+        }
+        //if not a valid number it will return false
+        catch (NumberFormatException nfe)
+        {
+            CtrAlertDialog.errorDialog("Invalid page number.");
+            return false;
+        }
+
+    }
+
+    public void setFileScanSelectedButUnsaved(File fSelectedButUnsaved)
+    {
+        this.fSelectedButUnsaved = fSelectedButUnsaved;
+    }
+
+    public File getFileScanSelectedButUnsaved()
+    {
+        return fSelectedButUnsaved;
+    }
+
+    public File getFileScan()
+    {
+        return fScan;
+    }
+
 }
