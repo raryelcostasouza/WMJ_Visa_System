@@ -250,9 +250,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
 
-        fieldsScan1 = new CtrModuleMainScanStampedPage(bSelectScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt);
-        fieldsScan2 = new CtrModuleMainScanStampedPage(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt);
-        fieldsScan3 = new CtrModuleMainScanStampedPage(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt);
+        ctrPaneScan1 = new CtrModuleMainScanStampedPage(bSelectScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt, ivScan1, this);
+        ctrPaneScan2 = new CtrModuleMainScanStampedPage(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt, ivScan2, this);
+        ctrPaneScan3 = new CtrModuleMainScanStampedPage(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt, ivScan3, this);
 
         initNonDigitFilter(tfScan1LeftPageNumber);
         initNonDigitFilter(tfScan2LeftPageNumber);
