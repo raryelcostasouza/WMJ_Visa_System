@@ -160,6 +160,11 @@ public class CtrModuleGenericScanStampedPage
     {
         return tfLeftPage;
     }
+    
+    public TextField getTfPRightPageNumber()
+    {
+        return tfRightPage;
+    }
 
     public void clearData()
     {
@@ -353,7 +358,7 @@ public class CtrModuleGenericScanStampedPage
 
     private boolean validatePageNumber(ArrayList<CtrModuleGenericScanStampedPage> listCtrModules)
     {
-        int currentScanPageNumber, otherScanPageNumber;
+        int currentScanPageNumber, otherScanLeftPageNumber, otherScanRightPageNumber;
         try
         {
             currentScanPageNumber = Integer.parseInt(getTfPLeftPageNumber().getText());
@@ -363,10 +368,15 @@ public class CtrModuleGenericScanStampedPage
             for (CtrModuleGenericScanStampedPage otherCtrModule : listCtrModules)
             {
                 //check to avoid comparing the pagenumber with the same scan
-                if (this != otherCtrModule)
+                ///and with other scans with empty data
+                if (this != otherCtrModule && !otherCtrModule.getTfPLeftPageNumber().getText().isEmpty())
                 {
-                    otherScanPageNumber = Integer.parseInt(otherCtrModule.getTfPLeftPageNumber().getText());
-                    if (otherScanPageNumber == currentScanPageNumber)
+                    //compares the current left page number with the left and right page number of other scans
+                    otherScanLeftPageNumber = Integer.parseInt(otherCtrModule.getTfPLeftPageNumber().getText());
+                    otherScanRightPageNumber = Integer.parseInt(otherCtrModule.getTfPRightPageNumber().getText());
+                    if ((currentScanPageNumber == otherScanLeftPageNumber)
+                            || (currentScanPageNumber == otherScanRightPageNumber)
+                            || (currentScanPageNumber == (otherScanLeftPageNumber -1)))
                     {
                         CtrAlertDialog.errorDialog("The page number for the newly added scan already exists at another scan.");
                         return false;
