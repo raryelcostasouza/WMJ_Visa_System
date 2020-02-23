@@ -1,4 +1,4 @@
-package org.watmarpjan.visaManager.model.eps;
+package org.watmarpjan.visaManager.model.stampedPage.input;
 
 import java.io.File;
 

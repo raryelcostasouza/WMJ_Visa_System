@@ -7,7 +7,7 @@ package org.watmarpjan.visaManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
 
 /**
  *

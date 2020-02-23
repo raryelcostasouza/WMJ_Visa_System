@@ -1,4 +1,4 @@
-package org.watmarpjan.visaManager.model.eps;
+package org.watmarpjan.visaManager.model.stampedPage.output;
 
 
 public class InfoMainScanStampedPage extends InfoGenericScanStampedPage

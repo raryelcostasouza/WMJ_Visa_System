@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.watmarpjan.visaManager.gui.util;
+package org.watmarpjan.visaManager.gui.panel.stampedPage;
 
 import java.io.File;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import org.watmarpjan.visaManager.gui.panel.CtrModuleGenericScanStampedPage;
+import org.watmarpjan.visaManager.gui.panel.stampedPage.CtrModuleGenericScanStampedPage;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -16,8 +16,9 @@ import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.gui.panel.CtrPanePassport;
-import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
