@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.watmarpjan.visaManager.gui.panel;
+package org.watmarpjan.visaManager.gui.panel.stampedPage;
 
 import java.io.File;
 import static java.lang.Integer.parseInt;
@@ -19,10 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.gui.panel.CtrPanePassport;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
-import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.InfoGenericScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoGenericScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -277,6 +278,8 @@ public class CtrModuleGenericScanStampedPage
             {
                 objCtrPanePassport.getCtrGUIMain().getCtrFieldChangeListener().setHasUnsavedChanges();
                 GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, fSelectedButUnsaved);
+                //do a tab refresh to get the height adjusted according to img size
+                objCtrPanePassport.switch2Tab(1);
             }
         }
         else
