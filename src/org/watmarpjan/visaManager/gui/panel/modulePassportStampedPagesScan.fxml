@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane fx:id="tpMain" collapsible="false" text="Stamped Page Scan" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrModuleGenericScanStampedPage">
+<TitledPane fx:id="tpMain" collapsible="false" text="Stamped Page Scan" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.stampedPage.CtrModuleGenericScanStampedPage">
    <content>
       <VBox>
          <children>
