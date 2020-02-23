@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import org.watmarpjan.visaManager.gui.panel.stampedPage.CtrModuleGenericScanStampedPage;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
@@ -52,9 +53,9 @@ import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.GenericScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.control.CtrPDF;
-import org.watmarpjan.visaManager.gui.util.CtrModuleMainScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
-import org.watmarpjan.visaManager.model.eps.InfoMainScanStampedPage;
+import org.watmarpjan.visaManager.gui.panel.stampedPage.CtrModuleMainScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
@@ -802,8 +803,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
                 //switch tabs and come back to reupdate tab height for scrolling
                 tabSelectedIndex = tAllStampedPages.getTabPane().getSelectionModel().getSelectedIndex();
-                tAllStampedPages.getTabPane().getSelectionModel().clearSelection();
-                tAllStampedPages.getTabPane().getSelectionModel().select(tabSelectedIndex);
+                switch2Tab(tabSelectedIndex);
             }
             //add on the last line
             else
@@ -922,6 +922,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ctrPaneScan2.actionLockEdit();
         ctrPaneScan3.actionLockEdit();
 
+        bAddStampedPageScan.setDisable(true);
         for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
         {
             objCtrStampedPage.actionLockEdit();
@@ -938,12 +939,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         dpPassportIssueDate.setDisable(false);
         dpPassportExpiryDate.setDisable(false);
         dpFirstEntryDate.setDisable(false);
+        
 
         toggleLockButtonsScanFirstPageNDepartureCard(false, p);
         ctrPaneScan1.actionUnlockEdit();
         ctrPaneScan2.actionUnlockEdit();
         ctrPaneScan3.actionUnlockEdit();
-
+        
+        bAddStampedPageScan.setDisable(false);
         for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
         {
             objCtrStampedPage.actionUnlockEdit();
@@ -1003,5 +1006,11 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     public CtrGUIMain getCtrGUIMain()
     {
         return ctrGUIMain;
+    }
+    
+    public void switch2Tab(int index)
+    {
+        tAllStampedPages.getTabPane().getSelectionModel().clearSelection();
+        tAllStampedPages.getTabPane().getSelectionModel().select(index);
     }
 }

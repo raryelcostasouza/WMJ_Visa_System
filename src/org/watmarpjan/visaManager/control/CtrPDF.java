@@ -50,7 +50,7 @@ import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
-import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;

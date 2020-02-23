@@ -25,7 +25,7 @@ import org.watmarpjan.visaManager.GenericScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryReceipt90Day;
-import org.watmarpjan.visaManager.model.eps.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
