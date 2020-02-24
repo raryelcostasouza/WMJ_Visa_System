@@ -189,6 +189,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private Button bArchive2;
     @FXML
     private Button bArchive3;
+    
+    @FXML
+    private Button bPreviewScansAllStampedPages;
 
     private InfoFileScanStampedPage objInfoScanLoaded1;
     private InfoFileScanStampedPage objInfoScanLoaded2;
@@ -231,6 +234,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ivAddButton = new ImageView(pIconAdd.toFile().toURI().toString());
         bAddStampedPageScan.setGraphic(ivAddButton);
 
+        bPreviewScansAllStampedPages.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         labelLock.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
         labelLock2.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
         labelLock3.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
@@ -993,7 +997,16 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM);
+        //if the preview button for the main scans is clicked
+        if (ae.getSource().equals(bPreview))
+        {
+            ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM, new MainScanStampedPageFilenameFilter());
+        }
+        //if the preview button for all stamped pages is clicked
+        else
+        {
+            ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM, new GenericScanStampedPageFilenameFilter());
+        }
     }
 
 //    @FXML
