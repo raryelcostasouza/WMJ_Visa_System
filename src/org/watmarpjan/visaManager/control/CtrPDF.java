@@ -778,10 +778,6 @@ public class CtrPDF
             {
                 fillFormTM86VisaChange(acroForm, p);
             }
-            else if (sourceFile.getName().contains("TM30-"))
-            {
-                overlayMonasteryWatermark(pdfDocument);
-            }
             else
             {
                 CtrAlertDialog.errorDialog("No action registered for form with name: " + sourceFile.getName());
@@ -921,25 +917,25 @@ public class CtrPDF
 
     }
 
-    public void overlayMonasteryWatermark(PDDocument pdfDoc) throws IOException
-    {
-        PDImageXObject pdImage;
-        PDPageContentStream contentStream;
-
-        pdImage = PDImageXObject.createFromFile(AppFiles.getOverlayWatermark().toString(), pdfDoc);
-        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
-
-        //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getHeight() * 0.3, 0, 0, pdImage.getWidth() * 0.3, 565, 450);
-
-        //rotates the image overlay 90 degree because the document is landscape
-        at.rotate(Math.toRadians(90));
-        Matrix tMatrix = new Matrix(at);
-
-        contentStream.drawImage(pdImage, tMatrix);
-        contentStream.close();
-
-    }
+//    public void overlayMonasteryWatermark(PDDocument pdfDoc) throws IOException
+//    {
+//        PDImageXObject pdImage;
+//        PDPageContentStream contentStream;
+//
+//        pdImage = PDImageXObject.createFromFile(AppFiles.getOverlayWatermark().toString(), pdfDoc);
+//        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
+//
+//        //translation, rotation and scale for the image
+//        AffineTransform at = new AffineTransform(pdImage.getHeight() * 0.3, 0, 0, pdImage.getWidth() * 0.3, 565, 450);
+//
+//        //rotates the image overlay 90 degree because the document is landscape
+//        at.rotate(Math.toRadians(90));
+//        Matrix tMatrix = new Matrix(at);
+//
+//        contentStream.drawImage(pdImage, tMatrix);
+//        contentStream.close();
+//
+//    }
 
     private void fillPrintDate(PDPageContentStream objContentStream, PDPage objPage) throws IOException
     {
