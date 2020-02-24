@@ -46,6 +46,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.util.Matrix;
+import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
@@ -1334,6 +1335,7 @@ public class CtrPDF
         try
         {
             listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), fileFilter);
+            listEPS.sort(new ComparableComparator<InfoFileScanStampedPage>());
             generateScansPage1(pdfDoc, p);
 
             //go adding the scans to the pdf and removing them from the list until there is none left
@@ -1453,7 +1455,7 @@ public class CtrPDF
             if (listEPS.size() >= 2)
             {
                 //drawing of the bottom scan on the page
-                fScan2 = listEPS.get(0).getFileScan();
+                fScan2 = listEPS.get(1).getFileScan();
                 imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
                 contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
                 
