@@ -471,7 +471,7 @@
                         <HBox alignment="CENTER" spacing="10.0">
                            <children>
                               <Button fx:id="bAddStampedPageScan" mnemonicParsing="false" onAction="#actionAddGUIModuleStampedPageScan" text="Add" />
-                              <Button fx:id="bAddStampedPageScan1" layoutX="501.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionAddGUIModuleStampedPageScan" text="Preview Scans" />
+                              <Button fx:id="bPreviewScansAllStampedPages" layoutX="501.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
                            </children>
                         </HBox>
                         <VBox fx:id="vboxAllStampedPages" />
