@@ -1164,7 +1164,7 @@ public class CtrGUIMain
     
     public void actionButtonHelp(ActionEvent ae)
     {
-        
+        Init.HOST_SERVICES.showDocument(AppPaths.getPathToHelp().resolve("index.html").toString());
     }
 
     public void initChildControllers()
