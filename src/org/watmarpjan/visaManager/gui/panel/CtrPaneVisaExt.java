@@ -390,7 +390,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
 
         if (objTM30 != null)
         {
-            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+            CtrFileOperation.openFileOnDefaultProgram(AppFiles.getPrintoutTM30(objTM30));
         }
         else
         {
