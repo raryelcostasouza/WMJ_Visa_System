@@ -101,6 +101,11 @@ public class AppPaths
         return getPathToIconSubfolder().resolve("pdf.png");
     }
     
+    public static Path getPathIconHelp()
+    {
+        return getPathToIconSubfolder().resolve("help.png");
+    }
+    
     public static Path getPathIconODT()
     {
         return getPathToIconSubfolder().resolve("odt.png");

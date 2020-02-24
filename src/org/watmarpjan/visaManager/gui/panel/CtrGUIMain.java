@@ -26,10 +26,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.watmarpjan.visaManager.control.CtrMain;
@@ -38,6 +40,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.Init;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.gui.util.CtrFieldChangeListener;
@@ -165,6 +168,9 @@ public class CtrGUIMain
     private ScrollPane modulePane;
     @FXML
     private BorderPane topPane;
+    
+    @FXML
+    private Button bHelp;
 
     private AChildPaneController currentPaneController;
     private ArrayList<AChildPaneController> listPaneControllers;
@@ -184,6 +190,7 @@ public class CtrGUIMain
     @FXML
     void initialize()
     {
+        bHelp.setGraphic(new ImageView(AppPaths.getPathIconHelp().toUri().toString()));
         //flags to control the threads that will load the FXML files in parallel
 
         //the array value is false when the thread still didn`t finish its task
@@ -1153,6 +1160,11 @@ public class CtrGUIMain
             ctrPaneEditSave.actionLock();
             ctrPaneEmbassy.fillEmbassyData(null);
         }
+    }
+    
+    public void actionButtonHelp(ActionEvent ae)
+    {
+        
     }
 
     public void initChildControllers()
