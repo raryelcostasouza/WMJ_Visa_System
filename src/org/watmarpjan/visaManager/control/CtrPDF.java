@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -1319,7 +1320,7 @@ public class CtrPDF
         }
     }
 
-    public void generatePDFPassportScans(MonasticProfile p, int option)
+    public void generatePDFPassportScans(MonasticProfile p, int option, FilenameFilter fileFilter)
     {
         //passport size 17cm X 12.5 cm
         ArrayList<InfoFileScanStampedPage> listEPS;
@@ -1332,11 +1333,15 @@ public class CtrPDF
 
         try
         {
-            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
+            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), fileFilter);
             generateScansPage1(pdfDoc, p);
-            generateScansPage2(pdfDoc, p, listEPS);
-            generateScansPage3(pdfDoc, p, listEPS);
 
+            //go adding the scans to the pdf and removing them from the list until there is none left
+            while (!listEPS.isEmpty())
+            {
+                listEPS = generateScansStampedPage(pdfDoc, p, listEPS);
+            }
+            
             pdfDoc.save(outputFile);
 
             if (option == OPTION_PRINT_FORM)
@@ -1425,7 +1430,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
+    private ArrayList<InfoFileScanStampedPage> generateScansStampedPage(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
     {
         File fScan1, fScan2;
         PDPageContentStream contentStream;
@@ -1434,10 +1439,9 @@ public class CtrPDF
 
         if (listEPS.size() >= 1)
         {
+            //drawing of the top scan on the page
             page2 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page2);
-
-            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), new MainScanStampedPageFilenameFilter());
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
 
@@ -1445,37 +1449,24 @@ public class CtrPDF
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
             contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
 
+            //if there is at least 2 scans draw the bottom scan as well
             if (listEPS.size() >= 2)
             {
-                fScan2 = listEPS.get(1).getFileScan();
+                //drawing of the bottom scan on the page
+                fScan2 = listEPS.get(0).getFileScan();
                 imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
                 contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+                
+                //removes the second scan from list
+                listEPS.remove(1);
             }
-
+            //removes the first scan from list
+            listEPS.remove(0);
+            
             contentStream.close();
         }
+        return listEPS;
 
-    }
-
-    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
-    {
-        File fScan3;
-        PDPageContentStream contentStream;
-        PDImageXObject imgScan3;
-        PDPage page3;
-
-        if (listEPS.size() == 3)
-        {
-            page3 = new PDPage(PDRectangle.A4);
-            pdfDoc.addPage(page3);
-
-            fScan3 = listEPS.get(2).getFileScan();
-            imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
-
-            contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(imgScan3, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
-            contentStream.close();
-        }
     }
 
     public void generatePhotoPage(String nicknameMonastic1, String nicknameMonastic2, int option)
