@@ -9,12 +9,15 @@ import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -68,7 +71,7 @@ public class CtrPaneDueTasks extends AChildPaneController
     private TableColumn<EntryDueTask, String> tcLastDayOnline;
     @FXML
     private TableColumn<EntryDueTask, String> tcLastDayOffice;
-
+    
     private ArrayList<TableView<EntryDueTask>> alTV;
 
     @FXML
@@ -272,6 +275,8 @@ public class CtrPaneDueTasks extends AChildPaneController
         {
             tv.setFixedCellSize(30);
         }
+        
+        
     }
 
     private void initTableGeneric(TableView<EntryDueTask> tv)
@@ -398,7 +403,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tvAbroadPassportRenewal.getItems().addAll(alAbroadPassportRenewal);
 
         taRecentChanges.setText(CtrFileOperation.loadChangelog());
-
+        
     }
 
 //    @FXML

@@ -29,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Transform;
+import javax.imageio.ImageIO;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
@@ -51,6 +52,7 @@ import org.apache.pdfbox.util.Matrix;
 import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
@@ -1226,9 +1228,8 @@ public class CtrPDF
         }
 
         objBufferedImgSnapshot = snapshotGUIComponent(objTV);
-
         pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
-
+        
         contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
 
         if (orientation == ORIENTATION_LANDSCAPE)
@@ -1409,7 +1410,6 @@ public class CtrPDF
         }
         catch (IOException ex)
         {
-            System.out.println(ex.getMessage());
             CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
         }
     }
