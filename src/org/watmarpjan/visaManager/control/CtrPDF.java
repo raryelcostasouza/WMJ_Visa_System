@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
@@ -960,7 +962,7 @@ public class CtrPDF
         objContentStream.endText();
     }
 
-    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
+    public void generatePDFDueTasksTH_OLD(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
     {
         PDDocument pdfDoc;
         PDPage page1, page2, page3;
@@ -977,6 +979,9 @@ public class CtrPDF
         page1 = new PDPage(PDRectangle.A4);
         page2 = new PDPage(PDRectangle.A4);
         page3 = new PDPage(PDRectangle.A4);
+        
+       
+        
         pdfDoc.addPage(page1);
         pdfDoc.addPage(page2);
         pdfDoc.addPage(page3);
@@ -1049,8 +1054,66 @@ public class CtrPDF
         }
 
     }
+    
+    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
+    {
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1, page2, page3, page4;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            pdfDoc = new PDDocument();
+            title = "Due Tasks TH";
+            listPages = new ArrayList<>();
+            
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tp90DayTH, "90 Day Notice", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page2 = generatePDFPageSnapshotTableView(pdfDoc, tpNonImmVisaExtTH, "Non-Immigrant Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page3 = generatePDFPageSnapshotTableView(pdfDoc, tpTouristExtTH, "Tourist Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page4 = generatePDFPageSnapshotTableView(pdfDoc, tpPsptTH, "Passport Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
 
+            listPages.add(page1);
+            listPages.add(page2);
+            listPages.add(page3);
+            listPages.add(page4);
+            
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate pdf with Due Tasks printout.");
+        }
+    }
+    
     public void generatePDFDueTasksAbroad(TableView<EntryDueTask> tvVisaExtAbroad, TableView<EntryDueTask> tvPsptAbroad, int option)
+    {
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1, page2;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            pdfDoc = new PDDocument();
+            title = "Due Tasks-Abroad";
+            listPages = new ArrayList<>();
+            
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tvVisaExtAbroad, "Visa Extension - Abroad", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page2 = generatePDFPageSnapshotTableView(pdfDoc, tvPsptAbroad, "Passport Extension - Abroad", ORIENTATION_LANDSCAPE, 0.33f, option);
+
+            listPages.add(page1);
+            listPages.add(page2);
+            
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate pdf with Due Tasks printout.");
+        }
+    }
+
+    public void generatePDFDueTasksAbroad_OLD(TableView<EntryDueTask> tvVisaExtAbroad, TableView<EntryDueTask> tvPsptAbroad, int option)
     {
         PDDocument pdfDoc;
         PDPage page1, page2;
@@ -1114,32 +1177,43 @@ public class CtrPDF
 
     public void generatePDFWorkflow(TableView tvWorkflowVisaExt, int option)
     {
-        generatePDFSnapshotTableView(tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            listPages = new ArrayList<PDPage>();
+            pdfDoc = new PDDocument();
+            title = "Workflow Visa Extension";
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            
+            listPages.add(page1);
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate workflow visa extension report PDF");
+        }
     }
 
     public void generatePDFPrintedDocStock(TableView tvPrintedDocStock, int option)
     {
-        generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
+        //generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
     }
 
-    public void generatePDFSnapshotTableView(TableView objTV, String title, int orientation, float scale, int option)
+    private PDPage generatePDFPageSnapshotTableView(PDDocument pdfDoc, TableView objTV, String title, int orientation, float scale, int option) throws IOException
     {
-        String filePrefix;
+        //String filePrefix;
         float posYTopPage, posX, paperWidth;
-        PDDocument pdfDoc;
         PDPage page1;
         PDPageContentStream contentStream;
-        File outputFile;
         PDFont font = PDType1Font.HELVETICA_BOLD;
         int fontSize = 18;
         BufferedImage objBufferedImgSnapshot;
         PDImageXObject pdImgSnapshot;
 
-        //removes any non-word characters from the title
-        filePrefix = title.replaceAll("\\W ", "");
-        outputFile = AppFiles.getFormTMPOutputPDF(filePrefix);
-
-        pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
 
         if (orientation == ORIENTATION_LANDSCAPE)
@@ -1150,63 +1224,43 @@ public class CtrPDF
         {
             page1.setRotation(0);
         }
-        pdfDoc.addPage(page1);
 
         objBufferedImgSnapshot = snapshotGUIComponent(objTV);
 
-        try
+        pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
+
+        contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
+
+        if (orientation == ORIENTATION_LANDSCAPE)
         {
-            pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
-
-            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-
-            if (orientation == ORIENTATION_LANDSCAPE)
-            {
-                // including a translation of pageWidth to use the lower left corner as 0,0 reference
-                contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
-                //on the landscape orientation, the height of the page is the same as the 
-                //width of the page on portrait orientation
-                posYTopPage = PAGE_A4_WIDTH_PX;
-                paperWidth = PAGE_A4_HEIGHT_PX;
-            }
-            else
-            {
-                posYTopPage = PAGE_A4_HEIGHT_PX;
-                paperWidth = PAGE_A4_WIDTH_PX;
-            }
-
-            fillPrintDate(contentStream, page1);
-
-            //left margin for centering the snapshot
-            posX = (paperWidth - pdImgSnapshot.getWidth() * scale) / 2.0f;
-
-            contentStream.setFont(font, fontSize);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(posX, posYTopPage - 40);
-            contentStream.showText(title);
-            contentStream.endText();
-
-            contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
-            contentStream.close();
-
-            pdfDoc.save(outputFile);
-
-            if (option == OPTION_PRINT_FORM)
-            {
-                printPDF(pdfDoc);
-            }
-            else
-            {
-                CtrFileOperation.openFileOnDefaultProgram(outputFile);
-            }
-            pdfDoc.close();
-
+            // including a translation of pageWidth to use the lower left corner as 0,0 reference
+            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+            //on the landscape orientation, the height of the page is the same as the 
+            //width of the page on portrait orientation
+            posYTopPage = PAGE_A4_WIDTH_PX;
+            paperWidth = PAGE_A4_HEIGHT_PX;
         }
-        catch (IOException e)
+        else
         {
-            CtrAlertDialog.errorDialog("Error to generate pdf for " + title);
+            posYTopPage = PAGE_A4_HEIGHT_PX;
+            paperWidth = PAGE_A4_WIDTH_PX;
         }
 
+        fillPrintDate(contentStream, page1);
+
+        //left margin for centering the snapshot
+        posX = (paperWidth - pdImgSnapshot.getWidth() * scale) / 2.0f;
+
+        contentStream.setFont(font, fontSize);
+        contentStream.beginText();
+        contentStream.newLineAtOffset(posX, posYTopPage - 40);
+        contentStream.showText(title);
+        contentStream.endText();
+
+        contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
+        contentStream.close();
+
+        return page1;
     }
 
     private BufferedImage snapshotGUIComponent(TableView pGUIComponent)
@@ -1595,6 +1649,32 @@ public class CtrPDF
             thaiTextField.setDefaultAppearance(afterFieldAppearance);
         }
 
+    }
+    
+    private void generatePDFFromPages(ArrayList<PDPage> listPages, PDDocument pdfDoc, String title, int option) throws IOException
+    {
+       String filePrefix;
+       File outputFile;
+        
+        for (PDPage page : listPages)
+        {
+           pdfDoc.addPage(page);
+        }
+        
+        //removes any non-word characters from the title
+        filePrefix = title.replaceAll("\\W ", "");
+        outputFile = AppFiles.getFormTMPOutputPDF(filePrefix);
+
+        pdfDoc.save(outputFile);
+        if (option == OPTION_PRINT_FORM)
+        {
+            printPDF(pdfDoc);
+        }
+        else
+        {
+            CtrFileOperation.openFileOnDefaultProgram(outputFile);
+        }
+        pdfDoc.close();
     }
 
 }
