@@ -28,8 +28,8 @@ public class AppFileNames
     public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_SNP = "NonImmMonasticAbroadSamnakPut.odt";
     
     public static final String ODT_LETTER_GUARANTEE_SNP = "ResidenceGuaranteeLetterSNP.odt";
-    public static final String ODT_LETTER_EXT_SNP = "ExtReqLetterSNP.odt";
-    public static final String ODT_LETTER_EXT_IMM = "ExtReqLetterIMM.odt";
+    public static final String ODT_LETTER_EXT_SNP = "ExtensionReqLetterSNP.odt";
+    public static final String ODT_LETTER_EXT_IMM = "ExtensionReqLetterIMM.odt";
 
     public static String getProfilePhoto()
     {

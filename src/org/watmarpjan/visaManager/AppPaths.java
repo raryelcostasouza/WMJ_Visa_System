@@ -76,9 +76,14 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../../Data/"+nickname + "/Letters");
     }
 
-    public static Path getPathToForms()
+    public static Path getPathToForms(String monasteryNickname)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Forms-Templates");
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/"+monasteryNickname+"/Forms-Templates");
+    }
+    
+    public static Path getPathToFonts()
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/fonts");
     }
     
     public static Path getPathToHelp()
@@ -88,7 +93,7 @@ public class AppPaths
     
     public static Path getPathToLetterTemplate(String monasteryNickname)
     {
-        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Letter-Templates/" + monasteryNickname);
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/"+monasteryNickname+"/Letter-Templates");
     }
 
     public static Path getPathToIconSubfolder()

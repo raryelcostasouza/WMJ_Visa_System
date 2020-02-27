@@ -175,14 +175,14 @@ public class AppFiles
         return pSubFolder.resolve(strFileName).toFile();
     }
 
-    public static File getFormPrawat()
+    public static File getFormPrawat(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("Prawat.pdf").toFile();
     }
 
-    public static File getFormPrawatPatimokkhaChanter()
+    public static File getFormPrawatPatimokkhaChanter(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
     }
 
     public static File getPrintoutTM30(PrintoutTm30 objTM30)
@@ -218,51 +218,37 @@ public class AppFiles
         return getPrintoutTM30(objTM30);
     }
 
-    public static File getOverlayWatermark()
-    {
-        return AppPaths.getPathToForms().resolve("overlay/overlay.png").toFile();
-    }
-
-    public static File getFormTM7ReqExtension()
-    {
-        return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();
-    }
-
-    public static File getFormTM8Reentry()
-    {
-        return AppPaths.getPathToForms().resolve("TM8-Reentry.pdf").toFile();
-    }
-
-    public static File getFormTM86VisaChange()
-    {
-        return AppPaths.getPathToForms().resolve("TM86-VisaChange.pdf").toFile();
-    }
-
-    public static File getFormOverstay()
-    {
-        return AppPaths.getPathToForms().resolve("AckOverstayPenalties.pdf").toFile();
-    }
-
-    public static File getFormSTM2AckConditions()
-    {
-        return AppPaths.getPathToForms().resolve("STM2-AckConditions.pdf").toFile();
-    }
-
-    public static File getFormTM47Notice90Day()
-    {
-        return AppPaths.getPathToForms().resolve("TM47-90DayNotice.pdf").toFile();
-    }
-
-    public static File getExtReqLetterSNP()
-    {
-        return AppPaths.getPathToForms().resolve("ExtReqLetterSNP.pdf").toFile();
-    }
-
-    public static File getExtReqLetterIMM()
-    {
-        return AppPaths.getPathToForms().resolve("ExtReqLetterIMM.pdf").toFile();
-    }
     
+    public static File getFormTM7ReqExtension(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM7-ReqExtension.pdf").toFile();
+    }
+
+    public static File getFormTM8Reentry(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM8-Reentry.pdf").toFile();
+    }
+
+    public static File getFormTM86VisaChange(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM86-VisaChange.pdf").toFile();
+    }
+
+    public static File getFormOverstay(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("AckOverstayPenalties.pdf").toFile();
+    }
+
+    public static File getFormSTM2AckConditions(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("STM2-AckConditions.pdf").toFile();
+    }
+
+    public static File getFormTM47Notice90Day(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM47-90DayNotice.pdf").toFile();
+    }
+
     public static File getODTVisaExtLetterGeneric(Monastery mResidence, String filename)
     {        
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(filename).toFile();
@@ -278,6 +264,6 @@ public class AppFiles
 
     public static File getThaiFont()
     {
-        return AppPaths.getPathToForms().resolve("font/angsa.ttf").toFile();
+        return AppPaths.getPathToFonts().resolve("angsa.ttf").toFile();
     }
 }
