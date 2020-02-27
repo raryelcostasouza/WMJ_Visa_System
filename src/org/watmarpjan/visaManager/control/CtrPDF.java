@@ -144,7 +144,7 @@ public class CtrPDF
 
         alThaiFields.add((PDTextField) acroForm.getField("certificateThai"));
 
-        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThaiPDF"));
+        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaAmpherThai"));
 
@@ -289,7 +289,7 @@ public class CtrPDF
         
         if (abbotName != null)
         {
-            acroForm.getField("nameAbbotWatResidingAtThaiPDF").setValue(abbotName);
+            acroForm.getField("nameAbbotWatResidingAtThai").setValue(abbotName);
         }
         
         mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
@@ -376,7 +376,7 @@ public class CtrPDF
         String immOffice, strFullName;
 
         alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -443,7 +443,7 @@ public class CtrPDF
         {
              //immigration office string need to have the province of the residence monastery
             immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
-            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
         
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
@@ -464,7 +464,7 @@ public class CtrPDF
         String immOffice;
 
         alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -500,7 +500,7 @@ public class CtrPDF
         {
             //immigration office string need to have the province of the residence monastery
             immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
-            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
         
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
@@ -535,7 +535,7 @@ public class CtrPDF
         String immOffice;
 
         alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -600,7 +600,7 @@ public class CtrPDF
         {
              //immigration office string need to have the province of the residence monastery
             immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
-            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
         
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
@@ -621,7 +621,7 @@ public class CtrPDF
         String immOffice;
 
         alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThaiPDF"));
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -654,7 +654,7 @@ public class CtrPDF
         {
             //immigration office string need to have the province of the residence monastery
             immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
-            acroForm.getField("immigrationOfficeThaiPDF").setValue(immOffice);
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
             
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
@@ -726,9 +726,11 @@ public class CtrPDF
         PDAcroForm acroForm;
         PDFont font;
         File outputFile;
+        String monasteryNickname;
 
         outputFile = AppFiles.getFormTMPOutputPDF(sourceFile.getName());
 
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         // load the document
         try
         {
@@ -745,40 +747,32 @@ public class CtrPDF
                 loadedThaiFontName = acroForm.getDefaultResources().add(font);
             }
 
-            if (sourceFile.getName().equals(AppFiles.getFormSTM2AckConditions().getName()))
+            if (sourceFile.getName().equals(AppFiles.getFormSTM2AckConditions(monasteryNickname).getName()))
             {
                 fillFormSTM2AckConditions2(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormOverstay().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormOverstay(monasteryNickname).getName()))
             {
                 fillFormAckOverstayPenalties(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM47Notice90Day().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM47Notice90Day(monasteryNickname).getName()))
             {
                 fillFormTM47_90DayNotice(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getExtReqLetterSNP().getName()))
-            {
-                fillExtReqLetter(acroForm, p, DESTINATION_SAMNAKPUT);
-            }
-            else if (sourceFile.getName().equals(AppFiles.getExtReqLetterIMM().getName()))
-            {
-                fillExtReqLetter(acroForm, p, DESTINATION_IMMIGRATION);
-            }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM7ReqExtension().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM7ReqExtension(monasteryNickname).getName()))
             {
                 fillTM7ReqExtension(acroForm, p);
             }
-            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
-                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter().getName())))
+            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat(monasteryNickname).getName()))
+                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter(monasteryNickname).getName())))
             {
                 fillPrawat(pdfDocument, acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry(monasteryNickname).getName()))
             {
                 fillFormTM8Reentry(acroForm, p, extraOption);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange(monasteryNickname).getName()))
             {
                 fillFormTM86VisaChange(acroForm, p);
             }
@@ -1621,32 +1615,41 @@ public class CtrPDF
      */
     private void adjustFontThaiField(ArrayList<PDTextField> listThaiFields)
     {
-        int indexFirstSpace;
+        int indexFirstSpace, i;
         String subStringAppearance;
         String beforeFieldAppearance;
         String afterFieldAppearance;
 
+        i = 0;
         for (PDTextField thaiTextField : listThaiFields)
         {
             /*
              * The appearance string has a format similar to the following example
              * "/Arial 50 Tf 0 g"
              */
-            beforeFieldAppearance = thaiTextField.getDefaultAppearance();
-            //looks for the position of the first space on the string
-            indexFirstSpace = beforeFieldAppearance.indexOf(" ");
+            if (thaiTextField != null)
+            {
+                beforeFieldAppearance = thaiTextField.getDefaultAppearance();
+                //looks for the position of the first space on the string
+                indexFirstSpace = beforeFieldAppearance.indexOf(" ");
 
-            //the substring is everything from the space on...
-            //following with the example, it would be 
-            //" 50 Tf 0 g"
-            subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
+                //the substring is everything from the space on...
+                //following with the example, it would be 
+                //" 50 Tf 0 g"
+                subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
 
-            //the new field appearance needs to use the loaded font name
-            //but keeping the other appearance settings like size etc.
-            //so the final result would be something like "/F1 50 Tf 0 g"
-            afterFieldAppearance = "/" + loadedThaiFontName.getName() + subStringAppearance;
-            
-            thaiTextField.setDefaultAppearance(afterFieldAppearance);
+                //the new field appearance needs to use the loaded font name
+                //but keeping the other appearance settings like size etc.
+                //so the final result would be something like "/F1 50 Tf 0 g"
+                afterFieldAppearance = "/" + loadedThaiFontName.getName() + subStringAppearance;
+
+                thaiTextField.setDefaultAppearance(afterFieldAppearance);
+            }
+            else
+            {
+                CtrAlertDialog.errorDialog("PDF form missing field with index "+i);
+            }
+            i++;
         }
 
     }
