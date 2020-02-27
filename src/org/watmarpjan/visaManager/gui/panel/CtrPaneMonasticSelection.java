@@ -125,17 +125,21 @@ public class CtrPaneMonasticSelection extends AChildPaneController
         String selectedNickname = cbSelectedMonastic.getValue();
         MonasticProfile p;
 
-        if (selectedNickname != null)
+        //check if there is unsaved changes before filling the data of the newly selected profile
+        if(ctrGUIMain.checkUnsavedChanges() == 0)
         {
-            if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
+            if (selectedNickname != null)
             {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-            }
+                if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
+                {
+                    ctrGUIMain.getPaneEditSaveController().actionLock();
+                }
 
-            p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(selectedNickname);
-            loadIMGProfile(p);
-            IDSelectedProfile = p.getIdProfile();
-            ctrGUIMain.fillMonasticProfileData();
+                p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(selectedNickname);
+                loadIMGProfile(p);
+                IDSelectedProfile = p.getIdProfile();
+                ctrGUIMain.fillMonasticProfileData();
+            }
         }
     }
 
