@@ -306,13 +306,14 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
 
     private File getPrawatTemplate(MonasticProfile p)
     {
+        
         if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
         {
-            return AppFiles.getFormPrawat();
+            return AppFiles.getFormPrawat(p.getMonasteryResidingAt().getMonasteryNickname());
         }
         else
         {
-            return AppFiles.getFormPrawatPatimokkhaChanter();
+            return AppFiles.getFormPrawatPatimokkhaChanter(p.getMonasteryResidingAt().getMonasteryNickname());
         }
     }
 
@@ -376,7 +377,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -403,7 +404,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -411,7 +412,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
     
     @FXML

@@ -332,8 +332,11 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
     {
         MonasticProfile p;
+        String monasteryNickname;
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
