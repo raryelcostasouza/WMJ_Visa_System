@@ -244,6 +244,7 @@ public class CtrLetterODF
                 generateLetterGuaranteeSNP(objTD, p);
                 break;
             case AppFileNames.ODT_LETTER_EXT_SNP:
+                System.out.println("here");
                 generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
                 break;
             case AppFileNames.ODT_LETTER_EXT_IMM:
@@ -277,23 +278,23 @@ public class CtrLetterODF
         LocalDate ldVisaExpiry, ldVisaExpiryDateDesired;
         int extensionsCount;
 
-        strTitle = ProfileUtil.getTitleTH(p);
+        strTitle = ProfileUtil.getTitleTH2(p);
         strFullName = ProfileUtil.getFullName(p);
         mOrdainedAt = p.getMonasteryOrdainedAt();
         mResidingAt = p.getMonasteryResidingAt();
 
-        searchNReplace(objTD, "<<titleThai>>", strTitle);
+        searchNReplace(objTD, "«titleTH2»", strTitle);
         
-        searchNReplace(objTD, "<<fullName>>", strFullName);
-        searchNReplace(objTD, "<<nationality>>", p.getNationality());
-        searchNReplace(objTD, "<<passportNumber>>", p.getPassportNumber());
-        searchNReplace(objTD, "<<ordinationTypeThai>>", ProfileUtil.getOrdinationType(p));
-        searchNReplace(objTD, "<<ordinationDate>>", ProfileUtil.getStrOrdinationDate(p));
+        searchNReplace(objTD, "«fullName»", strFullName);
+        searchNReplace(objTD, "«nationality»", p.getNationality());
+        searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
+        searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
+        searchNReplace(objTD, "«ordinationDate»", ProfileUtil.getStrOrdinationDate(p));
         
         dArrivalLastEntry = p.getArrivalLastEntryDate();
         if (dArrivalLastEntry != null)
         {
-            searchNReplace(objTD, "<<arrivalLastEntryDate>>", Util.toStringThaiDateFormat(dArrivalLastEntry));
+            searchNReplace(objTD, "«arrivalLastEntryDate»", Util.toStringThaiDateFormat(dArrivalLastEntry));
         }
 
         //if the visa for this monastic has already been extended
@@ -308,24 +309,24 @@ public class CtrLetterODF
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
         }
         
-        searchNReplace(objTD, "<<visaExpiryDate>>", Util.toStringThaiDateFormat(ldVisaExpiry));
+        searchNReplace(objTD, "«visaExpiryDate»", Util.toStringThaiDateFormat(ldVisaExpiry));
         
         if (ldVisaExpiry != null)
         {
             ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
-            searchNReplace(objTD, "<<visaExpiryDateDesired>>", Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
+            searchNReplace(objTD, "«visaExpiryDateDesired»", Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
         }
 
         if (mOrdainedAt != null)
         {
             strMOrdainedAt = MonasteryUtil.getStringWatAddrFull(mOrdainedAt, true, false);
-            searchNReplace(objTD, "<<WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry>>", strMOrdainedAt);
+            searchNReplace(objTD, "«WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry»", strMOrdainedAt);
         }
 
         if (mResidingAt != null)
         {
             strMResidingAt = MonasteryUtil.getStringWatAddrFull(mResidingAt, false, false);
-            searchNReplace(objTD, "<<WatResidingAtThai_addrAmpher_addrJangwat>>", strMResidingAt);
+            searchNReplace(objTD, "«WatResidingAtThai_addrAmpher_addrJangwat»", strMResidingAt);
         }
 
         if (filenameTemplateODT.equals(AppFileNames.ODT_LETTER_EXT_SNP))
@@ -333,7 +334,7 @@ public class CtrLetterODF
             if (p.getVisaExtensionSet() != null)
             {
                 extensionsCount = p.getVisaExtensionSet().size();
-                searchNReplace(objTD, "<<visaExtensionsCount>>", extensionsCount+"");
+                searchNReplace(objTD, "«visaExtensionsCount»", extensionsCount+"");
             }
         }
 
