@@ -799,7 +799,7 @@ public class CtrGUIMain
         }
     }
 
-    private int checkUnsavedChanges()
+    public int checkUnsavedChanges()
     {
         boolean actionSaveBefore;
         int opStatus = 0;
