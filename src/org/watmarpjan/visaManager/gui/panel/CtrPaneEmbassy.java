@@ -42,6 +42,8 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
 
     @FXML
     private ComboBox<String> cbCountry;
+    
+    private Embassy currentSelectedEmbassy;
 
     public void init()
     {
@@ -184,6 +186,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         if (e == null && !cbEmbassy.getItems().isEmpty())
         {
             e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(cbEmbassy.getValue());
+            currentSelectedEmbassy = e;
         }
 
         //if Embassy m exists on the database
@@ -273,7 +276,7 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         String previousNameEn, newNameEn;
         Embassy e;
 
-        e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(cbEmbassy.getValue());
+        e = currentSelectedEmbassy;
         if (e != null)
         {
             previousNameEn = e.getNameEn();
@@ -311,13 +314,19 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         String nameSelectedEmbassy;
         Embassy e;
 
-        nameSelectedEmbassy = cbEmbassy.getValue();
-        if (nameSelectedEmbassy != null)
+        //check if there is unsaved changes before filling the data of the newly selected embassy
+        if (ctrGUIMain.checkUnsavedChanges() == 0)
         {
-            ctrGUIMain.getPaneEditSaveController().actionLock();
-            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
-            fillEmbassyData(e);
+            nameSelectedEmbassy = cbEmbassy.getValue();
+            if (nameSelectedEmbassy != null)
+            {
+                ctrGUIMain.getPaneEditSaveController().actionLock();
+                e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
+                currentSelectedEmbassy = e;
+                fillEmbassyData(e);
+            }    
         }
+        
     }
 
 }

@@ -86,6 +86,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     private RadioButton rbCountryThailand;
     @FXML
     private RadioButton rbCountryOther;
+    
+    private Monastery currentSelectedMonastery;
 
     private static final String JAOKANA_NO = "NO";
     private static final String JAOKANA_TAMBOL = "TAMBOL";
@@ -177,7 +179,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         Monastery m;
         String previousName, newName;
 
-        m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
+        m = currentSelectedMonastery;
 
         if (m != null)
         {
@@ -315,6 +317,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         if (m == null && !cbMonasteryList.getItems().isEmpty())
         {
             m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
+            currentSelectedMonastery = m;
         }
 
         //if Monastery m exists on the database
@@ -399,12 +402,17 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         String nameSelectedMonastery;
         Monastery m;
 
-        nameSelectedMonastery = cbMonasteryList.getValue();
-        if (nameSelectedMonastery != null)
+        //check if there is unsaved changes before filling the data of the newly selected monastery
+        if (ctrGUIMain.checkUnsavedChanges() == 0)
         {
-            ctrGUIMain.getPaneEditSaveController().actionLock();
-            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
-            fillMonasteryData(m);
+            nameSelectedMonastery = cbMonasteryList.getValue();
+            if (nameSelectedMonastery != null)
+            {
+                ctrGUIMain.getPaneEditSaveController().actionLock();
+                m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
+                currentSelectedMonastery = m;
+                fillMonasteryData(m);
+            }
         }
     }
 
