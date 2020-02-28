@@ -1,3 +1,39 @@
+v1.9-BETA-1 28/02/2020
+* New Monastery Fields
+    **Abbot Name
+    **Monastery Nickname
+
+*New Monastic Profile Fields
+    **Passport kept at
+
+*New field for PrintoutTM30
+    **Monastery residence
+
+*New GUI to manage stamped pages scan
+*Stricter validation of page numbers repeated
+*Help button on left panel
+*Due Tasks report now come in landscape format
+
+Forms and Letters
+    *Filling of immigration office according to residence monastery
+    *New folder structure for forms and letter templates according to monastery nickname
+
+    *New Letter Guarantee
+    *Extension Request Letter converted from PDF to ODT 
+
+    Prawat
+        *Filling of abbot name and jaokana according to residence monastery
+
+TM30
+    *Removed overlay functionality
+
+Bugs fixed
+    **Showing first monastic of db on the list even when it is inactive
+    **If switch profile while have unsaved changes it was not asking to save before
+    **Embassy panel: country embassy changes were not being detected to toggle the save button status
+    **Error message dialogs: the message text was being wrapped and it was not possible to resize
+    **Due tasks report for Thailand: if the other tabs were not acessed in advance the report would come with wrong screenshots
+    
 v1.8.1 - 29/04/2019
 
 New features:
