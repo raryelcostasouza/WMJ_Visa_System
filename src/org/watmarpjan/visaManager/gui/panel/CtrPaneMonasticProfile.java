@@ -34,8 +34,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
+import javafx.scene.control.Toggle;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 
 /**
  *
@@ -266,7 +268,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         bRemoveCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
-
+        
         tfNickname.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -1079,27 +1081,33 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             {
                 //if the nickname was changed              
                 //refresh nickname list and rename folder
-                if (!previousNickName.equals(newNickName) ||
-                        !previousStatus.equals(newStatus))
+                if (!previousNickName.equals(newNickName))
                 {
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
                 
+                initNaktamCertificateButtons(p);
+                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+                
                 //if there was a status change 
                 //refresh nickname list
                 if (!previousStatus.equals(newStatus))
                 {
-                    ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
+                    //if the new status is inactive
+                    //and the option to show only active members is set
+                    if (newStatus == AppConstants.STATUS_INACTIVE && 
+                            ctrGUIMain.getCtrPaneSelection().isSet2ShowOnlyActive())
+                    {
+                        //need to remove the profile from the list
+                        ctrGUIMain.getCtrPaneSelection().removeProfileFromList(newNickName);
+                    }
                 }
-                    
-                initNaktamCertificateButtons(p);
-                ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
             return operationStatus;
         }
         return 0;
     }
-
+    
 }

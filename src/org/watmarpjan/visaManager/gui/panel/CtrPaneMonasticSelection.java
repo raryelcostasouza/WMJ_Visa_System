@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.gui.panel;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -37,11 +39,17 @@ public class CtrPaneMonasticSelection extends AChildPaneController
 
     private Integer IDSelectedProfile;
 
+    private String previousSelection;
+
+    private String newSelection;
+
     @Override
     public void init()
     {
         MonasticProfile firstProfile;
 
+        previousSelection = null;
+        newSelection = null;
         fillNicknameList();
         firstProfile = ctrGUIMain.getCtrMain().getCtrProfile().loadFirstProfile(cbShowOnlyActive.isSelected());
 
@@ -81,11 +89,31 @@ public class CtrPaneMonasticSelection extends AChildPaneController
 
     public void reloadNicknameList(String selectedNickname)
     {
+        System.out.println("list reaload");
         fillNicknameList();
-        cbSelectedMonastic.setValue(selectedNickname);
+
+        setSelectedProfileByNickname(selectedNickname);
+        //cbSelectedMonastic.setValue(selectedNickname);
+
         //loadIMGProfile(selectedNickname);
     }
-    
+
+    public void removeProfileFromList(String nickname)
+    {
+        int indexRemoved;
+        String item2SelectAfterRemove;
+
+        indexRemoved = cbSelectedMonastic.getItems().indexOf(nickname);
+        
+        //if removes the first item selects automatically the next one to avoid null field
+        if (indexRemoved == 0)
+        {
+            item2SelectAfterRemove = cbSelectedMonastic.getItems().get(1);
+            cbSelectedMonastic.setValue(item2SelectAfterRemove);
+        }
+        cbSelectedMonastic.getItems().remove(nickname);
+    }
+
     public Integer getIDSelectedProfile()
     {
         return IDSelectedProfile;
@@ -109,11 +137,11 @@ public class CtrPaneMonasticSelection extends AChildPaneController
             cbSelectedMonastic.setValue(nickname);
         }
     }
-    
+
     public void reloadCurrentProfile()
     {
-        MonasticProfile p; 
-        
+        MonasticProfile p;
+
         p = getSelectedProfile();
         cbSelectedMonastic.setValue(null);
         cbSelectedMonastic.setValue(p.getNickname());
@@ -122,25 +150,52 @@ public class CtrPaneMonasticSelection extends AChildPaneController
     @FXML
     void listenerCbSelectedMonastic(ActionEvent ae)
     {
-        String selectedNickname = cbSelectedMonastic.getValue();
         MonasticProfile p;
 
-        //check if there is unsaved changes before filling the data of the newly selected profile
-        if(ctrGUIMain.checkUnsavedChanges() == 0)
+        //uses newSelection as a flag to avoid recursion
+        
+        //if there is no selected value change operation undergoing
+        //and the current value is not null
+        if (newSelection == null && cbSelectedMonastic.getValue() != null)
         {
-            if (selectedNickname != null)
+            //flag selected value change operation setting newSelection
+            newSelection = cbSelectedMonastic.getValue();
+
+            //if there was no previous selection or 
+            //the new selection is different than the previous one
+            if (previousSelection == null || previousSelection != newSelection)
             {
+                //go ahead and switch profiles and lock
                 if (ctrGUIMain.getCurrentEditableGUIFormController() != null)
                 {
                     ctrGUIMain.getPaneEditSaveController().actionLock();
                 }
 
-                p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(selectedNickname);
+                //load profile info
+                p = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(newSelection);
                 loadIMGProfile(p);
                 IDSelectedProfile = p.getIdProfile();
                 ctrGUIMain.fillMonasticProfileData();
+                
+                //adjust flag variables
+                previousSelection = newSelection;
             }
+            
+            //after operation finish reset the newSelection flag
+            //to enable further selection change operations
+            newSelection = null;
+                
         }
+    }
+
+    public void lockCBMonasticSelection()
+    {
+        cbSelectedMonastic.setDisable(true);
+    }
+
+    public void unlockCBMonasticSelection()
+    {
+        cbSelectedMonastic.setDisable(false);
     }
 
     private void loadIMGProfile(MonasticProfile p)
@@ -210,4 +265,10 @@ public class CtrPaneMonasticSelection extends AChildPaneController
             return false;
         }
     }
+
+    public boolean isSet2ShowOnlyActive()
+    {
+        return cbShowOnlyActive.isSelected();
+    }
+    
 }

@@ -295,7 +295,9 @@ public class CtrGUIMain
 
     private void initGUIAfterFXMLLoad()
     {
-
+        CtrGUIMain selfObjCtrGUIMain;
+        
+        selfObjCtrGUIMain = this;
         Platform.runLater(new Runnable()
         {
             @Override
@@ -314,7 +316,7 @@ public class CtrGUIMain
                     mainScene.getStylesheets().add(getClass().getResource("root.css").toExternalForm());
                 }
 
-                ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave);
+                ctrFieldChangeListener = new CtrFieldChangeListener(ctrPaneEditSave, selfObjCtrGUIMain);
                 initChildControllers();
                 actionDueTasksButton(null);
                 System.out.println("LoadTime: " + Duration.between(Init.INSTANT_INIT_START, Instant.now()));
@@ -1223,6 +1225,11 @@ public class CtrGUIMain
     public CtrGUISharedUtil getCtrGUISharedUtil()
     {
         return ctrGUISharedUtil;
+    }
+    
+    public AChildPaneController getCurrentPaneController()
+    {
+        return currentPaneController;
     }
 
 }
