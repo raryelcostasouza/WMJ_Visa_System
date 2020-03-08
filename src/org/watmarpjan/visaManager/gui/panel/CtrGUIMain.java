@@ -56,7 +56,7 @@ public class CtrGUIMain
     private CtrDatePicker ctrDatePicker;
 
     @FXML
-    private BorderPane rootPane;
+    private HBox rootPane;
 
     @FXML
     private RadioButton rbDateFormatWestern;
