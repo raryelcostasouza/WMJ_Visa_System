@@ -321,7 +321,7 @@ public class CtrPaneDueTasks extends AChildPaneController
         tcLastDayOffice.setCellValueFactory(new PropertyValueFactory<>("lastDayOffice"));
         tcLastDayOffice.setCellFactory(dateCellFactory);
 
-        GUIUtil.initAutoHeightResize(tv, 3);
+        GUIUtil.initAutoHeightResize(tv, 3.5);
     }
 
     private void initTableNonImmVisaExtension(TableView<EntryDueTask> tv)
