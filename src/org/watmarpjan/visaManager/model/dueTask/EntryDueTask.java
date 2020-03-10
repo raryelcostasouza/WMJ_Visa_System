@@ -19,17 +19,21 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
 {
 
     private final SimpleStringProperty profileNickname;
+    private final SimpleStringProperty nicknameMonasteryResidingAt;
+    private final SimpleStringProperty passportKeptAt;
     private final SimpleStringProperty strDueDate;
     private final SimpleStringProperty weekDayDueDate;
     private final SimpleStringProperty remainingTime;
 
     protected LocalDate ldDueDate;
 
-    public EntryDueTask(String profileNickname, Date dueDate)
+    public EntryDueTask(String profileNickname, Date dueDate, String nicknameMonasteryResidingAt, String passportKeptAt)
     {
         Period pRemainingTime;
 
         this.profileNickname = new SimpleStringProperty(profileNickname);
+        this.nicknameMonasteryResidingAt = new SimpleStringProperty(nicknameMonasteryResidingAt);
+        this.passportKeptAt = new SimpleStringProperty(passportKeptAt);
         ldDueDate = org.watmarpjan.visaManager.util.Util.convertDateToLocalDate(dueDate);
         this.strDueDate = new SimpleStringProperty(ldDueDate.format(Util.DEFAULT_DATE_FORMAT));
         this.weekDayDueDate = new SimpleStringProperty((String) ldDueDate.getDayOfWeek().toString().subSequence(0, 3));
@@ -77,6 +81,16 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     public String getDueDate()
     {
         return strDueDate.get();
+    }
+
+    public String getNicknameMonasteryResidingAt()
+    {
+        return nicknameMonasteryResidingAt.get();
+    }
+    
+    public String getPassportKeptAt()
+    {
+        return passportKeptAt.get();
     }
 
     public String getWeekDayDueDate()

@@ -26,9 +26,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
+import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
@@ -70,6 +72,8 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     private Button bPreview6;
     @FXML
     private Button bPreview7;
+    @FXML
+    private Button bPreview8;
     
     @FXML
     private Button bPreviewNaktamCertificate;
@@ -95,12 +99,13 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         TableColumn<EntryVisaExt, String> tc;
 
         bPreview1.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPreview2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        bPreview3.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview2.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bPreview3.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bPreview4.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview5.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bPreview8.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         
         bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
@@ -301,13 +306,14 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
 
     private File getPrawatTemplate(MonasticProfile p)
     {
+        
         if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
         {
-            return AppFiles.getFormPrawat();
+            return AppFiles.getFormPrawat(p.getMonasteryResidingAt().getMonasteryNickname());
         }
         else
         {
-            return AppFiles.getFormPrawatPatimokkhaChanter();
+            return AppFiles.getFormPrawatPatimokkhaChanter(p.getMonasteryResidingAt().getMonasteryNickname());
         }
     }
 
@@ -337,17 +343,33 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     @FXML
     void actionPreviewLetterSamnakput(ActionEvent ae)
     {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        //old version for PDF form
+        //MonasticProfile p;
+        //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_SNP);
     }
 
     @FXML
     void actionPreviewLetterImmigration(ActionEvent ae)
     {
+        //old version for PDF form
+        //MonasticProfile p;
+        //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_IMM);
+    }
+    
+    private void actionPreviewLetterODTGeneric(String letterFilename)
+    {
+        File fLetter;
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), letterFilename);
+        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
     }
 
     @FXML
@@ -355,7 +377,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -369,7 +391,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
 
         if (objTM30 != null)
         {
-            ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getPrintoutTM30(objTM30), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+            CtrFileOperation.openFileOnDefaultProgram(AppFiles.getPrintoutTM30(objTM30));
         }
         else
         {
@@ -382,7 +404,7 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -390,7 +412,18 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     {
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
+    {
+        File fLetter;
+        MonasticProfile p;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), AppFileNames.ODT_LETTER_GUARANTEE_SNP);
+        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
     }
 
 //    @FXML

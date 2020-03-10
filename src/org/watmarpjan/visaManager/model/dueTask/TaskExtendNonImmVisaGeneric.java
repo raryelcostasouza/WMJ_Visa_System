@@ -8,6 +8,7 @@ package org.watmarpjan.visaManager.model.dueTask;
 import java.time.LocalDate;
 import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -20,9 +21,9 @@ public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtende
     private SimpleStringProperty prawat;
     private SimpleStringProperty samnakput;
 
-    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate)
+    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
     {
-        super(profileNickname, dDueDate);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
     }
 
     public String getPrawat()

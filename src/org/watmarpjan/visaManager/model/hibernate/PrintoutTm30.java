@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,17 +27,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adhipanyo
+ * @author adhipanyo
  */
 @Entity
 @Table(name = "PRINTOUT_TM30")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p")
-    , @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout")
-    , @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate")
-    , @NamedQuery(name = "PrintoutTm30.findByAuxIndex", query = "SELECT p FROM PrintoutTm30 p WHERE p.auxIndex = :auxIndex")
+    @NamedQuery(name = "PrintoutTm30.findAll", query = "SELECT p FROM PrintoutTm30 p"),
+    @NamedQuery(name = "PrintoutTm30.findByIdPrintout", query = "SELECT p FROM PrintoutTm30 p WHERE p.idPrintout = :idPrintout"),
+    @NamedQuery(name = "PrintoutTm30.findByNotifDate", query = "SELECT p FROM PrintoutTm30 p WHERE p.notifDate = :notifDate"),
+    @NamedQuery(name = "PrintoutTm30.findByAuxIndex", query = "SELECT p FROM PrintoutTm30 p WHERE p.auxIndex = :auxIndex")
 })
 public class PrintoutTm30 implements Serializable
 {
@@ -52,6 +54,9 @@ public class PrintoutTm30 implements Serializable
     private Date notifDate;
     @Column(name = "AUX_INDEX")
     private Integer auxIndex;
+    @JoinColumn(name = "MONASTERY_RESIDENCE", referencedColumnName = "ID_MONASTERY")
+    @ManyToOne
+    private Monastery monasteryResidence;
     @OneToMany(mappedBy = "printoutTm30")
     private Set<MonasticProfile> monasticProfileSet;
 
@@ -98,6 +103,16 @@ public class PrintoutTm30 implements Serializable
     public void setAuxIndex(Integer auxIndex)
     {
         this.auxIndex = auxIndex;
+    }
+
+    public Monastery getMonasteryResidence()
+    {
+        return monasteryResidence;
+    }
+
+    public void setMonasteryResidence(Monastery monasteryResidence)
+    {
+        this.monasteryResidence = monasteryResidence;
     }
 
     @XmlTransient

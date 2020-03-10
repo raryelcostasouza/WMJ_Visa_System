@@ -97,7 +97,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         {
             hql = "select p from MonasticProfile p"
                     + " where p.status <> 'INACTIVE'"
-                    + " order by"
+                    + " order by"   
                     + " p.bhikkhuOrdDate asc nulls last,"
                     + " p.samaneraOrdDate asc nulls last,"
                     + " p.pahkahwOrdDate asc nulls last";
@@ -122,12 +122,13 @@ public class CtrMonasticProfile extends AbstractControllerDB
         return listNickname;
     }
 
-    public MonasticProfile loadByIndex(int index)
+    public MonasticProfile loadFirstProfile(boolean onlyActive)
     {
         ArrayList<MonasticProfile> alProfile;
         String hql;
 
         hql = "from MonasticProfile p "
+                + "where p.status <> 'INACTIVE' "
                 + "order by "
                 + "p.bhikkhuOrdDate asc nulls last, "
                 + "p.samaneraOrdDate asc nulls last,"
@@ -137,7 +138,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
 
         if (!alProfile.isEmpty())
         {
-            return alProfile.get(index);
+            return alProfile.get(0);
         }
         else
         {
@@ -372,12 +373,25 @@ public class CtrMonasticProfile extends AbstractControllerDB
                 + " order by p.passportIssuedAt";
         return queryStringField(hql);
     }
+    
+    public ArrayList<String> loadListPassportKeptAt()
+    {
+        String hql;
+
+        hql = "select p.passportKeptAt"
+                + " from MonasticProfile p "
+                + " where p.passportKeptAt is not null"
+                + " group by p.passportKeptAt"
+                + " order by p.passportKeptAt";
+
+        return queryStringField(hql);
+    }
 
     public ArrayList<EntryDueTask> loadListDue90DayNotice()
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt)"
                 + " from MonasticProfile p "
                 + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + "and p.next90DayNotice is not null "
@@ -451,18 +465,18 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
         //for monastics whose NonImm visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate))"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt)"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" + currentLocation + "'"
                 + " and size(p.visaExtensionSet) > 0"
-                + " group by p.nickname"
+                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt"
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
         //for monastics whose NonImm visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt)"
                 + " from MonasticProfile p"
                 + " where p.visaType <>'"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" + currentLocation + "'"
@@ -486,18 +500,18 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
         //for monastics whose Tourist visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate))"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt)"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + " and size(p.visaExtensionSet) > 0"
-                + " group by p.nickname"
+                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt"
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
         //for monastics whose Tourist visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt)"
                 + " from MonasticProfile p"
                 + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
@@ -519,7 +533,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskRenewPassport(p.nickname, p.passportExpiryDate)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskRenewPassport(p.nickname, p.passportExpiryDate, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt)"
                 + " from MonasticProfile p "
                 + " where p.status = '" + currentLocation + "' and"
                 + " p.passportExpiryDate is not null "

@@ -1,19 +1,18 @@
-package org.watmarpjan.visaManager.model.eps;
+package org.watmarpjan.visaManager.model.stampedPage.output;
 
 
-public class ExtraPassportScanNew
+public class InfoMainScanStampedPage extends InfoGenericScanStampedPage
 {
     private boolean containScanArriveStamp;
     private boolean containScanVisa;
     private boolean containScanLastVisaExt;
-    private int leftPageNumber;
-
-    public ExtraPassportScanNew(int leftPageNumber, boolean containScanArriveStamp, boolean containScanVisa, boolean containScanLastVisaExt)
+    
+    public InfoMainScanStampedPage(String leftPageNumber, boolean containScanArriveStamp, boolean containScanVisa, boolean containScanLastVisaExt)
     {
+        super(leftPageNumber);
         this.containScanArriveStamp = containScanArriveStamp;
         this.containScanVisa = containScanVisa;
         this.containScanLastVisaExt = containScanLastVisaExt;
-        this.leftPageNumber = leftPageNumber;
     }
 
     public boolean containsScanArriveStamp()
@@ -31,12 +30,4 @@ public class ExtraPassportScanNew
         return containScanLastVisaExt;
     }
 
-    public int getLeftPageNumber()
-    {
-        return leftPageNumber;
-    }
-    
-    
-    
-    
 }

@@ -179,13 +179,16 @@ public class CtrLetter
         return linesCSV;
     }
 
+    //retired subfunction for generating letter for word template files and macro
     public static int generateCSV(MonasticProfile p, String[][] data)
     {
         Path pFolderLetterTemplate, pCSV;
+        String monasteryNickname;
         List<String> linesCSV;
 
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         linesCSV = matrix2CSVString(data);
-        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
+        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate(monasteryNickname);
 
         pCSV = pFolderLetterTemplate.resolve("letterInput.csv");
         try
@@ -207,16 +210,19 @@ public class CtrLetter
 
     }
 
+    
+    //retired function for generating letter for word template files and macro
     public static void generateLetter(String letterSelected, MonasticProfile p, LetterInputData objLetterInput)
     {
         Process pCMD;
         Path pFolderLetterTemplate, pProfileLetterStorage;
-        String fileName;
+        String fileName, monasteryNickname;
         String[][] matrixData;
         int output;
 
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         fileName = "NonImm" + letterSelected.replaceAll("[-  ]+", "") + ".dotm";
-        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate();
+        pFolderLetterTemplate = AppPaths.getPathToLetterTemplate(monasteryNickname);
         pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
 
         matrixData = fillMatrixData(objLetterInput);

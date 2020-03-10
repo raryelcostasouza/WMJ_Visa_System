@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
@@ -93,7 +94,10 @@ public class CtrAlertDialog
 
         a = new Alert(Alert.AlertType.ERROR);
         a.setTitle("Error!");
+        a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        a.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         a.setContentText(msg);
+
         a.showAndWait();
     }
 

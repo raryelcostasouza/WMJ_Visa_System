@@ -7,16 +7,21 @@ package org.watmarpjan.visaManager.control;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import org.odftoolkit.simple.TextDocument;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.odftoolkit.simple.common.navigation.TextNavigation;
 import org.odftoolkit.simple.common.navigation.TextSelection;
+import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.LetterInputData;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.util.MonasteryUtil;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -50,12 +55,8 @@ public class CtrLetterODF
         return p.getMonasticName() + p.getLastName() + "-" + LocalDateTime.now().format(Util.TIMESTAMP_FILE_NAME);
     }
 
-    private static void generateLetterCommonMonasticFields(TextDocument objTD, LetterInputData objLetterInput) throws InvalidNavigationException
+    private static void generateLetterCommonMonasticFields(TextDocument objTD, MonasticProfile p) throws InvalidNavigationException
     {
-        MonasticProfile p;
-
-        p = objLetterInput.getMonasticProfile();
-
         searchNReplace(objTD, "«name»", p.getMonasticName());
         if (p.getMiddleName() != null)
         {
@@ -106,7 +107,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
     }
 
@@ -116,7 +117,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         generateLetterCommonEmbassyFields(objTD, objLetterInput);
 
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
@@ -136,7 +137,7 @@ public class CtrLetterODF
         p = objLetterInput.getMonasticProfile();
         e = objLetterInput.getEmbassy();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         searchNReplace(objTD, "«titleTH»", ProfileUtil.getTitleTH(p));
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
 
@@ -152,7 +153,7 @@ public class CtrLetterODF
 
         p = objLetterInput.getMonasticProfile();
 
-        generateLetterCommonMonasticFields(objTD, objLetterInput);
+        generateLetterCommonMonasticFields(objTD, objLetterInput.getMonasticProfile());
         generateLetterCommonEmbassyFields(objTD, objLetterInput);
 
         searchNReplace(objTD, "«titleEN»", ProfileUtil.getTitleEN(p));
@@ -179,13 +180,13 @@ public class CtrLetterODF
         searchNReplace(objTD, "«addressLine4»", objLetterInput.getAddrMonasticLine4());
     }
 
-    private static void saveLetter(TextDocument objTD, MonasticProfile p, String fileNameTemplateWithoutExtension)
+    private static void saveLetter(TextDocument objTD, MonasticProfile p, File fTemplate)
     {
         Path pProfileLetterStorage;
         String fileNameGeneratedLetter;
         File fDestination;
 
-        fileNameGeneratedLetter = fileNameTemplateWithoutExtension + generateLetterFileNameSuffix(p) + ".odt";
+        fileNameGeneratedLetter = Util.getFileNameWithoutExtension(fTemplate) + generateLetterFileNameSuffix(p) + ".odt";
         pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
         fDestination = pProfileLetterStorage.resolve(fileNameGeneratedLetter).toFile();
 
@@ -203,39 +204,24 @@ public class CtrLetterODF
             CtrAlertDialog.exceptionDialog(ex, "Unable to save generated Letter.");
         }
     }
-
-    public static void generateLetter(String letterSelected, MonasticProfile p, LetterInputData objLetterInput)
+    
+    public static void generateLetterGeneric(File fTemplate, MonasticProfile p, LetterInputData objLetterInput, CtrVisa objCtrVisa)
     {
-        File fLetterTemplate;
-        String fileNameTemplateWithoutExtension;
-
-        fileNameTemplateWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
-        fLetterTemplate = AppPaths.getPathToLetterTemplate().resolve(fileNameTemplateWithoutExtension + ".odt").toFile();
         try
         {
-            TextDocument objTD = TextDocument.loadDocument(fLetterTemplate);
-            switch (fileNameTemplateWithoutExtension)
-            {
-                case "NonImmLaypersonAbroadEmbassy":
-                    generateLetterLaypersonAbroadEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmLaypersonAbroadEmbassyEN":
-                    generateLetterLaypersonAbroadEmbassyEN(objTD, objLetterInput);
-                    break;
-                case "NonImmLaypersonThailandVientianeEmbassy":
-                    generateLetterLaypersonThailandVientianeEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadEmbassy":
-                    generateLetterMonasticAbroadEmbassy(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadEmbassyEN":
-                    generateLetterMonasticAbroadEmbassyEN(objTD, objLetterInput);
-                    break;
-                case "NonImmMonasticAbroadSamnakPut":
-                    generateLetterMonasticAbroadSamnakPut(objTD, objLetterInput);
-                    break;
-            }
-            saveLetter(objTD, objLetterInput.getMonasticProfile(), fileNameTemplateWithoutExtension);
+            TextDocument objTD;
+           
+            // LetterInput Object is only set for new visa because of extra data needed
+           if (objLetterInput != null)
+           {
+               objTD = generateLetterNewVisa(fTemplate, objLetterInput);
+           }
+           else
+           {
+               objTD = generateLetterVisaExt(p, fTemplate, objCtrVisa);
+           }
+            
+            saveLetter(objTD, p, fTemplate);
 
         }
         catch (InvalidNavigationException ex)
@@ -247,5 +233,138 @@ public class CtrLetterODF
             CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
         }
 
+    }
+     
+    private static TextDocument generateLetterVisaExt(MonasticProfile p, File fTemplate, CtrVisa objCtrVisa) throws InvalidNavigationException, Exception
+    {
+        TextDocument objTD = TextDocument.loadDocument(fTemplate);
+        switch(fTemplate.getName())
+        {
+            case AppFileNames.ODT_LETTER_GUARANTEE_SNP:
+                generateLetterGuaranteeSNP(objTD, p);
+                break;
+            case AppFileNames.ODT_LETTER_EXT_SNP:
+                System.out.println("here");
+                generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
+                break;
+            case AppFileNames.ODT_LETTER_EXT_IMM:
+                generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
+                break;
+        }
+        
+        return objTD;
+    }
+    
+    public static void generateLetterGuaranteeSNP(TextDocument objTD, MonasticProfile p) throws InvalidNavigationException
+    {
+        Monastery mResidence;
+        String monasteryAddr;
+        
+        generateLetterCommonMonasticFields(objTD, p);
+        
+        mResidence = p.getMonasteryResidingAt();
+        monasteryAddr = MonasteryUtil.getStringWatAddrFull(mResidence, false, true);
+        //need to use thai numbers
+        searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
+        searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAge(p.getBirthDate()));
+        searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
+    }
+    
+    public static void generateLetterReqExt(TextDocument objTD, MonasticProfile p, CtrVisa objCtrVisa, String filenameTemplateODT) throws InvalidNavigationException
+    {
+        String strFullName, strTitle, strMOrdainedAt, strMResidingAt;
+        Monastery mOrdainedAt, mResidingAt;
+        Date dVisaExpiry, dArrivalLastEntry;
+        LocalDate ldVisaExpiry, ldVisaExpiryDateDesired;
+        int extensionsCount;
+
+        strTitle = ProfileUtil.getTitleTH2(p);
+        strFullName = ProfileUtil.getFullName(p);
+        mOrdainedAt = p.getMonasteryOrdainedAt();
+        mResidingAt = p.getMonasteryResidingAt();
+
+        searchNReplace(objTD, "«titleTH2»", strTitle);
+        
+        searchNReplace(objTD, "«fullName»", strFullName);
+        searchNReplace(objTD, "«nationality»", p.getNationality());
+        searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
+        searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
+        searchNReplace(objTD, "«ordinationDate»", ProfileUtil.getStrOrdinationDate(p));
+        
+        dArrivalLastEntry = p.getArrivalLastEntryDate();
+        if (dArrivalLastEntry != null)
+        {
+            searchNReplace(objTD, "«arrivalLastEntryDate»", Util.toStringThaiDateFormat(dArrivalLastEntry));
+        }
+
+        //if the visa for this monastic has already been extended
+        //retrieves the expiry date of the most recent extension
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
+        {
+            dVisaExpiry = objCtrVisa.getLastExtension(p).getExpiryDate();
+            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
+        } //otherwise retrieves the expiry date of the original visa
+        else
+        {
+            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        }
+        
+        searchNReplace(objTD, "«visaExpiryDate»", Util.toStringThaiDateFormat(ldVisaExpiry));
+        
+        if (ldVisaExpiry != null)
+        {
+            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
+            searchNReplace(objTD, "«visaExpiryDateDesired»", Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
+        }
+
+        if (mOrdainedAt != null)
+        {
+            strMOrdainedAt = MonasteryUtil.getStringWatAddrFull(mOrdainedAt, true, false);
+            searchNReplace(objTD, "«WatOrdainedAtThai_addrAmpher_addrJangwat_addrCountry»", strMOrdainedAt);
+        }
+
+        if (mResidingAt != null)
+        {
+            strMResidingAt = MonasteryUtil.getStringWatAddrFull(mResidingAt, false, false);
+            searchNReplace(objTD, "«WatResidingAtThai_addrAmpher_addrJangwat»", strMResidingAt);
+        }
+
+        if (filenameTemplateODT.equals(AppFileNames.ODT_LETTER_EXT_SNP))
+        {
+            if (p.getVisaExtensionSet() != null)
+            {
+                extensionsCount = p.getVisaExtensionSet().size();
+                searchNReplace(objTD, "«visaExtensionsCount»", extensionsCount+"");
+            }
+        }
+
+
+    }
+    
+    private static TextDocument generateLetterNewVisa(File fTemplate, LetterInputData objLetterInput) throws InvalidNavigationException, Exception
+    {
+        TextDocument objTD = TextDocument.loadDocument(fTemplate);
+        switch (fTemplate.getName())
+        {
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY:
+                generateLetterLaypersonAbroadEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY_EN:
+                generateLetterLaypersonAbroadEmbassyEN(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_THAILAND_VIENTIANE_EMBASSY:
+                generateLetterLaypersonThailandVientianeEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY:
+                generateLetterMonasticAbroadEmbassy(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY_EN:
+                generateLetterMonasticAbroadEmbassyEN(objTD, objLetterInput);
+                break;
+            case AppFileNames.ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_SNP:
+                generateLetterMonasticAbroadSamnakPut(objTD, objLetterInput);
+                break;
+        }    
+        return objTD;
     }
 }

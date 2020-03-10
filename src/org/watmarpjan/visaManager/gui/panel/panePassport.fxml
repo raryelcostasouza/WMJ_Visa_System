@@ -7,6 +7,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -248,213 +250,235 @@
         </VBox>
     </left>
    <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
-               </children>
-            </HBox>
-                <VBox>
-                    <children>
-                        <TitledPane collapsible="false" text="First Page/Departure Card">
-                            <content>
-                                <HBox alignment="CENTER">
-                                    <children>
-                                        <VBox alignment="CENTER">
-                                            <children>
-                                                <ImageView fx:id="ivPassportScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../../../../../icons/passport.png" />
-                                                    </image>
-                                                    <viewport>
-                                                        <Rectangle2D />
-                                                    </viewport>
-                                                </ImageView>
-                                    <HBox alignment="CENTER" spacing="10.0">
-                                       <children>
-                                          <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportFirstPage" text="Archive" />
-                                          <Button fx:id="bScanPassport" mnemonicParsing="false" onAction="#actionChooseScanPassport" text="Passport Scan" />
-                                       </children>
-                                    </HBox>
-                                            </children>
-                                        </VBox>
-                                        <VBox alignment="CENTER">
-                                            <children>
-                                                <ImageView fx:id="ivDepartureCardScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../../../../../icons/passport.png" />
-                                                    </image>
-                                                    <viewport>
-                                                        <Rectangle2D />
-                                                    </viewport>
-                                                </ImageView>
-                                    <HBox alignment="CENTER" spacing="10.0">
-                                       <children>
-                                          <Button fx:id="bArchiveDepartureCard" mnemonicParsing="false" onAction="#actionArchiveDepartureCard" text="Archive" />
-                                          <Button fx:id="bScanDepartureCard" mnemonicParsing="false" onAction="#actionChooseScanDepartureCard" text="Departure Card Scan" />
-                                       </children>
-                                    </HBox>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </HBox>
-                            </content>
-                        </TitledPane>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+      <TabPane BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab closable="false" text="Main Scans">
+               <content>
+                  <VBox>
                      <children>
-                              <TitledPane collapsible="false" text="Extra Scan 1">
-                           <content>
-                              <VBox>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
+                           </children>
+                        </HBox>
+                            <VBox>
+                                <children>
+                                    <TitledPane collapsible="false" text="First Page/Departure Card">
+                                        <content>
+                                            <HBox alignment="CENTER">
+                                                <children>
+                                                    <VBox alignment="CENTER">
+                                                        <children>
+                                                            <ImageView fx:id="ivPassportScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                <image>
+                                                                    <Image url="@../../../../../icons/passport.png" />
+                                                                </image>
+                                                                <viewport>
+                                                                    <Rectangle2D />
+                                                                </viewport>
+                                                            </ImageView>
+                                                <HBox alignment="CENTER" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportFirstPage" text="Archive" />
+                                                      <Button fx:id="bScanPassport" mnemonicParsing="false" onAction="#actionChooseScanPassport" text="Passport Scan" />
+                                                   </children>
+                                                </HBox>
+                                                        </children>
+                                                    </VBox>
+                                                    <VBox alignment="CENTER">
+                                                        <children>
+                                                            <ImageView fx:id="ivDepartureCardScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                <image>
+                                                                    <Image url="@../../../../../icons/passport.png" />
+                                                                </image>
+                                                                <viewport>
+                                                                    <Rectangle2D />
+                                                                </viewport>
+                                                            </ImageView>
+                                                <HBox alignment="CENTER" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="bArchiveDepartureCard" mnemonicParsing="false" onAction="#actionArchiveDepartureCard" text="Archive" />
+                                                      <Button fx:id="bScanDepartureCard" mnemonicParsing="false" onAction="#actionChooseScanDepartureCard" text="Departure Card Scan" />
+                                                   </children>
+                                                </HBox>
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </HBox>
+                                        </content>
+                                    </TitledPane>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                              <VBox alignment="CENTER">
-                                                  <children>
-                                                      <ImageView fx:id="ivScan1" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                          <image>
-                                                              <Image url="@../../../../../icons/passport.png" />
-                                                          </image>
-                                                          <viewport>
-                                                              <Rectangle2D />
-                                                          </viewport>
-                                                      </ImageView>
-                                                  </children>
-                                              </VBox>
-                                              <TitledPane animated="false" collapsible="false" text="Scan 1 Contents">
-                                                  <content>
-                                                      <VBox>
-                                                          <children>
-                                                              <HBox alignment="CENTER">
-                                                                  <children>
-                                                                      <Label text="Page number:" />
-                                                                      <TextField fx:id="tfScan1LeftPageNumber" editable="false" prefWidth="50.0" />
-                                                      <Label text="-" />
-                                                      <TextField fx:id="tfScan1RightPageNumber" editable="false" prefWidth="50.0" />
-                                                                  </children>
-                                                              </HBox>
-                                                              <RadioButton fx:id="rbScan1ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp">
-                                                   <toggleGroup>
-                                                                      <ToggleGroup fx:id="tgArriveStamp" />
-                                                   </toggleGroup>
-                                                              </RadioButton>
-                                                              <RadioButton fx:id="rbScan1Visa" disable="true" mnemonicParsing="false" text="Visa">
-                                                   <toggleGroup>
-                                                                      <ToggleGroup fx:id="tgVisa" />
-                                                   </toggleGroup>
-                                                              </RadioButton>
-                                                              <RadioButton fx:id="rbScan1LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="tgLastVisaExt" />
-                                                   </toggleGroup>
-                                                              </RadioButton>
-                                                              <HBox alignment="CENTER" spacing="10.0">
-                                                                  <children>
-                                                                      <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                      <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
-                                                                  </children>
-                                                              </HBox>
-                                                          </children>
-                                                      </VBox>
-                                                  </content>
-                                              </TitledPane>
+                                          <TitledPane collapsible="false" text="Extra Scan 1">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                          <VBox alignment="CENTER">
+                                                              <children>
+                                                                  <ImageView fx:id="ivScan1" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                      <image>
+                                                                          <Image url="@../../../../../icons/passport.png" />
+                                                                      </image>
+                                                                      <viewport>
+                                                                          <Rectangle2D />
+                                                                      </viewport>
+                                                                  </ImageView>
+                                                              </children>
+                                                          </VBox>
+                                                          <TitledPane animated="false" collapsible="false" text="Scan 1 Contents">
+                                                              <content>
+                                                                  <VBox>
+                                                                      <children>
+                                                                          <HBox alignment="CENTER">
+                                                                              <children>
+                                                                                  <Label text="Page number:" />
+                                                                                  <TextField fx:id="tfScan1LeftPageNumber" editable="false" prefWidth="50.0" />
+                                                                  <Label text="-" />
+                                                                  <TextField fx:id="tfScan1RightPageNumber" editable="false" prefWidth="50.0" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                          <RadioButton fx:id="rbScan1ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp">
+                                                               <toggleGroup>
+                                                                                  <ToggleGroup fx:id="tgArriveStamp" />
+                                                               </toggleGroup>
+                                                                          </RadioButton>
+                                                                          <RadioButton fx:id="rbScan1Visa" disable="true" mnemonicParsing="false" text="Visa">
+                                                               <toggleGroup>
+                                                                                  <ToggleGroup fx:id="tgVisa" />
+                                                               </toggleGroup>
+                                                                          </RadioButton>
+                                                                          <RadioButton fx:id="rbScan1LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension">
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="tgLastVisaExt" />
+                                                               </toggleGroup>
+                                                                          </RadioButton>
+                                                                          <HBox alignment="CENTER" spacing="10.0">
+                                                                              <children>
+                                                                                  <Button fx:id="bArchive1" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
+                                                                                  <Button fx:id="bSelectScan1" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                      </children>
+                                                                  </VBox>
+                                                              </content>
+                                                          </TitledPane>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" collapsible="false" text="Extra Scan 2">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                          <VBox alignment="CENTER">
+                                                              <children>
+                                                                  <ImageView fx:id="ivScan2" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                      <image>
+                                                                          <Image url="@../../../../../icons/passport.png" />
+                                                                      </image>
+                                                                      <viewport>
+                                                                          <Rectangle2D />
+                                                                      </viewport>
+                                                                  </ImageView>
+                                                              </children>
+                                                          </VBox>
+                                                          <TitledPane animated="false" collapsible="false" text="Scan 2 Contents">
+                                                              <content>
+                                                                  <VBox>
+                                                                      <children>
+                                                                          <HBox alignment="CENTER">
+                                                                              <children>
+                                                                                  <Label text="Page number:" />
+                                                                                  <TextField fx:id="tfScan2LeftPageNumber" editable="false" prefWidth="50.0" />
+                                                                  <Label text="-" />
+                                                                  <TextField fx:id="tfScan2RightPageNumber" editable="false" prefWidth="50.0" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                          <RadioButton fx:id="rbScan2ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />
+                                                                          <RadioButton fx:id="rbScan2Visa" disable="true" mnemonicParsing="false" text="Visa" toggleGroup="$tgVisa" />
+                                                                          <RadioButton fx:id="rbScan2LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVisaExt" />
+                                                                          <HBox alignment="CENTER" spacing="10.0">
+                                                                              <children>
+                                                                                  <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
+                                                                                  <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                      </children>
+                                                                  </VBox>
+                                                              </content>
+                                                          </TitledPane>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" collapsible="false" text="Extra Scan 3">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                          <VBox alignment="CENTER">
+                                                              <children>
+                                                                  <ImageView fx:id="ivScan3" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                      <image>
+                                                                          <Image url="@../../../../../icons/passport.png" />
+                                                                      </image>
+                                                                      <viewport>
+                                                                          <Rectangle2D />
+                                                                      </viewport>
+                                                                  </ImageView>
+                                                              </children>
+                                                          </VBox>
+                                                          <TitledPane animated="false" collapsible="false" text="Scan 3 Contents">
+                                                              <content>
+                                                                  <VBox>
+                                                                      <children>
+                                                                          <HBox alignment="CENTER">
+                                                                              <children>
+                                                                                  <Label text="Page number:" />
+                                                                                  <TextField fx:id="tfScan3LeftPageNumber" editable="false" prefWidth="50.0" />
+                                                                  <Label text="-" />
+                                                                  <TextField fx:id="tfScan3RightPageNumber" editable="false" prefWidth="50.0" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                          <RadioButton fx:id="rbScan3ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />
+                                                                          <RadioButton fx:id="rbScan3Visa" disable="true" mnemonicParsing="false" text="Visa" toggleGroup="$tgVisa" />
+                                                                          <RadioButton fx:id="rbScan3LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVisaExt" />
+                                                                          <HBox alignment="CENTER" spacing="10.0">
+                                                                              <children>
+                                                                                  <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
+                                                                                  <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
+                                                                              </children>
+                                                                          </HBox>
+                                                                      </children>
+                                                                  </VBox>
+                                                              </content>
+                                                          </TitledPane>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                          </TitledPane>
                                  </children>
-                              </VBox>
-                           </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Extra Scan 2">
-                           <content>
-                              <VBox>
-                                 <children>
-                                              <VBox alignment="CENTER">
-                                                  <children>
-                                                      <ImageView fx:id="ivScan2" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                          <image>
-                                                              <Image url="@../../../../../icons/passport.png" />
-                                                          </image>
-                                                          <viewport>
-                                                              <Rectangle2D />
-                                                          </viewport>
-                                                      </ImageView>
-                                                  </children>
-                                              </VBox>
-                                              <TitledPane animated="false" collapsible="false" text="Scan 2 Contents">
-                                                  <content>
-                                                      <VBox>
-                                                          <children>
-                                                              <HBox alignment="CENTER">
-                                                                  <children>
-                                                                      <Label text="Page number:" />
-                                                                      <TextField fx:id="tfScan2LeftPageNumber" editable="false" prefWidth="50.0" />
-                                                      <Label text="-" />
-                                                      <TextField fx:id="tfScan2RightPageNumber" editable="false" prefWidth="50.0" />
-                                                                  </children>
-                                                              </HBox>
-                                                              <RadioButton fx:id="rbScan2ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />
-                                                              <RadioButton fx:id="rbScan2Visa" disable="true" mnemonicParsing="false" text="Visa" toggleGroup="$tgVisa" />
-                                                              <RadioButton fx:id="rbScan2LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVisaExt" />
-                                                              <HBox alignment="CENTER" spacing="10.0">
-                                                                  <children>
-                                                                      <Button fx:id="bArchive2" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                      <Button fx:id="bSelectScan2" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
-                                                                  </children>
-                                                              </HBox>
-                                                          </children>
-                                                      </VBox>
-                                                  </content>
-                                              </TitledPane>
-                                 </children>
-                              </VBox>
-                           </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Extra Scan 3">
-                           <content>
-                              <VBox>
-                                 <children>
-                                              <VBox alignment="CENTER">
-                                                  <children>
-                                                      <ImageView fx:id="ivScan3" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                          <image>
-                                                              <Image url="@../../../../../icons/passport.png" />
-                                                          </image>
-                                                          <viewport>
-                                                              <Rectangle2D />
-                                                          </viewport>
-                                                      </ImageView>
-                                                  </children>
-                                              </VBox>
-                                              <TitledPane animated="false" collapsible="false" text="Scan 3 Contents">
-                                                  <content>
-                                                      <VBox>
-                                                          <children>
-                                                              <HBox alignment="CENTER">
-                                                                  <children>
-                                                                      <Label text="Page number:" />
-                                                                      <TextField fx:id="tfScan3LeftPageNumber" editable="false" prefWidth="50.0" />
-                                                      <Label text="-" />
-                                                      <TextField fx:id="tfScan3RightPageNumber" editable="false" prefWidth="50.0" />
-                                                                  </children>
-                                                              </HBox>
-                                                              <RadioButton fx:id="rbScan3ArriveStamp" disable="true" mnemonicParsing="false" text="Arrive Stamp" toggleGroup="$tgArriveStamp" />
-                                                              <RadioButton fx:id="rbScan3Visa" disable="true" mnemonicParsing="false" text="Visa" toggleGroup="$tgVisa" />
-                                                              <RadioButton fx:id="rbScan3LastVisaExt" disable="true" mnemonicParsing="false" text="Last Visa Extension" toggleGroup="$tgLastVisaExt" />
-                                                              <HBox alignment="CENTER" spacing="10.0">
-                                                                  <children>
-                                                                      <Button fx:id="bArchive3" mnemonicParsing="false" onAction="#actionArchiveExtraScan" text="Archive" />
-                                                                      <Button fx:id="bSelectScan3" mnemonicParsing="false" onAction="#actionChooseExtraScan" text="Select file" />
-                                                                  </children>
-                                                              </HBox>
-                                                          </children>
-                                                      </VBox>
-                                                  </content>
-                                              </TitledPane>
-                                 </children>
-                              </VBox>
-                           </content>
-                              </TitledPane>
+                              </HBox>
+                                </children>
+                            </VBox>
                      </children>
-                  </HBox>
-                    </children>
-                </VBox>
-         </children>
-      </VBox>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab fx:id="tAllStampedPages" closable="false" text="All Stamped Pages">
+               <content>
+                  <VBox>
+                     <children>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Button fx:id="bAddStampedPageScan" mnemonicParsing="false" onAction="#actionAddGUIModuleStampedPageScan" text="Add" />
+                              <Button fx:id="bPreviewScansAllStampedPages" layoutX="501.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="vboxAllStampedPages" />
+                     </children></VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </center>
 </BorderPane>

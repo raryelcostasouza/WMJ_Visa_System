@@ -9,6 +9,8 @@ import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -31,6 +33,12 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
 
     @FXML
     private TextField tfName;
+
+    @FXML
+    private TextField tfNickname;
+    
+    @FXML
+    private TextField tfAbbotName;
 
     @FXML
     private TextField tfPhoneNumber;
@@ -78,6 +86,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     private RadioButton rbCountryThailand;
     @FXML
     private RadioButton rbCountryOther;
+    
+    private Monastery currentSelectedMonastery;
 
     private static final String JAOKANA_NO = "NO";
     private static final String JAOKANA_TAMBOL = "TAMBOL";
@@ -103,10 +113,28 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields.add(tfAddrTambol);
         listFields.add(tfAddrRoad);
         listFields.add(tfAddrNumber);
+        listFields.add(tfNickname);
+        listFields.add(tfAbbotName);
         listFields.add(tfPhoneNumber);
         listFields.add(tgJaokana);
         listFields.add(tgCountry);
         
+        tfNickname.textProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if (newValue != null)
+                {
+                    //as the monastery nickname will be used as a subfolder name for letter templates better to prevent
+                    //special characters input
+                    
+                    //this listener
+                    //removes any character except letters, number, dot and space
+                    tfNickname.setText(newValue.replaceAll("[^a-zA-Z0-9\\. ]", ""));
+                }
+            }
+        });
         
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
@@ -118,6 +146,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionLockEdit()
     {
         tfName.setEditable(false);
+        tfNickname.setEditable(false);
+        tfAbbotName.setEditable(false);
         tfPhoneNumber.setEditable(false);
 
         rbCountryOther.setDisable(true);
@@ -149,7 +179,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         Monastery m;
         String previousName, newName;
 
-        m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
+        m = currentSelectedMonastery;
 
         if (m != null)
         {
@@ -157,6 +187,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
             newName = tfName.getText();
 
             m.setMonasteryName(tfName.getText());
+            m.setMonasteryNickname(tfNickname.getText());
+            m.setAbbotName(tfAbbotName.getText());
             m.setPhoneNumber(tfPhoneNumber.getText());
 
             if (rbJkJangwat.isSelected())
@@ -251,6 +283,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionUnlockEdit()
     {
         tfName.setEditable(true);
+        tfNickname.setEditable(true);
+        tfAbbotName.setEditable(true);
         tfPhoneNumber.setEditable(true);
 
         rbCountryOther.setDisable(false);
@@ -283,6 +317,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         if (m == null && !cbMonasteryList.getItems().isEmpty())
         {
             m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(cbMonasteryList.getValue());
+            currentSelectedMonastery = m;
         }
 
         //if Monastery m exists on the database
@@ -290,6 +325,8 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         {
             tfName.setText(m.getMonasteryName());
             tfPhoneNumber.setText(m.getPhoneNumber());
+            tfNickname.setText(m.getMonasteryNickname());
+            tfAbbotName.setText(m.getAbbotName());
             clearAddrTextFields();
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
@@ -365,12 +402,17 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         String nameSelectedMonastery;
         Monastery m;
 
-        nameSelectedMonastery = cbMonasteryList.getValue();
-        if (nameSelectedMonastery != null)
+        //check if there is unsaved changes before filling the data of the newly selected monastery
+        if (ctrGUIMain.checkUnsavedChanges() == 0)
         {
-            ctrGUIMain.getPaneEditSaveController().actionLock();
-            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
-            fillMonasteryData(m);
+            nameSelectedMonastery = cbMonasteryList.getValue();
+            if (nameSelectedMonastery != null)
+            {
+                ctrGUIMain.getPaneEditSaveController().actionLock();
+                m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
+                currentSelectedMonastery = m;
+                fillMonasteryData(m);
+            }
         }
     }
 

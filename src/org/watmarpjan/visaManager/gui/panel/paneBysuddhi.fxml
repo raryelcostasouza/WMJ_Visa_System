@@ -126,6 +126,7 @@
          <rowConstraints>
             <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
@@ -201,6 +202,44 @@
                      </children>
                   </HBox>
                   <ImageView fx:id="ivScan3" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="386.0" GridPane.rowIndex="2">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Button fx:id="b5" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 5" />
+                        <Button fx:id="b5Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan5" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ImageView fx:id="ivScan5" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../icons/bysuddhi.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="762.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Button fx:id="b6" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 6" />
+                        <Button fx:id="b6Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan6" text="Archive">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ImageView fx:id="ivScan6" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../icons/bysuddhi.png" />
                      </image>

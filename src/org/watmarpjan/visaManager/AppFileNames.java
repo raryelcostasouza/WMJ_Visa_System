@@ -7,7 +7,7 @@ package org.watmarpjan.visaManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
 
 /**
  *
@@ -18,6 +18,18 @@ public class AppFileNames
 
     public static final String RECEIPT_STATUS_PENDING = "PENDING";
     public static final String RECEIPT_STATUS_APPROVED = "APPROVED";
+    
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY = "NonImmLaypersonAbroadEmbassy.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_ABROAD_EMBASSY_EN = "NonImmLaypersonAbroadEmbassyEN.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_LAYPERSON_THAILAND_VIENTIANE_EMBASSY = "NonImmLaypersonThailandVientianeEmbassy.odt";
+    
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY = "NonImmMonasticAbroadEmbassy.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_EMBASSY_EN = "NonImmMonasticAbroadEmbassyEN.odt";
+    public static final String ODT_LETTER_NEW_VISA_NON_IMM_MONASTIC_ABROAD_SNP = "NonImmMonasticAbroadSamnakPut.odt";
+    
+    public static final String ODT_LETTER_GUARANTEE_SNP = "ResidenceGuaranteeLetterSNP.odt";
+    public static final String ODT_LETTER_EXT_SNP = "ExtensionReqLetterSNP.odt";
+    public static final String ODT_LETTER_EXT_IMM = "ExtensionReqLetterIMM.odt";
 
     public static String getProfilePhoto()
     {
@@ -54,12 +66,17 @@ public class AppFileNames
         return "departure-card.jpg";
     }
 
-    public static String generateFileNameExtraScan(String passportNumber, ExtraPassportScanNew ps)
+    public static String generateFileNameMain3StampedPageScan(String passportNumber, InfoMainScanStampedPage ps)
     {
         return passportNumber + "-page" + ps.getLeftPageNumber()+ generateExtraScanSuffix(ps) + ".jpg";
     }
+    
+    public static String generateFileNameGenericStampedPageScan(String passportNumber, String pagenumber)
+    {
+        return passportNumber + "-page" + pagenumber +"-.jpg";
+    }
 
-    private static String generateExtraScanSuffix(ExtraPassportScanNew ps)
+    private static String generateExtraScanSuffix(InfoMainScanStampedPage ps)
     {
         String suffix = "";
         boolean noSuffix;

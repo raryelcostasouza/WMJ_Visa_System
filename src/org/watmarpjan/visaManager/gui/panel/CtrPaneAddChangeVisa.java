@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.io.File;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
@@ -331,8 +332,11 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
     {
         MonasticProfile p;
+        String monasteryNickname;
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
     @FXML
@@ -432,6 +436,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         MonasticProfile p;
         Embassy e;
         LetterInputData objLetterInput;
+        File fTemplateODT;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         strLetterSelected = cbLetterType.getValue();
@@ -455,7 +460,8 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
             objLetterInput.setPhoneAbroad(tfMonasticPhoneAbroad.getText());
             objLetterInput.setLdDepartureDateThai(dpDepartureDateFromThai.getValue());
 
-            CtrLetterODF.generateLetter(strLetterSelected, p, objLetterInput);
+            fTemplateODT = AppFiles.getODTNewVisaLetter(p.getMonasteryResidingAt(), strLetterSelected);
+            CtrLetterODF.generateLetterGeneric(fTemplateODT, p, objLetterInput, null);
         }
         else
         {

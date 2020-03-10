@@ -18,9 +18,9 @@ public class TaskRenewPassport extends EntryDueTask
 {
     private SimpleStringProperty beginProcessingBy;
     
-    public TaskRenewPassport(String profileNickname, Date dDueDate)
+    public TaskRenewPassport(String profileNickname, Date dDueDate, String nicknameMonasteryResidingAt, String passportKeptAt)
     {
-        super(profileNickname, dDueDate);
+        super(profileNickname, dDueDate, nicknameMonasteryResidingAt, passportKeptAt);
 
         LocalDate ldBeginProcessing;
 

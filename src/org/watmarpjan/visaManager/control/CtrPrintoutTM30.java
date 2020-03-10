@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.PersistenceException;
 import org.hibernate.exception.ConstraintViolationException;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
@@ -28,7 +29,7 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         this.ctrProfile = ctrProfile;
     }
 
-    public int create(LocalDate ldNotifDate, ArrayList<String> listNicknameSelectedMonastics, int auxIndex)
+    public int create(LocalDate ldNotifDate, ArrayList<String> listNicknameSelectedMonastics, int auxIndex, Monastery mResidence)
     {
         ConstraintViolationException cve;
         PrintoutTm30 objTM30;
@@ -37,6 +38,7 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         objTM30 = new PrintoutTm30();
         objTM30.setNotifDate(Util.convertLocalDateToDate(ldNotifDate));
         objTM30.setAuxIndex(auxIndex);
+        objTM30.setMonasteryResidence(mResidence);
 
         try
         {

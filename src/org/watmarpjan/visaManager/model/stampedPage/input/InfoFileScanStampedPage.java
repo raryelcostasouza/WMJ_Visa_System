@@ -1,12 +1,12 @@
-package org.watmarpjan.visaManager.model.eps;
+package org.watmarpjan.visaManager.model.stampedPage.input;
 
 import java.io.File;
 
-public class ExtraPassportScanLoaded
+public class InfoFileScanStampedPage implements Comparable<InfoFileScanStampedPage>
 {
     private File fileScan;
     
-    public ExtraPassportScanLoaded(File fileScan)
+    public InfoFileScanStampedPage(File fileScan)
     {
         this.fileScan = fileScan;
     }
@@ -45,5 +45,26 @@ public class ExtraPassportScanLoaded
     public boolean containsScanVisa()
     {
         return fileScan.getName().contains("Visa-") || fileScan.getName().contains("Visa.");
+    }
+    
+    @Override
+    public int compareTo(InfoFileScanStampedPage objPS)
+    {
+        if (objPS == null)
+        {
+            return 1;
+        }
+        else if (this.getLeftPageNumber() > objPS.getLeftPageNumber())
+        {
+            return 1;
+        }
+        else if (this.getLeftPageNumber() <= objPS.getLeftPageNumber())
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

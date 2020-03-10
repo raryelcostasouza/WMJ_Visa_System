@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
@@ -26,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Transform;
+import javax.imageio.ImageIO;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
@@ -45,11 +49,14 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.util.Matrix;
+import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
@@ -105,11 +112,12 @@ public class CtrPDF
     private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
-        Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat;
+        Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat, mResidence;
         Upajjhaya u;
         LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
         Date dVisaExpiry;
         String str_jangwat_country;
+        String abbotName;
 
         addProfilePhotoPrawat(pdfDoc, p);
 
@@ -136,6 +144,7 @@ public class CtrPDF
 
         alThaiFields.add((PDTextField) acroForm.getField("certificateThai"));
 
+        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaAmpherThai"));
 
@@ -274,15 +283,23 @@ public class CtrPDF
             }
 
         }
-
-        mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher();
+        
+        mResidence = p.getMonasteryResidingAt();
+        abbotName = mResidence.getAbbotName();
+        
+        if (abbotName != null)
+        {
+            acroForm.getField("nameAbbotWatResidingAtThai").setValue(abbotName);
+        }
+        
+        mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
         if (mJaoKanaAmpher != null)
         {
             acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getAddrAmpher() + " " + mJaoKanaAmpher.getAddrJangwat());
             acroForm.getField("watJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getMonasteryName());
         }
 
-        mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat();
+        mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat(mResidence);
         if (mJaoKanaJangwat != null)
         {
             acroForm.getField("addrJangwatJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getAddrJangwat());
@@ -356,8 +373,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldPassportIssue, ldPassportExp, ldBirthDate, ldLastEntry;
         Monastery mResidingAt;
+        String immOffice, strFullName;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -422,14 +441,19 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+             //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
             acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
             acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
-
         }
+        strFullName = ProfileUtil.getFullName(p);
+        acroForm.getField("fullName").setValue(strFullName);
     }
 
     private void fillFormTM47_90DayNotice(PDAcroForm acroForm, MonasticProfile p) throws IOException
@@ -437,8 +461,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         LocalDate ldArrival;
         Monastery mResidingAt;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -472,7 +498,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
-
+            //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
@@ -503,8 +532,10 @@ public class CtrPDF
         ArrayList<PDTextField> alThaiFields;
         Monastery mResidingAt;
         LocalDate ldBirthDate, ldPassportIssue, ldPassportExpiry, ldLastEntry;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
@@ -567,6 +598,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+             //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
+        
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
@@ -583,8 +618,10 @@ public class CtrPDF
         LocalDate ldBirthDate, ldLastEntry, ldVisaExpiry, ldPassportIssue,
                 ldPassportExpiry;
         Date dVisaExpiry;
+        String immOffice;
 
         alThaiFields = new ArrayList<>();
+        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
@@ -615,6 +652,10 @@ public class CtrPDF
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
+            //immigration office string need to have the province of the residence monastery
+            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
+            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
+            
             acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
             acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
             acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
@@ -685,9 +726,11 @@ public class CtrPDF
         PDAcroForm acroForm;
         PDFont font;
         File outputFile;
+        String monasteryNickname;
 
         outputFile = AppFiles.getFormTMPOutputPDF(sourceFile.getName());
 
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         // load the document
         try
         {
@@ -704,46 +747,34 @@ public class CtrPDF
                 loadedThaiFontName = acroForm.getDefaultResources().add(font);
             }
 
-            if (sourceFile.getName().equals(AppFiles.getFormSTM2AckConditions().getName()))
+            if (sourceFile.getName().equals(AppFiles.getFormSTM2AckConditions(monasteryNickname).getName()))
             {
                 fillFormSTM2AckConditions2(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormOverstay().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormOverstay(monasteryNickname).getName()))
             {
                 fillFormAckOverstayPenalties(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM47Notice90Day().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM47Notice90Day(monasteryNickname).getName()))
             {
                 fillFormTM47_90DayNotice(acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getExtReqLetterSNP().getName()))
-            {
-                fillExtReqLetter(acroForm, p, DESTINATION_SAMNAKPUT);
-            }
-            else if (sourceFile.getName().equals(AppFiles.getExtReqLetterIMM().getName()))
-            {
-                fillExtReqLetter(acroForm, p, DESTINATION_IMMIGRATION);
-            }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM7ReqExtension().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM7ReqExtension(monasteryNickname).getName()))
             {
                 fillTM7ReqExtension(acroForm, p);
             }
-            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat().getName()))
-                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter().getName())))
+            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat(monasteryNickname).getName()))
+                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter(monasteryNickname).getName())))
             {
                 fillPrawat(pdfDocument, acroForm, p);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry(monasteryNickname).getName()))
             {
                 fillFormTM8Reentry(acroForm, p, extraOption);
             }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange().getName()))
+            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange(monasteryNickname).getName()))
             {
                 fillFormTM86VisaChange(acroForm, p);
-            }
-            else if (sourceFile.getName().contains("TM30-"))
-            {
-                overlayMonasteryWatermark(pdfDocument);
             }
             else
             {
@@ -884,25 +915,25 @@ public class CtrPDF
 
     }
 
-    public void overlayMonasteryWatermark(PDDocument pdfDoc) throws IOException
-    {
-        PDImageXObject pdImage;
-        PDPageContentStream contentStream;
-
-        pdImage = PDImageXObject.createFromFile(AppFiles.getOverlayWatermark().toString(), pdfDoc);
-        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
-
-        //translation, rotation and scale for the image
-        AffineTransform at = new AffineTransform(pdImage.getHeight() * 0.3, 0, 0, pdImage.getWidth() * 0.3, 565, 450);
-
-        //rotates the image overlay 90 degree because the document is landscape
-        at.rotate(Math.toRadians(90));
-        Matrix tMatrix = new Matrix(at);
-
-        contentStream.drawImage(pdImage, tMatrix);
-        contentStream.close();
-
-    }
+//    public void overlayMonasteryWatermark(PDDocument pdfDoc) throws IOException
+//    {
+//        PDImageXObject pdImage;
+//        PDPageContentStream contentStream;
+//
+//        pdImage = PDImageXObject.createFromFile(AppFiles.getOverlayWatermark().toString(), pdfDoc);
+//        contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
+//
+//        //translation, rotation and scale for the image
+//        AffineTransform at = new AffineTransform(pdImage.getHeight() * 0.3, 0, 0, pdImage.getWidth() * 0.3, 565, 450);
+//
+//        //rotates the image overlay 90 degree because the document is landscape
+//        at.rotate(Math.toRadians(90));
+//        Matrix tMatrix = new Matrix(at);
+//
+//        contentStream.drawImage(pdImage, tMatrix);
+//        contentStream.close();
+//
+//    }
 
     private void fillPrintDate(PDPageContentStream objContentStream, PDPage objPage) throws IOException
     {
@@ -927,7 +958,7 @@ public class CtrPDF
         objContentStream.endText();
     }
 
-    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
+    public void generatePDFDueTasksTH_OLD(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
     {
         PDDocument pdfDoc;
         PDPage page1, page2, page3;
@@ -944,6 +975,9 @@ public class CtrPDF
         page1 = new PDPage(PDRectangle.A4);
         page2 = new PDPage(PDRectangle.A4);
         page3 = new PDPage(PDRectangle.A4);
+        
+       
+        
         pdfDoc.addPage(page1);
         pdfDoc.addPage(page2);
         pdfDoc.addPage(page3);
@@ -1016,8 +1050,66 @@ public class CtrPDF
         }
 
     }
+    
+    public void generatePDFDueTasksTH(TableView<EntryDueTask> tp90DayTH, TableView<EntryDueTask> tpNonImmVisaExtTH, TableView<EntryDueTask> tpTouristExtTH, TableView<EntryDueTask> tpPsptTH, int option)
+    {
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1, page2, page3, page4;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            pdfDoc = new PDDocument();
+            title = "Due Tasks TH";
+            listPages = new ArrayList<>();
+            
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tp90DayTH, "90 Day Notice", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page2 = generatePDFPageSnapshotTableView(pdfDoc, tpNonImmVisaExtTH, "Non-Immigrant Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page3 = generatePDFPageSnapshotTableView(pdfDoc, tpTouristExtTH, "Tourist Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page4 = generatePDFPageSnapshotTableView(pdfDoc, tpPsptTH, "Passport Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
 
+            listPages.add(page1);
+            listPages.add(page2);
+            listPages.add(page3);
+            listPages.add(page4);
+            
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate pdf with Due Tasks printout.");
+        }
+    }
+    
     public void generatePDFDueTasksAbroad(TableView<EntryDueTask> tvVisaExtAbroad, TableView<EntryDueTask> tvPsptAbroad, int option)
+    {
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1, page2;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            pdfDoc = new PDDocument();
+            title = "Due Tasks-Abroad";
+            listPages = new ArrayList<>();
+            
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tvVisaExtAbroad, "Visa Extension - Abroad", ORIENTATION_LANDSCAPE, 0.33f, option);
+            page2 = generatePDFPageSnapshotTableView(pdfDoc, tvPsptAbroad, "Passport Extension - Abroad", ORIENTATION_LANDSCAPE, 0.33f, option);
+
+            listPages.add(page1);
+            listPages.add(page2);
+            
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate pdf with Due Tasks printout.");
+        }
+    }
+
+    public void generatePDFDueTasksAbroad_OLD(TableView<EntryDueTask> tvVisaExtAbroad, TableView<EntryDueTask> tvPsptAbroad, int option)
     {
         PDDocument pdfDoc;
         PDPage page1, page2;
@@ -1081,32 +1173,43 @@ public class CtrPDF
 
     public void generatePDFWorkflow(TableView tvWorkflowVisaExt, int option)
     {
-        generatePDFSnapshotTableView(tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+        PDDocument pdfDoc;
+        String title;
+        PDPage page1;
+        ArrayList<PDPage> listPages;
+            
+        try
+        {
+            listPages = new ArrayList<PDPage>();
+            pdfDoc = new PDDocument();
+            title = "Workflow Visa Extension";
+            page1 = generatePDFPageSnapshotTableView(pdfDoc, tvWorkflowVisaExt, "Workflow Visa Extension", ORIENTATION_LANDSCAPE, 0.33f, option);
+            
+            listPages.add(page1);
+            generatePDFFromPages(listPages, pdfDoc, title, option);
+        }
+        catch (IOException ex)
+        {
+            CtrAlertDialog.exceptionDialog(ex, "Error to generate workflow visa extension report PDF");
+        }
     }
 
     public void generatePDFPrintedDocStock(TableView tvPrintedDocStock, int option)
     {
-        generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
+        //generatePDFSnapshotTableView(tvPrintedDocStock, "Printed Documents Stock", ORIENTATION_PORTRAIT, 0.33f, option);
     }
 
-    public void generatePDFSnapshotTableView(TableView objTV, String title, int orientation, float scale, int option)
+    private PDPage generatePDFPageSnapshotTableView(PDDocument pdfDoc, TableView objTV, String title, int orientation, float scale, int option) throws IOException
     {
-        String filePrefix;
+        //String filePrefix;
         float posYTopPage, posX, paperWidth;
-        PDDocument pdfDoc;
         PDPage page1;
         PDPageContentStream contentStream;
-        File outputFile;
         PDFont font = PDType1Font.HELVETICA_BOLD;
         int fontSize = 18;
         BufferedImage objBufferedImgSnapshot;
         PDImageXObject pdImgSnapshot;
 
-        //removes any non-word characters from the title
-        filePrefix = title.replaceAll("\\W ", "");
-        outputFile = AppFiles.getFormTMPOutputPDF(filePrefix);
-
-        pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
 
         if (orientation == ORIENTATION_LANDSCAPE)
@@ -1117,63 +1220,42 @@ public class CtrPDF
         {
             page1.setRotation(0);
         }
-        pdfDoc.addPage(page1);
 
         objBufferedImgSnapshot = snapshotGUIComponent(objTV);
+        pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
+        
+        contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
 
-        try
+        if (orientation == ORIENTATION_LANDSCAPE)
         {
-            pdImgSnapshot = LosslessFactory.createFromImage(pdfDoc, objBufferedImgSnapshot);
+            transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
 
-            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-
-            if (orientation == ORIENTATION_LANDSCAPE)
-            {
-                // including a translation of pageWidth to use the lower left corner as 0,0 reference
-                contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
-                //on the landscape orientation, the height of the page is the same as the 
-                //width of the page on portrait orientation
-                posYTopPage = PAGE_A4_WIDTH_PX;
-                paperWidth = PAGE_A4_HEIGHT_PX;
-            }
-            else
-            {
-                posYTopPage = PAGE_A4_HEIGHT_PX;
-                paperWidth = PAGE_A4_WIDTH_PX;
-            }
-
-            fillPrintDate(contentStream, page1);
-
-            //left margin for centering the snapshot
-            posX = (paperWidth - pdImgSnapshot.getWidth() * scale) / 2.0f;
-
-            contentStream.setFont(font, fontSize);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(posX, posYTopPage - 40);
-            contentStream.showText(title);
-            contentStream.endText();
-
-            contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
-            contentStream.close();
-
-            pdfDoc.save(outputFile);
-
-            if (option == OPTION_PRINT_FORM)
-            {
-                printPDF(pdfDoc);
-            }
-            else
-            {
-                CtrFileOperation.openFileOnDefaultProgram(outputFile);
-            }
-            pdfDoc.close();
-
+            //on the landscape orientation, the height of the page is the same as the 
+            //width of the page on portrait orientation
+            posYTopPage = PAGE_A4_WIDTH_PX;
+            paperWidth = PAGE_A4_HEIGHT_PX;
         }
-        catch (IOException e)
+        else
         {
-            CtrAlertDialog.errorDialog("Error to generate pdf for " + title);
+            posYTopPage = PAGE_A4_HEIGHT_PX;
+            paperWidth = PAGE_A4_WIDTH_PX;
         }
 
+        fillPrintDate(contentStream, page1);
+
+        //left margin for centering the snapshot
+        posX = (paperWidth - pdImgSnapshot.getWidth() * scale) / 2.0f;
+
+        contentStream.setFont(font, fontSize);
+        contentStream.beginText();
+        contentStream.newLineAtOffset(posX, posYTopPage - 40);
+        contentStream.showText(title);
+        contentStream.endText();
+
+        contentStream.drawImage(pdImgSnapshot, posX, posYTopPage - pdImgSnapshot.getHeight() * scale - 50, pdImgSnapshot.getWidth() * scale, pdImgSnapshot.getHeight() * scale);
+        contentStream.close();
+
+        return page1;
     }
 
     private BufferedImage snapshotGUIComponent(TableView pGUIComponent)
@@ -1199,10 +1281,10 @@ public class CtrPDF
     public void generatePDFBysuddhiScans(MonasticProfile p, int option)
     {
         //bysuddhi size 18.5 cm X 12.5 cm
-        File fScan1, fScan2, fScan3, fScan4;
+        File fScan1, fScan2, fScan3, fScan4, fScan5, fScan6;
         PDPageContentStream contentStream;
-        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4;
-        PDPage page1;
+        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4, imgScan5, imgScan6;
+        PDPage page1, page2;
         float bysuddhiScanWidth, bysuddhiScanHeight;
         float landscape_A4_width_px, landscape_A4_height_px;
 
@@ -1213,15 +1295,18 @@ public class CtrPDF
 
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
+        page2 = new PDPage(PDRectangle.A4);
 
         //landscape PDF
         page1.setRotation(90);
+        page2.setRotation(90);
         pdfDoc.addPage(page1);
+        
 
         //on a landscape PDF the width and the height of the page are switched
         landscape_A4_width_px = page1.getMediaBox().getHeight();
         landscape_A4_height_px = page1.getMediaBox().getWidth();
-
+        
         //Bysuddhi Real size 185mm x 125mm
         //Converts the Bysuddhi width to pixels
         //Bysuddhi real Width  185mm
@@ -1241,13 +1326,13 @@ public class CtrPDF
         fScan2 = AppFiles.getScanBysuddhi(p.getNickname(), 2);
         fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
         fScan4 = AppFiles.getScanBysuddhi(p.getNickname(), 4);
+        fScan5 = AppFiles.getScanBysuddhi(p.getNickname(), 5);
+        fScan6 = AppFiles.getScanBysuddhi(p.getNickname(), 6);
 
         try
         {
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            // add the rotation using the current transformation matrix
-            // including a translation of pageWidth to use the lower left corner as 0,0 reference
-            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+            transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
 
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
             contentStream.drawImage(imgScan1, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
@@ -1263,8 +1348,29 @@ public class CtrPDF
                 imgScan4 = PDImageXObject.createFromFile(fScan4.toString(), pdfDoc);
                 contentStream.drawImage(imgScan4, landscape_A4_width_px - bysuddhiScanWidth - 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
             }
-
+            
             contentStream.close();
+            
+            //if Scan 5 or Scan 6 exists need to have second page
+            if (fScan5.exists() || fScan6.exists())
+            {
+                pdfDoc.addPage(page2);
+                contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+                transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
+                
+                if (fScan5.exists())
+                {
+                    imgScan5 = PDImageXObject.createFromFile(fScan5.toString(), pdfDoc);
+                    contentStream.drawImage(imgScan5, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+                }
+                if (fScan6.exists())
+                {
+                    imgScan6 = PDImageXObject.createFromFile(fScan6.toString(), pdfDoc);
+                    contentStream.drawImage(imgScan6, landscape_A4_width_px - bysuddhiScanWidth - 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+                }
+                contentStream.close();
+            }
+            
             pdfDoc.save(outputFile);
 
             if (option == OPTION_PRINT_FORM)
@@ -1284,10 +1390,10 @@ public class CtrPDF
         }
     }
 
-    public void generatePDFPassportScans(MonasticProfile p, int option)
+    public void generatePDFPassportScans(MonasticProfile p, int option, FilenameFilter fileFilter)
     {
         //passport size 17cm X 12.5 cm
-        ArrayList<ExtraPassportScanLoaded> listEPS;
+        ArrayList<InfoFileScanStampedPage> listEPS;
         PDDocument pdfDoc;
         File outputFile;
 
@@ -1297,11 +1403,16 @@ public class CtrPDF
 
         try
         {
-            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
+            listEPS = AppFiles.getListInfoPassportScansStampedPage(p.getNickname(), p.getPassportNumber(), fileFilter);
+            listEPS.sort(new ComparableComparator<InfoFileScanStampedPage>());
             generateScansPage1(pdfDoc, p);
-            generateScansPage2(pdfDoc, p, listEPS);
-            generateScansPage3(pdfDoc, p, listEPS);
 
+            //go adding the scans to the pdf and removing them from the list until there is none left
+            while (!listEPS.isEmpty())
+            {
+                listEPS = generateScansStampedPage(pdfDoc, p, listEPS);
+            }
+            
             pdfDoc.save(outputFile);
 
             if (option == OPTION_PRINT_FORM)
@@ -1317,7 +1428,6 @@ public class CtrPDF
         }
         catch (IOException ex)
         {
-            System.out.println(ex.getMessage());
             CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
         }
     }
@@ -1390,7 +1500,7 @@ public class CtrPDF
 
     }
 
-    private void generateScansPage2(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
+    private ArrayList<InfoFileScanStampedPage> generateScansStampedPage(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
     {
         File fScan1, fScan2;
         PDPageContentStream contentStream;
@@ -1399,10 +1509,9 @@ public class CtrPDF
 
         if (listEPS.size() >= 1)
         {
+            //drawing of the top scan on the page
             page2 = new PDPage(PDRectangle.A4);
             pdfDoc.addPage(page2);
-
-            listEPS = AppFiles.getListExtraScans(p.getNickname(), p.getPassportNumber());
 
             contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
 
@@ -1410,37 +1519,24 @@ public class CtrPDF
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
             contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
 
+            //if there is at least 2 scans draw the bottom scan as well
             if (listEPS.size() >= 2)
             {
+                //drawing of the bottom scan on the page
                 fScan2 = listEPS.get(1).getFileScan();
                 imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
                 contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
+                
+                //removes the second scan from list
+                listEPS.remove(1);
             }
-
+            //removes the first scan from list
+            listEPS.remove(0);
+            
             contentStream.close();
         }
+        return listEPS;
 
-    }
-
-    private void generateScansPage3(PDDocument pdfDoc, MonasticProfile p, ArrayList<ExtraPassportScanLoaded> listEPS) throws IOException
-    {
-        File fScan3;
-        PDPageContentStream contentStream;
-        PDImageXObject imgScan3;
-        PDPage page3;
-
-        if (listEPS.size() == 3)
-        {
-            page3 = new PDPage(PDRectangle.A4);
-            pdfDoc.addPage(page3);
-
-            fScan3 = listEPS.get(2).getFileScan();
-            imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
-
-            contentStream = new PDPageContentStream(pdfDoc, page3, PDPageContentStream.AppendMode.APPEND, true);
-            contentStream.drawImage(imgScan3, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
-            contentStream.close();
-        }
     }
 
     public void generatePhotoPage(String nicknameMonastic1, String nicknameMonastic2, int option)
@@ -1543,34 +1639,77 @@ public class CtrPDF
      */
     private void adjustFontThaiField(ArrayList<PDTextField> listThaiFields)
     {
-        int indexFirstSpace;
+        int indexFirstSpace, i;
         String subStringAppearance;
         String beforeFieldAppearance;
         String afterFieldAppearance;
 
+        i = 0;
         for (PDTextField thaiTextField : listThaiFields)
         {
             /*
              * The appearance string has a format similar to the following example
              * "/Arial 50 Tf 0 g"
              */
-            beforeFieldAppearance = thaiTextField.getDefaultAppearance();
-            //looks for the position of the first space on the string
-            indexFirstSpace = beforeFieldAppearance.indexOf(" ");
+            if (thaiTextField != null)
+            {
+                beforeFieldAppearance = thaiTextField.getDefaultAppearance();
+                //looks for the position of the first space on the string
+                indexFirstSpace = beforeFieldAppearance.indexOf(" ");
 
-            //the substring is everything from the space on...
-            //following with the example, it would be 
-            //" 50 Tf 0 g"
-            subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
+                //the substring is everything from the space on...
+                //following with the example, it would be 
+                //" 50 Tf 0 g"
+                subStringAppearance = beforeFieldAppearance.substring(indexFirstSpace, beforeFieldAppearance.length());
 
-            //the new field appearance needs to use the loaded font name
-            //but keeping the other appearance settings like size etc.
-            //so the final result would be something like "/F1 50 Tf 0 g"
-            afterFieldAppearance = "/" + loadedThaiFontName.getName() + subStringAppearance;
-            
-            thaiTextField.setDefaultAppearance(afterFieldAppearance);
+                //the new field appearance needs to use the loaded font name
+                //but keeping the other appearance settings like size etc.
+                //so the final result would be something like "/F1 50 Tf 0 g"
+                afterFieldAppearance = "/" + loadedThaiFontName.getName() + subStringAppearance;
+
+                thaiTextField.setDefaultAppearance(afterFieldAppearance);
+            }
+            else
+            {
+                CtrAlertDialog.errorDialog("PDF form missing field with index "+i);
+            }
+            i++;
         }
 
+    }
+    
+    private void generatePDFFromPages(ArrayList<PDPage> listPages, PDDocument pdfDoc, String title, int option) throws IOException
+    {
+       String filePrefix;
+       File outputFile;
+        
+        for (PDPage page : listPages)
+        {
+           pdfDoc.addPage(page);
+        }
+        
+        //removes any non-word characters from the title
+        filePrefix = title.replaceAll("\\W ", "");
+        outputFile = AppFiles.getFormTMPOutputPDF(filePrefix);
+
+        pdfDoc.save(outputFile);
+        if (option == OPTION_PRINT_FORM)
+        {
+            printPDF(pdfDoc);
+        }
+        else
+        {
+            CtrFileOperation.openFileOnDefaultProgram(outputFile);
+        }
+        pdfDoc.close();
+    }
+    
+    
+    private void transformContentStreamForLandscapePDF(PDPageContentStream contentStream, float width) throws IOException
+    {
+        // add the rotation using the current transformation matrix
+        // including a translation of pageWidth to use the lower left corner as 0,0 reference
+        contentStream.transform(new Matrix(0, 1, -1, 0, width, 0));
     }
 
 }

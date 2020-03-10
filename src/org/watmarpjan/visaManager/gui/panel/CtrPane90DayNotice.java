@@ -370,8 +370,10 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
     void actionPreviewForm90day(ActionEvent ae)
     {
         MonasticProfile p;
+        String monasteryNickaname;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM47Notice90Day(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        monasteryNickaname = p.getMonasteryResidingAt().getMonasteryNickname();
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM47Notice90Day(monasteryNickaname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
 //    @FXML

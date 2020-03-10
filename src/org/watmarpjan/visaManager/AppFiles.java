@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,8 +14,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanLoaded;
-import org.watmarpjan.visaManager.model.eps.ExtraPassportScanNew;
+import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoGenericScanStampedPage;
+import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
+import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -47,7 +50,7 @@ public class AppFiles
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
 
-    public static File generateFileNameExtraScan(String nickName, String passportNumber, ExtraPassportScanNew ps)
+    public static File generateFileNameMain3StampedPageScan(String nickName, String passportNumber, InfoMainScanStampedPage ps)
     {
         Path pSubfolder;
         String strFileName;
@@ -55,7 +58,7 @@ public class AppFiles
         if (ps != null)
         {
             pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
-            strFileName = AppFileNames.generateFileNameExtraScan(passportNumber, ps);
+            strFileName = AppFileNames.generateFileNameMain3StampedPageScan(passportNumber, ps);
 
             return new File(pSubfolder.resolve(strFileName).toUri());
         } else
@@ -65,20 +68,38 @@ public class AppFiles
 
     }
 
-    public static ArrayList<ExtraPassportScanLoaded> getListExtraScans(String nickName, String passportNumber)
+    public static File generateFileNameGenericStampedPageScan(String nickName, String passportNumber, InfoGenericScanStampedPage objInfoScan)
+    {
+        Path pSubfolder;
+        String strFileName;
+
+        if (passportNumber != null && objInfoScan != null)
+        {
+            pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
+            strFileName = AppFileNames.generateFileNameGenericStampedPageScan(passportNumber, objInfoScan.getLeftPageNumber());
+
+            return new File(pSubfolder.resolve(strFileName).toUri());
+        } else
+        {
+            return null;
+        }
+
+    }
+    
+    public static ArrayList<InfoFileScanStampedPage> getListInfoPassportScansStampedPage(String nickName, String passportNumber, FilenameFilter objFF)
     {
         Path pSubfolder;
         File[] listFScans = null;
-        ArrayList<ExtraPassportScanLoaded> listFExtraScan;
+        ArrayList<InfoFileScanStampedPage> listFExtraScan;
 
         listFExtraScan = new ArrayList<>();
         pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
         if (pSubfolder.toFile().exists())
         {
-            listFScans = pSubfolder.toFile().listFiles(new ExtraScanFileNameFilter());
+            listFScans = pSubfolder.toFile().listFiles(objFF);
             for (File f : listFScans)
             {
-                listFExtraScan.add(new ExtraPassportScanLoaded(f));
+                listFExtraScan.add(new InfoFileScanStampedPage(f));
             }
         }
 
@@ -154,14 +175,14 @@ public class AppFiles
         return pSubFolder.resolve(strFileName).toFile();
     }
 
-    public static File getFormPrawat()
+    public static File getFormPrawat(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("Prawat.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("Prawat.pdf").toFile();
     }
 
-    public static File getFormPrawatPatimokkhaChanter()
+    public static File getFormPrawatPatimokkhaChanter(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("Prawat-Patimokkha-Chanter.pdf").toFile();
     }
 
     public static File getPrintoutTM30(PrintoutTm30 objTM30)
@@ -197,53 +218,52 @@ public class AppFiles
         return getPrintoutTM30(objTM30);
     }
 
-    public static File getOverlayWatermark()
+    
+    public static File getFormTM7ReqExtension(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("overlay/overlay.png").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM7-ReqExtension.pdf").toFile();
     }
 
-    public static File getFormTM7ReqExtension()
+    public static File getFormTM8Reentry(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("TM7-ReqExtension.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM8-Reentry.pdf").toFile();
     }
 
-    public static File getFormTM8Reentry()
+    public static File getFormTM86VisaChange(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("TM8-Reentry.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM86-VisaChange.pdf").toFile();
     }
 
-    public static File getFormTM86VisaChange()
+    public static File getFormOverstay(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("TM86-VisaChange.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("AckOverstayPenalties.pdf").toFile();
     }
 
-    public static File getFormOverstay()
+    public static File getFormSTM2AckConditions(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("AckOverstayPenalties.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("STM2-AckConditions.pdf").toFile();
     }
 
-    public static File getFormSTM2AckConditions()
+    public static File getFormTM47Notice90Day(String monasteryNickname)
     {
-        return AppPaths.getPathToForms().resolve("STM2-AckConditions.pdf").toFile();
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM47-90DayNotice.pdf").toFile();
     }
 
-    public static File getFormTM47Notice90Day()
-    {
-        return AppPaths.getPathToForms().resolve("TM47-90DayNotice.pdf").toFile();
+    public static File getODTVisaExtLetterGeneric(Monastery mResidence, String filename)
+    {        
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(filename).toFile();
     }
-
-    public static File getExtReqLetterSNP()
+    
+    public static File getODTNewVisaLetter(Monastery mResidence, String letterSelected)
     {
-        return AppPaths.getPathToForms().resolve("ExtReqLetterSNP.pdf").toFile();
-    }
-
-    public static File getExtReqLetterIMM()
-    {
-        return AppPaths.getPathToForms().resolve("ExtReqLetterIMM.pdf").toFile();
+        String fileNameWithoutExtension;
+        
+        fileNameWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(fileNameWithoutExtension + ".odt").toFile();
     }
 
     public static File getThaiFont()
     {
-        return AppPaths.getPathToForms().resolve("font/angsa.ttf").toFile();
+        return AppPaths.getPathToFonts().resolve("angsa.ttf").toFile();
     }
 }

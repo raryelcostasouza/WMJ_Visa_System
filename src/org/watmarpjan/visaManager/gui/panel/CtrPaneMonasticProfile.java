@@ -34,8 +34,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
+import javafx.scene.control.Toggle;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.gui.intface.IEditableGUIForm;
 
 /**
  *
@@ -204,6 +206,9 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
 
     @FXML
     private Button bCurrentCertificateNaktamEk;
+    
+    @FXML
+    private ComboBox<String> cbPassportKeptAt;
 
     File fPDFSelectedNaktamTri;
     File fPDFSelectedNaktamToh;
@@ -248,6 +253,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         listFields.add(tfPhoneNumber1);
         listFields.add(tfPhoneNumber2);
         listFields.add(taRemark);
+        listFields.add(cbPassportKeptAt);
 
         bCurrentCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bCurrentCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
@@ -262,7 +268,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         bRemoveCertificateNaktamEk.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
-
+        
         tfNickname.textProperty().addListener(new ChangeListener<String>()
         {
             @Override
@@ -344,6 +350,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         GUIUtil.loadContentComboboxGeneric(cbCertificate, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateEngList());
         GUIUtil.loadContentComboboxGeneric(cbCertificateThai, ctrGUIMain.getCtrMain().getCtrProfile().loadCertificateThaiList());
 
+        GUIUtil.loadContentComboboxGeneric(cbPassportKeptAt, ctrGUIMain.getCtrMain().getCtrProfile().loadListPassportKeptAt());
+        
         GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
         GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
 
@@ -374,6 +382,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             tfSchool.setText(p.getSchool());
             cbCertificate.setValue(p.getCertificateEnglish());
             cbCertificateThai.setValue(p.getCertificateThai());
+            cbPassportKeptAt.setValue(p.getPassportKeptAt());
             if (p.getCertificateDuration() != null)
             {
                 tfDuration.setText(p.getCertificateDuration() + "");
@@ -806,6 +815,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber1.setEditable(false);
         tfPhoneNumber2.setEditable(false);
         taRemark.setEditable(false);
+        
+        cbPassportKeptAt.setDisable(true);
 
         bAddCertificateNaktamTri.setDisable(true);
         bAddCertificateNaktamToh.setDisable(true);
@@ -876,6 +887,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         tfPhoneNumber2.setEditable(true);
         taRemark.setEditable(true);
 
+        cbPassportKeptAt.setDisable(false);
+        
         bAddCertificateNaktamTri.setDisable(false);
         bAddCertificateNaktamToh.setDisable(false);
         bAddCertificateNaktamEk.setDisable(false);
@@ -912,7 +925,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         boolean error;
         Monastery wResidingAt, wAdviserToCome;
         Date birthDate;
-        String previousNickName, newNickName;
+        String previousNickName, newNickName, previousStatus, newStatus;
 
         error = false;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -945,6 +958,8 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         p.setCertificateEnglish(cbCertificate.getValue());
 
         p.setCertificateThai(cbCertificateThai.getValue());
+        
+        p.setPassportKeptAt(cbPassportKeptAt.getValue());
 
         //if the duration changed and the text field is not empty
         if ((!tfDuration.getText().equals(p.getCertificateDuration())
@@ -1040,6 +1055,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         p.setEmail(tfEmail.getText());
         p.setEmergencyContact(taEmergencyContact.getText());
 
+        previousStatus = p.getStatus();
         if (rbInThailand.isSelected())
         {
             p.setStatus(AppConstants.STATUS_THAILAND);
@@ -1052,6 +1068,7 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
         {
             p.setStatus(AppConstants.STATUS_INACTIVE);
         }
+        newStatus = p.getStatus();
 
         p.setRemark(taRemark.getText());
 
@@ -1062,19 +1079,35 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
             //if the update operation was successful
             if (operationStatus == 0)
             {
-                //if the nickname was changed refresh nickname list
+                //if the nickname was changed              
+                //refresh nickname list and rename folder
                 if (!previousNickName.equals(newNickName))
                 {
                     CtrFileOperation.renameProfileFolder(previousNickName, newNickName);
                     ctrGUIMain.getCtrPaneSelection().reloadNicknameList(newNickName);
                 }
+                
                 initNaktamCertificateButtons(p);
                 ctrGUIMain.getCtrFieldChangeListener().resetUnsavedChanges();
+                
+                //if there was a status change 
+                //refresh nickname list
+                if (!previousStatus.equals(newStatus))
+                {
+                    //if the new status is inactive
+                    //and the option to show only active members is set
+                    if (newStatus == AppConstants.STATUS_INACTIVE && 
+                            ctrGUIMain.getCtrPaneSelection().isSet2ShowOnlyActive())
+                    {
+                        //need to remove the profile from the list
+                        ctrGUIMain.getCtrPaneSelection().removeProfileFromList(newNickName);
+                    }
+                }
                 CtrAlertDialog.infoDialog("Profile Updated", "The monastic profile information was successfully updated");
             }
             return operationStatus;
         }
         return 0;
     }
-
+    
 }

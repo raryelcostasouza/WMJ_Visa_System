@@ -14,26 +14,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adhipanyo
+ * @author adhipanyo
  */
 @Entity
+@Table(name = "EMBASSY")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Embassy.findAll", query = "SELECT e FROM Embassy e")
-    , @NamedQuery(name = "Embassy.findByIdEmbassy", query = "SELECT e FROM Embassy e WHERE e.idEmbassy = :idEmbassy")
-    , @NamedQuery(name = "Embassy.findByNameTh", query = "SELECT e FROM Embassy e WHERE e.nameTh = :nameTh")
-    , @NamedQuery(name = "Embassy.findByAddress", query = "SELECT e FROM Embassy e WHERE e.address = :address")
-    , @NamedQuery(name = "Embassy.findByAddressLine1", query = "SELECT e FROM Embassy e WHERE e.addressLine1 = :addressLine1")
-    , @NamedQuery(name = "Embassy.findByAddressLine2", query = "SELECT e FROM Embassy e WHERE e.addressLine2 = :addressLine2")
-    , @NamedQuery(name = "Embassy.findByAddressLine3", query = "SELECT e FROM Embassy e WHERE e.addressLine3 = :addressLine3")
-    , @NamedQuery(name = "Embassy.findByAddressLine4", query = "SELECT e FROM Embassy e WHERE e.addressLine4 = :addressLine4")
-    , @NamedQuery(name = "Embassy.findByCountry", query = "SELECT e FROM Embassy e WHERE e.country = :country")
-    , @NamedQuery(name = "Embassy.findByNameEn", query = "SELECT e FROM Embassy e WHERE e.nameEn = :nameEn")
+    @NamedQuery(name = "Embassy.findAll", query = "SELECT e FROM Embassy e"),
+    @NamedQuery(name = "Embassy.findByIdEmbassy", query = "SELECT e FROM Embassy e WHERE e.idEmbassy = :idEmbassy"),
+    @NamedQuery(name = "Embassy.findByNameTh", query = "SELECT e FROM Embassy e WHERE e.nameTh = :nameTh"),
+    @NamedQuery(name = "Embassy.findByAddress", query = "SELECT e FROM Embassy e WHERE e.address = :address"),
+    @NamedQuery(name = "Embassy.findByAddressLine1", query = "SELECT e FROM Embassy e WHERE e.addressLine1 = :addressLine1"),
+    @NamedQuery(name = "Embassy.findByAddressLine2", query = "SELECT e FROM Embassy e WHERE e.addressLine2 = :addressLine2"),
+    @NamedQuery(name = "Embassy.findByAddressLine3", query = "SELECT e FROM Embassy e WHERE e.addressLine3 = :addressLine3"),
+    @NamedQuery(name = "Embassy.findByAddressLine4", query = "SELECT e FROM Embassy e WHERE e.addressLine4 = :addressLine4"),
+    @NamedQuery(name = "Embassy.findByCountry", query = "SELECT e FROM Embassy e WHERE e.country = :country"),
+    @NamedQuery(name = "Embassy.findByNameEn", query = "SELECT e FROM Embassy e WHERE e.nameEn = :nameEn")
 })
 public class Embassy implements Serializable
 {
@@ -46,6 +48,7 @@ public class Embassy implements Serializable
     private Integer idEmbassy;
     @Column(name = "NAME_TH")
     private String nameTh;
+    @Column(name = "ADDRESS")
     private String address;
     @Column(name = "ADDRESS_LINE1")
     private String addressLine1;
@@ -55,6 +58,7 @@ public class Embassy implements Serializable
     private String addressLine3;
     @Column(name = "ADDRESS_LINE4")
     private String addressLine4;
+    @Column(name = "COUNTRY")
     private String country;
     @Column(name = "NAME_EN")
     private String nameEn;

@@ -225,8 +225,11 @@ public class CtrPaneAddEntryReEntry extends AChildPaneControllerExportPDF implem
     void actionPreviewFormTM8Reentry(ActionEvent ae)
     {
         MonasticProfile p;
+        String monasteryNickname;
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(), p, CtrPDF.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
+        monasteryNickname =  p.getMonasteryResidingAt().getMonasteryNickname();
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM8Reentry(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, cbReentryTogetherExtension.isSelected());
     }
 
 //    @FXML
