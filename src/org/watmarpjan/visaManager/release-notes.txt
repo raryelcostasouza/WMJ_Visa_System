@@ -1,3 +1,13 @@
+v1.9.0 - 10/03/2020
+* Added 2 extra bysuddhi scans
+
+* Bugs 
+    *Switching monastic profiles and save confirmation window.
+    *Tweak on 90 Table to avoid vertical scrollbar
+    *Fixed side menu pane to avoid scrollbar
+    *Old bug. Switching between monastery or embassy was not checking for unsaved changes
+
+-------------------------------------------------------------------------------------------
 v1.9-BETA-1 28/02/2020
 * New Monastery Fields
     **Abbot Name
@@ -33,7 +43,8 @@ Bugs fixed
     **Embassy panel: country embassy changes were not being detected to toggle the save button status
     **Error message dialogs: the message text was being wrapped and it was not possible to resize
     **Due tasks report for Thailand: if the other tabs were not acessed in advance the report would come with wrong screenshots
-    
+
+-------------------------------------------------------------------------------------------
 v1.8.1 - 29/04/2019
 
 New features:
