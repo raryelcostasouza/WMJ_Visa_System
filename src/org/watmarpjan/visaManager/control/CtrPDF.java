@@ -1228,8 +1228,8 @@ public class CtrPDF
 
         if (orientation == ORIENTATION_LANDSCAPE)
         {
-            // including a translation of pageWidth to use the lower left corner as 0,0 reference
-            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+            transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
+
             //on the landscape orientation, the height of the page is the same as the 
             //width of the page on portrait orientation
             posYTopPage = PAGE_A4_WIDTH_PX;
@@ -1281,10 +1281,10 @@ public class CtrPDF
     public void generatePDFBysuddhiScans(MonasticProfile p, int option)
     {
         //bysuddhi size 18.5 cm X 12.5 cm
-        File fScan1, fScan2, fScan3, fScan4;
+        File fScan1, fScan2, fScan3, fScan4, fScan5, fScan6;
         PDPageContentStream contentStream;
-        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4;
-        PDPage page1;
+        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4, imgScan5, imgScan6;
+        PDPage page1, page2;
         float bysuddhiScanWidth, bysuddhiScanHeight;
         float landscape_A4_width_px, landscape_A4_height_px;
 
@@ -1295,15 +1295,18 @@ public class CtrPDF
 
         pdfDoc = new PDDocument();
         page1 = new PDPage(PDRectangle.A4);
+        page2 = new PDPage(PDRectangle.A4);
 
         //landscape PDF
         page1.setRotation(90);
+        page2.setRotation(90);
         pdfDoc.addPage(page1);
+        
 
         //on a landscape PDF the width and the height of the page are switched
         landscape_A4_width_px = page1.getMediaBox().getHeight();
         landscape_A4_height_px = page1.getMediaBox().getWidth();
-
+        
         //Bysuddhi Real size 185mm x 125mm
         //Converts the Bysuddhi width to pixels
         //Bysuddhi real Width  185mm
@@ -1323,13 +1326,13 @@ public class CtrPDF
         fScan2 = AppFiles.getScanBysuddhi(p.getNickname(), 2);
         fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
         fScan4 = AppFiles.getScanBysuddhi(p.getNickname(), 4);
+        fScan5 = AppFiles.getScanBysuddhi(p.getNickname(), 5);
+        fScan6 = AppFiles.getScanBysuddhi(p.getNickname(), 6);
 
         try
         {
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            // add the rotation using the current transformation matrix
-            // including a translation of pageWidth to use the lower left corner as 0,0 reference
-            contentStream.transform(new Matrix(0, 1, -1, 0, page1.getMediaBox().getWidth(), 0));
+            transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
 
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
             contentStream.drawImage(imgScan1, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
@@ -1345,8 +1348,29 @@ public class CtrPDF
                 imgScan4 = PDImageXObject.createFromFile(fScan4.toString(), pdfDoc);
                 contentStream.drawImage(imgScan4, landscape_A4_width_px - bysuddhiScanWidth - 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
             }
-
+            
             contentStream.close();
+            
+            //if Scan 5 or Scan 6 exists need to have second page
+            if (fScan5.exists() || fScan6.exists())
+            {
+                pdfDoc.addPage(page2);
+                contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
+                transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
+                
+                if (fScan5.exists())
+                {
+                    imgScan5 = PDImageXObject.createFromFile(fScan5.toString(), pdfDoc);
+                    contentStream.drawImage(imgScan5, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+                }
+                if (fScan6.exists())
+                {
+                    imgScan6 = PDImageXObject.createFromFile(fScan6.toString(), pdfDoc);
+                    contentStream.drawImage(imgScan6, landscape_A4_width_px - bysuddhiScanWidth - 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
+                }
+                contentStream.close();
+            }
+            
             pdfDoc.save(outputFile);
 
             if (option == OPTION_PRINT_FORM)
@@ -1678,6 +1702,14 @@ public class CtrPDF
             CtrFileOperation.openFileOnDefaultProgram(outputFile);
         }
         pdfDoc.close();
+    }
+    
+    
+    private void transformContentStreamForLandscapePDF(PDPageContentStream contentStream, float width) throws IOException
+    {
+        // add the rotation using the current transformation matrix
+        // including a translation of pageWidth to use the lower left corner as 0,0 reference
+        contentStream.transform(new Matrix(0, 1, -1, 0, width, 0));
     }
 
 }
