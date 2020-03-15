@@ -209,7 +209,7 @@ public class CtrModuleGenericScanStampedPage
 
     }
 
-    public void fillData(InfoFileScanStampedPage objPS)
+    public void fillData(InfoFileScanStampedPage objPS, boolean lockStatus)
     {
         if (objPS != null)
         {
@@ -225,7 +225,16 @@ public class CtrModuleGenericScanStampedPage
             GUIUtil.loadImageView(ivScan, GUIUtil.IMG_TYPE_PASSPORT, null);
             fScan = null;
         }
-
+        
+        resetLockStatus();
+        if (lockStatus)
+        {
+            actionLockEdit();
+        }
+        else
+        {
+            actionUnlockEdit();
+        }
     }
 
     @FXML

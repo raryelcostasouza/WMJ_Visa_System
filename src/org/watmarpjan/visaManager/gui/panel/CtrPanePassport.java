@@ -379,7 +379,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             cbPassportIssuedAt.setValue(p.getPassportIssuedAt());
 
             fillDataTabMainScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-            fillDataTabAllStampedPages(p);
+            fillDataTabAllStampedPages(p,ctrGUIMain.getPaneEditSaveController().getLockStatus());
 
             if (p.getPassportExpiryDate() != null)
             {
@@ -516,10 +516,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ctrPaneScan2.clearData();
         ctrPaneScan3.clearData();
 
-        ctrPaneScan1.resetLockStatus();
-        ctrPaneScan2.resetLockStatus();
-        ctrPaneScan3.resetLockStatus();
-
         ctrPaneScan1.setFileScanSelectedButUnsaved(null);
         ctrPaneScan2.setFileScanSelectedButUnsaved(null);
         ctrPaneScan3.setFileScanSelectedButUnsaved(null);
@@ -542,7 +538,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         GUIUtil.loadImageView(ivDepartureCardScan, GUIUtil.IMG_TYPE_PASSPORT, fDepartureCard);
     }
 
-    private void fillDataTabAllStampedPages(MonasticProfile p)
+    private void fillDataTabAllStampedPages(MonasticProfile p, boolean lockStatus)
     {
         CtrModuleGenericScanStampedPage objCtr;
 
@@ -563,7 +559,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
             //retrieve the last controller added with the module and fills it with the data
             objCtr = listCtrModulePassportStampedPage.get(listCtrModulePassportStampedPage.size() - 1);
-            objCtr.fillData(objPS1);
+            objCtr.fillData(objPS1, lockStatus);
         }
     }
     
@@ -574,7 +570,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
         fillDataTabMainScans(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
-        fillDataTabAllStampedPages(p);
+        fillDataTabAllStampedPages(p, ctrGUIMain.getPaneEditSaveController().getLockStatus());
     }
 
     @FXML

@@ -45,6 +45,7 @@ public class CtrModuleMainScanStampedPage extends CtrModuleGenericScanStampedPag
         this.rbLastVisaExt = rbLastVisaExt;
     }
 
+    @Override
     public void resetLockStatus()
     {
         super.resetLockStatus();
@@ -93,7 +94,7 @@ public class CtrModuleMainScanStampedPage extends CtrModuleGenericScanStampedPag
 
     public void fillData(InfoFileScanStampedPage objPS, boolean lockStatus)
     {
-        super.fillData(objPS);
+        super.fillData(objPS, lockStatus);
         if (objPS != null)
         {
 
@@ -111,14 +112,6 @@ public class CtrModuleMainScanStampedPage extends CtrModuleGenericScanStampedPag
             }
         }
 
-        if (lockStatus)
-        {
-            actionLockEdit();
-        }
-        else
-        {
-            actionUnlockEdit();
-        }
     }
 
     public void clearData()
