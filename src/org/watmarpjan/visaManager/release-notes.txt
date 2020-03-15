@@ -1,3 +1,8 @@
+v1.9.1 - 15/03/2020
+
+Bug fix: Lock status of Archive/Select Buttons on All Stamped Pages tab getting not working properly
+-------------------------------------------------------------------------------------------
+
 v1.9.0 - 10/03/2020
 * Added 2 extra bysuddhi scans
 
