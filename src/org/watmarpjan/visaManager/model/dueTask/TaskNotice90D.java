@@ -40,7 +40,7 @@ public class TaskNotice90D extends EntryDueTask
         }
 
         ldFirstDay = ldDueDate.minusDays(14);
-        ldLastDayOnline = ldDueDate.minusDays(7);
+        ldLastDayOnline = ldDueDate;
         ldLastDayOffice = ldDueDate.plusDays(7);
         firstDay = new SimpleStringProperty(ldFirstDay.format(Util.DEFAULT_DATE_FORMAT));
         lastDayOnline = new SimpleStringProperty(ldLastDayOnline.format(Util.DEFAULT_DATE_FORMAT));
