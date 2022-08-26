@@ -247,7 +247,7 @@ public class CtrPaneDueTasks extends AChildPaneController
     @Override
     public void init()
     {
-        GUIUtil.updateTooltipBehavior(0, 5000, 200, true);
+        //GUIUtil.updateTooltipBehavior(0, 5000, 200, false);
 //        bPrintTH.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
         bPreviewTH.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
