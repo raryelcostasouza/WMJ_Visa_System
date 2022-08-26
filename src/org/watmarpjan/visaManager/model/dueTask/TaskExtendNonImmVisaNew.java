@@ -22,7 +22,7 @@ public class TaskExtendNonImmVisaNew extends TaskExtendNonImmVisaGeneric
         LocalDate ldPrawat, ldSamnakput;
 
         ldPrawat = ldDueDate.minusMonths(3);
-        ldSamnakput = ldDueDate.minusMonths(2);
+        ldSamnakput = ldDueDate.minusDays(45);
         
         setPrawat(ldPrawat);
         setSamnakput(ldSamnakput);
