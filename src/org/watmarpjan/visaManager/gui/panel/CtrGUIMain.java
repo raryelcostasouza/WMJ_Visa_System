@@ -5,6 +5,7 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
+import java.io.File;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import java.io.IOException;
 import java.time.Duration;
@@ -1166,7 +1167,10 @@ public class CtrGUIMain
     
     public void actionButtonHelp(ActionEvent ae)
     {
-        Init.HOST_SERVICES.showDocument(AppPaths.getPathToHelp().resolve("index.html").toString());
+        File f;
+        
+        f = new File(AppPaths.getPathToHelp().resolve("index.html").toUri());
+        CtrFileOperation.openFileOnDefaultProgram(f);                   
     }
 
     public void initChildControllers()
