@@ -91,6 +91,11 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../../appData/Help/");
     }
     
+    public static Path getPathToImmigrationWebsite()
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/ImmigrationWebsite/");
+    }
+    
     public static Path getPathToLetterTemplate(String monasteryNickname)
     {
         return Paths.get(System.getProperty("user.dir")).resolve("../../appData/"+monasteryNickname+"/Letter-Templates");

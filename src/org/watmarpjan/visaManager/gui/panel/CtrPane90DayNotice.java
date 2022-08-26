@@ -281,7 +281,10 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
     @FXML
     public void actionLinkThaiImmigration(ActionEvent ae)
     {
-        Init.HOST_SERVICES.showDocument("https://extranet.immigration.go.th/fn90online");
+        File f;
+        
+        f = new File(AppPaths.getPathToImmigrationWebsite().resolve("index.html").toUri());
+        CtrFileOperation.openFileOnDefaultProgram(f);
     }
 
     private void loadListVisaManager()
