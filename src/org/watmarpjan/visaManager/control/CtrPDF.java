@@ -15,12 +15,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
@@ -29,7 +26,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Transform;
-import javax.imageio.ImageIO;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
@@ -52,8 +48,6 @@ import org.apache.pdfbox.util.Matrix;
 import org.hibernate.internal.util.compare.ComparableComparator;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.AppPaths;
-import org.watmarpjan.visaManager.MainScanStampedPageFilenameFilter;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.dueTask.EntryDueTask;
 import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPage;
@@ -108,13 +102,13 @@ public class CtrPDF
     //Bysuddhi real Width  185mm
     //A4 Width pixel size: PDRectangle.A4.getWidth() 
     //A4 Width real size 210mm
-    private final float BYSUDDHI_SCAN_WIDTH = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+    private final float DEFAULT_WIDTH_BYSUDDHI_SCAN = (PDRectangle.A4.getWidth() * 185) / 210.0f;
     
     //Converts the Bysuddhi to pixels
     //Bysuddhi real Height 125mm
     //A4 Height pixel size: PDRectangle.A4.getHeight() 
     //A4 Height real size 297mm
-    private final float BYSUDDHI_SCAN_HEIGHT = (PDRectangle.A4.getHeight() * 125) / 297.0f;
+    private final float DEFAULT_HEIGHT_BYSUDDHI_SCAN = (PDRectangle.A4.getHeight() * 125) / 297.0f;
     
     public CtrPDF(CtrMain pCtrMain)
     {
@@ -1328,17 +1322,17 @@ public class CtrPDF
         {
             if (fScan1.exists() || fScan2.exists())
             {
-                 generatePDFPageBysuddhiScan(pdfDoc, fScan1, fScan2);
+                 generatePDFPageScan(pdfDoc, fScan1, fScan2, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
             }         
             
             if (fScan3.exists() || fScan4.exists())
             {
-                generatePDFPageBysuddhiScan(pdfDoc, fScan3, fScan4);
+                generatePDFPageScan(pdfDoc, fScan3, fScan4, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
             }        
             
             if (fScan5.exists() || fScan6.exists())
             {
-                generatePDFPageBysuddhiScan(pdfDoc, fScan6, fScan6);
+                generatePDFPageScan(pdfDoc, fScan6, fScan6, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
             }
             
             pdfDoc.save(outputFile);
@@ -1360,7 +1354,7 @@ public class CtrPDF
         }
     }
     
-    private void generatePDFPageBysuddhiScan(PDDocument pdfDoc, File fScan1, File fScan2 ) throws IOException
+    private void generatePDFPageScan(PDDocument pdfDoc, File fScan1, File fScan2, float scanWidth, float scanHeight) throws IOException
     {
         PDPage page;
         PDPageContentStream contentStream;
@@ -1374,13 +1368,13 @@ public class CtrPDF
         if (fScan1.exists())
         {
             imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
-            contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - BYSUDDHI_SCAN_HEIGHT - 50, BYSUDDHI_SCAN_WIDTH, BYSUDDHI_SCAN_HEIGHT);
+            contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - scanHeight - 50, scanWidth, scanHeight);
         }
 
-        if (fScan2.exists())
+        if (fScan2 != null && fScan2.exists())
         {
             imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
-            contentStream.drawImage(imgScan2, 50, 50, BYSUDDHI_SCAN_WIDTH, BYSUDDHI_SCAN_HEIGHT);
+            contentStream.drawImage(imgScan2, 50, 50, scanWidth, scanHeight);
         }
 
         contentStream.close();
@@ -1391,7 +1385,7 @@ public class CtrPDF
         //passport size 17cm X 12.5 cm
         ArrayList<InfoFileScanStampedPage> listEPS;
         PDDocument pdfDoc;
-        File outputFile;
+        File outputFile, fScan1, fScan2;
 
         outputFile = AppFiles.getFormTMPOutputPDF(p.getNickname() + "-PassportScans");
 
@@ -1406,7 +1400,16 @@ public class CtrPDF
             //go adding the scans to the pdf and removing them from the list until there is none left
             while (!listEPS.isEmpty())
             {
-                listEPS = generateScansStampedPage(pdfDoc, p, listEPS);
+                if (listEPS.size() >= 2)
+                {
+                    fScan2 = listEPS.remove(1).getFileScan();
+                }
+                else
+                {
+                    fScan2 = null;
+                }
+                fScan1 = listEPS.remove(0).getFileScan();
+                generatePDFPageScan(pdfDoc, fScan1, fScan2, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
             }
             
             pdfDoc.save(outputFile);
@@ -1493,45 +1496,6 @@ public class CtrPDF
 
             contentStream.close();
         }
-
-    }
-
-    private ArrayList<InfoFileScanStampedPage> generateScansStampedPage(PDDocument pdfDoc, MonasticProfile p, ArrayList<InfoFileScanStampedPage> listEPS) throws IOException
-    {
-        File fScan1, fScan2;
-        PDPageContentStream contentStream;
-        PDImageXObject imgScan1, imgScan2;
-        PDPage page2;
-
-        if (listEPS.size() >= 1)
-        {
-            //drawing of the top scan on the page
-            page2 = new PDPage(PDRectangle.A4);
-            pdfDoc.addPage(page2);
-
-            contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
-
-            fScan1 = listEPS.get(0).getFileScan();
-            imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
-            contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - DEFAULT_HEIGHT_PASSPORT_SCAN_PX - 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
-
-            //if there is at least 2 scans draw the bottom scan as well
-            if (listEPS.size() >= 2)
-            {
-                //drawing of the bottom scan on the page
-                fScan2 = listEPS.get(1).getFileScan();
-                imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
-                contentStream.drawImage(imgScan2, 50, 50, DEFAULT_WIDTH_PASSPORT_SCAN_PX, DEFAULT_HEIGHT_PASSPORT_SCAN_PX);
-                
-                //removes the second scan from list
-                listEPS.remove(1);
-            }
-            //removes the first scan from list
-            listEPS.remove(0);
-            
-            contentStream.close();
-        }
-        return listEPS;
 
     }
 
