@@ -102,7 +102,20 @@ public class CtrPDF
     private final float PAGE_A4_WIDTH_PX = PDRectangle.A4.getWidth();
 
     private final float SCALE_DUE_TASKS_SNAPSHOT = 0.3f;
-
+    
+    //Bysuddhi Real size 185mm x 125mm
+    //Converts the Bysuddhi width to pixels
+    //Bysuddhi real Width  185mm
+    //A4 Width pixel size: PDRectangle.A4.getWidth() 
+    //A4 Width real size 210mm
+    private final float BYSUDDHI_SCAN_WIDTH = (PDRectangle.A4.getWidth() * 185) / 210.0f;
+    
+    //Converts the Bysuddhi to pixels
+    //Bysuddhi real Height 125mm
+    //A4 Height pixel size: PDRectangle.A4.getHeight() 
+    //A4 Height real size 297mm
+    private final float BYSUDDHI_SCAN_HEIGHT = (PDRectangle.A4.getHeight() * 125) / 297.0f;
+    
     public CtrPDF(CtrMain pCtrMain)
     {
         System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
@@ -1282,11 +1295,6 @@ public class CtrPDF
     {
         //bysuddhi size 18.5 cm X 12.5 cm
         File fScan1, fScan2, fScan3, fScan4, fScan5, fScan6;
-        PDPageContentStream contentStream;
-        PDImageXObject imgScan1, imgScan2, imgScan3, imgScan4, imgScan5, imgScan6;
-        PDPage page1, page2;
-        float bysuddhiScanWidth, bysuddhiScanHeight;
-        float landscape_A4_width_px, landscape_A4_height_px;
 
         PDDocument pdfDoc;
         File outputFile;
@@ -1294,34 +1302,21 @@ public class CtrPDF
         outputFile = AppFiles.getFormTMPOutputPDF(p.getNickname() + "-BysuddhiScans");
 
         pdfDoc = new PDDocument();
-        page1 = new PDPage(PDRectangle.A4);
-        page2 = new PDPage(PDRectangle.A4);
 
         //landscape PDF
-        page1.setRotation(90);
-        page2.setRotation(90);
-        pdfDoc.addPage(page1);
-        
+        //page1.setRotation(90);
+        //page2.setRotation(90);
+        //pdfDoc.addPage(page1);        
 
         //on a landscape PDF the width and the height of the page are switched
-        landscape_A4_width_px = page1.getMediaBox().getHeight();
-        landscape_A4_height_px = page1.getMediaBox().getWidth();
+        //on portrait they are not switched
+        //A4_width_px = page1.getMediaBox().getHeight();
+        //A4_height_px = page1.getMediaBox().getWidth();
+
+        //scales down the scan
+        //bysuddhiScanHeight /= 1.5f;
+        //bysuddhiScanWidth /= 1.5f;
         
-        //Bysuddhi Real size 185mm x 125mm
-        //Converts the Bysuddhi width to pixels
-        //Bysuddhi real Width  185mm
-        //A4 Width pixel size: PDRectangle.A4.getWidth() 
-        //A4 Width real size 210mm
-        bysuddhiScanWidth = (PDRectangle.A4.getWidth() * 185) / 210.0f;
-
-        //Converts the Bysuddhi to pixels
-        //Bysuddhi real Height 125mm
-        //A4 Height pixel size: PDRectangle.A4.getHeight() 
-        //A4 Height real size 297mm
-        bysuddhiScanHeight = (PDRectangle.A4.getHeight() * 125) / 297.0f;
-
-        bysuddhiScanHeight /= 1.5f;
-        bysuddhiScanWidth /= 1.5f;
         fScan1 = AppFiles.getScanBysuddhi(p.getNickname(), 1);
         fScan2 = AppFiles.getScanBysuddhi(p.getNickname(), 2);
         fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
@@ -1331,44 +1326,19 @@ public class CtrPDF
 
         try
         {
-            contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
-            transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
-
-            imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
-            contentStream.drawImage(imgScan1, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
-
-            imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
-            contentStream.drawImage(imgScan2, landscape_A4_width_px - bysuddhiScanWidth - 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
-
-            imgScan3 = PDImageXObject.createFromFile(fScan3.toString(), pdfDoc);
-            contentStream.drawImage(imgScan3, 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
-
-            if (fScan4.exists())
+            if (fScan1.exists() || fScan2.exists())
             {
-                imgScan4 = PDImageXObject.createFromFile(fScan4.toString(), pdfDoc);
-                contentStream.drawImage(imgScan4, landscape_A4_width_px - bysuddhiScanWidth - 50, 50, bysuddhiScanWidth, bysuddhiScanHeight);
-            }
+                 generatePDFPageBysuddhiScan(pdfDoc, fScan1, fScan2);
+            }         
             
-            contentStream.close();
+            if (fScan3.exists() || fScan4.exists())
+            {
+                generatePDFPageBysuddhiScan(pdfDoc, fScan3, fScan4);
+            }        
             
-            //if Scan 5 or Scan 6 exists need to have second page
             if (fScan5.exists() || fScan6.exists())
             {
-                pdfDoc.addPage(page2);
-                contentStream = new PDPageContentStream(pdfDoc, page2, PDPageContentStream.AppendMode.APPEND, true);
-                transformContentStreamForLandscapePDF(contentStream, page1.getMediaBox().getWidth());
-                
-                if (fScan5.exists())
-                {
-                    imgScan5 = PDImageXObject.createFromFile(fScan5.toString(), pdfDoc);
-                    contentStream.drawImage(imgScan5, 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
-                }
-                if (fScan6.exists())
-                {
-                    imgScan6 = PDImageXObject.createFromFile(fScan6.toString(), pdfDoc);
-                    contentStream.drawImage(imgScan6, landscape_A4_width_px - bysuddhiScanWidth - 50, landscape_A4_height_px - bysuddhiScanHeight - 50, bysuddhiScanWidth, bysuddhiScanHeight);
-                }
-                contentStream.close();
+                generatePDFPageBysuddhiScan(pdfDoc, fScan6, fScan6);
             }
             
             pdfDoc.save(outputFile);
@@ -1386,8 +1356,34 @@ public class CtrPDF
         }
         catch (IOException ex)
         {
-            CtrAlertDialog.errorDialog("Error to generate pdf with passport scans.");
+            CtrAlertDialog.errorDialog("Error to generate pdf with bysuddhi scans.");
         }
+    }
+    
+    private void generatePDFPageBysuddhiScan(PDDocument pdfDoc, File fScan1, File fScan2 ) throws IOException
+    {
+        PDPage page;
+        PDPageContentStream contentStream;
+        PDImageXObject imgScan1, imgScan2;
+        
+        page = new PDPage(PDRectangle.A4);
+
+        pdfDoc.addPage(page);
+        contentStream = new PDPageContentStream(pdfDoc, page, PDPageContentStream.AppendMode.APPEND, true);
+
+        if (fScan1.exists())
+        {
+            imgScan1 = PDImageXObject.createFromFile(fScan1.toString(), pdfDoc);
+            contentStream.drawImage(imgScan1, 50, PAGE_A4_HEIGHT_PX - BYSUDDHI_SCAN_HEIGHT - 50, BYSUDDHI_SCAN_WIDTH, BYSUDDHI_SCAN_HEIGHT);
+        }
+
+        if (fScan2.exists())
+        {
+            imgScan2 = PDImageXObject.createFromFile(fScan2.toString(), pdfDoc);
+            contentStream.drawImage(imgScan2, 50, 50, BYSUDDHI_SCAN_WIDTH, BYSUDDHI_SCAN_HEIGHT);
+        }
+
+        contentStream.close();
     }
 
     public void generatePDFPassportScans(MonasticProfile p, int option, FilenameFilter fileFilter)
@@ -1675,7 +1671,6 @@ public class CtrPDF
             }
             i++;
         }
-
     }
     
     private void generatePDFFromPages(ArrayList<PDPage> listPages, PDDocument pdfDoc, String title, int option) throws IOException
