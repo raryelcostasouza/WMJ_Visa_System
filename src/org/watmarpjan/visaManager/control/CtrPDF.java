@@ -1294,10 +1294,10 @@ public class CtrPDF
         return SwingFXUtils.fromFXImage(imgView.getImage(), null);
     }
 
-    public void generatePDFBysuddhiScans(MonasticProfile p, int option)
+    public void generatePDFBysuddhiScans(MonasticProfile p, int option, boolean includeCover)
     {
         //bysuddhi size 18.5 cm X 12.5 cm
-        File fScan1, fScan2, fScan3, fScan4, fScan5, fScan6;
+        File fScan1, fScan2, fScan3, fScan4, fScan5, fScanCover;
 
         PDDocument pdfDoc;
         File outputFile;
@@ -1325,10 +1325,15 @@ public class CtrPDF
         fScan3 = AppFiles.getScanBysuddhi(p.getNickname(), 3);
         fScan4 = AppFiles.getScanBysuddhi(p.getNickname(), 4);
         fScan5 = AppFiles.getScanBysuddhi(p.getNickname(), 5);
-        fScan6 = AppFiles.getScanBysuddhi(p.getNickname(), 6);
+        fScanCover = AppFiles.getScanBysuddhi(p.getNickname(), 0);
 
         try
         {
+            if (includeCover && fScanCover.exists())
+            {
+                generatePDFPageScan(pdfDoc, fScanCover, null,DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
+            }
+            
             if (fScan1.exists() || fScan2.exists())
             {
                  generatePDFPageScan(pdfDoc, fScan1, fScan2, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
@@ -1339,9 +1344,9 @@ public class CtrPDF
                 generatePDFPageScan(pdfDoc, fScan3, fScan4, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
             }        
             
-            if (fScan5.exists() || fScan6.exists())
+            if (fScan5.exists())
             {
-                generatePDFPageScan(pdfDoc, fScan6, fScan6, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
+                generatePDFPageScan(pdfDoc, fScan5, null, DEFAULT_WIDTH_BYSUDDHI_SCAN, DEFAULT_HEIGHT_BYSUDDHI_SCAN);
             }
             
             pdfDoc.save(outputFile);
@@ -1552,7 +1557,7 @@ public class CtrPDF
         generatePhotoPageGeneric(nicknameMonastic1, nicknameMonastic2, pdRectangle4By6InchPaper, photoWidth4x6_PX, photoHeight4x6_PX, 2, 2, 25);
     }
     
-    private void generatePhotoPageGeneric(String nicknameMonastic1, String nicknameMonastic2, PDRectangle pdRPaperType, float photoWidth, float photoHeight, int nRows, int nColumns, float margin)
+    private void generatePhotoPageGeneric(String nicknameMonastic1, String nicknameMonastic2, PDRectangle pdRPaperType, float photoWidth, float photoHeight, int nColumns, int nRows, float margin)
     {
         PDDocument pdfDoc;
         PDPage page1;
@@ -1570,9 +1575,9 @@ public class CtrPDF
         {
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
             pdIMG1 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic1).toString(), pdfDoc);
-            for (int i = 0; i < nRows; i++)
+            for (int i = 0; i < nColumns; i++)
             {
-                for (int j = 0; j < nColumns; j++)
+                for (int j = 0; j < nRows; j++)
                 {
                     contentStream.drawImage(pdIMG1, margin + i * (photoWidth + 10), pdRPaperType.getHeight() - photoHeight - 50 - j * (photoHeight + 10), photoWidth, photoHeight);
                 }
@@ -1581,9 +1586,9 @@ public class CtrPDF
             if (nicknameMonastic2 != null)
             {
                 pdIMG2 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic2).toString(), pdfDoc);
-                for (int i = 0; i < nRows; i++)
+                for (int i = 0; i < nColumns; i++)
                 {
-                    for (int j = 0; j < nColumns; j++)
+                    for (int j = 0; j < nRows; j++)
                     {
                         contentStream.drawImage(pdIMG2, margin + i * (photoWidth + 10), pdRPaperType.getHeight() / 2.0f - photoHeight - j * (photoHeight + 10), photoWidth, photoHeight);
                     }
