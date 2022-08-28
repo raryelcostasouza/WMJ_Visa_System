@@ -17,6 +17,7 @@ import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -68,7 +69,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     @FXML
     private ImageView ivScan5;
     @FXML
-    private ImageView ivScan6;
+    private ImageView ivScanCover;
 
     @FXML
     private Button b1;
@@ -81,7 +82,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     @FXML
     private Button b5;
     @FXML
-    private Button b6;
+    private Button bCover;
 
     @FXML
     private Button b1Archive;
@@ -94,10 +95,13 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     @FXML
     private Button b5Archive;
     @FXML
-    private Button b6Archive;
+    private Button bCoverArchive;
 
     @FXML
     private Button bPreview;
+    
+    @FXML
+    private CheckBox cbIncludeCover;
 
 //    @FXML
 //    private Button bPrint;
@@ -152,14 +156,14 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         b3.setDisable(true);
         b4.setDisable(true);
         b5.setDisable(true);
-        b6.setDisable(true);
+        bCover.setDisable(true);
 
         b1Archive.setDisable(true);
         b2Archive.setDisable(true);
         b3Archive.setDisable(true);
         b4Archive.setDisable(true);
         b5Archive.setDisable(true);
-        b6Archive.setDisable(true);
+        bCoverArchive.setDisable(true);
     }
 
     @Override
@@ -231,7 +235,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         MonasticProfile p;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PREVIEW_FORM);
+        ctrGUIMain.getCtrMain().getCtrPDF().generatePDFBysuddhiScans(p, CtrPDF.OPTION_PREVIEW_FORM, cbIncludeCover.isSelected());
     }
 
 //    @FXML
@@ -326,7 +330,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
 
     private void loadIMGPreviews(MonasticProfile p)
     {
-        File f1, f2, f3, f4, f5, f6;
+        File f1, f2, f3, f4, f5, fCover;
         String nickname;
 
         if (p != null)
@@ -337,11 +341,11 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             f3 = AppFiles.getScanBysuddhi(nickname, 3);
             f4 = AppFiles.getScanBysuddhi(nickname, 4);
             f5 = AppFiles.getScanBysuddhi(nickname, 5);
-            f6 = AppFiles.getScanBysuddhi(nickname, 6);
+            fCover = AppFiles.getScanBysuddhi(nickname, 0);
         }
         else
         {
-            f1 = f2 = f3 = f4 = f5 = f6 = null;
+            f1 = f2 = f3 = f4 = f5 = fCover = null;
         }
 
         initScanButtonsGeneric(f1, b1, b1Archive);
@@ -349,19 +353,19 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         initScanButtonsGeneric(f3, b3, b3Archive);
         initScanButtonsGeneric(f4, b4, b4Archive);
         initScanButtonsGeneric(f5, b5, b5Archive);
-        initScanButtonsGeneric(f6, b6, b6Archive);
+        initScanButtonsGeneric(fCover, bCover, bCoverArchive);
 
         GUIUtil.loadImageView(ivScan1, GUIUtil.IMG_TYPE_BYSUDDHI, f1);
         GUIUtil.loadImageView(ivScan2, GUIUtil.IMG_TYPE_BYSUDDHI, f2);
         GUIUtil.loadImageView(ivScan3, GUIUtil.IMG_TYPE_BYSUDDHI, f3);
         GUIUtil.loadImageView(ivScan4, GUIUtil.IMG_TYPE_BYSUDDHI, f4);
         GUIUtil.loadImageView(ivScan5, GUIUtil.IMG_TYPE_BYSUDDHI, f5);
-        GUIUtil.loadImageView(ivScan6, GUIUtil.IMG_TYPE_BYSUDDHI, f6);
+        GUIUtil.loadImageView(ivScanCover, GUIUtil.IMG_TYPE_BYSUDDHI, fCover);
     }
 
     private void reloadScanButtons()
     {
-        File f1, f2, f3, f4, f5, f6;
+        File f1, f2, f3, f4, f5, fCover;
         MonasticProfile p;
         String nickname;
 
@@ -373,14 +377,14 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         f3 = AppFiles.getScanBysuddhi(nickname, 3);
         f4 = AppFiles.getScanBysuddhi(nickname, 4);
         f5 = AppFiles.getScanBysuddhi(nickname, 5);
-        f6 = AppFiles.getScanBysuddhi(nickname, 6);
+        fCover = AppFiles.getScanBysuddhi(nickname, 0);
 
         initScanButtonsGeneric(f1, b1, b1Archive);
         initScanButtonsGeneric(f2, b2, b2Archive);
         initScanButtonsGeneric(f3, b3, b3Archive);
         initScanButtonsGeneric(f4, b4, b4Archive);
         initScanButtonsGeneric(f5, b5, b5Archive);
-        initScanButtonsGeneric(f6, b6, b6Archive);
+        initScanButtonsGeneric(fCover, bCover, bCoverArchive);
     }
 
     private void initScanButtonsGeneric(File f, Button bScan, Button bArchive)
@@ -433,9 +437,10 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         {
             fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 5);
         }
+        //for the cover scan
         else
         {
-            fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 6);
+            fDestination = AppFiles.getScanBysuddhi(p.getNickname(), 0);
         }
         fSource = CtrFileOperation.selectFile("Select Bysuddhi Scan", CtrFileOperation.FILE_CHOOSER_TYPE_JPG);
 
@@ -476,9 +481,9 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         actionArchiveBysuddhiScanGeneric(5);
     }
     @FXML
-    void actionArchiveBysuddhiScan6(ActionEvent ae)
+    void actionArchiveBysuddhiScanCover(ActionEvent ae)
     {
-        actionArchiveBysuddhiScanGeneric(6);
+        actionArchiveBysuddhiScanGeneric(0);
     }
 
     private void actionArchiveBysuddhiScanGeneric(int scanNumber)
@@ -537,9 +542,10 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             fImg = AppFiles.getScanBysuddhi(p.getNickname(), 5);
 
         }
+        //for cover scan
         else
         {
-            fImg = AppFiles.getScanBysuddhi(p.getNickname(), 6);
+            fImg = AppFiles.getScanBysuddhi(p.getNickname(), 0);
         }
 
         CtrFileOperation.openFileOnDefaultProgram(fImg);
