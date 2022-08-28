@@ -24,6 +24,13 @@ public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtende
     public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
     {
         super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
+        LocalDate ldPrawat, ldSamnakput;
+        
+        ldPrawat = ldDueDate.minusMonths(3);
+        ldSamnakput = ldDueDate.minusDays(45);
+        
+        setPrawat(ldPrawat);
+        setSamnakput(ldSamnakput);
     }
 
     public String getPrawat()
