@@ -73,8 +73,10 @@ public class CtrPDF
     public static final int ORIENTATION_LANDSCAPE = 1;
 
     public static final String DESTINATION_SAMNAKPUT = "SNP";
-    public static final String DESTINATION_IMMIGRATION = "IMM";
+    private static float POINTS_PER_INCH = 72;
 
+    public static final String DESTINATION_IMMIGRATION = "IMM";
+    
     private final String MSG_ERROR = "Error while generating PDF form.";
 
     private COSName loadedThaiFontName = null;
@@ -109,6 +111,13 @@ public class CtrPDF
     //A4 Height pixel size: PDRectangle.A4.getHeight() 
     //A4 Height real size 297mm
     private final float DEFAULT_HEIGHT_BYSUDDHI_SCAN = (PDRectangle.A4.getHeight() * 125) / 297.0f;
+    
+    //Photo Real Real size 40mm x 60mm
+    //Converts the photo height to pixels
+    //Photo Real Height  60mm
+    //A4 Height pixel size: PDRectangle.A4.getHeight() 
+    //A4 Height real size 297mm
+    private final float HEIGHT_PHOTO_A4_PX = (PDRectangle.A4.getHeight() * 60) / 297.0f;
     
     public CtrPDF(CtrMain pCtrMain)
     {
@@ -1499,76 +1508,98 @@ public class CtrPDF
 
     }
 
-    public void generatePhotoPage(String nicknameMonastic1, String nicknameMonastic2, int option)
+    public void generatePhotoPageA4(String nicknameMonastic1, String nicknameMonastic2, int option)
     {
-        PDDocument pdfDoc;
-        File outputFile;
-        PDPage page1;
-        PDPageContentStream contentStream;
-        PDImageXObject pdIMG1, pdIMG2;
-        float step;
-
         //Photo Real Real size 40mm x 60mm
         //Converts the photo height to pixels
         //Photo Real Height  60mm
         //A4 Height pixel size: PDRectangle.A4.getHeight() 
         //A4 Height real size 297mm
-        final float photoHeight_PX = (PDRectangle.A4.getHeight() * 60) / 297.0f;
+        final float photoHeightA4_PX = (PDRectangle.A4.getHeight() * 60) / 297.0f;
 
         //Converts the photo Width to pixels
         //Photo Real Width  40mm
         //A4 Width pixel size: PDRectangle.A4.getHeight() 
         //A4 Width real size 210mm
-        final float photoWidth_PX = (PDRectangle.A4.getWidth() * 40) / 210.0f;
+        final float photoWidthA4_PX = (PDRectangle.A4.getWidth() * 40) / 210.0f;
 
+        
+        generatePhotoPageGeneric(nicknameMonastic1, nicknameMonastic2, PDRectangle.A4, photoWidthA4_PX, photoHeightA4_PX, 4, 2, 50);
+    }
+    
+    public void generatePhotoPage4x6(String nicknameMonastic1, String nicknameMonastic2, int option)
+    {
+        PDRectangle pdRectangle4By6InchPaper;
+        float heightPhotoPaper, widthPhotoPaper;
+       
+        heightPhotoPaper = 6 * POINTS_PER_INCH;
+        widthPhotoPaper = 4 * POINTS_PER_INCH;
+        pdRectangle4By6InchPaper = new PDRectangle(widthPhotoPaper, heightPhotoPaper);
+        
+        //Photo Real Real size 40mm x 60mm
+        //Converts the photo height to pixels
+        //Photo Real Height  60mm
+        //A4 Height pixel size: PDRectangle4x6.getHeight() 
+        //4x6 inches (10 x 15cm) Height real size 150mmm
+        final float photoHeight4x6_PX = (pdRectangle4By6InchPaper.getHeight() * 60) / 150f;
+
+        //Converts the photo Width to pixels
+        //Photo Real Width  40mm
+        //4x6 inches Width pixel size: PDRectangle4x6.getHeight() 
+        //4x6 inches (10 x 15cm) Width real size 100mmm
+        final float photoWidth4x6_PX = (pdRectangle4By6InchPaper.getWidth() * 40) / 100f;
+        
+        generatePhotoPageGeneric(nicknameMonastic1, nicknameMonastic2, pdRectangle4By6InchPaper, photoWidth4x6_PX, photoHeight4x6_PX, 2, 2, 25);
+    }
+    
+    private void generatePhotoPageGeneric(String nicknameMonastic1, String nicknameMonastic2, PDRectangle pdRPaperType, float photoWidth, float photoHeight, int nRows, int nColumns, float margin)
+    {
+        PDDocument pdfDoc;
+        PDPage page1;
+        File outputFile;
+        PDPageContentStream contentStream;
+        PDImageXObject pdIMG1, pdIMG2;
+        
         pdfDoc = new PDDocument();
-        page1 = new PDPage(PDRectangle.A4);
+        page1 = new PDPage(pdRPaperType);
+        
         pdfDoc.addPage(page1);
         outputFile = AppFiles.getFormTMPOutputPDF("PhotoPage");
+        
         try
         {
             contentStream = new PDPageContentStream(pdfDoc, page1, PDPageContentStream.AppendMode.APPEND, true);
             pdIMG1 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic1).toString(), pdfDoc);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < nRows; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < nColumns; j++)
                 {
-                    contentStream.drawImage(pdIMG1, 50 + i * (photoWidth_PX + 10), PAGE_A4_HEIGHT_PX - photoHeight_PX - 50 - j * (photoHeight_PX + 10), photoWidth_PX, photoHeight_PX);
+                    contentStream.drawImage(pdIMG1, margin + i * (photoWidth + 10), pdRPaperType.getHeight() - photoHeight - 50 - j * (photoHeight + 10), photoWidth, photoHeight);
                 }
-
             }
 
             if (nicknameMonastic2 != null)
             {
                 pdIMG2 = PDImageXObject.createFromFile(AppFiles.getProfilePhoto(nicknameMonastic2).toString(), pdfDoc);
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < nRows; i++)
                 {
-                    for (int j = 0; j < 2; j++)
+                    for (int j = 0; j < nColumns; j++)
                     {
-                        contentStream.drawImage(pdIMG2, 50 + i * (photoWidth_PX + 10), PAGE_A4_HEIGHT_PX / 2.0f - photoHeight_PX - j * (photoHeight_PX + 10), photoWidth_PX, photoHeight_PX);
+                        contentStream.drawImage(pdIMG2, margin + i * (photoWidth + 10), pdRPaperType.getHeight() / 2.0f - photoHeight - j * (photoHeight + 10), photoWidth, photoHeight);
                     }
-
                 }
-
             }
             contentStream.close();
             pdfDoc.save(outputFile);
 
-            if (option == OPTION_PRINT_FORM)
-            {
-                printPDF(pdfDoc);
-            }
-            else
-            {
-                CtrFileOperation.openFileOnDefaultProgram(outputFile);
-            }
+            CtrFileOperation.openFileOnDefaultProgram(outputFile);
+            
             pdfDoc.close();
         }
         catch (IOException ioe)
         {
             CtrAlertDialog.errorDialog("Error to generate pdf with Photo Page.");
         }
-
     }
 
     private void printPDF(PDDocument p)
