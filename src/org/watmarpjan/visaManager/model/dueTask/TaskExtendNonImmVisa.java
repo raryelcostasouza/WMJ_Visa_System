@@ -15,13 +15,13 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author pm.dell
  */
-public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtended
+public class TaskExtendNonImmVisa extends TaskExtendTouristVisaNotExtended
 {
 
     private SimpleStringProperty prawat;
     private SimpleStringProperty samnakput;
 
-    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendNonImmVisa(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
     {
         super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
         LocalDate ldPrawat, ldSamnakput;
