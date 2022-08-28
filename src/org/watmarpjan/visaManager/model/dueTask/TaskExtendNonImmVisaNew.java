@@ -13,7 +13,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author pm.dell
  */
-public class TaskExtendNonImmVisaNew extends TaskExtendNonImmVisaGeneric
+public class TaskExtendNonImmVisaNew extends TaskExtendNonImmVisa
 {
     //used when the visa has NOT been EXTENDED YET.
     public TaskExtendNonImmVisaNew(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
