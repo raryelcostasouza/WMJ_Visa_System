@@ -610,7 +610,7 @@ public class CtrPDF
             acroForm.getField("arrivalLastEntryDateYear").setValue(Util.convertYearToThai(ldLastEntry.getYear()) + "");
         }
         acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
-
+        acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
