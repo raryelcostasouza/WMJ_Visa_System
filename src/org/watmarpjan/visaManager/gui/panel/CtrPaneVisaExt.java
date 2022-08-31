@@ -32,6 +32,9 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaExtFiller;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -303,29 +306,18 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         return (!tfExtNumber.getText().isEmpty())
                 && (dpExpiryDate.getValue() != null);
     }
-
-    private File getPrawatTemplate(MonasticProfile p)
-    {
-        
-        if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
-        {
-            return AppFiles.getFormPrawat(p.getMonasteryResidingAt().getMonasteryNickname());
-        }
-        else
-        {
-            return AppFiles.getFormPrawatPatimokkhaChanter(p.getMonasteryResidingAt().getMonasteryNickname());
-        }
-    }
-
+    
+    
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
-        File fPrawatTemplate;
+        PrawatVisaExtFiller pVextFiller;
         MonasticProfile p;
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
-        fPrawatTemplate = getPrawatTemplate(p);
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        pVextFiller = new PrawatVisaExtFiller(ctrGUIMain.getCtrMain(), p);
+        pVextFiller.saveAndOpenPDF();
     }
     
     @FXML
