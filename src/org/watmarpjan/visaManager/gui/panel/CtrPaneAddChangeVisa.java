@@ -15,18 +15,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrLetter;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.LetterInputData;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
@@ -37,7 +43,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implements IFormMonasticProfile
+public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implements IFormMonasticProfile
 {
 
     @FXML
@@ -104,11 +110,77 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
     @FXML
     private GridPane gpMonasticPhone;
-
+    
+    @FXML
+    private Button bVisaChangeRequestLetterSNP;
+    
+    @FXML
+    private Button bVisaChangeRequestLetterIMM;
+    
+    @FXML
+    private Button bVisaChangeResidenceGuaranteeLetter;
+    
+    @FXML
+    private Button bTM86;
+    
+    @FXML
+    private Button bTM87;
+    
+    @FXML
+    private Button bNewVisaRequestLetterSNP;
+    
+    @FXML
+    private Button bNewVisaRequestLetterIMM;
+    
+    @FXML
+    private Button bNewVisaResidenceGuaranteeLetter;
+    
+    @FXML
+    private Button bPrawat;
+    
+    @FXML
+    private Button bOrdinationGuaranteeLetter;
+    
+    @FXML
+    private Button bMonasteryMap;
+    
+    @FXML
+    private Button bTM30;
+    
+    @FXML
+    private Button bAckPenaltiesOverstay;
+    
+    @FXML
+    private Button bSTM2AckTermsAndConditions;
+    
+    @FXML
+    private RadioButton rbVisaExemption;
+    
+    @FXML
+    private RadioButton rbTourist;
+    
+    @FXML
+    private ToggleGroup tgVisaType;
+    
+    @FXML
+    private TitledPane tpTouristDocs;
+    
+    @FXML
+    private TitledPane tpVisaExemptionDocs;
+    
+    @FXML
+    private VBox vbSpecificDocs;
+    
     @Override
     public void init()
     {
         super.init();
+        
+        initButtonIcons();
+        
+        //refresh the GUI for visa type selection
+        actionSelectVisaType(null);
+        
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
@@ -198,6 +270,44 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
             }
         });
         
+    }
+    
+    private void initButtonIcons()
+    {
+        bTM86.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bVisaChangeRequestLetterSNP.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        
+        bTM87.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bNewVisaRequestLetterSNP.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        
+        bPrawat.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bOrdinationGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bMonasteryMap.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bTM30.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bAckPenaltiesOverstay.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bSTM2AckTermsAndConditions.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+    }
+    
+    @FXML
+    void actionSelectVisaType(ActionEvent ae)
+    {
+        //remove all child panes
+        vbSpecificDocs.getChildren().clear();
+        
+        //and add the selected one
+        if (rbTourist.isSelected())
+        {
+            
+            vbSpecificDocs.getChildren().add(tpTouristDocs);
+        }
+        else
+        {
+            vbSpecificDocs.getChildren().add(tpVisaExemptionDocs);
+        }
     }
 
     private void clearFieldsVisaLetters(boolean partialClear)
@@ -338,6 +448,78 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
         monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
+    
+    @FXML
+    void actionPreviewFormTM87NewVisa(ActionEvent ae)
+    {
+        MonasticProfile p;
+        String monasteryNickname;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
+        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+    }
+    
+    @FXML
+    void actionPreviewVisaChangeLetterSNP(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewVisaChangeLetterImm(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterTouristVisa(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewNewVisaLetterSNP(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewNewVisaLetterImm(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterVisaExemption(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionPreviewPrawat(ActionEvent ae)
+    {
+        PrawatVisaChangeFiller pVCFiller;
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        pVCFiller = new PrawatVisaChangeFiller(ctrGUIMain.getCtrMain(), p);
+        pVCFiller.saveAndOpenPDF();
+    }
+    
+    @FXML
+    void actionOrdinationGuaranteeLetter(ActionEvent ae)
+    {
+        
+    }
+    
+    @FXML
+    void actionMonasteryMap(ActionEvent ae)
+    {
+        
+    }
+    
 
     @FXML
     void listenerCBLetter(ActionEvent ae)
