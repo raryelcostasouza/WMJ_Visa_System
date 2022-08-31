@@ -124,8 +124,8 @@ public class CtrPDF
         System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
         this.ctrMain = pCtrMain;
     }
-
-    private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p) throws IOException
+    
+    private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p, int nDaysDesiredVisaExpiryDate, boolean fillExtensionsDetails) throws IOException
     {
         ArrayList<PDTextField> alThaiFields = new ArrayList<>();
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat, mResidence;
@@ -261,7 +261,7 @@ public class CtrPDF
 
         if (ldVisaExpiry != null)
         {
-            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
+            ldVisaExpiryDateDesired = ldVisaExpiry.plusDays(nDaysDesiredVisaExpiryDate);
             acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
         }
 
@@ -323,41 +323,44 @@ public class CtrPDF
         }
         
         
-        if (p.getVisaExtensionSet() != null)
+        if (p.getVisaExtensionSet() != null && fillExtensionsDetails)
         {
-            String countString, periodString;
-            LocalDate ldExtensionExpiry;
-            int count = 1;
-            
-            //sorts the list of extensions according to expiry date
-            List<VisaExtension> listExt = p.getVisaExtensionSet().stream().collect(Collectors.toList());
-            listExt.sort(new Comparator<VisaExtension>()
+            fillPrawatExtensionsDetails(acroForm, p);
+        }
+    }
+    
+    private void fillPrawatExtensionsDetails(PDAcroForm acroForm, MonasticProfile p) throws IOException
+    {
+        String countString, periodString;
+        LocalDate ldExtensionExpiry;
+        int count = 1;
+
+        //sorts the list of extensions according to expiry date
+        List<VisaExtension> listExt = p.getVisaExtensionSet().stream().collect(Collectors.toList());
+        listExt.sort((VisaExtension o1, VisaExtension o2) -> o1.getExpiryDate().compareTo(o2.getExpiryDate()) //order by expiry date
+        );
+
+        //print all the extensions periods in order of expiry date
+        for (VisaExtension vext : listExt)
+        {   
+            if (count < 10)
             {
-                //order by expiry date
-                @Override
-                public int compare(VisaExtension o1, VisaExtension o2)
-                {
-                    return o1.getExpiryDate().compareTo(o2.getExpiryDate());
-                }
-            });
-            
-            //print all the extensions periods in order of expiry date
-            for (VisaExtension vext : listExt)
-            {   
-                if (count < 10)
-                {
-                    countString = "0"+count;
-                }
-                else
-                {
-                    countString = ""+count;
-                }
-                
-                ldExtensionExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
-                periodString = Util.toStringThaiDateFormatMonthText(ldExtensionExpiry.minusYears(1)) + " - " + Util.toStringThaiDateFormatMonthText(ldExtensionExpiry);
-                acroForm.getField("visaExtension"+countString+"Thai").setValue(periodString);
-                count++;
+                countString = "0"+count;
             }
+            else if (count == 10)
+            {
+                countString = ""+count;
+            }
+            //because of the 10 extensions fields on the pdf just fill the details up to the 10th
+            else
+            {
+                break;
+            }
+
+            ldExtensionExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
+            periodString = Util.toStringThaiDateFormatMonthText(ldExtensionExpiry.minusYears(1)) + " - " + Util.toStringThaiDateFormatMonthText(ldExtensionExpiry);
+            acroForm.getField("visaExtension"+countString+"Thai").setValue(periodString);
+            count++;
         }
     }
 
