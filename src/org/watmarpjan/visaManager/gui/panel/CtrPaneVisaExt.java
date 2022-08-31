@@ -41,7 +41,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasticProfile
+public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFormMonasticProfile
 {
 
     @FXML
@@ -380,41 +380,6 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM7ReqExtension(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
     }
 
-    @FXML
-    void actionPreviewTM30NotifResidence(ActionEvent ae)
-    {
-        MonasticProfile p;
-        PrintoutTm30 objTM30;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objTM30 = p.getPrintoutTm30();
-
-        if (objTM30 != null)
-        {
-            CtrFileOperation.openFileOnDefaultProgram(AppFiles.getPrintoutTM30(objTM30));
-        }
-        else
-        {
-            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
-        }
-    }
-
-    @FXML
-    void actionPreviewAckOverstayPenalties(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-    }
-
-    @FXML
-    void actionPreviewSTM2AckConditions(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-    }
-    
     @FXML
     void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
     {
