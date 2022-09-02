@@ -6,6 +6,7 @@
 package org.watmarpjan.visaManager.util;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -29,7 +30,9 @@ public class Util
     public final static DateTimeFormatter CHANGELOG_DATE_TIME_FORMAT_ = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public final static DateTimeFormatter TIMESTAMP_FILE_NAME = DateTimeFormatter.ofPattern("yyyy-MM-dd-kk'h'mm'm'ss's'");
-
+    private final static Locale THAI_LOCALE = new Locale("th", "TH", "TH");
+    private final static NumberFormat numberFormatterThai = NumberFormat.getNumberInstance(THAI_LOCALE);
+    
     public static String getLastElement(List<String> list)
     {
         int indexLastElement;
@@ -125,7 +128,7 @@ public class Util
         
         if (ld != null)
         {
-            monthNameThai = ld.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
+            monthNameThai = convertMonthToThaiLang(ld);
             return ld.getDayOfMonth() + " " + monthNameThai + " " + Util.convertYearToThai(ld.getYear());
         }
         else
@@ -147,6 +150,24 @@ public class Util
         {
             return null;
         }
+    }
+    
+    public static String convertDayToThaiDigits(LocalDate ld)
+    {
+        return numberFormatterThai.format(ld.getDayOfMonth());
+    }
+    
+    public static String convertMonthToThaiLang(LocalDate ld)
+    {
+        return ld.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
+    }
+    
+    public static String convertYearToThaiDigits(LocalDate ld)
+    {
+        //removes the thousands separator char
+        numberFormatterThai.setGroupingUsed(false);
+        
+        return numberFormatterThai.format(convertYearToThai(ld.getYear()));
     }
 
     public static Date convertLocalDateToDate(LocalDate ld)
