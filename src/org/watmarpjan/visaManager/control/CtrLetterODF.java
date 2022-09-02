@@ -244,7 +244,6 @@ public class CtrLetterODF
                 generateLetterGuaranteeSNP(objTD, p);
                 break;
             case AppFileNames.ODT_LETTER_EXT_SNP:
-                System.out.println("here");
                 generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
                 break;
             case AppFileNames.ODT_LETTER_EXT_IMM:
