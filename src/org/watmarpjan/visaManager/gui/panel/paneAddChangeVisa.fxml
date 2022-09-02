@@ -151,7 +151,7 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -191,13 +191,13 @@
                                                    </GridPane.margin>
                                                 </Label>
                                                 <Button fx:id="bNewVisaRequestLetterSNP" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button fx:id="bNewVisaRequestLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bNewVisaRequestLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Residence Guarantee Letter - Immigration:" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="305.0" layoutY="66.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="305.0" layoutY="66.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                        </children>
