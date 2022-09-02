@@ -27,10 +27,12 @@ import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrLetter;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.OrdinationGuaranteeLetterFiller;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
@@ -511,13 +513,22 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     @FXML
     void actionOrdinationGuaranteeLetter(ActionEvent ae)
     {
+        OrdinationGuaranteeLetterFiller oLF;
         
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        oLF = new OrdinationGuaranteeLetterFiller(p);
+        oLF.saveAndOpenODT(p);
     }
     
     @FXML
     void actionMonasteryMap(ActionEvent ae)
     {
+        MonasticProfile p;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrPDF().getMonasteryMap(p); 
     }
     
 
