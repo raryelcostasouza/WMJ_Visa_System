@@ -32,7 +32,12 @@ import org.watmarpjan.visaManager.control.CtrLetter;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterIMMFiller;
+import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterSNPFiller;
 import org.watmarpjan.visaManager.control.letterFiller.OrdinationGuaranteeLetterFiller;
+import org.watmarpjan.visaManager.control.letterFiller.VisaChangeOrNewReqLetterFiller;
+import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterIMMFiller;
+import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterSNPFiller;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
@@ -465,13 +470,23 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     @FXML
     void actionPreviewVisaChangeLetterSNP(ActionEvent ae)
     {
+        MonasticProfile p;
+        VisaChangeReqLetterSNPFiller vcf;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        vcf = new VisaChangeReqLetterSNPFiller(p);
+        vcf.saveAndOpenODT(p);
     }
     
     @FXML
     void actionPreviewVisaChangeLetterImm(ActionEvent ae)
     {
+        MonasticProfile p;
+        VisaChangeReqLetterIMMFiller vcf;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        vcf = new VisaChangeReqLetterIMMFiller(p);
+        vcf.saveAndOpenODT(p);
     }
     
     @FXML
@@ -483,13 +498,23 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     @FXML
     void actionPreviewNewVisaLetterSNP(ActionEvent ae)
     {
+        MonasticProfile p;
+        NewVisaReqLetterSNPFiller nvf;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        nvf = new NewVisaReqLetterSNPFiller(p);
+        nvf.saveAndOpenODT(p);
     }
     
     @FXML
     void actionPreviewNewVisaLetterImm(ActionEvent ae)
     {
+        MonasticProfile p;
+        NewVisaReqLetterIMMFiller nvf;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        nvf = new NewVisaReqLetterIMMFiller(p);
+        nvf.saveAndOpenODT(p);
     }
     
     @FXML
