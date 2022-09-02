@@ -21,7 +21,7 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
 
     public OrdinationGuaranteeLetterFiller(MonasticProfile p)
     {
-        super(AppFiles.getODTOrdinationGuaranteeLetter(p.getMonasteryResidingAt()));
+        super(AppFiles.getODTOrdinationGuaranteeLetter(p.getMonasteryResidingAt()), p);
         fillLetter(p);
     }
     

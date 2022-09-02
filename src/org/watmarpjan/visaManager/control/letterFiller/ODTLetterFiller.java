@@ -26,12 +26,13 @@ public abstract class ODTLetterFiller
     protected TextDocument objTD;
     protected File fTemplate;
     
-    public ODTLetterFiller(File fTemplate)
+    public ODTLetterFiller(File fTemplate, MonasticProfile p)
     {
         try
         {
             this.fTemplate = fTemplate;
             this.objTD = TextDocument.loadDocument(this.fTemplate);
+            fillLetter(p);
         }
         catch (InvalidNavigationException ex)
         {
@@ -43,7 +44,7 @@ public abstract class ODTLetterFiller
         }
     }
     
-    public abstract void fillLetter(MonasticProfile p);
+    public abstract void fillLetter(MonasticProfile p) throws InvalidNavigationException;
     
     public void saveAndOpenODT(MonasticProfile p)
     {
