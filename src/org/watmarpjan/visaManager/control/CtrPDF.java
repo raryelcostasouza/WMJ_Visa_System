@@ -1500,5 +1500,16 @@ public class CtrPDF
         // including a translation of pageWidth to use the lower left corner as 0,0 reference
         contentStream.transform(new Matrix(0, 1, -1, 0, width, 0));
     }
+    
+    public void getMonasteryMap(MonasticProfile p)
+    {
+        File fMonasteryMap;
+        String monasteryNickname;
+        
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
+        
+        fMonasteryMap = AppFiles.getMonasteryMap(monasteryNickname);
+        CtrFileOperation.openFileOnDefaultProgram(fMonasteryMap);
+    }
 
 }
