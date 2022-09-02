@@ -147,6 +147,16 @@ public class ProfileUtil
     {
         LocalDate ldOrdDate;
         ThaiBuddhistDate tbd;
+        ldOrdDate = getOrdinationDate(p);
+
+        tbd = ThaiBuddhistDate.from(ldOrdDate);
+        return tbd.format(Util.DEFAULT_DATE_FORMAT);
+    }
+    
+    public static LocalDate getOrdinationDate(MonasticProfile p)
+    {
+        LocalDate ldOrdDate;
+        
         if (p.getBhikkhuOrdDate() != null)
         {
             ldOrdDate = Util.convertDateToLocalDate(p.getBhikkhuOrdDate());
@@ -159,9 +169,8 @@ public class ProfileUtil
         {
             ldOrdDate = null;
         }
-
-        tbd = ThaiBuddhistDate.from(ldOrdDate);
-        return tbd.format(Util.DEFAULT_DATE_FORMAT);
+        
+        return ldOrdDate;
     }
 
     public static String getStrAge(Date birthDate)
