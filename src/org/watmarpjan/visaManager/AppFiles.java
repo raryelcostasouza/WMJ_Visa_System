@@ -175,6 +175,11 @@ public class AppFiles
         return pSubFolder.resolve(strFileName).toFile();
     }
 
+    public static File getMonasteryMap(String monasteryNickname)
+    {
+        return AppPaths.getPathToMonasteryMap(monasteryNickname).toFile();
+    }
+
     public static File getFormPrawat(String monasteryNickname)
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("Prawat.pdf").toFile();
