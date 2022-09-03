@@ -110,7 +110,7 @@
                   </TitledPane>
                   <TitledPane collapsible="false" prefHeight="200.0" prefWidth="200.0" text="Specific Documents:">
                      <content>
-                        <VBox fx:id="vbSpecificDocs" prefHeight="200.0" prefWidth="100.0">
+                        <VBox fx:id="vbSpecificDocs">
                            <children>
                               <TitledPane fx:id="tpTouristDocs" collapsible="false" text="Tourist Visa to Non-Immigrant (Visa Change)">
                                  <content>
@@ -162,6 +162,18 @@
                                  <content>
                                     <VBox>
                                        <children>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <RadioButton fx:id="rbpoh15" mnemonicParsing="false" text="ผ.15">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="tgVisaExemptionType" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="rbpoh30" mnemonicParsing="false" selected="true" text="ผ.30" toggleGroup="$tgVisaExemptionType" />
+                                                <RadioButton fx:id="rbpohpoh30" mnemonicParsing="false" text="ผผ.30" toggleGroup="$tgVisaExemptionType" />
+                                                <RadioButton fx:id="rbpohpoh90" mnemonicParsing="false" text="ผผ.90" toggleGroup="$tgVisaExemptionType" />
+                                             </children>
+                                          </HBox>
                                           <GridPane gridLinesVisible="true">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" />
