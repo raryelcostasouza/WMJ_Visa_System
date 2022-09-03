@@ -169,6 +169,11 @@ public class Util
         
         return numberFormatterThai.format(convertYearToThai(ld.getYear()));
     }
+    
+    public static String convertNumberToThaiDigits(long i)
+    {
+        return numberFormatterThai.format(i);
+    }
 
     public static Date convertLocalDateToDate(LocalDate ld)
     {
