@@ -6,7 +6,6 @@ package org.watmarpjan.visaManager.control.letterFiller;
 
 import java.io.File;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
-import static org.watmarpjan.visaManager.control.CtrLetterODF.searchNReplace;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.MonasteryUtil;
