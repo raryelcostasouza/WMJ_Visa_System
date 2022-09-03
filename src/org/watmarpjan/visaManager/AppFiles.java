@@ -305,6 +305,27 @@ public class AppFiles
                 .resolve("NewVisaThailandReqLetterSNP.odt")
                 .toFile();
     }  
+    
+    public static File getODTResidenceGuaranteeLetterIMMNewVisa(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterIMM-NewVisaThailand.odt")
+                .toFile();
+    }
+    
+     public static File getODTResidenceGuaranteeLetterIMMVisaChange(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterIMM-VisaChange.odt")
+                .toFile();
+    }
+     
+     public static File getODTResidenceGuaranteeLetterSNP(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP.odt")
+                .toFile();
+     }
 
     public static File getThaiFont()
     {
