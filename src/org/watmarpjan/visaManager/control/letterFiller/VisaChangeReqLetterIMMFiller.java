@@ -16,28 +16,11 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author raryel
  */
-public class VisaChangeReqLetterIMMFiller extends VisaChangeOrNewReqLetterFiller
+public class VisaChangeReqLetterIMMFiller extends VisaChangeReqLetterFiller
 {
 
     public VisaChangeReqLetterIMMFiller(MonasticProfile p)
     {
         super(AppFiles.getODTVisaChangeReqLetterIMM(p.getMonasteryResidingAt()), p);
-    }
-    
-    @Override
-    public void fillLetter(MonasticProfile p) throws InvalidNavigationException
-    {
-        super.fillLetter(p);
-        String strMOrdainedAt;
-        LocalDate ldOrdDate;
-        
-        strMOrdainedAt = MonasteryUtil.getStringWatAddrFull(p.getMonasteryOrdainedAt(), true, true);
-        searchNReplace(objTD, "«WatOrdainedAtThai_addrTambon_addrAmpher_addrJangwat_addrCountry»", strMOrdainedAt);
-        
-        ldOrdDate = ProfileUtil.getOrdinationDate(p);
-        searchNReplace(objTD, "«ordinationDateDayThai»", ldOrdDate.getDayOfMonth() + "");
-        searchNReplace(objTD, "«ordinationDateMonthThai»", Util.convertMonthToThaiLang(ldOrdDate));
-        searchNReplace(objTD, "«ordinationDateYearThai»", Util.convertYearToThai(ldOrdDate.getYear()) + "");
-    }
-    
+    }    
 }
