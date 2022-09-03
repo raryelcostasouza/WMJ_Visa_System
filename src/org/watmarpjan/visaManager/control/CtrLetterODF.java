@@ -240,9 +240,6 @@ public class CtrLetterODF
         TextDocument objTD = TextDocument.loadDocument(fTemplate);
         switch(fTemplate.getName())
         {
-            case AppFileNames.ODT_LETTER_GUARANTEE_SNP:
-                generateLetterGuaranteeSNP(objTD, p);
-                break;
             case AppFileNames.ODT_LETTER_EXT_SNP:
                 generateLetterReqExt(objTD, p, objCtrVisa, fTemplate.getName());
                 break;
@@ -252,21 +249,6 @@ public class CtrLetterODF
         }
         
         return objTD;
-    }
-    
-    public static void generateLetterGuaranteeSNP(TextDocument objTD, MonasticProfile p) throws InvalidNavigationException
-    {
-        Monastery mResidence;
-        String monasteryAddr;
-        
-        generateLetterCommonMonasticFields(objTD, p);
-        
-        mResidence = p.getMonasteryResidingAt();
-        monasteryAddr = MonasteryUtil.getStringWatAddrFull(mResidence, false, true);
-        //need to use thai numbers
-        searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
-        searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAge(p.getBirthDate()));
-        searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
     }
     
     public static void generateLetterReqExt(TextDocument objTD, MonasticProfile p, CtrVisa objCtrVisa, String filenameTemplateODT) throws InvalidNavigationException
