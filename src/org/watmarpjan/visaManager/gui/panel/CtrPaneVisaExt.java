@@ -34,6 +34,8 @@ import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaExtFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterSNP;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
@@ -375,12 +377,12 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
     @FXML
     void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
     {
-        File fLetter;
         MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ResidenceGuaranteeLetterSNP objLetterFiller;
         
-        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), AppFileNames.ODT_LETTER_GUARANTEE_SNP);
-        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        objLetterFiller = new ResidenceGuaranteeLetterSNP(p);
+        objLetterFiller.saveAndOpenODT(p);
     }
 
 //    @FXML
