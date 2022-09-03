@@ -358,6 +358,7 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaType"));
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
