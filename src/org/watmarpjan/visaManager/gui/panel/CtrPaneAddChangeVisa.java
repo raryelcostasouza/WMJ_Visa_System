@@ -179,6 +179,22 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     
     @FXML
     private VBox vbSpecificDocs;
+   
+    @FXML
+    private ToggleGroup tgVisaExemptionType;
+    
+    @FXML
+    private RadioButton rbpoh15;
+    
+    @FXML
+    private RadioButton rbpoh30;
+    
+    @FXML
+    private RadioButton rbpohpoh30;
+    
+    @FXML
+    private RadioButton rbpohpoh90;
+    
     
     @Override
     public void init()
@@ -310,11 +326,11 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         //and add the selected one
         if (rbTourist.isSelected())
         {
-            
             vbSpecificDocs.getChildren().add(tpTouristDocs);
         }
         else
         {
+            rbpoh30.setSelected(true);
             vbSpecificDocs.getChildren().add(tpVisaExemptionDocs);
         }
     }
@@ -446,6 +462,14 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
                 && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null));
     }
+    
+    private String getSelectedVisaExemptionType()
+    {
+        RadioButton rbSelected;
+        
+        rbSelected = (RadioButton)tgVisaExemptionType.getSelectedToggle();
+        return rbSelected.getText();
+    }
 
     @FXML
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
@@ -462,11 +486,22 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     void actionPreviewFormTM87NewVisa(ActionEvent ae)
     {
         MonasticProfile p;
-        String monasteryNickname;
+        String monasteryNickname, visaExemptionType, visaTypeOriginal;
+        
+        
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        //temporarily sets the visa type as the exemption type
+        visaTypeOriginal = p.getVisaType();
+        visaExemptionType = getSelectedVisaExemptionType();
+        p.setVisaType(visaExemptionType);
+        
         monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
         ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        //resets back
+        p.setVisaType(visaTypeOriginal);
     }
     
     @FXML
@@ -507,10 +542,18 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         MonasticProfile p;
         NewVisaReqLetterSNPFiller nvf;
+        String visaExemptionType, visaTypeOriginal;
         
+        visaExemptionType = getSelectedVisaExemptionType();
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
         nvf = new NewVisaReqLetterSNPFiller(p);
         nvf.saveAndOpenODT(p);
+        //and change it back
+        p.setVisaType(visaTypeOriginal);
     }
     
     @FXML
@@ -518,10 +561,22 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         MonasticProfile p;
         NewVisaReqLetterIMMFiller nvf;
+        String visaExemptionType, visaTypeOriginal;
         
+         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+       
         nvf = new NewVisaReqLetterIMMFiller(p);
         nvf.saveAndOpenODT(p);
+        
+        //and change it back
+        p.setVisaType(visaTypeOriginal);
     }
     
     @FXML
@@ -529,10 +584,21 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         MonasticProfile p;
         ResidenceGuaranteeLetterIMMNewVisaFiller objLetterFiller;
+        String visaTypeOriginal, visaExemptionType;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+         
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+        
         objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p);
         objLetterFiller.saveAndOpenODT(p);
+        
+        p.setVisaType(visaTypeOriginal);
     }
     
     @FXML
@@ -540,11 +606,21 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         PrawatVisaChangeFiller pVCFiller;
         MonasticProfile p;
+        String visaExemptionType, visaTypeOriginal;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+        
         pVCFiller = new PrawatVisaChangeFiller(ctrGUIMain.getCtrMain(), p);
         pVCFiller.saveAndOpenPDF();
+        
+        //resets
+        p.setVisaType(visaTypeOriginal);
     }
     
     @FXML
