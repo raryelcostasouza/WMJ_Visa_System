@@ -138,6 +138,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension08Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension09Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension10Thai"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaType"));
         
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
