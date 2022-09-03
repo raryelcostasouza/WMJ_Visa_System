@@ -18,7 +18,7 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
 {
-
+   
     public VisaChangeOrNewReqLetterFiller(File fLetter, MonasticProfile p)
     {
         super(fLetter, p);
@@ -30,13 +30,15 @@ public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
     {
         String strLastEntry, monasteryAddr;
         LocalDate ldVisaExpiry;
-        
-        
+        String strMOrdainedAt;
+        LocalDate ldOrdDate;
+                
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
         searchNReplace(objTD, "«fullName»", ProfileUtil.getFullName(p));
         searchNReplace(objTD, "«nationality»", p.getNationality());
         searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
         searchNReplace(objTD, "«visaType»", p.getVisaType());
+        
 
         searchNReplace(objTD, "«titleTH»", ProfileUtil.getTitleTH(p));
         searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
@@ -47,8 +49,16 @@ public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
         monasteryAddr = MonasteryUtil.getStringWatAddrFull(p.getMonasteryResidingAt(), false, true);
         searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
 
-        ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        ldVisaExpiry =  ProfileUtil.getVisaExpiryDate(p);
         searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormat(ldVisaExpiry));
+        
+        ldOrdDate = ProfileUtil.getOrdinationDate(p);
+        searchNReplace(objTD, "«ordinationDateDayThai»", ldOrdDate.getDayOfMonth() + "");
+        searchNReplace(objTD, "«ordinationDateMonthThai»", Util.convertMonthToThaiLang(ldOrdDate));
+        searchNReplace(objTD, "«ordinationDateYearThai»", Util.convertYearToThai(ldOrdDate.getYear()) + "");
+        
+        strMOrdainedAt = MonasteryUtil.getStringWatAddrFull(p.getMonasteryOrdainedAt(), true, true);
+        searchNReplace(objTD, "«WatOrdainedAtThai_addrTambon_addrAmpher_addrJangwat_addrCountry»", strMOrdainedAt);
     }
     
 }
