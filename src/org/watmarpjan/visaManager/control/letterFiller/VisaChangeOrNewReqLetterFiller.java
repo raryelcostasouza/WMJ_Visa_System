@@ -7,8 +7,6 @@ package org.watmarpjan.visaManager.control.letterFiller;
 import java.io.File;
 import java.time.LocalDate;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
-import static org.watmarpjan.visaManager.control.CtrLetterODF.searchNReplace;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.MonasteryUtil;
 import org.watmarpjan.visaManager.util.ProfileUtil;
@@ -47,7 +45,7 @@ public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
         searchNReplace(objTD, "«arrivalLastEntryDateThai»", strLastEntry);
 
         monasteryAddr = MonasteryUtil.getStringWatAddrFull(p.getMonasteryResidingAt(), false, true);
-        searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", ProfileUtil.getOrdinationType(p));
+        searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
 
         ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
         searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormat(ldVisaExpiry));
