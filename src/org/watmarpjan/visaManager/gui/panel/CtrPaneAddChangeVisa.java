@@ -35,6 +35,8 @@ import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
 import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterIMMFiller;
 import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterSNPFiller;
 import org.watmarpjan.visaManager.control.letterFiller.OrdinationGuaranteeLetterFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMNewVisaFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMVisaChangeFiller;
 import org.watmarpjan.visaManager.control.letterFiller.VisaChangeOrNewReqLetterFiller;
 import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterIMMFiller;
 import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterSNPFiller;
@@ -492,7 +494,12 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     @FXML
     void actionPreviewResidenceGuaranteeLetterTouristVisa(ActionEvent ae)
     {
+        MonasticProfile p;
+        ResidenceGuaranteeLetterIMMVisaChangeFiller objLetterFiller;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        objLetterFiller = new ResidenceGuaranteeLetterIMMVisaChangeFiller(p);
+        objLetterFiller.saveAndOpenODT(p);
     }
     
     @FXML
@@ -520,7 +527,12 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     @FXML
     void actionPreviewResidenceGuaranteeLetterVisaExemption(ActionEvent ae)
     {
+        MonasticProfile p;
+        ResidenceGuaranteeLetterIMMNewVisaFiller objLetterFiller;
         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p);
+        objLetterFiller.saveAndOpenODT(p);
     }
     
     @FXML
