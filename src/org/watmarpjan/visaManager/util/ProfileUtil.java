@@ -175,6 +175,11 @@ public class ProfileUtil
 
     public static String getStrAge(Date birthDate)
     {
+       return getAge(birthDate) + "";
+    }
+    
+    private static int getAge(Date birthDate)
+    {
         LocalDate ldBirth, ldToday;
         Period age;
 
@@ -183,12 +188,18 @@ public class ProfileUtil
             ldToday = LocalDate.now();
             ldBirth = Util.convertDateToLocalDate(birthDate);
             age = Period.between(ldBirth, ldToday);
-            return age.getYears() + "";
+            return age.getYears();
         }
         else
         {
-            return "";
+            return 0;
         }
-
+    }
+    
+    public static String getStrAgeThai(Date birthDate)
+    {
+        int age;
+        age = getAge(birthDate);
+        return Util.convertNumberToThaiDigits(age);
     }
 }
