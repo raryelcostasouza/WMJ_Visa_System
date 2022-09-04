@@ -22,50 +22,43 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
     public OrdinationGuaranteeLetterFiller(MonasticProfile p)
     {
         super(AppFiles.getODTOrdinationGuaranteeLetter(p.getMonasteryResidingAt()), p);
-        fillLetter(p);
     }
     
     @Override
-    public void fillLetter(MonasticProfile p)
+    public void fillLetter(MonasticProfile p) throws InvalidNavigationException
     {
-        try
-        {
-            LocalDate ldOrdDate, ldBirthDate;
-            
-            //need to use thai numbers
-            searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
-            searchNReplace(objTD, "«name»", p.getMonasticName());
-            searchNReplace(objTD, "«middleName»", p.getMiddleName());
-            searchNReplace(objTD, "«paliNameThai»", p.getPaliNameThai());
-            searchNReplace(objTD, "«lastName»", p.getLastName());
-            
-            ldBirthDate = Util.convertDateToLocalDate(p.getBirthDate());
-            searchNReplace(objTD, "«birthDateDayThaiDigits»", Util.convertDayToThaiDigits(ldBirthDate));
-            searchNReplace(objTD, "«birthDateMonthThai»",Util.convertMonthToThaiLang(ldBirthDate));
-            searchNReplace(objTD, "«birthDateYearThaiDigits»",Util.convertYearToThaiDigits(ldBirthDate));
-            
-            searchNReplace(objTD, "«birthPlace»", p.getBirthPlace());
-            searchNReplace(objTD, "«birthCountry»", p.getBirthCountry());
-            
-            searchNReplace(objTD, "«nameFather»", p.getFatherName());
-            searchNReplace(objTD, "«nameMother»", p.getMotherName());
-            
-            searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
-            ldOrdDate = ProfileUtil.getOrdinationDate(p);
-            searchNReplace(objTD, "«ordinationDateDayThaiDigits»", Util.convertDayToThaiDigits(ldOrdDate));
-            searchNReplace(objTD, "«ordinationDateMonthThai»", Util.convertMonthToThaiLang(ldOrdDate));
-            searchNReplace(objTD, "«ordinationDateYearThaiDigits»", Util.convertYearToThaiDigits(ldOrdDate));
-            
-            searchNReplace(objTD, "«WatOrdainedAtThai»", p.getMonasteryOrdainedAt().getMonasteryName());
-            searchNReplace(objTD, "«WatResidingAtThai»", p.getMonasteryResidingAt().getMonasteryName());
-            searchNReplace(objTD, "«WatResidingAtThaiaddrTambon»", p.getMonasteryResidingAt().getAddrTambon());
-            searchNReplace(objTD, "«WatResidingAtThaiaddrAmpher»", p.getMonasteryResidingAt().getAddrAmpher());
-            searchNReplace(objTD, "«WatResidingAtThaiaddrJangwat»", p.getMonasteryResidingAt().getAddrJangwat());
-        }
-        catch (InvalidNavigationException ex)
-        {
-            CtrAlertDialog.exceptionDialog(ex, "Error while search/replacing fields on letter template.");
-        }
+        LocalDate ldOrdDate, ldBirthDate;
+
+        //need to use thai numbers
+        searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
+        searchNReplace(objTD, "«name»", p.getMonasticName());
+        searchNReplace(objTD, "«middleName»", p.getMiddleName());
+        searchNReplace(objTD, "«paliNameThai»", p.getPaliNameThai());
+        searchNReplace(objTD, "«lastName»", p.getLastName());
+
+        ldBirthDate = Util.convertDateToLocalDate(p.getBirthDate());
+        searchNReplace(objTD, "«birthDateDayThaiDigits»", Util.convertDayToThaiDigits(ldBirthDate));
+        searchNReplace(objTD, "«birthDateMonthThai»",Util.convertMonthToThaiLang(ldBirthDate));
+        searchNReplace(objTD, "«birthDateYearThaiDigits»",Util.convertYearToThaiDigits(ldBirthDate));
+
+        searchNReplace(objTD, "«birthPlace»", p.getBirthPlace());
+        searchNReplace(objTD, "«birthCountry»", p.getBirthCountry());
+
+        searchNReplace(objTD, "«nameFather»", p.getFatherName());
+        searchNReplace(objTD, "«nameMother»", p.getMotherName());
+
+        searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
+        ldOrdDate = ProfileUtil.getOrdinationDate(p);
+        searchNReplace(objTD, "«ordinationDateDayThaiDigits»", Util.convertDayToThaiDigits(ldOrdDate));
+        searchNReplace(objTD, "«ordinationDateMonthThai»", Util.convertMonthToThaiLang(ldOrdDate));
+        searchNReplace(objTD, "«ordinationDateYearThaiDigits»", Util.convertYearToThaiDigits(ldOrdDate));
+
+        searchNReplace(objTD, "«WatOrdainedAtThai»", p.getMonasteryOrdainedAt().getMonasteryName());
+        searchNReplace(objTD, "«WatResidingAtThai»", p.getMonasteryResidingAt().getMonasteryName());
+        searchNReplace(objTD, "«WatResidingAtThaiaddrTambon»", p.getMonasteryResidingAt().getAddrTambon());
+        searchNReplace(objTD, "«WatResidingAtThaiaddrAmpher»", p.getMonasteryResidingAt().getAddrAmpher());
+        searchNReplace(objTD, "«WatResidingAtThaiaddrJangwat»", p.getMonasteryResidingAt().getAddrJangwat());
+
     }
     
 }
