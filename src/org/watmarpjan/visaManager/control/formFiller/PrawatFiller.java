@@ -206,18 +206,7 @@ public abstract class PrawatFiller extends PDFFormFiller
             acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(str_jangwat_country);
         }
 
-        //if the visa for this monastic has already been extended
-        //retrieves the expiry date of the most recent extension
-        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
-        {
-            dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
-            this.ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-        } //otherwise retrieves the expiry date of the original visa
-        else
-        {
-            this.ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-        }
-        
+        this.ldVisaExpiry = ProfileUtil.getVisaExpiryDate(p);
         acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
 
         
