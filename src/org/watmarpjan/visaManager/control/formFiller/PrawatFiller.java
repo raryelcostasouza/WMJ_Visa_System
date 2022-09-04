@@ -206,7 +206,7 @@ public abstract class PrawatFiller extends PDFFormFiller
             acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(str_jangwat_country);
         }
 
-        this.ldVisaExpiry = ProfileUtil.getVisaExpiryDate(p);
+        this.ldVisaExpiry = ProfileUtil.getVisaOrExtExpiryDate(p);
         acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
 
         

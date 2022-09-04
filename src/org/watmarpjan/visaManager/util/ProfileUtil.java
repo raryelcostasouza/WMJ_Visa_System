@@ -206,7 +206,7 @@ public class ProfileUtil
         return Util.convertNumberToThaiDigits(age);
     }
     
-    public static LocalDate getVisaExpiryDate(MonasticProfile p)
+    public static LocalDate getVisaOrExtExpiryDate(MonasticProfile p)
     {
         Date dVisaExpiry;
         LocalDate ldExtExpiry, ldLatestExt = null;

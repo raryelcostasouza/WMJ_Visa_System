@@ -49,7 +49,7 @@ public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
         monasteryAddr = MonasteryUtil.getStringWatAddrFull(p.getMonasteryResidingAt(), false, true);
         searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
 
-        ldVisaExpiry =  ProfileUtil.getVisaExpiryDate(p);
+        ldVisaExpiry =  ProfileUtil.getVisaOrExtExpiryDate(p);
         searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormat(ldVisaExpiry));
         
         ldOrdDate = ProfileUtil.getOrdinationDate(p);
