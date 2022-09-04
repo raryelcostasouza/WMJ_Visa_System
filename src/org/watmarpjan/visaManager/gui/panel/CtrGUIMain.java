@@ -83,7 +83,7 @@ public class CtrGUIMain
     @FXML
     private CtrPaneMonastery ctrPaneMonastery;
     @FXML
-    private VBox paneMonastery;
+    private ScrollPane paneMonastery;
 
     @FXML
     private CtrPaneUpajjhaya ctrPaneUpajjhaya;

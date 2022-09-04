@@ -19,7 +19,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile">
    <content>
       <VBox>
@@ -161,8 +160,8 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
                                                   <Label text="Occupation:" />
@@ -180,9 +179,9 @@
                                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                                         <children>
                                             <Label text="School:" />
-                                            <TextField fx:id="tfSchool" editable="false" />
+                                            <TextField fx:id="tfSchool" editable="false" prefHeight="28.0" prefWidth="248.0" />
                                             <Label text="Graduation Year:" />
-                                            <TextField fx:id="tfGraduationYear" editable="false" prefHeight="25.0" prefWidth="55.0" />
+                                            <TextField fx:id="tfGraduationYear" editable="false" prefHeight="28.0" prefWidth="76.0" />
                                             <Label text="Duration (years):" />
                                             <TextField fx:id="tfDuration" editable="false" prefHeight="25.0" prefWidth="55.0" />
                                         </children>
