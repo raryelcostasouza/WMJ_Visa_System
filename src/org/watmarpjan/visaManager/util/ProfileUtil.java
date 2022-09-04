@@ -8,8 +8,11 @@ package org.watmarpjan.visaManager.util;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.chrono.ThaiBuddhistDate;
+import java.util.Collections;
 import java.util.Date;
+import org.watmarpjan.visaManager.control.CtrMain;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
+import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
 /**
  *
@@ -196,10 +199,37 @@ public class ProfileUtil
         }
     }
     
-    public static String getStrAgeThai(Date birthDate)
+    public static String getStrAgeThai(MonasticProfile p)
     {
         int age;
-        age = getAge(birthDate);
+        age = getAge(p.getBirthDate());
         return Util.convertNumberToThaiDigits(age);
+    }
+    
+    public static LocalDate getVisaExpiryDate(MonasticProfile p)
+    {
+        Date dVisaExpiry;
+        LocalDate ldExtExpiry, ldLatestExt = null;
+        
+        //if the visa has been extended
+        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
+        {
+            //looks for the latest extension expiry date
+            for (VisaExtension vext : p.getVisaExtensionSet())
+            {
+                ldExtExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
+                if (ldLatestExt == null || ldExtExpiry.getYear() > ldLatestExt.getYear())
+                {
+                    ldLatestExt = ldExtExpiry; 
+                }
+            }
+        }
+        //otherwise get the original visa expiry date
+        else
+        {
+            ldLatestExt = Util.convertDateToLocalDate(p.getVisaExpiryDate());
+        }   
+        
+        return ldLatestExt;
     }
 }
