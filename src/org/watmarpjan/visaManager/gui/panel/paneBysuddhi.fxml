@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -17,238 +18,243 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
-   <children>
-      <HBox alignment="CENTER">
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneBysuddhi">
+   <content>
+      <VBox>
          <children>
-            <VBox>
+            <HBox alignment="CENTER">
                <children>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <VBox>
                      <children>
-                        <Label text="Issue Date:">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <DatePicker fx:id="dpIssueDate" disable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="104.0" GridPane.columnIndex="1" />
-                        <Label text="Pahkahw Ordination:" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <DatePicker fx:id="dpPahkahwOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Samanera Ordination:" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <DatePicker fx:id="dpSamaneraOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Bhikkhu Ordination:" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <DatePicker fx:id="dpBhikkhuOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Issue Date:">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <DatePicker fx:id="dpIssueDate" disable="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="104.0" GridPane.columnIndex="1" />
+                              <Label text="Pahkahw Ordination:" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <DatePicker fx:id="dpPahkahwOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Samanera Ordination:" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <DatePicker fx:id="dpSamaneraOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Bhikkhu Ordination:" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <DatePicker fx:id="dpBhikkhuOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
                      </children>
-                  </GridPane>
+                  </VBox>
+                  <Separator orientation="VERTICAL" />
+                  <VBox>
+                     <children>
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Pali Name:">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Pali Name (Thai):" GridPane.rowIndex="1" />
+                              <Label text="Ordained at:" GridPane.rowIndex="2" />
+                              <Label text="Upajjhaya:" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="tfPaliName" editable="false" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <TextField fx:id="tfPaliNameThai" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <ComboBox fx:id="cbOrdainedAt" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </ComboBox>
+                              <ComboBox fx:id="cbUpajjhaya" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <Separator orientation="VERTICAL" />
-            <VBox>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <GridPane>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Pali Name:">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Pali Name (Thai):" GridPane.rowIndex="1" />
-                        <Label text="Ordained at:" GridPane.rowIndex="2" />
-                        <Label text="Upajjhaya:" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <TextField fx:id="tfPaliName" editable="false" GridPane.columnIndex="1">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <TextField fx:id="tfPaliNameThai" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
-                           </GridPane.margin>
-                        </TextField>
-                        <ComboBox fx:id="cbOrdainedAt" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets right="10.0" />
-                           </GridPane.margin>
-                        </ComboBox>
-                        <ComboBox fx:id="cbUpajjhaya" disable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
+                  <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
+                  <CheckBox fx:id="cbIncludeCover" mnemonicParsing="false" text="Include cover" />
                </children>
-            </VBox>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <GridPane gridLinesVisible="true">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="762.0">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="bCover" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Cover" />
+                              <Button fx:id="bCoverArchive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScanCover" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScanCover" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" GridPane.rowIndex="1">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="b2" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 2" />
+                              <Button fx:id="b2Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan2" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScan2" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="b1" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 1" />
+                              <Button fx:id="b1Archive" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan1" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScan1" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" GridPane.rowIndex="2">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="b4" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 4" />
+                              <Button fx:id="b4Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan4" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScan4" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" />
+                              <Button fx:id="b3Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan3" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScan3" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="386.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="b5" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 5" />
+                              <Button fx:id="b5Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan5" text="Archive">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="ivScan5" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../icons/bysuddhi.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
          </children>
-      </HBox>
-      <Separator prefWidth="200.0" />
-      <HBox alignment="CENTER" spacing="10.0">
-         <children>
-            <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
-            <CheckBox fx:id="cbIncludeCover" mnemonicParsing="false" text="Include cover" />
-         </children>
-      </HBox>
-      <Separator prefWidth="200.0" />
-      <GridPane gridLinesVisible="true">
-         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="762.0">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="bCover" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Cover" />
-                        <Button fx:id="bCoverArchive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScanCover" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScanCover" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" GridPane.rowIndex="1">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="b2" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 2" />
-                        <Button fx:id="b2Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan2" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScan2" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" GridPane.columnIndex="1">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="b1" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 1" />
-                        <Button fx:id="b1Archive" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan1" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScan1" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" GridPane.rowIndex="2">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="b4" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 4" />
-                        <Button fx:id="b4Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan4" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScan4" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="b3" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 3" />
-                        <Button fx:id="b3Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan3" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScan3" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="386.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Button fx:id="b5" mnemonicParsing="false" onAction="#actionChooseBysuddhiScan" text="Page 5" />
-                        <Button fx:id="b5Archive" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionArchiveBysuddhiScan5" text="Archive">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <ImageView fx:id="ivScan5" fitHeight="350.0" fitWidth="350.0" onMouseClicked="#actionIMGBysuddhiScanClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../icons/bysuddhi.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-         </children>
-      </GridPane>
-   </children>
-</VBox>
+      </VBox>
+   </content>
+</ScrollPane>

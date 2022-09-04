@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
@@ -82,9 +81,9 @@
                     </right>
                 </BorderPane>
             </top>
-            <center>
-                <ScrollPane fx:id="modulePane" BorderPane.alignment="TOP_LEFT" />
-            </center>
+         <center>
+            <BorderPane fx:id="modulePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
         </BorderPane>
     </children>
 </HBox>
