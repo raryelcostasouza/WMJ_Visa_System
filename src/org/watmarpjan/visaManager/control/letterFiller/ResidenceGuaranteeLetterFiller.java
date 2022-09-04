@@ -33,7 +33,7 @@ public class ResidenceGuaranteeLetterFiller extends ODTLetterFiller
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
         searchNReplace(objTD, "«fullName»", ProfileUtil.getFullName(p));
         searchNReplace(objTD, "«nationality»", p.getNationality());
-        searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAgeThai(p.getBirthDate()));
+        searchNReplace(objTD, "«ageThai»", ProfileUtil.getStrAgeThai(p));
         searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
         searchNReplace(objTD, "«visaType»", p.getVisaType());
         
