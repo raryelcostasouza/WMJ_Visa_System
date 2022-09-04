@@ -32,7 +32,12 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
         //need to use thai numbers
         searchNReplace(objTD, "«titleTH2»", ProfileUtil.getTitleTH2(p));
         searchNReplace(objTD, "«name»", p.getMonasticName());
-        searchNReplace(objTD, "«middleName»", p.getMiddleName());
+        
+        if (p.getMiddleName() != null)
+        {
+            searchNReplace(objTD, "«middleName»", p.getMiddleName());
+        }
+        
         searchNReplace(objTD, "«paliNameThai»", p.getPaliNameThai());
         searchNReplace(objTD, "«lastName»", p.getLastName());
 
