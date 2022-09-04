@@ -256,7 +256,7 @@ public class CtrLetterODF
         String strFullName, strTitle, strMOrdainedAt, strMResidingAt;
         Monastery mOrdainedAt, mResidingAt;
         Date dVisaExpiry, dArrivalLastEntry;
-        LocalDate ldVisaExpiry, ldVisaExpiryDateDesired;
+        LocalDate ldVisaExpiry, ldVisaExpiryDateDesired, ordinationDate;
         int extensionsCount;
 
         strTitle = ProfileUtil.getTitleTH2(p);
@@ -270,12 +270,13 @@ public class CtrLetterODF
         searchNReplace(objTD, "«nationality»", p.getNationality());
         searchNReplace(objTD, "«passportNumber»", p.getPassportNumber());
         searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
-        searchNReplace(objTD, "«ordinationDate»", ProfileUtil.getStrOrdinationDate(p));
+        ordinationDate = ProfileUtil.getOrdinationDate(p);
+        searchNReplace(objTD, "«ordinationDateThai»", Util.toStringThaiDateFormatMonthText(ordinationDate));
         
         dArrivalLastEntry = p.getArrivalLastEntryDate();
         if (dArrivalLastEntry != null)
         {
-            searchNReplace(objTD, "«arrivalLastEntryDate»", Util.toStringThaiDateFormat(dArrivalLastEntry));
+            searchNReplace(objTD, "«arrivalLastEntryDateThai»", Util.toStringThaiDateFormatMonthText(dArrivalLastEntry));
         }
 
         //if the visa for this monastic has already been extended
@@ -290,12 +291,12 @@ public class CtrLetterODF
             ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
         }
         
-        searchNReplace(objTD, "«visaExpiryDate»", Util.toStringThaiDateFormat(ldVisaExpiry));
+        searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormatMonthText(ldVisaExpiry));
         
         if (ldVisaExpiry != null)
         {
             ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
-            searchNReplace(objTD, "«visaExpiryDateDesired»", Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
+            searchNReplace(objTD, "«visaExpiryDateDesiredThai»", Util.toStringThaiDateFormatMonthText(ldVisaExpiryDateDesired));
         }
 
         if (mOrdainedAt != null)

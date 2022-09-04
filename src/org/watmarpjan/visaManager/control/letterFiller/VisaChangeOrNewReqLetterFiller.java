@@ -43,14 +43,14 @@ public abstract class VisaChangeOrNewReqLetterFiller extends ODTLetterFiller
         searchNReplace(objTD, "«titleTH»", ProfileUtil.getTitleTH(p));
         searchNReplace(objTD, "«ordinationTypeThai»", ProfileUtil.getOrdinationType(p));
 
-        strLastEntry = Util.toStringThaiDateFormat(p.getArrivalLastEntryDate());
+        strLastEntry = Util.toStringThaiDateFormatMonthText(p.getArrivalLastEntryDate());
         searchNReplace(objTD, "«arrivalLastEntryDateThai»", strLastEntry);
 
         monasteryAddr = MonasteryUtil.getStringWatAddrFull(p.getMonasteryResidingAt(), false, true);
         searchNReplace(objTD, "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»", monasteryAddr);
 
         ldVisaExpiry =  ProfileUtil.getVisaOrExtExpiryDate(p);
-        searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormat(ldVisaExpiry));
+        searchNReplace(objTD, "«visaExpiryDateThai»", Util.toStringThaiDateFormatMonthText(ldVisaExpiry));
         
         ldOrdDate = ProfileUtil.getOrdinationDate(p);
         searchNReplace(objTD, "«ordinationDateDayThai»", ldOrdDate.getDayOfMonth() + "");
