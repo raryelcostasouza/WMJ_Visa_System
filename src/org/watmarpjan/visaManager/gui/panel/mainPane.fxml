@@ -73,7 +73,7 @@
               </children>
           </VBox>
       
-        <BorderPane maxWidth="1.7976931348623157E308" BorderPane.alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
+        <BorderPane BorderPane.alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
             <center>                        
             </center>
             <top>
@@ -83,7 +83,7 @@
                 </BorderPane>
             </top>
             <center>
-                <ScrollPane fx:id="modulePane" fitToWidth="true" BorderPane.alignment="TOP_LEFT" />
+                <ScrollPane fx:id="modulePane" BorderPane.alignment="TOP_LEFT" />
             </center>
         </BorderPane>
     </children>
