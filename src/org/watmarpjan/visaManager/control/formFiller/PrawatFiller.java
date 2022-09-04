@@ -138,7 +138,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension08Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension09Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension10Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaType"));
+        alThaiFields.add((PDTextField) acroForm.getField("visaTypeThai"));
         
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
@@ -178,7 +178,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         acroForm.getField("arrivalLastEntryDate").setValue(Util.toStringThaiDateFormat(p.getArrivalLastEntryDate()));
 
         acroForm.getField("passportNumber").setValue(p.getPassportNumber());
-        acroForm.getField("visaType").setValue(p.getVisaType());
+        acroForm.getField("visaTypeThai").setValue(p.getVisaType());
         acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
         acroForm.getField("passportIssueDate").setValue(Util.toStringThaiDateFormat(p.getPassportIssueDate()));
         acroForm.getField("passportExpiryDate").setValue(Util.toStringThaiDateFormat(p.getPassportExpiryDate()));
