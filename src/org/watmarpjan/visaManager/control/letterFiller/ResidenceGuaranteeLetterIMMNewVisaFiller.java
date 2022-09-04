@@ -4,7 +4,6 @@
  */
 package org.watmarpjan.visaManager.control.letterFiller;
 
-import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
