@@ -30,6 +30,8 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.formFiller.TM86Filler;
+import org.watmarpjan.visaManager.control.formFiller.TM87Filler;
 import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterIMMFiller;
 import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterSNPFiller;
 import org.watmarpjan.visaManager.control.letterFiller.OrdinationGuaranteeLetterFiller;
@@ -471,20 +473,19 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
     {
         MonasticProfile p;
-        String monasteryNickname;
-        
+        TM86Filler objFormFiller;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        objFormFiller = new TM86Filler(ctrGUIMain.getCtrMain(), p);
+        objFormFiller.saveAndOpenPDF();
     }
     
     @FXML
     void actionPreviewFormTM87NewVisa(ActionEvent ae)
     {
         MonasticProfile p;
-        String monasteryNickname, visaExemptionType, visaTypeOriginal;
-        
-        
+        String visaExemptionType, visaTypeOriginal;
+        TM87Filler objFormFiller;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
@@ -493,9 +494,8 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         visaExemptionType = getSelectedVisaExemptionType();
         p.setVisaType(visaExemptionType);
         
-        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-        
+        objFormFiller = new TM87Filler(ctrGUIMain.getCtrMain(), p);
+        objFormFiller.saveAndOpenPDF();
         //resets back
         p.setVisaType(visaTypeOriginal);
     }

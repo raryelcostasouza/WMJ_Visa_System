@@ -240,6 +240,11 @@ public class AppFiles
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("TM86-VisaChange.pdf").toFile();
     }
+    
+    public static File getFormTM87NewVisa(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM87-VisaApplication.pdf").toFile();
+    }
 
     public static File getFormOverstay(String monasteryNickname)
     {
