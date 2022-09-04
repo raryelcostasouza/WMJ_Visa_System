@@ -4,19 +4,14 @@
  */
 package org.watmarpjan.visaManager.control.letterFiller;
 
-import java.time.LocalDate;
-import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.util.MonasteryUtil;
-import org.watmarpjan.visaManager.util.ProfileUtil;
-import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
  * @author raryel
  */
-public class VisaChangeReqLetterIMMFiller extends VisaChangeReqLetterFiller
+public class VisaChangeReqLetterIMMFiller extends VisaChangeOrNewReqLetterFiller
 {
 
     public VisaChangeReqLetterIMMFiller(MonasticProfile p)
