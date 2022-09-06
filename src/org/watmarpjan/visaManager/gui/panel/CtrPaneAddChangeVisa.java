@@ -15,18 +15,31 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.control.CtrLetter;
+import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
-import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerExportPDF;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.formFiller.TM86Filler;
+import org.watmarpjan.visaManager.control.formFiller.TM87Filler;
+import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterIMMFiller;
+import org.watmarpjan.visaManager.control.letterFiller.NewVisaReqLetterSNPFiller;
+import org.watmarpjan.visaManager.control.letterFiller.OrdinationGuaranteeLetterFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMNewVisaFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterIMMFiller;
+import org.watmarpjan.visaManager.control.letterFiller.VisaChangeReqLetterSNPFiller;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.LetterInputData;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
@@ -37,7 +50,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implements IFormMonasticProfile
+public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implements IFormMonasticProfile
 {
 
     @FXML
@@ -104,11 +117,93 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
 
     @FXML
     private GridPane gpMonasticPhone;
-
+    
+    @FXML
+    private Button bVisaChangeRequestLetterSNP;
+    
+    @FXML
+    private Button bVisaChangeRequestLetterIMM;
+    
+    @FXML
+    private Button bVisaChangeResidenceGuaranteeLetter;
+    
+    @FXML
+    private Button bTM86;
+    
+    @FXML
+    private Button bTM87;
+    
+    @FXML
+    private Button bNewVisaRequestLetterSNP;
+    
+    @FXML
+    private Button bNewVisaRequestLetterIMM;
+    
+    @FXML
+    private Button bNewVisaResidenceGuaranteeLetter;
+    
+    @FXML
+    private Button bPrawat;
+    
+    @FXML
+    private Button bOrdinationGuaranteeLetter;
+    
+    @FXML
+    private Button bMonasteryMap;
+    
+    @FXML
+    private Button bTM30;
+    
+    @FXML
+    private Button bAckPenaltiesOverstay;
+    
+    @FXML
+    private Button bSTM2AckTermsAndConditions;
+    
+    @FXML
+    private RadioButton rbVisaExemption;
+    
+    @FXML
+    private RadioButton rbTourist;
+    
+    @FXML
+    private ToggleGroup tgVisaType;
+    
+    @FXML
+    private TitledPane tpTouristDocs;
+    
+    @FXML
+    private TitledPane tpVisaExemptionDocs;
+    
+    @FXML
+    private VBox vbSpecificDocs;
+   
+    @FXML
+    private ToggleGroup tgVisaExemptionType;
+    
+    @FXML
+    private RadioButton rbpoh15;
+    
+    @FXML
+    private RadioButton rbpoh30;
+    
+    @FXML
+    private RadioButton rbpohpoh30;
+    
+    @FXML
+    private RadioButton rbpohpoh90;
+    
+    
     @Override
     public void init()
     {
         super.init();
+        
+        initButtonIcons();
+        
+        //refresh the GUI for visa type selection
+        actionSelectVisaType(null);
+        
         cbVisaType.getItems().addAll(AppConstants.LIST_VISA_TYPES);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpNext90DayNotice);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpVisaExpiryDate);
@@ -198,6 +293,44 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
             }
         });
         
+    }
+    
+    private void initButtonIcons()
+    {
+        bTM86.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bVisaChangeRequestLetterSNP.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        
+        bTM87.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bNewVisaRequestLetterSNP.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        
+        bPrawat.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bOrdinationGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bMonasteryMap.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bTM30.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bAckPenaltiesOverstay.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bSTM2AckTermsAndConditions.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+    }
+    
+    @FXML
+    void actionSelectVisaType(ActionEvent ae)
+    {
+        //remove all child panes
+        vbSpecificDocs.getChildren().clear();
+        
+        //and add the selected one
+        if (rbTourist.isSelected())
+        {
+            vbSpecificDocs.getChildren().add(tpTouristDocs);
+        }
+        else
+        {
+            rbpoh30.setSelected(true);
+            vbSpecificDocs.getChildren().add(tpVisaExemptionDocs);
+        }
     }
 
     private void clearFieldsVisaLetters(boolean partialClear)
@@ -327,17 +460,186 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerExportPDF implemen
                 && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null));
     }
+    
+    private String getSelectedVisaExemptionType()
+    {
+        RadioButton rbSelected;
+        
+        rbSelected = (RadioButton)tgVisaExemptionType.getSelectedToggle();
+        return rbSelected.getText();
+    }
 
     @FXML
     void actionPreviewFormTM86VisaChange(ActionEvent ae)
     {
         MonasticProfile p;
-        String monasteryNickname;
+        TM86Filler objFormFiller;
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        objFormFiller = new TM86Filler(ctrGUIMain.getCtrMain(), p);
+        objFormFiller.saveAndOpenPDF();
+    }
+    
+    @FXML
+    void actionPreviewFormTM87NewVisa(ActionEvent ae)
+    {
+        MonasticProfile p;
+        String visaExemptionType, visaTypeOriginal;
+        TM87Filler objFormFiller;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormTM86VisaChange(monasteryNickname), p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        
+        //temporarily sets the visa type as the exemption type
+        visaTypeOriginal = p.getVisaType();
+        visaExemptionType = getSelectedVisaExemptionType();
+        p.setVisaType(visaExemptionType);
+        
+        objFormFiller = new TM87Filler(ctrGUIMain.getCtrMain(), p);
+        objFormFiller.saveAndOpenPDF();
+        //resets back
+        p.setVisaType(visaTypeOriginal);
     }
+    
+    @FXML
+    void actionPreviewVisaChangeLetterSNP(ActionEvent ae)
+    {
+        MonasticProfile p;
+        VisaChangeReqLetterSNPFiller vcf;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        vcf = new VisaChangeReqLetterSNPFiller(p);
+        vcf.saveAndOpenODT(p);
+    }
+    
+    @FXML
+    void actionPreviewVisaChangeLetterImm(ActionEvent ae)
+    {
+        MonasticProfile p;
+        VisaChangeReqLetterIMMFiller vcf;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        vcf = new VisaChangeReqLetterIMMFiller(p);
+        vcf.saveAndOpenODT(p);
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterTouristVisa(ActionEvent ae)
+    {
+        MonasticProfile p;
+        ResidenceGuaranteeLetterIMMVisaChangeFiller objLetterFiller;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        objLetterFiller = new ResidenceGuaranteeLetterIMMVisaChangeFiller(p);
+        objLetterFiller.saveAndOpenODT(p);
+    }
+    
+    @FXML
+    void actionPreviewNewVisaLetterSNP(ActionEvent ae)
+    {
+        MonasticProfile p;
+        NewVisaReqLetterSNPFiller nvf;
+        String visaExemptionType, visaTypeOriginal;
+        
+        visaExemptionType = getSelectedVisaExemptionType();
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+        nvf = new NewVisaReqLetterSNPFiller(p);
+        nvf.saveAndOpenODT(p);
+        //and change it back
+        p.setVisaType(visaTypeOriginal);
+    }
+    
+    @FXML
+    void actionPreviewNewVisaLetterImm(ActionEvent ae)
+    {
+        MonasticProfile p;
+        NewVisaReqLetterIMMFiller nvf;
+        String visaExemptionType, visaTypeOriginal;
+        
+         
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+       
+        nvf = new NewVisaReqLetterIMMFiller(p);
+        nvf.saveAndOpenODT(p);
+        
+        //and change it back
+        p.setVisaType(visaTypeOriginal);
+    }
+    
+    @FXML
+    void actionPreviewResidenceGuaranteeLetterVisaExemption(ActionEvent ae)
+    {
+        MonasticProfile p;
+        ResidenceGuaranteeLetterIMMNewVisaFiller objLetterFiller;
+        String visaTypeOriginal, visaExemptionType;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+         
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+        
+        objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p);
+        objLetterFiller.saveAndOpenODT(p);
+        
+        p.setVisaType(visaTypeOriginal);
+    }
+    
+    @FXML
+    void actionPreviewPrawat(ActionEvent ae)
+    {
+        PrawatVisaChangeFiller pVCFiller;
+        MonasticProfile p;
+        String visaExemptionType, visaTypeOriginal;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        
+        visaExemptionType = getSelectedVisaExemptionType();
+        visaTypeOriginal = p.getVisaType();
+        
+        //temporarily set the visa type as the visa extension
+        p.setVisaType(visaExemptionType);
+        
+        pVCFiller = new PrawatVisaChangeFiller(ctrGUIMain.getCtrMain(), p);
+        pVCFiller.saveAndOpenPDF();
+        
+        //resets
+        p.setVisaType(visaTypeOriginal);
+    }
+    
+    @FXML
+    void actionOrdinationGuaranteeLetter(ActionEvent ae)
+    {
+        OrdinationGuaranteeLetterFiller oLF;
+        
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        oLF = new OrdinationGuaranteeLetterFiller(p);
+        oLF.saveAndOpenODT(p);
+    }
+    
+    @FXML
+    void actionMonasteryMap(ActionEvent ae)
+    {
+        MonasticProfile p;
+        
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ctrGUIMain.getCtrMain().getCtrPDF().getMonasteryMap(p); 
+    }
+    
 
     @FXML
     void listenerCBLetter(ActionEvent ae)

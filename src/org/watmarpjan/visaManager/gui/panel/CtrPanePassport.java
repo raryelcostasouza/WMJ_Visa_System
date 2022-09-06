@@ -262,7 +262,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         initNonDigitFilter(tfScan1LeftPageNumber);
         initNonDigitFilter(tfScan2LeftPageNumber);
         initNonDigitFilter(tfScan3LeftPageNumber);
-
+        
+        GUIUtil.initAutoHeightResize(tvExtensions, 3.5);
         initChangeListener();
     }
 

@@ -32,6 +32,11 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
+import org.watmarpjan.visaManager.control.formFiller.PrawatVisaExtFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterSNP;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
@@ -41,7 +46,7 @@ import org.watmarpjan.visaManager.util.Util;
  *
  * @author WMJ_user
  */
-public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasticProfile
+public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFormMonasticProfile
 {
 
     @FXML
@@ -303,29 +308,18 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
         return (!tfExtNumber.getText().isEmpty())
                 && (dpExpiryDate.getValue() != null);
     }
-
-    private File getPrawatTemplate(MonasticProfile p)
-    {
-        
-        if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
-        {
-            return AppFiles.getFormPrawat(p.getMonasteryResidingAt().getMonasteryNickname());
-        }
-        else
-        {
-            return AppFiles.getFormPrawatPatimokkhaChanter(p.getMonasteryResidingAt().getMonasteryNickname());
-        }
-    }
-
+    
+    
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
-        File fPrawatTemplate;
+        PrawatVisaExtFiller pVextFiller;
         MonasticProfile p;
+        
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         
-        fPrawatTemplate = getPrawatTemplate(p);
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(fPrawatTemplate, p, CtrPDF.OPTION_PREVIEW_FORM, false);
+        pVextFiller = new PrawatVisaExtFiller(ctrGUIMain.getCtrMain(), p);
+        pVextFiller.saveAndOpenPDF();
     }
     
     @FXML
@@ -381,49 +375,14 @@ public class CtrPaneVisaExt extends AChildPaneController implements IFormMonasti
     }
 
     @FXML
-    void actionPreviewTM30NotifResidence(ActionEvent ae)
-    {
-        MonasticProfile p;
-        PrintoutTm30 objTM30;
-
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objTM30 = p.getPrintoutTm30();
-
-        if (objTM30 != null)
-        {
-            CtrFileOperation.openFileOnDefaultProgram(AppFiles.getPrintoutTM30(objTM30));
-        }
-        else
-        {
-            CtrAlertDialog.errorDialog("No TM30 Printout registered for this monastic profile yet.");
-        }
-    }
-
-    @FXML
-    void actionPreviewAckOverstayPenalties(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormOverstay(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-    }
-
-    @FXML
-    void actionPreviewSTM2AckConditions(ActionEvent ae)
-    {
-        MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(p.getMonasteryResidingAt().getMonasteryNickname()), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-    }
-    
-    @FXML
     void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
     {
-        File fLetter;
         MonasticProfile p;
-        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        ResidenceGuaranteeLetterSNP objLetterFiller;
         
-        fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), AppFileNames.ODT_LETTER_GUARANTEE_SNP);
-        CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        objLetterFiller = new ResidenceGuaranteeLetterSNP(p);
+        objLetterFiller.saveAndOpenODT(p);
     }
 
 //    @FXML

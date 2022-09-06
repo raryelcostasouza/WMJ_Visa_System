@@ -125,239 +125,38 @@ public class CtrPDF
         this.ctrMain = pCtrMain;
     }
 
-    private void fillPrawat(PDDocument pdfDoc, PDAcroForm acroForm, MonasticProfile p) throws IOException
+    private void fillPrawatExtensionsDetails(PDAcroForm acroForm, MonasticProfile p) throws IOException
     {
-        ArrayList<PDTextField> alThaiFields = new ArrayList<>();
-        Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat, mResidence;
-        Upajjhaya u;
-        LocalDate ldVisaExpiryDateDesired, ldVisaExpiry;
-        Date dVisaExpiry;
-        String str_jangwat_country;
-        String abbotName;
+        String countString, periodString;
+        LocalDate ldExtensionExpiry;
+        int count = 1;
 
-        addProfilePhotoPrawat(pdfDoc, p);
+        //sorts the list of extensions according to expiry date
+        List<VisaExtension> listExt = p.getVisaExtensionSet().stream().collect(Collectors.toList());
+        listExt.sort((VisaExtension o1, VisaExtension o2) -> o1.getExpiryDate().compareTo(o2.getExpiryDate()) //order by expiry date
+        );
 
-        alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("paliNameThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("ordinationDateThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watOrdainedAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("upajjhayaThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watUpajjhayaThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("nameAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("certificateThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("nameAbbotWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaAmpherThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatJaoKanaJangwatThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watJaoKanaJangwatThai"));
-
-        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF1"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension01Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension02Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension03Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension04Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension05Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension06Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension07Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension08Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension09Thai"));
-        alThaiFields.add((PDTextField) acroForm.getField("visaExtension10Thai"));
-        
-//        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
-//        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
-        adjustFontThaiField(alThaiFields);
-
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
-        acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
-        acroForm.getField("paliNameThai").setValue(p.getPaliNameThai());
-        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
-        acroForm.getField("ethnicity").setValue(p.getEthnicity());
-        acroForm.getField("nationality").setValue(p.getNationality());
-        acroForm.getField("previousResidenceCountry").setValue(p.getPreviousResidenceCountry());
-        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + ", " + p.getBirthCountry());
-        acroForm.getField("occupationThai").setValue(p.getOccupationThai());
-        acroForm.getField("fatherName").setValue(p.getFatherName());
-        acroForm.getField("motherName").setValue(p.getMotherName());
-
-        acroForm.getField("ordinationDateThai").setValue(ProfileUtil.getStrOrdinationDatePrawat(p));
-        mOrdainedAt = p.getMonasteryOrdainedAt();
-        if (mOrdainedAt != null)
-        {
-            acroForm.getField("watOrdainedAtThai").setValue(p.getMonasteryOrdainedAt().getMonasteryName());
-        }
-
-        u = p.getUpajjhaya();
-        if (u != null)
-        {
-            acroForm.getField("upajjhayaThai").setValue(p.getUpajjhaya().getUpajjhayaName());
-            mUpajjhaya = u.getMonastery();
-            if (mUpajjhaya != null)
+        //print all the extensions periods in order of expiry date
+        for (VisaExtension vext : listExt)
+        {   
+            if (count < 10)
             {
-                acroForm.getField("watUpajjhayaThai").setValue(u.getMonastery().getMonasteryName());
+                countString = "0"+count;
             }
-        }
-
-        acroForm.getField("firstEntryDate").setValue(Util.toStringThaiDateFormat(p.getFirstEntryDate()));
-        acroForm.getField("arrivalLastEntryDate").setValue(Util.toStringThaiDateFormat(p.getArrivalLastEntryDate()));
-
-        acroForm.getField("passportNumber").setValue(p.getPassportNumber());
-        acroForm.getField("visaType").setValue(p.getVisaType());
-        acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
-        acroForm.getField("passportIssueDate").setValue(Util.toStringThaiDateFormat(p.getPassportIssueDate()));
-        acroForm.getField("passportExpiryDate").setValue(Util.toStringThaiDateFormat(p.getPassportExpiryDate()));
-
-        acroForm.getField("nameAdviserToComeThai").setValue(p.getNameAdviserToCome());
-
-        mAdviserToCome = p.getMonasteryAdviserToCome();
-        if (mAdviserToCome != null)
-        {
-            acroForm.getField("watAdviserToComeThai").setValue(mAdviserToCome.getMonasteryName());
-            acroForm.getField("addrNumberWatAdviserToComeThai").setValue(mAdviserToCome.getAddrNumber());
-            acroForm.getField("addrRoadWatAdviserToComeThai").setValue(mAdviserToCome.getAddrRoad());
-            acroForm.getField("addrTambonWatAdviserToComeThai").setValue(mAdviserToCome.getAddrTambon());
-            acroForm.getField("addrAmpherWatAdviserToComeThai").setValue(mAdviserToCome.getAddrAmpher());
-
-            if (mAdviserToCome.getAddrCountry() != null
-                    && !mAdviserToCome.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
+            else if (count == 10)
             {
-                str_jangwat_country = mAdviserToCome.getAddrJangwat() + ", " + mAdviserToCome.getAddrCountry();
+                countString = ""+count;
             }
+            //because of the 10 extensions fields on the pdf just fill the details up to the 10th
             else
             {
-                str_jangwat_country = mAdviserToCome.getAddrJangwat();
-            }
-            acroForm.getField("addrJangwatWatAdviserToComeThai_addrCountryWatAdviserToComeThai").setValue(str_jangwat_country);
-        }
-
-        //if the visa for this monastic has already been extended
-        //retrieves the expiry date of the most recent extension
-        if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
-        {
-            dVisaExpiry = ctrMain.getCtrVisa().getLastExtension(p).getExpiryDate();
-            ldVisaExpiry = Util.convertDateToLocalDate(dVisaExpiry);
-        } //otherwise retrieves the expiry date of the original visa
-        else
-        {
-            ldVisaExpiry = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-        }
-
-        acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
-
-        if (ldVisaExpiry != null)
-        {
-            ldVisaExpiryDateDesired = ldVisaExpiry.plusYears(1);
-            acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldVisaExpiryDateDesired));
-        }
-
-        mResidingAt = p.getMonasteryResidingAt();
-        if (mResidingAt != null)
-        {
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
-            acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
-            acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
-            acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
-        }
-
-        acroForm.getField("baisuddhiIssueDate").setValue(Util.toStringThaiDateFormat(p.getBysuddhiIssueDate()));
-        acroForm.getField("certificateGradYear").setValue("" + Util.convertYearToThai(p.getCertificateGradYear()));
-
-        acroForm.getField("school").setValue(p.getSchool());
-        acroForm.getField("certificateDuration").setValue(p.getCertificateDuration() + "");
-        acroForm.getField("certificateThai").setValue(p.getCertificateThai());
-        acroForm.getField("certificateGradYear").setValue("" + Util.convertYearToThai(p.getCertificateGradYear()));
-
-        if (!p.getDhammaStudies().equals(AppConstants.STUDIES_REGULAR))
-        {
-            ((PDCheckBox) acroForm.getField("buddhistStudiesDhammaPDF")).check();
-            if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_TRI))
-            {
-                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมตรี");
-            }
-            if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_TOH))
-            {
-                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมโท");
-            }
-            if (p.getDhammaStudies().equals(AppConstants.STUDIES_NAKTAM_EK))
-            {
-                acroForm.getField("dhammaStudiesThaiPDF1").setValue("นักธรรมเอก");
+                break;
             }
 
-        }
-        
-        mResidence = p.getMonasteryResidingAt();
-        abbotName = mResidence.getAbbotName();
-        
-        if (abbotName != null)
-        {
-            acroForm.getField("nameAbbotWatResidingAtThai").setValue(abbotName);
-        }
-        
-        mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
-        if (mJaoKanaAmpher != null)
-        {
-            acroForm.getField("addrAmpherJaoKanaAmpherThai_addrJangwatJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getAddrAmpher() + " " + mJaoKanaAmpher.getAddrJangwat());
-            acroForm.getField("watJaoKanaAmpherThai").setValue(mJaoKanaAmpher.getMonasteryName());
-        }
-
-        mJaoKanaJangwat = ctrMain.getCtrMonastery().loadMonasteryJaoKanaJangwat(mResidence);
-        if (mJaoKanaJangwat != null)
-        {
-            acroForm.getField("addrJangwatJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getAddrJangwat());
-            acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getMonasteryName());
-        }
-        
-        
-        if (p.getVisaExtensionSet() != null)
-        {
-            String countString, periodString;
-            LocalDate ldExtensionExpiry;
-            int count = 1;
-            
-            //sorts the list of extensions according to expiry date
-            List<VisaExtension> listExt = p.getVisaExtensionSet().stream().collect(Collectors.toList());
-            listExt.sort(new Comparator<VisaExtension>()
-            {
-                //order by expiry date
-                @Override
-                public int compare(VisaExtension o1, VisaExtension o2)
-                {
-                    return o1.getExpiryDate().compareTo(o2.getExpiryDate());
-                }
-            });
-            
-            //print all the extensions periods in order of expiry date
-            for (VisaExtension vext : listExt)
-            {   
-                if (count < 10)
-                {
-                    countString = "0"+count;
-                }
-                else
-                {
-                    countString = ""+count;
-                }
-                
-                ldExtensionExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
-                periodString = Util.toStringThaiDateFormatMonthText(ldExtensionExpiry.minusYears(1)) + " - " + Util.toStringThaiDateFormatMonthText(ldExtensionExpiry);
-                acroForm.getField("visaExtension"+countString+"Thai").setValue(periodString);
-                count++;
-            }
+            ldExtensionExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
+            periodString = Util.toStringThaiDateFormatMonthText(ldExtensionExpiry.minusYears(1)) + " - " + Util.toStringThaiDateFormatMonthText(ldExtensionExpiry);
+            acroForm.getField("visaExtension"+countString+"Thai").setValue(periodString);
+            count++;
         }
     }
 
@@ -543,90 +342,6 @@ public class CtrPDF
 
     }
 
-    public void fillFormTM86VisaChange(PDAcroForm acroForm, MonasticProfile p) throws IOException
-    {
-        ArrayList<PDTextField> alThaiFields;
-        Monastery mResidingAt;
-        LocalDate ldBirthDate, ldPassportIssue, ldPassportExpiry, ldLastEntry;
-        String immOffice;
-
-        alThaiFields = new ArrayList<>();
-        alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
-        adjustFontThaiField(alThaiFields);
-
-        acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
-        acroForm.getField("lastName").setValue(p.getLastName());
-        acroForm.getField("name").setValue(p.getMonasticName());
-        acroForm.getField("middleName").setValue(p.getMiddleName());
-
-        acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
-
-        ldBirthDate = Util.convertDateToLocalDate(p.getBirthDate());
-        if (ldBirthDate != null)
-        {
-            acroForm.getField("birthDateDay").setValue(ldBirthDate.getDayOfMonth() + "");
-            acroForm.getField("birthDateMonth").setValue(ldBirthDate.getMonthValue() + "");
-            acroForm.getField("birthDateYear").setValue(Util.convertYearToThai(ldBirthDate.getYear()) + "");
-        }
-
-        acroForm.getField("birthPlace_birthCountry").setValue(p.getBirthPlace() + ", " + p.getBirthCountry());
-        acroForm.getField("nationality").setValue(p.getNationality());
-        acroForm.getField("passportNumber").setValue(p.getPassportNumber());
-
-        ldPassportIssue = Util.convertDateToLocalDate(p.getPassportIssueDate());
-        if (ldPassportIssue != null)
-        {
-            acroForm.getField("passportIssueDateDay").setValue(ldPassportIssue.getDayOfMonth() + "");
-            acroForm.getField("passportIssueDateMonth").setValue(ldPassportIssue.getMonthValue() + "");
-            acroForm.getField("passportIssueDateYear").setValue(Util.convertYearToThai(ldPassportIssue.getYear()) + "");
-        }
-        acroForm.getField("passportIssuedAt").setValue(p.getPassportIssuedAt());
-
-        ldPassportExpiry = Util.convertDateToLocalDate(p.getPassportExpiryDate());
-        if (ldPassportExpiry != null)
-        {
-            acroForm.getField("passportExpiryDateDay").setValue(ldPassportExpiry.getDayOfMonth() + "");
-            acroForm.getField("passportExpiryDateMonth").setValue(ldPassportExpiry.getMonthValue() + "");
-            acroForm.getField("passportExpiryDateYear").setValue(Util.convertYearToThai(ldPassportExpiry.getYear()) + "");
-        }
-
-        acroForm.getField("visaType").setValue(p.getVisaType());
-        acroForm.getField("arrivalTravelBy").setValue(p.getArrivalTravelBy());
-        acroForm.getField("arrivalTravelFrom").setValue(p.getArrivalTravelFrom());
-        acroForm.getField("arrivalPortOfEntry").setValue(p.getArrivalPortOfEntry());
-
-        ldLastEntry = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
-        if (ldLastEntry != null)
-        {
-            acroForm.getField("arrivalLastEntryDateDay").setValue(ldLastEntry.getDayOfMonth() + "");
-            acroForm.getField("arrivalLastEntryDateMonth").setValue(ldLastEntry.getMonthValue() + "");
-            acroForm.getField("arrivalLastEntryDateYear").setValue(Util.convertYearToThai(ldLastEntry.getYear()) + "");
-        }
-        acroForm.getField("departureCardNumber").setValue(p.getArrivalCardNumber());
-
-        mResidingAt = p.getMonasteryResidingAt();
-        if (mResidingAt != null)
-        {
-             //immigration office string need to have the province of the residence monastery
-            immOffice = "ตรวจคนเข้าเมืองจังหวัด"+mResidingAt.getAddrJangwat();
-            acroForm.getField("immigrationOfficeThai").setValue(immOffice);
-        
-            acroForm.getField("watResidingAtThai").setValue(mResidingAt.getMonasteryName());
-            acroForm.getField("addrNumberWatResidingAtThai").setValue(mResidingAt.getAddrNumber());
-            acroForm.getField("addrRoadWatResidingAtThai").setValue(mResidingAt.getAddrRoad());
-            acroForm.getField("addrTambonWatResidingAtThai").setValue(mResidingAt.getAddrTambon());
-            acroForm.getField("addrAmpherWatResidingAtThai").setValue(mResidingAt.getAddrAmpher());
-            acroForm.getField("addrJangwatWatResidingAtThai").setValue(mResidingAt.getAddrJangwat());
-        }
-    }
-
     public void fillFormTM8Reentry(PDAcroForm acroForm, MonasticProfile p, boolean reentryTogetherExtension) throws IOException
     {
         ArrayList<PDTextField> alThaiFields;
@@ -756,7 +471,9 @@ public class CtrPDF
 
             // get the document catalog
             acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
-
+            
+            //acroForm.setNeedAppearances(true);
+            
             //if the document is a PDF Form
             if (acroForm != null)
             {
@@ -779,18 +496,9 @@ public class CtrPDF
             {
                 fillTM7ReqExtension(acroForm, p);
             }
-            else if ((sourceFile.getName().equals(AppFiles.getFormPrawat(monasteryNickname).getName()))
-                    || (sourceFile.getName().equals(AppFiles.getFormPrawatPatimokkhaChanter(monasteryNickname).getName())))
-            {
-                fillPrawat(pdfDocument, acroForm, p);
-            }
             else if (sourceFile.getName().equals(AppFiles.getFormTM8Reentry(monasteryNickname).getName()))
             {
                 fillFormTM8Reentry(acroForm, p, extraOption);
-            }
-            else if (sourceFile.getName().equals(AppFiles.getFormTM86VisaChange(monasteryNickname).getName()))
-            {
-                fillFormTM86VisaChange(acroForm, p);
             }
             else
             {
@@ -1705,6 +1413,17 @@ public class CtrPDF
         // add the rotation using the current transformation matrix
         // including a translation of pageWidth to use the lower left corner as 0,0 reference
         contentStream.transform(new Matrix(0, 1, -1, 0, width, 0));
+    }
+    
+    public void getMonasteryMap(MonasticProfile p)
+    {
+        File fMonasteryMap;
+        String monasteryNickname;
+        
+        monasteryNickname = p.getMonasteryResidingAt().getMonasteryNickname();
+        
+        fMonasteryMap = AppFiles.getMonasteryMap(monasteryNickname);
+        CtrFileOperation.openFileOnDefaultProgram(fMonasteryMap);
     }
 
 }

@@ -61,7 +61,8 @@ public class AppFiles
             strFileName = AppFileNames.generateFileNameMain3StampedPageScan(passportNumber, ps);
 
             return new File(pSubfolder.resolve(strFileName).toUri());
-        } else
+        }
+        else
         {
             return null;
         }
@@ -79,13 +80,14 @@ public class AppFiles
             strFileName = AppFileNames.generateFileNameGenericStampedPageScan(passportNumber, objInfoScan.getLeftPageNumber());
 
             return new File(pSubfolder.resolve(strFileName).toUri());
-        } else
+        }
+        else
         {
             return null;
         }
 
     }
-    
+
     public static ArrayList<InfoFileScanStampedPage> getListInfoPassportScansStampedPage(String nickName, String passportNumber, FilenameFilter objFF)
     {
         Path pSubfolder;
@@ -127,7 +129,7 @@ public class AppFiles
 
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
-    
+
     public static File getNaktamCertificate(String nickName, String level)
     {
         Path pSubfolder;
@@ -158,7 +160,8 @@ public class AppFiles
         {
             pathTMPFile = Files.createTempFile(AppPaths.getPathAppTMPFolder(), formFileName, ".pdf");
             return pathTMPFile.toFile();
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Unable to create tmp file for saving form.");
             return null;
@@ -173,6 +176,11 @@ public class AppFiles
         pSubFolder = AppPaths.getPathToReceiptsOnline90dNotice(nickName);
         strFileName = AppFileNames.getReceiptOnline90d(referenceNumber, ldReceiptDate, status);
         return pSubFolder.resolve(strFileName).toFile();
+    }
+
+    public static File getMonasteryMap(String monasteryNickname)
+    {
+        return AppPaths.getPathToMonasteryMap(monasteryNickname).toFile();
     }
 
     public static File getFormPrawat(String monasteryNickname)
@@ -218,7 +226,6 @@ public class AppFiles
         return getPrintoutTM30(objTM30);
     }
 
-    
     public static File getFormTM7ReqExtension(String monasteryNickname)
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("TM7-ReqExtension.pdf").toFile();
@@ -232,6 +239,11 @@ public class AppFiles
     public static File getFormTM86VisaChange(String monasteryNickname)
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("TM86-VisaChange.pdf").toFile();
+    }
+    
+    public static File getFormTM87NewVisa(String monasteryNickname)
+    {
+        return AppPaths.getPathToForms(monasteryNickname).resolve("TM87-VisaApplication.pdf").toFile();
     }
 
     public static File getFormOverstay(String monasteryNickname)
@@ -250,17 +262,75 @@ public class AppFiles
     }
 
     public static File getODTVisaExtLetterGeneric(Monastery mResidence, String filename)
-    {        
+    {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(filename).toFile();
     }
-    
+
     public static File getODTNewVisaLetter(Monastery mResidence, String letterSelected)
     {
         String fileNameWithoutExtension;
-        
+
         fileNameWithoutExtension = "NonImm" + letterSelected.replaceAll("[-  ]+", "");
-        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname()).resolve(fileNameWithoutExtension + ".odt").toFile();
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve(fileNameWithoutExtension + ".odt")
+                .toFile();
     }
+
+    public static File getODTOrdinationGuaranteeLetter(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("OrdinationGuaranteeLetterSNP.odt")
+                .toFile();
+    }
+    
+    public static File getODTVisaChangeReqLetterSNP(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("VisaChangeReqLetterSNP.odt")
+                .toFile();
+    }
+    
+    public static File getODTVisaChangeReqLetterIMM(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("VisaChangeReqLetterIMM.odt")
+                .toFile();
+    }
+
+    public static File getODTNewVisaReqLetterIMM(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("NewVisaThailandReqLetterIMM.odt")
+                .toFile();
+    }  
+    
+    public static File getODTNewVisaReqLetterSNP(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("NewVisaThailandReqLetterSNP.odt")
+                .toFile();
+    }  
+    
+    public static File getODTResidenceGuaranteeLetterIMMNewVisa(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterIMM-NewVisaThailand.odt")
+                .toFile();
+    }
+    
+     public static File getODTResidenceGuaranteeLetterIMMVisaChange(Monastery mResidence)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterIMM-VisaChange.odt")
+                .toFile();
+    }
+     
+     public static File getODTResidenceGuaranteeLetterSNP(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP.odt")
+                .toFile();
+     }
 
     public static File getThaiFont()
     {

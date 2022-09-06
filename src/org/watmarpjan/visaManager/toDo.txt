@@ -1,4 +1,14 @@
-       Profile Panel
+Static CtrDB 
+Migracao formulários pdf e cartas para herança
+Layout font too big - detect hidpi screeen
+Bysuddhi 6th and 7th scan
+
+Prawat  bugged fields on needAppearances
+*visa extensions list
+*patimokkha chanter fields       
+
+
+Profile Panel
         -Printable
 
 ------------------------------------------------------------------------------

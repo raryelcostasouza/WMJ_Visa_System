@@ -81,6 +81,11 @@ public class AppPaths
         return Paths.get(System.getProperty("user.dir")).resolve("../../appData/"+monasteryNickname+"/Forms-Templates");
     }
     
+    public static Path getPathToMonasteryMap(String monasteryNickname)
+    {
+        return Paths.get(System.getProperty("user.dir")).resolve("../../appData/"+monasteryNickname+"/MonasteryMap.pdf");
+    }
+    
     public static Path getPathToFonts()
     {
         return Paths.get(System.getProperty("user.dir")).resolve("../../appData/fonts");

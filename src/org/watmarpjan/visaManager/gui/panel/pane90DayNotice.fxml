@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,344 +24,350 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
-  <tabs>
-    <Tab text="Register 90 day Notice">
-         <content>
-            <VBox>
-               <children>
-                  <TitledPane collapsible="false" text="Forms">
-                     <content>
-                        <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
-                           <children>
-                              <Label text="TM47 - Form 90 day Notice:" />
-                              <Pane prefHeight="36.0" prefWidth="56.0" />
-                              <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewForm90day" text="Preview" />
-                              <Pane prefHeight="36.0" prefWidth="56.0" />
-                              <VBox />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane collapsible="false" text="Register 90 Day Notice">
-                     <content>
-                        <BorderPane>
-                           <top>
-                              <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPane90DayNotice">
+   <content>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Register 90 day Notice">
+               <content>
+                  <VBox>
+                     <children>
+                        <TitledPane collapsible="false" text="Forms">
+                           <content>
+                              <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
                                  <children>
+                                    <Label text="TM47 - Form 90 day Notice:" />
+                                    <Pane prefHeight="36.0" prefWidth="56.0" />
+                                    <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewForm90day" text="Preview" />
+                                    <Pane prefHeight="36.0" prefWidth="56.0" />
+                                    <VBox />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                           </content>
+                        </TitledPane>
+                        <TitledPane collapsible="false" text="Register 90 Day Notice">
+                           <content>
+                              <BorderPane>
+                                 <top>
+                                    <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Label text="Next 90 Day Notice at:" />
+                                                <DatePicker fx:id="dpNext90DayNotice" />
+                                             </children>
+                                          </HBox>
+                                          <CheckBox fx:id="cbUsedSignedForm" mnemonicParsing="false" text="Used signed form" />
+                                       </children>
+                                    </VBox>
+                                 </top>
+                                 <center>
                                     <HBox alignment="CENTER">
                                        <children>
-                                          <Label text="Next 90 Day Notice at:" />
-                                          <DatePicker fx:id="dpNext90DayNotice" />
+                                          <TableView fx:id="tvDueNotice90Day" editable="true">
+                                             <columns>
+                                                <TableColumn fx:id="tcSelected" minWidth="-1.0" text="Selection" />
+                                                <TableColumn editable="false" minWidth="-1.0" prefWidth="159.0" text="Monastic" />
+                                                <TableColumn editable="false" minWidth="-1.0" prefWidth="100.0" resizable="false" text="Due Date" />
+                                                <TableColumn minWidth="-1.0" prefWidth="150.0" text="Signed 90D Forms" />
+                                             </columns>
+                                          </TableView>
                                        </children>
                                     </HBox>
-                                    <CheckBox fx:id="cbUsedSignedForm" mnemonicParsing="false" text="Used signed form" />
-                                 </children>
-                              </VBox>
-                           </top>
-                           <center>
+                                 </center>
+                                 <bottom>
+                                    <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#actionUpdate90Day" text="Update" />
+                                       </children>
+                                    </HBox>
+                                 </bottom>
+                              </BorderPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+          <Tab text="Online Notification">
+               <content>
+                  <VBox>
+                     <children>
+                        <TitledPane collapsible="false" text="Website Thai Immigration">
+                           <content>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TableView fx:id="tvDueNotice90Day" editable="true">
-                                       <columns>
-                                          <TableColumn fx:id="tcSelected" minWidth="-1.0" text="Selection" />
-                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="159.0" text="Monastic" />
-                                          <TableColumn editable="false" minWidth="-1.0" prefWidth="100.0" resizable="false" text="Due Date" />
-                                          <TableColumn minWidth="-1.0" prefWidth="150.0" text="Signed 90D Forms" />
-                                       </columns>
-                                    </TableView>
+                                    <Hyperlink onAction="#actionLinkThaiImmigration" text="Thai Immigration - 90 Notification Online" />
                                  </children>
                               </HBox>
-                           </center>
-                           <bottom>
-                              <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                           </content>
+                        </TitledPane>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <VBox maxHeight="1.7976931348623157E308">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#actionUpdate90Day" text="Update" />
-                                 </children>
-                              </HBox>
-                           </bottom>
-                        </BorderPane>
-                     </content>
-                  </TitledPane>
-               </children>
-            </VBox>
-         </content>
-    </Tab>
-    <Tab text="Online Notification">
-         <content>
-            <VBox>
-               <children>
-                  <TitledPane collapsible="false" text="Website Thai Immigration">
-                     <content>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Hyperlink onAction="#actionLinkThaiImmigration" text="Thai Immigration - 90 Notification Online" />
-                           </children>
-                        </HBox>
-                     </content>
-                  </TitledPane>
-                  <HBox alignment="TOP_CENTER">
-                     <children>
-                        <VBox maxHeight="1.7976931348623157E308">
-                           <children>
-                              <TitledPane animated="false" collapsible="false" text="Personal Information">
-                                 <content>
-                                    <VBox>
-                                       <children>
+                                    <TitledPane animated="false" collapsible="false" text="Personal Information">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <HBox alignment="CENTER" spacing="10.0">
+                                                   <children>
+                                                      <GridPane>
+                                                        <columnConstraints>
+                                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <Label text="Passport No:" />
+                                                            <Label text="Surname:" GridPane.rowIndex="1" />
+                                                            <Label layoutX="55.0" layoutY="47.0" text="Given Name:" GridPane.rowIndex="2" />
+                                                            <Label text="Middle Name:" GridPane.rowIndex="3" />
+                                                            <Label text="Date of Birth:" GridPane.rowIndex="4" />
+                                                            <Label layoutX="35.0" layoutY="137.0" text="Nationality:" GridPane.rowIndex="5" />
+                                                            <TextField fx:id="tfPassportNumber" editable="false" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="tfSurname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="tfGivenName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="tfMiddleName" editable="false" layoutX="159.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                            <DatePicker fx:id="dpDateOfBirth" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                            <TextField fx:id="tfNationality" editable="false" layoutX="105.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" collapsible="false" text="Travel Information">
+                                       <content>
                                           <HBox alignment="CENTER" spacing="10.0">
                                              <children>
                                                 <GridPane>
-                                                  <columnConstraints>
-                                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   <columnConstraints>
+                                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
+                                                   </rowConstraints>
                                                    <children>
-                                                      <Label text="Passport No:" />
-                                                      <Label text="Surname:" GridPane.rowIndex="1" />
-                                                      <Label layoutX="55.0" layoutY="47.0" text="Given Name:" GridPane.rowIndex="2" />
-                                                      <Label text="Middle Name:" GridPane.rowIndex="3" />
-                                                      <Label text="Date of Birth:" GridPane.rowIndex="4" />
-                                                      <Label layoutX="35.0" layoutY="137.0" text="Nationality:" GridPane.rowIndex="5" />
-                                                      <TextField fx:id="tfPassportNumber" editable="false" GridPane.columnIndex="1" />
-                                                      <TextField fx:id="tfSurname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <TextField fx:id="tfGivenName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <TextField fx:id="tfMiddleName" editable="false" layoutX="159.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <DatePicker fx:id="dpDateOfBirth" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                      <TextField fx:id="tfNationality" editable="false" layoutX="105.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <TextField fx:id="tfArrivalTm6Number" editable="false" GridPane.columnIndex="1" />
+                                                      <Label text="Arrived  in Thailand:" GridPane.rowIndex="1" />
+                                                      <DatePicker fx:id="dpArrivalDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <RadioButton fx:id="rbTravelBy" mnemonicParsing="false" selected="true" text="ByTransportation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label layoutX="55.0" layoutY="47.0" text="By Transportation:" GridPane.rowIndex="2" />
+                                                      <Label text="TM6 Number:" />
                                                    </children>
                                                 </GridPane>
                                              </children>
                                           </HBox>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Travel Information">
-                                 <content>
-                                    <HBox alignment="CENTER" spacing="10.0">
-                                       <children>
-                                          <GridPane>
-                                             <columnConstraints>
-                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
+                                       </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <TitledPane collapsible="false" layoutX="10.0" layoutY="324.0" text="Visa Information">
+                                       <content>
+                                          <VBox>
                                              <children>
-                                                <TextField fx:id="tfArrivalTm6Number" editable="false" GridPane.columnIndex="1" />
-                                                <Label text="Arrived  in Thailand:" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="dpArrivalDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <RadioButton fx:id="rbTravelBy" mnemonicParsing="false" selected="true" text="ByTransportation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label layoutX="55.0" layoutY="47.0" text="By Transportation:" GridPane.rowIndex="2" />
-                                                <Label text="TM6 Number:" />
+                                                <GridPane>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <DatePicker fx:id="dpStayPermittedUntil" GridPane.columnIndex="1" />
+                                                      <Label text="Stay permitted until:" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
-                                          </GridPane>
-                                       </children>
-                                    </HBox>
-                                 </content>
-                              </TitledPane>
-                           </children>
-                        </VBox>
-                        <VBox>
-                           <children>
-                              <TitledPane collapsible="false" layoutX="10.0" layoutY="324.0" text="Visa Information">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <GridPane>
-                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints vgrow="SOMETIMES" />
-                                             </rowConstraints>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane animated="false" collapsible="false" stylesheets="@thaiField.css" text="Address">
+                                       <content>
+                                          <HBox alignment="CENTER" spacing="10.0">
                                              <children>
-                                                <DatePicker fx:id="dpStayPermittedUntil" GridPane.columnIndex="1" />
-                                                <Label text="Stay permitted until:" />
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" collapsible="false" stylesheets="@thaiField.css" text="Address">
-                                 <content>
-                                    <HBox alignment="CENTER" spacing="10.0">
-                                       <children>
-                                          <GridPane>
-                                             <columnConstraints>
-                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
-                                             <children>
-                                                <TextField fx:id="tfBuildingName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Address No:" GridPane.rowIndex="2" />
-                                                <Label layoutX="55.0" layoutY="47.0" text="Soi/Road:" GridPane.rowIndex="3" />
-                                                <Label text="Building Name:" GridPane.rowIndex="1" />
-                                                <Label layoutX="40.0" layoutY="77.0" text="State/Province:" GridPane.rowIndex="4" />
-                                                <Label text="City/Amphur:" GridPane.rowIndex="5" />
-                                                <Label text="District/Tambon:" GridPane.rowIndex="6" />
-                                                <Label text="Types of Housing:" />
-                                                <TextField fx:id="tfAddrNumber" editable="false" layoutX="106.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField fx:id="tfAddrSoiRoad" layoutX="106.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <TextField fx:id="tfAddrStateProvince" editable="false" layoutX="106.0" layoutY="103.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <TextField fx:id="tfAddrCityAmphur" editable="false" layoutX="106.0" layoutY="133.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <TextField fx:id="tfAddrDistrictTambon" editable="false" layoutX="106.0" layoutY="163.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <RadioButton mnemonicParsing="false" selected="true" text="Home/Other" GridPane.columnIndex="1" />
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </HBox>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane collapsible="false" text="Visa Manager Contact">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <HBox alignment="CENTER">
-                                             <children>
-                                                <Label text="Visa Manager:" />
-                                                <ComboBox fx:id="cbVisaManager" onAction="#actionSelectVisaManager" prefWidth="150.0" />
+                                                <GridPane>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <TextField fx:id="tfBuildingName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label text="Address No:" GridPane.rowIndex="2" />
+                                                      <Label layoutX="55.0" layoutY="47.0" text="Soi/Road:" GridPane.rowIndex="3" />
+                                                      <Label text="Building Name:" GridPane.rowIndex="1" />
+                                                      <Label layoutX="40.0" layoutY="77.0" text="State/Province:" GridPane.rowIndex="4" />
+                                                      <Label text="City/Amphur:" GridPane.rowIndex="5" />
+                                                      <Label text="District/Tambon:" GridPane.rowIndex="6" />
+                                                      <Label text="Types of Housing:" />
+                                                      <TextField fx:id="tfAddrNumber" editable="false" layoutX="106.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="tfAddrSoiRoad" layoutX="106.0" layoutY="73.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="tfAddrStateProvince" editable="false" layoutX="106.0" layoutY="103.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <TextField fx:id="tfAddrCityAmphur" editable="false" layoutX="106.0" layoutY="133.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <TextField fx:id="tfAddrDistrictTambon" editable="false" layoutX="106.0" layoutY="163.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <RadioButton mnemonicParsing="false" selected="true" text="Home/Other" GridPane.columnIndex="1" />
+                                                   </children>
+                                                </GridPane>
                                              </children>
                                           </HBox>
-                                          <GridPane>
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane collapsible="false" text="Visa Manager Contact">
+                                       <content>
+                                          <VBox>
                                              <children>
-                                                <Label text="Phone Number:" />
-                                                <HBox spacing="10.0" GridPane.columnIndex="1">
+                                                <HBox alignment="CENTER">
                                                    <children>
-                                                      <TextField fx:id="tfVisaManagerPhoneSection1" editable="false" prefWidth="50.0" />
-                                                      <TextField fx:id="tfVisaManagerPhoneSection2" editable="false" prefWidth="50.0" />
-                                                      <TextField fx:id="tfVisaManagerPhoneSection3" editable="false" prefWidth="50.0" />
+                                                      <Label text="Visa Manager:" />
+                                                      <ComboBox fx:id="cbVisaManager" onAction="#actionSelectVisaManager" />
                                                    </children>
                                                 </HBox>
-                                                <Label text="E-mail:" GridPane.rowIndex="1" />
-                                                <TextField fx:id="tfVisaManagerEmail" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints vgrow="SOMETIMES" />
+                                                    <RowConstraints vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label text="Phone Number:" />
+                                                      <HBox spacing="10.0" GridPane.columnIndex="1">
+                                                         <children>
+                                                            <TextField fx:id="tfVisaManagerPhoneSection1" editable="false" prefWidth="50.0" />
+                                                            <TextField fx:id="tfVisaManagerPhoneSection2" editable="false" prefWidth="50.0" />
+                                                            <TextField fx:id="tfVisaManagerPhoneSection3" editable="false" prefWidth="50.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <Label text="E-mail:" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="tfVisaManagerEmail" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+            <Tab text="Receipts Online Notice">
+               <content>
+                  <VBox>
+                     <children>
+                        <TitledPane animated="false" collapsible="false" text="Saved Receipts">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <TableView fx:id="tvReceipts" prefWidth="500.0">
+                                             <columns>
+                                                <TableColumn fx:id="tcOpenPDF" prefWidth="60.0" text="PDF" />
+                                                <TableColumn prefWidth="90.0" text="Date" />
+                                                <TableColumn prefWidth="100.0" text="Type" />
+                                                <TableColumn prefWidth="230.0" text="Ref Number" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Ref Number:" />
+                                          <TextField fx:id="tfSelectionRefNumber" editable="false" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" text="Add new Receipt">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="TRN - Reference Number" />
+                                                <TextField fx:id="tfReceiptNumber" GridPane.columnIndex="1" />
+                                                <Label text="Type:" GridPane.rowIndex="1" />
+                                                <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <RadioButton fx:id="rbReceiptPending" mnemonicParsing="false" text="Pending">
+                                                         <toggleGroup>
+                                                            <ToggleGroup fx:id="tgReceiptStatus" />
+                                                         </toggleGroup>
+                                                      </RadioButton>
+                                                      <RadioButton fx:id="rbReceiptApproved" mnemonicParsing="false" text="Approved" toggleGroup="$tgReceiptStatus" />
+                                                   </children>
+                                                </HBox>
+                                                <Label layoutX="10.0" layoutY="48.0" text="Receipt Date:" GridPane.rowIndex="2" />
+                                                <DatePicker fx:id="dpReceiptDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button mnemonicParsing="false" onAction="#actionButtonSelectReceiptPDF" text="Select PDF file" GridPane.rowIndex="3" />
+                                                <TextField fx:id="tfReceiptFilePath" editable="false" layoutX="144.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                        </children>
-                                    </VBox>
-                                 </content>
-                              </TitledPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </content>
-    </Tab>
-      <Tab text="Receipts Online Notice">
-         <content>
-            <VBox>
-               <children>
-                  <TitledPane animated="false" collapsible="false" text="Saved Receipts">
-                     <content>
-                        <VBox>
-                           <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TableView fx:id="tvReceipts" prefWidth="500.0">
-                                       <columns>
-                                          <TableColumn fx:id="tcOpenPDF" prefWidth="60.0" text="PDF" />
-                                          <TableColumn prefWidth="90.0" text="Date" />
-                                          <TableColumn prefWidth="100.0" text="Type" />
-                                          <TableColumn prefWidth="230.0" text="Ref Number" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Label text="Ref Number:" />
-                                    <TextField fx:id="tfSelectionRefNumber" editable="false" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" collapsible="false" text="Add new Receipt">
-                     <content>
-                        <VBox>
-                           <children>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <GridPane>
-                                       <columnConstraints>
-                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
+                                    </HBox>
+                                    <HBox alignment="CENTER">
                                        <children>
-                                          <Label text="TRN - Reference Number" />
-                                          <TextField fx:id="tfReceiptNumber" GridPane.columnIndex="1" />
-                                          <Label text="Type:" GridPane.rowIndex="1" />
-                                          <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <children>
-                                                <RadioButton fx:id="rbReceiptPending" mnemonicParsing="false" text="Pending">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="tgReceiptStatus" />
-                                                   </toggleGroup></RadioButton>
-                                                <RadioButton fx:id="rbReceiptApproved" mnemonicParsing="false" text="Approved" toggleGroup="$tgReceiptStatus" />
-                                             </children>
-                                          </HBox>
-                                          <Label layoutX="10.0" layoutY="48.0" text="Receipt Date:" GridPane.rowIndex="2" />
-                                          <DatePicker fx:id="dpReceiptDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Button mnemonicParsing="false" onAction="#actionButtonSelectReceiptPDF" text="Select PDF file" GridPane.rowIndex="3" />
-                                          <TextField fx:id="tfReceiptFilePath" editable="false" layoutX="144.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Button mnemonicParsing="false" onAction="#actionButtonAddReceipt" text="Add" />
                                        </children>
-                                    </GridPane>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#actionButtonAddReceipt" text="Add" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-               </children>
-            </VBox>
-         </content>
-      </Tab>
-  </tabs>
-</TabPane>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </content>
+</ScrollPane>
