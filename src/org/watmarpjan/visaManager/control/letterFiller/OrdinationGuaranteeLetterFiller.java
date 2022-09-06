@@ -37,6 +37,10 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
         {
             searchNReplace(objTD, "«middleName»", p.getMiddleName());
         }
+        else
+        {
+            searchNReplace(objTD, "«middleName»", "");
+        }
         
         searchNReplace(objTD, "«paliNameThai»", p.getPaliNameThai());
         searchNReplace(objTD, "«lastName»", p.getLastName());
