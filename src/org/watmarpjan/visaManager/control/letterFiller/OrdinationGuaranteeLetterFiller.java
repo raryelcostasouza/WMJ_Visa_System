@@ -7,7 +7,6 @@ package org.watmarpjan.visaManager.control.letterFiller;
 import java.time.LocalDate;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
@@ -42,6 +41,14 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
             searchNReplace(objTD, "«middleName»", "");
         }
         
+        if (p.getPaliNameThai() != null)
+        {
+            searchNReplace(objTD, "«paliNameThai»", "ฉายา " +  p.getPaliNameThai());
+        }
+        else
+        {
+            searchNReplace(objTD, "«paliNameThai»", "");
+        }
         searchNReplace(objTD, "«paliNameThai»", p.getPaliNameThai());
         searchNReplace(objTD, "«lastName»", p.getLastName());
 
