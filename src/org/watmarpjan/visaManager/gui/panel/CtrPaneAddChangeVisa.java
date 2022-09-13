@@ -610,7 +610,10 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         visaTypeOriginal = p.getVisaType();
         
         //temporarily set the visa type as the visa extension
-        p.setVisaType(visaExemptionType);
+        if (rbVisaExemption.isSelected())
+        {
+            p.setVisaType(visaExemptionType);    
+        }       
         
         pVCFiller = new PrawatVisaChangeFiller(ctrGUIMain.getCtrMain(), p);
         pVCFiller.saveAndOpenPDF();
