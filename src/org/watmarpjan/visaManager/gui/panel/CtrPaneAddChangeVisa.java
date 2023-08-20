@@ -383,7 +383,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         MonasticProfile p;
         int operationStatus;
-
+        
         if (validateFields())
         {
             p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
@@ -457,7 +457,6 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     {
         return ((!tfVisaNumber.getText().isEmpty())
                 && (dpVisaExpiryDate.getValue() != null)
-                && (dpNext90DayNotice.getValue() != null)
                 && (cbVisaType.getValue() != null));
     }
     
