@@ -121,6 +121,12 @@ public class AppPaths
         return getPathToIconSubfolder().resolve("pdf.png");
     }
     
+     public static Path getPathEVisa()
+    {
+        return getPathToIconSubfolder().resolve("evisa.png");
+    }
+    
+    
     public static Path getPathIconHelp()
     {
         return getPathToIconSubfolder().resolve("help.png");

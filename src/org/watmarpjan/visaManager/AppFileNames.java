@@ -50,6 +50,11 @@ public class AppFileNames
         return "";  
         
     }
+    
+    public static String getEVisa()
+    {
+        return "e-visa.pdf";
+    }
 
     public static String getScanBysuddhi(int number)
     {
