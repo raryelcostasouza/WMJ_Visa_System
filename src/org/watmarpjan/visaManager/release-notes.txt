@@ -1,3 +1,9 @@
+v.1.11.0
+* New Visa -> Register Visa, The field “Next 90 day:” should accept a blank value.
+* When filling out forms / letters for non-ordained persons: use the title “Mr” instead of “นาค”
+* Passport: Add button to register and preview e-visa pdf (A4). This is used instead of the passport visa stamp scan for persons with e-visa. It can be placed next to the Preview Scans button.
+-----------------------------------------------------------------------------------------
+
 v1.9.1 - 15/03/2020
 
 Bug fix: Lock status of Archive/Select Buttons on All Stamped Pages tab getting not working properly
