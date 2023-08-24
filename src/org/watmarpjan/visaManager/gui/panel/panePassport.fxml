@@ -262,82 +262,58 @@
                               <HBox alignment="CENTER" spacing="10.0">
                                  <children>
                                     <Button fx:id="bPreview" mnemonicParsing="false" onAction="#actionPreviewScansPDF" text="Preview Scans" />
+                                    <Button fx:id="bViewEVisaScan" mnemonicParsing="false" onAction="#actionViewEVisaScan" text="Preview E-Visa" />
+                                    <Button fx:id="bArchiveEVisaScan" mnemonicParsing="false" onAction="#actionArchiveEVisa" text="Archive E-Visa" />
+                                    <Button fx:id="bSelectEVisaScan" mnemonicParsing="false" onAction="#actionSelectEVisaScan" text="Select E-Visa" />
+                                    <TextField fx:id="tfEVisaScanPath" editable="false" prefColumnCount="5" />
                                  </children>
                               </HBox>
                                   <VBox>
                                       <children>
-                                    <HBox VBox.vgrow="ALWAYS">
-                                       <children>
-                                                <TitledPane collapsible="false" text="First Page/Departure Card">
-                                                    <content>
-                                                        <HBox alignment="CENTER">
-                                                            <children>
-                                                                <VBox alignment="CENTER">
-                                                                    <children>
-                                                                        <ImageView fx:id="ivPassportScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                                            <image>
-                                                                                <Image url="@../../../../../icons/passport.png" />
-                                                                            </image>
-                                                                            <viewport>
-                                                                                <Rectangle2D />
-                                                                            </viewport>
-                                                                        </ImageView>
-                                                            <HBox alignment="CENTER" spacing="10.0">
-                                                               <children>
-                                                                  <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportFirstPage" text="Archive" />
-                                                                  <Button fx:id="bScanPassport" mnemonicParsing="false" onAction="#actionChooseScanPassport" text="Passport Scan" />
-                                                               </children>
-                                                            </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                                <VBox alignment="CENTER">
-                                                                    <children>
-                                                                        <ImageView fx:id="ivDepartureCardScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
-                                                                            <image>
-                                                                                <Image url="@../../../../../icons/passport.png" />
-                                                                            </image>
-                                                                            <viewport>
-                                                                                <Rectangle2D />
-                                                                            </viewport>
-                                                                        </ImageView>
-                                                            <HBox alignment="CENTER" spacing="10.0">
-                                                               <children>
-                                                                  <Button fx:id="bArchiveDepartureCard" mnemonicParsing="false" onAction="#actionArchiveDepartureCard" text="Archive" />
-                                                                  <Button fx:id="bScanDepartureCard" mnemonicParsing="false" onAction="#actionChooseScanDepartureCard" text="Departure Card Scan" />
-                                                               </children>
-                                                            </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                        </HBox>
-                                                    </content>
-                                                </TitledPane>
-                                          <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="E-Visa">
-                                             <content>
-                                                <VBox alignment="CENTER">
-                                                   <children>
-                                                      <ImageView fx:id="ivEVisa" fitHeight="395.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../../../../../../../../icons/evisa.png" />
-                                                         </image>
-                                                         <viewport>
-                                                            <Rectangle2D />
-                                                         </viewport>
-                                                      </ImageView>
-                                                      <TextField fx:id="tfEVisaScanPath" editable="false" />
+                                          <TitledPane collapsible="false" text="First Page/Departure Card">
+                                              <content>
+                                                  <HBox alignment="CENTER">
+                                                      <children>
+                                                          <VBox alignment="CENTER">
+                                                              <children>
+                                                                  <ImageView fx:id="ivPassportScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                      <image>
+                                                                          <Image url="@../../../../../icons/passport.png" />
+                                                                      </image>
+                                                                      <viewport>
+                                                                          <Rectangle2D />
+                                                                      </viewport>
+                                                                  </ImageView>
                                                       <HBox alignment="CENTER" spacing="10.0">
                                                          <children>
-                                                            <Button fx:id="bArchiveEVisaScan" mnemonicParsing="false" onAction="#actionArchiveEVisa" text="Archive" />
-                                                            <Button fx:id="bSelectEVisaScan" mnemonicParsing="false" onAction="#actionSelectEVisaScan" text="Select E-Visa PDF file" />
-                                                            <Button fx:id="bViewEVisaScan" mnemonicParsing="false" onAction="#actionViewEVisaScan" text="Preview" />
+                                                            <Button fx:id="bArchivePassport" mnemonicParsing="false" onAction="#actionArchivePassportFirstPage" text="Archive" />
+                                                            <Button fx:id="bScanPassport" mnemonicParsing="false" onAction="#actionChooseScanPassport" text="Passport Scan" />
                                                          </children>
                                                       </HBox>
-                                                   </children>
-                                                </VBox>
-                                             </content>
+                                                              </children>
+                                                          </VBox>
+                                                          <VBox alignment="CENTER">
+                                                              <children>
+                                                                  <ImageView fx:id="ivDepartureCardScan" fitHeight="395.0" fitWidth="320.0" onMouseClicked="#actionIMGPassportScanClicked" pickOnBounds="true" preserveRatio="true">
+                                                                      <image>
+                                                                          <Image url="@../../../../../icons/passport.png" />
+                                                                      </image>
+                                                                      <viewport>
+                                                                          <Rectangle2D />
+                                                                      </viewport>
+                                                                  </ImageView>
+                                                      <HBox alignment="CENTER" spacing="10.0">
+                                                         <children>
+                                                            <Button fx:id="bArchiveDepartureCard" mnemonicParsing="false" onAction="#actionArchiveDepartureCard" text="Archive" />
+                                                            <Button fx:id="bScanDepartureCard" mnemonicParsing="false" onAction="#actionChooseScanDepartureCard" text="Departure Card Scan" />
+                                                         </children>
+                                                      </HBox>
+                                                              </children>
+                                                          </VBox>
+                                                      </children>
+                                                  </HBox>
+                                              </content>
                                           </TitledPane>
-                                       </children>
-                                    </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                                 <TitledPane collapsible="false" text="Extra Scan 1">

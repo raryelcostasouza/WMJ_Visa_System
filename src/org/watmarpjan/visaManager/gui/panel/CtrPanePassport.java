@@ -217,9 +217,6 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private ArrayList<InfoFileScanStampedPage> listGenericScans;
 
     public final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
-
-   @FXML
-   private ImageView ivEVisa;
     
     @FXML
     private Button bSelectEVisaScan;
@@ -258,8 +255,7 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         labelLock4.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
         
         bViewEVisaScan.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
-        GUIUtil.loadImageView(ivEVisa, null, AppPaths.getPathEVisa().toFile());
-      
+        
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpFirstEntryDate);
@@ -275,6 +271,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
 
+        bSelectEVisaScan.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
+        bArchiveEVisaScan.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
+        
+        
         ctrPaneScan1 = new CtrModuleMainScanStampedPage(bSelectScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt, ivScan1, this);
         ctrPaneScan2 = new CtrModuleMainScanStampedPage(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt, ivScan2, this);
         ctrPaneScan3 = new CtrModuleMainScanStampedPage(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt, ivScan3, this);
