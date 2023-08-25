@@ -45,7 +45,7 @@ public class ProfileUtil
         }
         else    
         {
-            return "นาค";
+            return "Mr.";
         }
     }
     

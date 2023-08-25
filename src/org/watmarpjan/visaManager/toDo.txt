@@ -1,12 +1,10 @@
+Cleanup Archive naktam certificate and EVisa - duplicated code
+
+
+
 Static CtrDB 
 Migracao formulários pdf e cartas para herança
 Layout font too big - detect hidpi screeen
-Bysuddhi 6th and 7th scan
-
-Prawat  bugged fields on needAppearances
-*visa extensions list
-*patimokkha chanter fields       
-
 
 Profile Panel
         -Printable
@@ -17,28 +15,8 @@ Changes/Fixes
     -Connection pool not use hibernate native one
     --Check about Hibernate session use
 ------------------------------------------------------------------------------
-Current Working
-
-    Buttons for Pali characters input
-
-    Due Tasks
-        Test number of entries. If to much create move data to new page. 
-        csv file 
-        NDays for processing should be changeable or stored in a table - yes
-
     Forms 
         Change implementation
             -separate functions to fill according to field
                 fillField(PDField, fieldName)
                 fillPassportIssuedAt(acroForm.getField("passportIssuedAt))
-
-    Bug - when DB is already open not showing exception message
-------------------------------------------------------------------------------
-Desirable features
-
-    Generate csv file with due dates for each profile
-    Ex: K.Raryel, 2016-09-09, 2016-09-09, 2016-09-09
-                90 Day      Visa Ext    Passport
-
-DB
-    -proper error messages for common SQL error - primary key, unique key etc

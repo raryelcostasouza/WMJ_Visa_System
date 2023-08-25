@@ -38,6 +38,17 @@ public class AppFiles
 
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
+    
+    public static File getEVisa(String nickName)
+    {
+        Path pSubfolder;
+        String strFileName;
+
+        pSubfolder = AppPaths.getPathToPassportSubFolder(nickName);
+        strFileName = AppFileNames.getEVisa();
+
+        return new File(pSubfolder.resolve(strFileName).toUri());
+    }
 
     public static File getScanDepartureCard(String nickName)
     {

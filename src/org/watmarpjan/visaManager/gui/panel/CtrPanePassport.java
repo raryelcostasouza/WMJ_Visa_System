@@ -217,7 +217,21 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     private ArrayList<InfoFileScanStampedPage> listGenericScans;
 
     public final String ERROR_NO_PASSPORT_REGISTERED = "Please register a passport to this profile before adding scans.";
-
+    
+    @FXML
+    private Button bSelectEVisaScan;
+    
+    @FXML
+    private Button bArchiveEVisaScan;
+    
+    @FXML
+    private Button bViewEVisaScan;
+    
+    @FXML
+    private TextField tfEVisaScanPath;
+    
+    File fPDFSelectedEVisa;
+    
     @Override
     public void init()
     {
@@ -239,7 +253,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         labelLock2.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
         labelLock3.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
         labelLock4.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("unlock.png").toUri().toString()));
-
+        
+        bViewEVisaScan.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportExpiryDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpPassportIssueDate);
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpFirstEntryDate);
@@ -255,10 +271,14 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
 
         tvExtensions.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("expiryDate"));
 
+        bSelectEVisaScan.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("add.png").toUri().toString()));
+        bArchiveEVisaScan.setGraphic(new ImageView(AppPaths.getPathToIconSubfolder().resolve("remove.png").toUri().toString()));
+        
+        
         ctrPaneScan1 = new CtrModuleMainScanStampedPage(bSelectScan1, bArchive1, tfScan1LeftPageNumber, tfScan1RightPageNumber, rbScan1ArriveStamp, rbScan1Visa, rbScan1LastVisaExt, ivScan1, this);
         ctrPaneScan2 = new CtrModuleMainScanStampedPage(bSelectScan2, bArchive2, tfScan2LeftPageNumber, tfScan2RightPageNumber, rbScan2ArriveStamp, rbScan2Visa, rbScan2LastVisaExt, ivScan2, this);
         ctrPaneScan3 = new CtrModuleMainScanStampedPage(bSelectScan3, bArchive3, tfScan3LeftPageNumber, tfScan3RightPageNumber, rbScan3ArriveStamp, rbScan3Visa, rbScan3LastVisaExt, ivScan3, this);
-
+        
         initNonDigitFilter(tfScan1LeftPageNumber);
         initNonDigitFilter(tfScan2LeftPageNumber);
         initNonDigitFilter(tfScan3LeftPageNumber);
@@ -266,7 +286,33 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         GUIUtil.initAutoHeightResize(tvExtensions, 3.5);
         initChangeListener();
     }
+    
+    private void fillEVisaDetails(MonasticProfile p)
+    {
+        tfEVisaScanPath.setText("");
+   
+        if (AppFiles.getEVisa(p.getNickname()).exists())
+        {
+            System.out.println("exists" + AppFiles.getEVisa(p.getNickname()).toString());
+            bViewEVisaScan.setDisable(false);
 
+            tfEVisaScanPath.setVisible(false);
+            bSelectEVisaScan.setVisible(false);
+
+            bArchiveEVisaScan.setVisible(true);
+        }
+        else
+        {
+            System.out.println("not exists");
+            bViewEVisaScan.setDisable(true);
+
+            tfEVisaScanPath.setVisible(true);
+            bSelectEVisaScan.setVisible(true);
+
+            bArchiveEVisaScan.setVisible(false);
+        }
+    }
+     
     //listener to remove any non-digit char from the text field
     private void initNonDigitFilter(TextField objTF)
     {
@@ -440,6 +486,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
             tvExtensions.getItems().addAll(alVisaExtensions);
 
             tfNVisaExt.setText("" + alVisaExtensions.size());
+            
+            fillEVisaDetails(p);
         }
 
     }
@@ -922,7 +970,10 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ctrPaneScan1.actionLockEdit();
         ctrPaneScan2.actionLockEdit();
         ctrPaneScan3.actionLockEdit();
-
+        
+        bSelectEVisaScan.setDisable(true);
+        bArchiveEVisaScan.setDisable(true);
+        
         bAddStampedPageScan.setDisable(true);
         for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
         {
@@ -946,6 +997,9 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         ctrPaneScan1.actionUnlockEdit();
         ctrPaneScan2.actionUnlockEdit();
         ctrPaneScan3.actionUnlockEdit();
+        
+        bSelectEVisaScan.setDisable(false);
+        bArchiveEVisaScan.setDisable(false);
         
         bAddStampedPageScan.setDisable(false);
         for (CtrModuleGenericScanStampedPage objCtrStampedPage : listCtrModulePassportStampedPage)
@@ -972,7 +1026,8 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         opStatus1 = ctrGUIMain.getCtrMain().getCtrProfile().update(p);
         errorHappenedOp2 = saveMainExtraScans();
         errorHappenedOp3 = saveGenericExtraScans();
-
+        
+        actionSaveEVisaScan(p, fPDFSelectedEVisa);
         //only shows success message if all saving procedures were successful
         if ((opStatus1 == 0) && !errorHappenedOp2 && !errorHappenedOp3)
         {
@@ -1003,6 +1058,64 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
         else
         {
             ctrGUIMain.getCtrMain().getCtrPDF().generatePDFPassportScans(p, CtrPDF.OPTION_PREVIEW_FORM, new GenericScanStampedPageFilenameFilter());
+        }
+    }
+    
+    @FXML
+    void actionSelectEVisaScan(ActionEvent ae)
+    {
+        fPDFSelectedEVisa = CtrFileOperation.selectFile("Select E-Visa Scan File", CtrFileOperation.FILE_CHOOSER_TYPE_PDF);
+        if (fPDFSelectedEVisa != null)
+        {
+            tfEVisaScanPath.setText(fPDFSelectedEVisa.getAbsolutePath().toString());
+            ctrGUIMain.getCtrFieldChangeListener().setHasUnsavedChanges();
+        }
+    }
+    
+    private void actionSaveEVisaScan(MonasticProfile p, File fPDFSelected)
+    {
+        if (fPDFSelected != null && fPDFSelected.exists())
+        {
+            CtrFileOperation.copyOperation(fPDFSelected, AppFiles.getEVisa(p.getNickname()));
+        }
+        //reset temp variable after save
+        fPDFSelected = null;
+        fillEVisaDetails(p);
+    }
+    
+    @FXML
+    void actionViewEVisaScan(ActionEvent ae)
+    {
+        MonasticProfile p;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getEVisa(p.getNickname()));
+    }
+    
+    @FXML
+    void actionArchiveEVisa()
+    {
+        MonasticProfile p;
+        String msg;
+        boolean confirmation;
+        int opStatusArchive;
+        File f2Archive;
+
+        msg = "Are you sure that you want to remove this E-Visa from system?\n"
+                + "(Note: The e-visa file will be archived)\n ";
+
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
+        if (confirmation)
+        {
+            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+            f2Archive = AppFiles.getEVisa(p.getNickname());
+            opStatusArchive = CtrFileOperation.archiveScanFile(p.getNickname(),CtrFileOperation.SCAN_TYPE_PASSPORT,f2Archive);
+            if (opStatusArchive == 0)
+            {
+                fillEVisaDetails(p);
+                CtrAlertDialog.infoDialog("Archived successfully", "The E-Visa was archived successfully.");
+            }
         }
     }
 
