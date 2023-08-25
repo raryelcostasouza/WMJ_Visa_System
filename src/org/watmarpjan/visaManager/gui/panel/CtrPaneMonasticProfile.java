@@ -603,25 +603,19 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     {
         MonasticProfile p;
         String msg;
-        boolean confirmation;
-        int opStatusArchive;
+        int ret;
         File f2Archive;
 
         msg = "Are you sure that you want to archive this profile photo?\n";
-
-        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
-        if (confirmation)
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        f2Archive = AppFiles.getProfilePhoto(p.getNickname());
+        
+        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(),CtrFileOperation.SCAN_TYPE_PROFILE);
+        if (ret == 0)
         {
-            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-            f2Archive = AppFiles.getProfilePhoto(p.getNickname());
-            opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
-            if (opStatusArchive == 0)
-            {
                 ctrGUIMain.getCtrPaneSelection().reloadCurrentProfile();
                 CtrAlertDialog.infoDialog("Archived successfully", "The profile photo was archived successfully.");
-            }
-        }
+        }     
     }
 
     @Override
@@ -734,25 +728,19 @@ public class CtrPaneMonasticProfile extends AChildPaneController implements IFor
     {
         MonasticProfile p;
         String msg;
-        boolean confirmation;
-        int opStatusArchive;
+        int ret;
         File f2Archive;
 
         msg = "Are you sure that you want to remove the " + level + " certificate?\n"
                 + "(Note: The certificate file will be archived)\n ";
-
-        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
-        if (confirmation)
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        f2Archive = AppFiles.getNaktamCertificate(p.getNickname(), level);
+        
+        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(),CtrFileOperation.SCAN_TYPE_PROFILE);
+        if (ret == 0)
         {
-            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-            f2Archive = AppFiles.getNaktamCertificate(p.getNickname(), level);
-            opStatusArchive = CtrFileOperation.archiveProfilePhotoOrCertificate(f2Archive, p.getNickname());
-            if (opStatusArchive == 0)
-            {
-                initNaktamCertificateButtons(p);
-                CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
-            }
+             initNaktamCertificateButtons(p);
+             CtrAlertDialog.infoDialog("Archived successfully", "The Naktam certificate was archived successfully.");
         }
     }
 
