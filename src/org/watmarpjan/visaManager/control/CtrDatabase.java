@@ -84,7 +84,7 @@ public class CtrDatabase
         entityManager.close();
     }
 
-    public int updatePersistentObject(Serializable obj, String strErrorMessage)
+    public int updatePersistentObject(Serializable obj, String strErrorMessage, String strNotUniqueErrorMessage)
     {
         try
         {
@@ -92,20 +92,12 @@ public class CtrDatabase
             commitCurrentTransaction();
             return 0;
         }
-        catch (PersistenceException he)
+        catch (PersistenceException  he)
         {
-            rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, strErrorMessage + "\n\nDetails:");
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(he, strErrorMessage);
-            }
+            handleException(he, strErrorMessage, strNotUniqueErrorMessage);
             return -1;
         }
+        
     }
 
     public void closeDBConnection()
@@ -132,13 +124,13 @@ public class CtrDatabase
         return getSession().createQuery(hql).getSingleResult();
     }
     
-    public void handleException(PersistenceException pe, String errorMessage)
+    public void handleException(PersistenceException pe, String errorMessage, String strNotUniqueErrorMessage)
     {
         rollbackCurrentTransaction();
 
-        if (pe instanceof ConstraintViolationException)
+        if (pe.getCause().getCause() instanceof ConstraintViolationException)
         {
-            CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
+            CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe.getCause().getCause(), errorMessage, strNotUniqueErrorMessage);
         }
         else
         {
