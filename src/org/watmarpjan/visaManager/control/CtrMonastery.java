@@ -18,6 +18,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  */
 public class CtrMonastery extends AbstractControllerDB
 {
+    private final String ERROR_UNIQUE_NICKNAME = "The monastery nickname you are trying to save already exists on database.";
 
     public CtrMonastery(CtrDatabase ctrDB)
     {
@@ -42,6 +43,7 @@ public class CtrMonastery extends AbstractControllerDB
 
             generatedID = m.getIdMonastery();
             m.setMonasteryName("New Monastery " + generatedID);
+            m.setMonasteryNickname("New Monastery " + generatedID);
 
             ctrDB.commitCurrentTransaction();
 
@@ -49,14 +51,14 @@ public class CtrMonastery extends AbstractControllerDB
 
         } catch (PersistenceException he)
         {
-            ctrDB.handleException(he, errorMessage);
+            ctrDB.handleException(he, errorMessage, ERROR_UNIQUE_NICKNAME);
             return null;
         }
     }
 
     public int update(Monastery m)
     {
-        return ctrDB.updatePersistentObject(m, "Error when saving monastery info.");
+        return ctrDB.updatePersistentObject(m, "Error when saving monastery info.", ERROR_UNIQUE_NICKNAME);
     }
 
     public ArrayList<String> loadMonasteryList()

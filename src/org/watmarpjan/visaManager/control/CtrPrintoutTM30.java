@@ -22,6 +22,7 @@ import org.watmarpjan.visaManager.util.Util;
 public class CtrPrintoutTM30 extends AbstractControllerDB {
 
     private final CtrMonasticProfile ctrProfile;
+    private final String ERROR_UNIQUE_NOTIF_DATE_AUX = "The combination of notification date and aux nuber you are trying to save already exists on database.";
     
     public CtrPrintoutTM30(CtrDatabase ctrDB, CtrMonasticProfile ctrProfile)
     {
@@ -54,7 +55,7 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         }
         catch (PersistenceException he)
         {
-            ctrDB.handleException(he, "Error when saving profile info.");
+            ctrDB.handleException(he, "Error when saving profile info.", ERROR_UNIQUE_NOTIF_DATE_AUX);
             return -1;
         }
     }
@@ -80,7 +81,7 @@ public class CtrPrintoutTM30 extends AbstractControllerDB {
         }
         catch (PersistenceException hex)
         {
-            ctrDB.handleException(hex, errorMessage);
+            ctrDB.handleException(hex, errorMessage, ERROR_UNIQUE_NOTIF_DATE_AUX);
             return -1;
         }  
     }
