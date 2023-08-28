@@ -35,6 +35,9 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
     private TextField tfName;
 
     @FXML
+    private TextField tfNameEnglish;
+    
+    @FXML
     private TextField tfNickname;
     
     @FXML
@@ -67,6 +70,17 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
     private TextField tfAddrRoad;
     @FXML
     private TextField tfAddrNumber;
+    
+    @FXML
+    private TextField tfAddrProvince90Day;
+    @FXML
+    private TextField tfAddrAmpher90Day;
+    @FXML
+    private TextField tfAddrTambol90Day;
+    @FXML
+    private TextField tfAddrRoad90Day;
+    @FXML
+    private TextField tfAddrNumber90Day;
 
     @FXML
     private TextField tfTHAddrProvince;
@@ -100,6 +114,7 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         listFields = new ArrayList();
 
         listFields.add(tfName);
+        listFields.add(tfNameEnglish);
         listFields.add(cbAddrCountry);
         
         listFields.add(tfTHAddrProvince);
@@ -113,6 +128,13 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         listFields.add(tfAddrTambol);
         listFields.add(tfAddrRoad);
         listFields.add(tfAddrNumber);
+        
+        listFields.add(tfAddrProvince90Day);
+        listFields.add(tfAddrAmpher90Day);
+        listFields.add(tfAddrTambol90Day);
+        listFields.add(tfAddrRoad90Day);
+        listFields.add(tfAddrNumber90Day);
+        
         listFields.add(tfNickname);
         listFields.add(tfAbbotName);
         listFields.add(tfPhoneNumber);
@@ -146,6 +168,7 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
     public void actionLockEdit()
     {
         tfName.setEditable(false);
+        tfNameEnglish.setEditable(false);
         tfNickname.setEditable(false);
         tfAbbotName.setEditable(false);
         tfPhoneNumber.setEditable(false);
@@ -159,6 +182,12 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         tfAddrTambol.setEditable(false);
         tfAddrRoad.setEditable(false);
         tfAddrNumber.setEditable(false);
+        
+        tfAddrProvince90Day.setEditable(false);
+        tfAddrAmpher90Day.setEditable(false);
+        tfAddrTambol90Day.setEditable(false);
+        tfAddrRoad90Day.setEditable(false);
+        tfAddrNumber90Day.setEditable(false);
         
         tfTHAddrProvince.setEditable(false);
         tfTHAddrAmpher.setEditable(false);
@@ -187,9 +216,16 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
             newName = tfName.getText();
 
             m.setMonasteryName(tfName.getText());
+            m.setMonasteryNameEnglish(tfNameEnglish.getText());
             m.setMonasteryNickname(tfNickname.getText());
             m.setAbbotName(tfAbbotName.getText());
             m.setPhoneNumber(tfPhoneNumber.getText());
+            
+            m.setAddrJangwat90DayOnline(tfAddrProvince90Day.getText());
+            m.setAddrAmpher90DayOnline(tfAddrAmpher90Day.getText());
+            m.setAddrTambon90DayOnline(tfAddrTambol90Day.getText());
+            m.setAddrRoad90DayOnline(tfAddrRoad90Day.getText());
+            m.setAddrNumber90DayOnline(tfAddrNumber90Day.getText());
 
             if (rbJkJangwat.isSelected())
             {
@@ -283,6 +319,7 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
     public void actionUnlockEdit()
     {
         tfName.setEditable(true);
+        tfNameEnglish.setEditable(true);
         tfNickname.setEditable(true);
         tfAbbotName.setEditable(true);
         tfPhoneNumber.setEditable(true);
@@ -295,6 +332,12 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         tfAddrTambol.setEditable(true);
         tfAddrRoad.setEditable(true);
         tfAddrNumber.setEditable(true);
+        
+        tfAddrProvince90Day.setEditable(true);
+        tfAddrAmpher90Day.setEditable(true);
+        tfAddrTambol90Day.setEditable(true);
+        tfAddrRoad90Day.setEditable(true);
+        tfAddrNumber90Day.setEditable(true);
         
         tfTHAddrProvince.setEditable(true);
         tfTHAddrAmpher.setEditable(true);
@@ -336,9 +379,18 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         if (m != null)
         {
             tfName.setText(m.getMonasteryName());
+            tfNameEnglish.setText(m.getMonasteryNameEnglish());
+            
             tfPhoneNumber.setText(m.getPhoneNumber());
             tfNickname.setText(m.getMonasteryNickname());
             tfAbbotName.setText(m.getAbbotName());
+            
+            tfAddrProvince90Day.setText(m.getAddrJangwat90DayOnline());
+            tfAddrAmpher90Day.setText(m.getAddrAmpher90DayOnline());
+            tfAddrTambol90Day.setText(m.getAddrTambon90DayOnline());
+            tfAddrRoad90Day.setText(m.getAddrRoad90DayOnline());
+            tfAddrNumber90Day.setText(m.getAddrNumber90DayOnline());            
+            
             clearAddrTextFields();
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {

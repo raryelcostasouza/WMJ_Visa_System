@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneMonastery">
    <content>
       <VBox>
@@ -35,7 +34,7 @@
                         <GridPane>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints vgrow="SOMETIMES" />
@@ -43,14 +42,18 @@
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Name:" />
-                              <Label text="Phone Number:" GridPane.rowIndex="3" />
+                              <Label text="Name (Thai):" />
+                              <Label text="Phone Number:" GridPane.rowIndex="4" />
                               <TextField fx:id="tfName" stylesheets="@thaiField.css" GridPane.columnIndex="1" />
-                              <TextField fx:id="tfPhoneNumber" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label layoutX="10.0" layoutY="108.0" text="Wat of JaoKana:" GridPane.rowIndex="4" />
-                              <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <TextField fx:id="tfNameEnglish" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="tfNickname" layoutX="114.0" layoutY="72.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="tfAbbotName" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="tfPhoneNumber" layoutX="110.0" layoutY="74.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label layoutX="10.0" layoutY="108.0" text="Wat of JaoKana:" GridPane.rowIndex="5" />
+                              <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
                                     <RadioButton fx:id="rbNo" mnemonicParsing="false" selected="true" text="No">
                                        <toggleGroup>
@@ -62,103 +65,143 @@
                                     <RadioButton fx:id="rbJKTambol" mnemonicParsing="false" text="Jaokana Tambol" toggleGroup="$tgJaokana" />
                                  </children>
                               </VBox>
-                              <Label text="Nickname:" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfNickname" layoutX="114.0" layoutY="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label layoutX="10.0" layoutY="52.0" text="Abbot Name (Thai):" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfAbbotName" stylesheets="@thaiField.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Nickname:" GridPane.rowIndex="2" />
+                              <Label layoutX="10.0" layoutY="52.0" text="Abbot Name (Thai):" GridPane.rowIndex="3" />
+                              <Label text="Name (English):" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
                   </HBox>
                </content>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" text="Address">
-               <content>
-                  <VBox>
-                     <children>
-                        <HBox alignment="CENTER">
+            <HBox>
+               <children>
+                  <TitledPane animated="false" collapsible="false" text="Address">
+                     <content>
+                        <VBox>
                            <children>
-                              <GridPane>
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                </rowConstraints>
+                              <HBox alignment="CENTER">
                                  <children>
-                                    <Label text="Province/State:" GridPane.rowIndex="1" />
-                                    <Label layoutX="10.0" layoutY="20.0" text="District/Ampher:" GridPane.rowIndex="2" />
-                                    <Label layoutX="10.0" layoutY="54.0" text="Subdistrict/Tambol:" GridPane.rowIndex="3" />
-                                    <Label layoutX="10.0" layoutY="53.0" text="Road:" GridPane.rowIndex="4" />
-                                    <Label layoutX="10.0" layoutY="73.0" text="Number:" GridPane.rowIndex="5" />
-                                    <Label text="Country:" />
-                                    <GridPane GridPane.columnIndex="1">
+                                    <GridPane>
                                       <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Province/State:" GridPane.rowIndex="1" />
+                                          <Label layoutX="10.0" layoutY="20.0" text="District/Ampher:" GridPane.rowIndex="2" />
+                                          <Label layoutX="10.0" layoutY="54.0" text="Subdistrict/Tambol:" GridPane.rowIndex="3" />
+                                          <Label layoutX="10.0" layoutY="53.0" text="Road:" GridPane.rowIndex="4" />
+                                          <Label layoutX="10.0" layoutY="73.0" text="Number:" GridPane.rowIndex="5" />
+                                          <Label text="Country:" />
+                                          <GridPane GridPane.columnIndex="1">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                              <RowConstraints vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <RadioButton fx:id="rbCountryThailand" mnemonicParsing="false" onAction="#enableTextFieldThai" text="Thailand">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="tgCountry" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <HBox alignment="CENTER" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <RadioButton fx:id="rbCountryOther" mnemonicParsing="false" onAction="#enableTextFieldEnglish" text="Other:" toggleGroup="$tgCountry" />
+                                                      <ComboBox fx:id="cbAddrCountry" editable="true" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </GridPane>
+                                          <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <TextField fx:id="tfTHAddrProvince" stylesheets="@thaiField.css" />
+                                                <TextField fx:id="tfAddrProvince" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <children>
+                                                <TextField fx:id="tfAddrAmpher" />
+                                                <TextField fx:id="tfTHAddrAmpher" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <children>
+                                                <TextField fx:id="tfAddrTambol" />
+                                                <TextField fx:id="tfTHAddrTambol" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <children>
+                                                <TextField fx:id="tfTHAddrRoad" stylesheets="@thaiField.css" />
+                                                <TextField fx:id="tfAddrRoad" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <children>
+                                                <TextField fx:id="tfAddrNumber" />
+                                                <TextField fx:id="tfTHAddrNumber" stylesheets="@thaiField.css" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" text="Address for Online 90 Day Notice">
+                     <content>
+                        <VBox>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" />
                                         <ColumnConstraints hgrow="SOMETIMES" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints vgrow="SOMETIMES" />
-                                          <RowConstraints vgrow="SOMETIMES" />
                                         <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
+                                          <RowConstraints vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <RadioButton fx:id="rbCountryThailand" mnemonicParsing="false" onAction="#enableTextFieldThai" text="Thailand">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="tgCountry" />
-                                             </toggleGroup>
-                                          </RadioButton>
-                                          <HBox alignment="CENTER" GridPane.rowIndex="1">
-                                             <children>
-                                                <RadioButton fx:id="rbCountryOther" mnemonicParsing="false" onAction="#enableTextFieldEnglish" text="Other:" toggleGroup="$tgCountry" />
-                                                <ComboBox fx:id="cbAddrCountry" editable="true" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
+                                          <Label text="Province/State (English):" />
+                                          <Label text="District/Ampher (English):" GridPane.rowIndex="1" />
+                                          <Label text="Subdistrict/Tambol (English):" GridPane.rowIndex="2" />
+                                          <Label text="Road (English):" GridPane.rowIndex="3" />
+                                          <Label text="Number (English):" GridPane.rowIndex="4" />
+                                          <TextField fx:id="tfAddrProvince90Day" GridPane.columnIndex="1" />
+                                          <TextField fx:id="tfAddrAmpher90Day" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="tfAddrTambol90Day" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="tfAddrRoad90Day" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="tfAddrNumber90Day" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                        </children>
                                     </GridPane>
-                                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <TextField fx:id="tfTHAddrProvince" stylesheets="@thaiField.css" />
-                                          <TextField fx:id="tfAddrProvince" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                       <children>
-                                          <TextField fx:id="tfAddrAmpher" />
-                                          <TextField fx:id="tfTHAddrAmpher" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <children>
-                                          <TextField fx:id="tfAddrTambol" />
-                                          <TextField fx:id="tfTHAddrTambol" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                       <children>
-                                          <TextField fx:id="tfAddrRoad" />
-                                          <TextField fx:id="tfTHAddrRoad" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                       <children>
-                                          <TextField fx:id="tfAddrNumber" />
-                                          <TextField fx:id="tfTHAddrNumber" layoutX="10.0" layoutY="70.0" stylesheets="@thaiField.css" />
-                                       </children>
-                                    </StackPane>
                                  </children>
-                              </GridPane>
+                              </HBox>
                            </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </content>
