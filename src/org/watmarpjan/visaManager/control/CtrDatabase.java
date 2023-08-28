@@ -13,6 +13,7 @@ import java.time.Instant;
 import javax.persistence.EntityManager;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -99,6 +100,11 @@ public class CtrDatabase
         }
         
     }
+    
+    public void reloadEntity(Serializable obj)
+    {
+        entityManager.refresh(obj);
+    }
 
     public void closeDBConnection()
     {
@@ -119,9 +125,16 @@ public class CtrDatabase
     public Object loadEntityByUniqueProperty(String entityName, String propertyName, String value2Search)
     {
         String hql;
-
-        hql = "from " + entityName + " e where e." + propertyName + " = '" + value2Search + "'";
-        return getSession().createQuery(hql).getSingleResult();
+        
+        try
+        {
+            hql = "from " + entityName + " e where e." + propertyName + " = '" + value2Search + "'";
+            return getSession().createQuery(hql).getSingleResult();
+        }
+        catch (NoResultException nre)
+        {
+            return null;
+        }        
     }
     
     public void handleException(PersistenceException pe, String errorMessage, String strNotUniqueErrorMessage)
