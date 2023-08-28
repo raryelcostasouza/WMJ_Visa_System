@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import org.watmarpjan.visaManager.gui.panel.CtrGUIMain;
 import org.watmarpjan.visaManager.gui.panel.CtrPaneEditSave;
-import org.watmarpjan.visaManager.gui.panel.CtrPaneMonasticProfile;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 
 /**
  *
@@ -47,16 +47,10 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
         this.unsavedChangesCurrentForm = true;
         ctrEditSave.enableSaveButton();
 
-       setHasUnsavedChangesMonasticProfile();
-    }
-    
-    private void setHasUnsavedChangesMonasticProfile()
-    {
-        //special case for profile panel
-        //need to lock the profile switching combobox
-        if (ctrGUIMain.getCurrentPaneController() instanceof CtrPaneMonasticProfile)
+        if (ctrGUIMain.getCurrentPaneController() instanceof AChildPaneControllerCBSelectableEntity)
         {
-            ctrGUIMain.getCtrPaneSelection().lockCBMonasticSelection();
+            AChildPaneControllerCBSelectableEntity currentPane = (AChildPaneControllerCBSelectableEntity) ctrGUIMain.getCurrentPaneController();
+            currentPane.lockCBSelectionEntity();
         }
     }
 
@@ -65,11 +59,10 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
         this.unsavedChangesCurrentForm = false;
         ctrEditSave.disableSaveButton();
 
-        //special case for profile panel
-        //need to unlock the profile switching combobox
-        if (ctrGUIMain.getCurrentPaneController() instanceof CtrPaneMonasticProfile)
+        if (ctrGUIMain.getCurrentPaneController() instanceof AChildPaneControllerCBSelectableEntity)
         {
-            ctrGUIMain.getCtrPaneSelection().unlockCBMonasticSelection();
+            AChildPaneControllerCBSelectableEntity currentPane = (AChildPaneControllerCBSelectableEntity) ctrGUIMain.getCurrentPaneController();
+            currentPane.unlockCBSelectionEntity();
         }
     }
 
@@ -78,7 +71,7 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
     {
         if (!ctrEditSave.getLockStatus() && !unsavedChangesCurrentForm)
         {
-            setHasUnsavedChangesMonasticProfile();
+            setHasUnsavedChanges();
 
             unsavedChangesCurrentForm = true;
             ctrEditSave.enableSaveButton();
@@ -122,5 +115,4 @@ public class CtrFieldChangeListener implements ChangeListener<Object>
             }
         }
     }
-
 }
