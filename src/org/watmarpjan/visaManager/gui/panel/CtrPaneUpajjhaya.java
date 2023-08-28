@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
-import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
@@ -13,13 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
 
 /**
  *
  * @author WMJ_user
  */
-public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEditGUIForm
+public class CtrPaneUpajjhaya extends AChildPaneControllerCBSelectableEntity implements ICreateEditGUIForm
 {
 
     @FXML
@@ -163,12 +163,16 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
         String nameSelectedUpajjhaya;
         Upajjhaya u;
 
-        nameSelectedUpajjhaya = cbUpajjhayaList.getValue();
-        if (nameSelectedUpajjhaya != null)
+        //check if there is unsaved changes before filling the data of the newly selected monastery
+        if (ctrGUIMain.checkUnsavedChanges() == 0)
         {
-            ctrGUIMain.getPaneEditSaveController().actionLock();
-            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(nameSelectedUpajjhaya);
-            fillUpajjhayaData(u);
+            nameSelectedUpajjhaya = cbUpajjhayaList.getValue();
+            if (nameSelectedUpajjhaya != null)
+            {
+                ctrGUIMain.getPaneEditSaveController().actionLock();
+                u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(nameSelectedUpajjhaya);
+                fillUpajjhayaData(u);
+            }
         }
     }
 
@@ -185,5 +189,16 @@ public class CtrPaneUpajjhaya extends AChildPaneController implements ICreateEdi
             cbUpajjhayaList.setValue(nameNewUpajjhaya);
         }
     }
+    
+    @Override
+    public void lockCBSelectionEntity()
+    {
+        cbUpajjhayaList.setDisable(true);
+    }
 
+    @Override
+    public void unlockCBSelectionEntity()
+    {
+        cbUpajjhayaList.setDisable(false);
+    }
 }
