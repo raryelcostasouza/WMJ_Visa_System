@@ -1,4 +1,7 @@
-v.1.12-BETA
+v.1.12-BETA2
+* Fixed bug 90 Day Form not working for Tourist Visas (field name on form filler was different than pdf)
+-----------------------------------------------------------------------------------------
+v.1.12-BETA1
 *90 Day Online
     Address fields added to DB and editable via Monastery Panel
     90 Day Online Tab filled using new fields. Unused fields removed
