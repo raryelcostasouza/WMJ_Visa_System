@@ -297,8 +297,8 @@ public class CtrPDF
 
         if (p.getVisaType() != null && p.getVisaType().equals("Tourist"))
         {
-            ((PDCheckBox) acroForm.getField("TOURIST")).check();
-            ((PDCheckBox) acroForm.getField("NONIMM")).unCheck();
+            ((PDCheckBox) acroForm.getField("visaTouristPDF")).check();
+            ((PDCheckBox) acroForm.getField("visaNonimmigrantPDF")).unCheck();
         }
 
         ldArrival = Util.convertDateToLocalDate(p.getArrivalLastEntryDate());
