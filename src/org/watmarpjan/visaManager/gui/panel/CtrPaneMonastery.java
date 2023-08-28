@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
-import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
@@ -25,7 +25,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonastery extends AChildPaneController implements ICreateEditGUIForm
+public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity implements ICreateEditGUIForm
 {
 
     @FXML
@@ -306,6 +306,18 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         rbJkJangwat.setDisable(false);
         rbJKAmpher.setDisable(false);
         rbJKTambol.setDisable(false);
+    }
+    
+    @Override
+    public void lockCBSelectionEntity()
+    {
+        cbMonasteryList.setDisable(true);
+    }
+
+    @Override
+    public void unlockCBSelectionEntity()
+    {
+        cbMonasteryList.setDisable(false);
     }
 
     public void fillMonasteryData(Monastery m)

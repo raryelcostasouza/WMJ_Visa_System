@@ -9,11 +9,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
 
-public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditGUIForm
+public class CtrPaneEmbassy extends AChildPaneControllerCBSelectableEntity implements ICreateEditGUIForm
 {
 
     @FXML
@@ -328,5 +329,16 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         }
         
     }
-
+    
+    @Override
+    public void unlockCBSelectionEntity()
+    {
+        cbEmbassy.setDisable(false);
+    }
+    
+    @Override
+    public void lockCBSelectionEntity()
+    {
+        cbEmbassy.setDisable(true);
+    }    
 }
