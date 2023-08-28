@@ -1,7 +1,3 @@
-Cleanup Archive naktam certificate and EVisa - duplicated code
-
-
-
 Static CtrDB 
 Migracao formulários pdf e cartas para herança
 Layout font too big - detect hidpi screeen
