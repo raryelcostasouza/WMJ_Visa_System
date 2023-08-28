@@ -40,8 +40,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monastery.findByMonasteryOfJaokana", query = "SELECT m FROM Monastery m WHERE m.monasteryOfJaokana = :monasteryOfJaokana"),
     @NamedQuery(name = "Monastery.findByMonasteryName", query = "SELECT m FROM Monastery m WHERE m.monasteryName = :monasteryName"),
     @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber"),
+    @NamedQuery(name = "Monastery.findByAbbotName", query = "SELECT m FROM Monastery m WHERE m.abbotName = :abbotName"),
     @NamedQuery(name = "Monastery.findByMonasteryNickname", query = "SELECT m FROM Monastery m WHERE m.monasteryNickname = :monasteryNickname"),
-    @NamedQuery(name = "Monastery.findByAbbotName", query = "SELECT m FROM Monastery m WHERE m.abbotName = :abbotName")
+    @NamedQuery(name = "Monastery.findByMonasteryNameEnglish", query = "SELECT m FROM Monastery m WHERE m.monasteryNameEnglish = :monasteryNameEnglish"),
+    @NamedQuery(name = "Monastery.findByAddrAmpher90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrAmpher90DayOnline = :addrAmpher90DayOnline"),
+    @NamedQuery(name = "Monastery.findByAddrRoad90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrRoad90DayOnline = :addrRoad90DayOnline"),
+    @NamedQuery(name = "Monastery.findByAddrTambon90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrTambon90DayOnline = :addrTambon90DayOnline"),
+    @NamedQuery(name = "Monastery.findByAddrNumber90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrNumber90DayOnline = :addrNumber90DayOnline"),
+    @NamedQuery(name = "Monastery.findByAddrJangwat90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrJangwat90DayOnline = :addrJangwat90DayOnline")
 })
 public class Monastery implements Serializable
 {
@@ -71,10 +77,22 @@ public class Monastery implements Serializable
     private String monasteryName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @Column(name = "MONASTERY_NICKNAME")
-    private String monasteryNickname;
     @Column(name = "ABBOT_NAME")
     private String abbotName;
+    @Column(name = "MONASTERY_NICKNAME")
+    private String monasteryNickname;
+    @Column(name = "MONASTERY_NAME_ENGLISH")
+    private String monasteryNameEnglish;
+    @Column(name = "ADDR_AMPHER_90_DAY_ONLINE")
+    private String addrAmpher90DayOnline;
+    @Column(name = "ADDR_ROAD_90_DAY_ONLINE")
+    private String addrRoad90DayOnline;
+    @Column(name = "ADDR_TAMBON_90_DAY_ONLINE")
+    private String addrTambon90DayOnline;
+    @Column(name = "ADDR_NUMBER_90_DAY_ONLINE")
+    private String addrNumber90DayOnline;
+    @Column(name = "ADDR_JANGWAT_90_DAY_ONLINE")
+    private String addrJangwat90DayOnline;
     @OneToMany(mappedBy = "monastery")
     private Set<Upajjhaya> upajjhayaSet;
     @OneToMany(mappedBy = "monasteryResidence")
@@ -201,6 +219,16 @@ public class Monastery implements Serializable
         this.phoneNumber = phoneNumber;
     }
 
+    public String getAbbotName()
+    {
+        return abbotName;
+    }
+
+    public void setAbbotName(String abbotName)
+    {
+        this.abbotName = abbotName;
+    }
+
     public String getMonasteryNickname()
     {
         return monasteryNickname;
@@ -211,14 +239,64 @@ public class Monastery implements Serializable
         this.monasteryNickname = monasteryNickname;
     }
 
-    public String getAbbotName()
+    public String getMonasteryNameEnglish()
     {
-        return abbotName;
+        return monasteryNameEnglish;
     }
 
-    public void setAbbotName(String abbotName)
+    public void setMonasteryNameEnglish(String monasteryNameEnglish)
     {
-        this.abbotName = abbotName;
+        this.monasteryNameEnglish = monasteryNameEnglish;
+    }
+
+    public String getAddrAmpher90DayOnline()
+    {
+        return addrAmpher90DayOnline;
+    }
+
+    public void setAddrAmpher90DayOnline(String addrAmpher90DayOnline)
+    {
+        this.addrAmpher90DayOnline = addrAmpher90DayOnline;
+    }
+
+    public String getAddrRoad90DayOnline()
+    {
+        return addrRoad90DayOnline;
+    }
+
+    public void setAddrRoad90DayOnline(String addrRoad90DayOnline)
+    {
+        this.addrRoad90DayOnline = addrRoad90DayOnline;
+    }
+
+    public String getAddrTambon90DayOnline()
+    {
+        return addrTambon90DayOnline;
+    }
+
+    public void setAddrTambon90DayOnline(String addrTambon90DayOnline)
+    {
+        this.addrTambon90DayOnline = addrTambon90DayOnline;
+    }
+
+    public String getAddrNumber90DayOnline()
+    {
+        return addrNumber90DayOnline;
+    }
+
+    public void setAddrNumber90DayOnline(String addrNumber90DayOnline)
+    {
+        this.addrNumber90DayOnline = addrNumber90DayOnline;
+    }
+
+    public String getAddrJangwat90DayOnline()
+    {
+        return addrJangwat90DayOnline;
+    }
+
+    public void setAddrJangwat90DayOnline(String addrJangwat90DayOnline)
+    {
+        this.addrJangwat90DayOnline = addrJangwat90DayOnline;
     }
 
     @XmlTransient
