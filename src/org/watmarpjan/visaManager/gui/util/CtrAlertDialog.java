@@ -141,14 +141,14 @@ public class CtrAlertDialog
         
         dbex = (DerbySQLIntegrityConstraintViolationException) cve.getCause();
        
-        msgDBEx = msg+"\n:"
-                + msgNotUnique+"\n:"
+        msgDBEx = msg+"\n\n"
+                + msgNotUnique+"\n"
                 + "\nDetails:"
                 + "\n\nConstraint name: " + dbex.getConstraintName()
                 + "\nSQL state: " + cve.getSQLState()
                 + "\nMessage: " + dbex.getMessage();
 
-        exceptionDialog(cve, msg + msgNotUnique +msgDBEx);
+        exceptionDialog(cve, msgDBEx);
     }
 
     public static void warningDialog(String msg)
