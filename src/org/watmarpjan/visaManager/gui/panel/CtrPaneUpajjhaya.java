@@ -61,7 +61,7 @@ public class CtrPaneUpajjhaya extends AChildPaneControllerCBSelectableEntity imp
         String previousName, newName;
 
         u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(cbUpajjhayaList.getValue());
-
+        
         if (u != null)
         {
             previousName = u.getUpajjhayaName();
@@ -163,16 +163,12 @@ public class CtrPaneUpajjhaya extends AChildPaneControllerCBSelectableEntity imp
         String nameSelectedUpajjhaya;
         Upajjhaya u;
 
-        //check if there is unsaved changes before filling the data of the newly selected monastery
-        if (ctrGUIMain.checkUnsavedChanges() == 0)
+        nameSelectedUpajjhaya = cbUpajjhayaList.getValue();
+        if (nameSelectedUpajjhaya != null)
         {
-            nameSelectedUpajjhaya = cbUpajjhayaList.getValue();
-            if (nameSelectedUpajjhaya != null)
-            {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-                u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(nameSelectedUpajjhaya);
-                fillUpajjhayaData(u);
-            }
+            ctrGUIMain.getPaneEditSaveController().actionLock();
+            u = ctrGUIMain.getCtrMain().getCtrUpajjhaya().loadByName(nameSelectedUpajjhaya);
+            fillUpajjhayaData(u);
         }
     }
 

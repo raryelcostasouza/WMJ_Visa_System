@@ -466,18 +466,14 @@ public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity imp
         String nameSelectedMonastery;
         Monastery m;
 
-        //check if there is unsaved changes before filling the data of the newly selected monastery
-        if (ctrGUIMain.checkUnsavedChanges() == 0)
+        nameSelectedMonastery = cbMonasteryList.getValue();
+        if (nameSelectedMonastery != null)
         {
-            nameSelectedMonastery = cbMonasteryList.getValue();
-            if (nameSelectedMonastery != null)
-            {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-                m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
-                currentSelectedMonastery = m;
-                fillMonasteryData(m);
-            }
-        }
+            ctrGUIMain.getPaneEditSaveController().actionLock();
+            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
+            currentSelectedMonastery = m;
+            fillMonasteryData(m);
+        }        
     }
 
     @Override

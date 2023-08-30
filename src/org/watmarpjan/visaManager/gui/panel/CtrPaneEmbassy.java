@@ -315,19 +315,14 @@ public class CtrPaneEmbassy extends AChildPaneControllerCBSelectableEntity imple
         String nameSelectedEmbassy;
         Embassy e;
 
-        //check if there is unsaved changes before filling the data of the newly selected embassy
-        if (ctrGUIMain.checkUnsavedChanges() == 0)
+        nameSelectedEmbassy = cbEmbassy.getValue();
+        if (nameSelectedEmbassy != null)
         {
-            nameSelectedEmbassy = cbEmbassy.getValue();
-            if (nameSelectedEmbassy != null)
-            {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-                e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
-                currentSelectedEmbassy = e;
-                fillEmbassyData(e);
-            }    
-        }
-        
+            ctrGUIMain.getPaneEditSaveController().actionLock();
+            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
+            currentSelectedEmbassy = e;
+            fillEmbassyData(e);
+        }            
     }
     
     @Override
