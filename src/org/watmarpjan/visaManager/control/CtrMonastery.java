@@ -74,8 +74,8 @@ public class CtrMonastery extends AbstractControllerDB
     {
          Monastery mExisting;
         
-        //Validation to check if there is no other monastery with same nickname, except for null nicknames
-        if (m.getMonasteryNickname() != null)
+        //Validation to check if there is no other monastery with same nickname, except for null/empty nicknames
+        if ((m.getMonasteryNickname() != null ) && !(m.getMonasteryNickname().isEmpty()))
         {
             mExisting = loadByNickname(m.getMonasteryNickname());
             //if the found monastery id is different than the one being updated, this is a duplicate
