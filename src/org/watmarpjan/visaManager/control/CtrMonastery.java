@@ -103,7 +103,7 @@ public class CtrMonastery extends AbstractControllerDB
         ArrayList<String> alMonastery;
         String hql;
 
-        hql = "select m.monasteryNickname from Monastery m where m.monasteryNickname is not null";
+        hql = "select m.monasteryNickname from Monastery m where m.monasteryNickname is not null and m.monasteryNickname !='' ";
         alMonastery = (ArrayList<String>) ctrDB.getSession().createQuery(hql).getResultList();
 
         return alMonastery;
