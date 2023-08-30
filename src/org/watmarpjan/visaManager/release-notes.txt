@@ -1,3 +1,10 @@
+v.1.12-BETA3
+* Fixed bug unsaved modifications panel showing after hit save for Upajjhaya, Embassy and Monastery
+* Fixed bug monastery nickname not being possible to change to empty
+* TM 30: added validation to require at least one monastic to be selected
+* TM 30: filter out empty string nicknames to load on Residence Monastery combobox
+-----------------------------------------------------------------------------------------
+
 v.1.12-BETA2
 * Fixed bug 90 Day Form not working for Tourist Visas (field name on form filler was different than pdf)
 -----------------------------------------------------------------------------------------
