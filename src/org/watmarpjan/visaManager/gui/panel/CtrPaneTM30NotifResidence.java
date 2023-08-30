@@ -281,7 +281,7 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
         }
         else
         {
-            CtrAlertDialog.warningDialog("Fill out all fields before adding a new Printout.");
+            CtrAlertDialog.warningDialog("Fill out all fields and select at least one monastic before adding a new Printout.");
         }
     }
 
@@ -343,8 +343,21 @@ public class CtrPaneTM30NotifResidence extends AChildPaneController
 
     private boolean validateFields()
     {
-        return (fSelected != null)
+        return validateAtLeastOneMonasticSelected() &&
+                (fSelected != null)
                 && (dpNotification.getValue() != null)
                 && (cbResidenceMonastery.getValue() != null);
+    }
+    
+    private boolean validateAtLeastOneMonasticSelected()
+    {
+        for (CheckBoxTreeItem<String> cb : bMonasticSelection.getListCheckBoxMonastics())
+        {
+            if (cb.isSelected())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
