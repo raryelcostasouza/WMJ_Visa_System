@@ -1,4 +1,4 @@
-v.1.12-BETA3
+v.1.12.0
 * Fixed bug unsaved modifications panel showing after hit save for Upajjhaya, Embassy and Monastery
 * Fixed bug monastery nickname not being possible to change to empty
 * TM 30: added validation to require at least one monastic to be selected
