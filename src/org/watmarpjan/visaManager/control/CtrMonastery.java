@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
 /**
@@ -18,6 +19,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  */
 public class CtrMonastery extends AbstractControllerDB
 {
+    private final String ERROR_UNIQUE_NAME = "The monastery name you are trying to save already exists on database.";
 
     public CtrMonastery(CtrDatabase ctrDB)
     {
@@ -49,14 +51,40 @@ public class CtrMonastery extends AbstractControllerDB
 
         } catch (PersistenceException he)
         {
-            ctrDB.handleException(he, errorMessage);
+            ctrDB.handleException(he, errorMessage, ERROR_UNIQUE_NAME);
             return null;
         }
     }
 
     public int update(Monastery m)
+    {   
+        if (checkNonNullDuplicateNickname(m) == -1)
+        {
+            ctrDB.reloadEntity(m);
+            CtrAlertDialog.errorDialog("Duplicated nickname! There is already a monastery registered with the same nickname.");
+            return -1;
+        }
+        else
+        {
+            return ctrDB.updatePersistentObject(m, "Error when saving monastery info.", ERROR_UNIQUE_NAME);
+        }
+    }
+    
+    public int checkNonNullDuplicateNickname(Monastery m)
     {
-        return ctrDB.updatePersistentObject(m, "Error when saving monastery info.");
+         Monastery mExisting;
+        
+        //Validation to check if there is no other monastery with same nickname, except for null/empty nicknames
+        if ((m.getMonasteryNickname() != null ) && !(m.getMonasteryNickname().isEmpty()))
+        {
+            mExisting = loadByNickname(m.getMonasteryNickname());
+            //if the found monastery id is different than the one being updated, this is a duplicate
+            if (mExisting != null && mExisting.getIdMonastery() != m.getIdMonastery())
+            {
+                return -1;
+            }
+        }    
+        return 0;
     }
 
     public ArrayList<String> loadMonasteryList()
@@ -75,7 +103,7 @@ public class CtrMonastery extends AbstractControllerDB
         ArrayList<String> alMonastery;
         String hql;
 
-        hql = "select m.monasteryNickname from Monastery m where m.monasteryNickname is not null";
+        hql = "select m.monasteryNickname from Monastery m where m.monasteryNickname is not null and m.monasteryNickname !='' ";
         alMonastery = (ArrayList<String>) ctrDB.getSession().createQuery(hql).getResultList();
 
         return alMonastery;

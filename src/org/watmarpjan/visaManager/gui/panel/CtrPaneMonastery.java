@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.gui.panel;
 
-import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 
@@ -25,7 +25,7 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  *
  * @author WMJ_user
  */
-public class CtrPaneMonastery extends AChildPaneController implements ICreateEditGUIForm
+public class CtrPaneMonastery extends AChildPaneControllerCBSelectableEntity implements ICreateEditGUIForm
 {
 
     @FXML
@@ -34,6 +34,9 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     @FXML
     private TextField tfName;
 
+    @FXML
+    private TextField tfNameEnglish;
+    
     @FXML
     private TextField tfNickname;
     
@@ -67,6 +70,17 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     private TextField tfAddrRoad;
     @FXML
     private TextField tfAddrNumber;
+    
+    @FXML
+    private TextField tfAddrProvince90Day;
+    @FXML
+    private TextField tfAddrAmpher90Day;
+    @FXML
+    private TextField tfAddrTambol90Day;
+    @FXML
+    private TextField tfAddrRoad90Day;
+    @FXML
+    private TextField tfAddrNumber90Day;
 
     @FXML
     private TextField tfTHAddrProvince;
@@ -100,6 +114,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields = new ArrayList();
 
         listFields.add(tfName);
+        listFields.add(tfNameEnglish);
         listFields.add(cbAddrCountry);
         
         listFields.add(tfTHAddrProvince);
@@ -113,6 +128,13 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         listFields.add(tfAddrTambol);
         listFields.add(tfAddrRoad);
         listFields.add(tfAddrNumber);
+        
+        listFields.add(tfAddrProvince90Day);
+        listFields.add(tfAddrAmpher90Day);
+        listFields.add(tfAddrTambol90Day);
+        listFields.add(tfAddrRoad90Day);
+        listFields.add(tfAddrNumber90Day);
+        
         listFields.add(tfNickname);
         listFields.add(tfAbbotName);
         listFields.add(tfPhoneNumber);
@@ -146,6 +168,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionLockEdit()
     {
         tfName.setEditable(false);
+        tfNameEnglish.setEditable(false);
         tfNickname.setEditable(false);
         tfAbbotName.setEditable(false);
         tfPhoneNumber.setEditable(false);
@@ -159,6 +182,12 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         tfAddrTambol.setEditable(false);
         tfAddrRoad.setEditable(false);
         tfAddrNumber.setEditable(false);
+        
+        tfAddrProvince90Day.setEditable(false);
+        tfAddrAmpher90Day.setEditable(false);
+        tfAddrTambol90Day.setEditable(false);
+        tfAddrRoad90Day.setEditable(false);
+        tfAddrNumber90Day.setEditable(false);
         
         tfTHAddrProvince.setEditable(false);
         tfTHAddrAmpher.setEditable(false);
@@ -187,9 +216,16 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
             newName = tfName.getText();
 
             m.setMonasteryName(tfName.getText());
+            m.setMonasteryNameEnglish(tfNameEnglish.getText());
             m.setMonasteryNickname(tfNickname.getText());
             m.setAbbotName(tfAbbotName.getText());
             m.setPhoneNumber(tfPhoneNumber.getText());
+            
+            m.setAddrJangwat90DayOnline(tfAddrProvince90Day.getText());
+            m.setAddrAmpher90DayOnline(tfAddrAmpher90Day.getText());
+            m.setAddrTambon90DayOnline(tfAddrTambol90Day.getText());
+            m.setAddrRoad90DayOnline(tfAddrRoad90Day.getText());
+            m.setAddrNumber90DayOnline(tfAddrNumber90Day.getText());
 
             if (rbJkJangwat.isSelected())
             {
@@ -283,6 +319,7 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
     public void actionUnlockEdit()
     {
         tfName.setEditable(true);
+        tfNameEnglish.setEditable(true);
         tfNickname.setEditable(true);
         tfAbbotName.setEditable(true);
         tfPhoneNumber.setEditable(true);
@@ -296,6 +333,12 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         tfAddrRoad.setEditable(true);
         tfAddrNumber.setEditable(true);
         
+        tfAddrProvince90Day.setEditable(true);
+        tfAddrAmpher90Day.setEditable(true);
+        tfAddrTambol90Day.setEditable(true);
+        tfAddrRoad90Day.setEditable(true);
+        tfAddrNumber90Day.setEditable(true);
+        
         tfTHAddrProvince.setEditable(true);
         tfTHAddrAmpher.setEditable(true);
         tfTHAddrTambol.setEditable(true);
@@ -306,6 +349,18 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         rbJkJangwat.setDisable(false);
         rbJKAmpher.setDisable(false);
         rbJKTambol.setDisable(false);
+    }
+    
+    @Override
+    public void lockCBSelectionEntity()
+    {
+        cbMonasteryList.setDisable(true);
+    }
+
+    @Override
+    public void unlockCBSelectionEntity()
+    {
+        cbMonasteryList.setDisable(false);
     }
 
     public void fillMonasteryData(Monastery m)
@@ -324,9 +379,18 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         if (m != null)
         {
             tfName.setText(m.getMonasteryName());
+            tfNameEnglish.setText(m.getMonasteryNameEnglish());
+            
             tfPhoneNumber.setText(m.getPhoneNumber());
             tfNickname.setText(m.getMonasteryNickname());
             tfAbbotName.setText(m.getAbbotName());
+            
+            tfAddrProvince90Day.setText(m.getAddrJangwat90DayOnline());
+            tfAddrAmpher90Day.setText(m.getAddrAmpher90DayOnline());
+            tfAddrTambol90Day.setText(m.getAddrTambon90DayOnline());
+            tfAddrRoad90Day.setText(m.getAddrRoad90DayOnline());
+            tfAddrNumber90Day.setText(m.getAddrNumber90DayOnline());            
+            
             clearAddrTextFields();
             if (m.getAddrCountry() != null && m.getAddrCountry().equals(AppConstants.COUNTRY_THAILAND))
             {
@@ -402,18 +466,14 @@ public class CtrPaneMonastery extends AChildPaneController implements ICreateEdi
         String nameSelectedMonastery;
         Monastery m;
 
-        //check if there is unsaved changes before filling the data of the newly selected monastery
-        if (ctrGUIMain.checkUnsavedChanges() == 0)
+        nameSelectedMonastery = cbMonasteryList.getValue();
+        if (nameSelectedMonastery != null)
         {
-            nameSelectedMonastery = cbMonasteryList.getValue();
-            if (nameSelectedMonastery != null)
-            {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-                m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
-                currentSelectedMonastery = m;
-                fillMonasteryData(m);
-            }
-        }
+            ctrGUIMain.getPaneEditSaveController().actionLock();
+            m = ctrGUIMain.getCtrMain().getCtrMonastery().loadByName(nameSelectedMonastery);
+            currentSelectedMonastery = m;
+            fillMonasteryData(m);
+        }        
     }
 
     @Override

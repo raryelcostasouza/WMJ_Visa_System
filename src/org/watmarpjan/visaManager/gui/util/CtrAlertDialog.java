@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import org.apache.derby.shared.common.error.DerbySQLIntegrityConstraintViolationException;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
@@ -133,16 +134,21 @@ public class CtrAlertDialog
         alert.showAndWait();
     }
 
-    public static void databaseExceptionDialog(ConstraintViolationException cve, String msg)
+    public static void databaseExceptionDialog(ConstraintViolationException cve, String msg, String msgNotUnique)
     {
         String msgDBEx;
-
-        msgDBEx = "\nDetails:"
-                + "\n\nConstraint name: " + cve.getConstraintName()
+        DerbySQLIntegrityConstraintViolationException dbex;
+        
+        dbex = (DerbySQLIntegrityConstraintViolationException) cve.getCause();
+       
+        msgDBEx = msg+"\n\n"
+                + msgNotUnique+"\n"
+                + "\nDetails:"
+                + "\n\nConstraint name: " + dbex.getConstraintName()
                 + "\nSQL state: " + cve.getSQLState()
-                + "\nSQL command: " + cve.getSQL();
+                + "\nMessage: " + dbex.getMessage();
 
-        exceptionDialog(cve, msg + msgDBEx);
+        exceptionDialog(cve, msgDBEx);
     }
 
     public static void warningDialog(String msg)

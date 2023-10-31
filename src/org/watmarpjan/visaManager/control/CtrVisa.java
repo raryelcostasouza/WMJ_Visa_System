@@ -22,6 +22,8 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public class CtrVisa extends AbstractControllerDB
 {
+    
+    private final String ERROR_UNIQUE_EXT_NUMBER = "The visa extension number you are trying to save already exists on database.";
 
     public CtrVisa(CtrDatabase ctrDB)
     {
@@ -41,7 +43,7 @@ public class CtrVisa extends AbstractControllerDB
 
         } catch (PersistenceException hex)
         {
-            ctrDB.handleException(hex, errorMessage);
+            ctrDB.handleException(hex, errorMessage, ERROR_UNIQUE_EXT_NUMBER);
             return -1;
         }
     }
@@ -58,7 +60,7 @@ public class CtrVisa extends AbstractControllerDB
 
         } catch (PersistenceException hex)
         {
-            ctrDB.handleException(hex, errorMessage);
+            ctrDB.handleException(hex, errorMessage, "");
             return -1;
         }
     }
@@ -178,7 +180,7 @@ public class CtrVisa extends AbstractControllerDB
 
         } catch (PersistenceException hex)
         {
-            ctrDB.handleException(hex, errorMessage);
+            ctrDB.handleException(hex, errorMessage, ERROR_UNIQUE_EXT_NUMBER);
             return -1;
         }
     }
@@ -214,7 +216,7 @@ public class CtrVisa extends AbstractControllerDB
 
         } catch (PersistenceException hex)
         {
-            ctrDB.handleException(hex, errorMessage);
+            ctrDB.handleException(hex, errorMessage, "");
             return -1;
         }
     }

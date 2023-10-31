@@ -77,14 +77,11 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
     @FXML
     private TextField tfNationality;
 
-    @FXML
-    private TextField tfArrivalTm6Number;
+    
     @FXML
     private DatePicker dpArrivalDate;
     @FXML
     private DatePicker dpStayPermittedUntil;
-    @FXML
-    private RadioButton rbTravelBy;
 
     @FXML
     private TextField tfBuildingName;
@@ -128,8 +125,6 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
 
     private ArrayList<TextField> alTextFields;
 
-    @FXML
-    private TextField tfVisaManagerEmail;
     @FXML
     private TextField tfVisaManagerPhoneSection1;
     @FXML
@@ -268,8 +263,6 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
         alTextFields.add(tfMiddleName);
         alTextFields.add(tfNationality);
 
-        alTextFields.add(tfArrivalTm6Number);
-
         alTextFields.add(tfBuildingName);
         alTextFields.add(tfAddrStateProvince);
         alTextFields.add(tfAddrCityAmphur);
@@ -330,20 +323,18 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
             dpDateOfBirth.setValue(Util.convertDateToLocalDate(p.getBirthDate()));
             tfNationality.setText(p.getNationality());
 
-            tfArrivalTm6Number.setText(p.getArrivalCardNumber());
             dpArrivalDate.setValue(Util.convertDateToLocalDate(p.getArrivalLastEntryDate()));
             dpStayPermittedUntil.setValue(ldStayPermittedUntil);
-            rbTravelBy.setText(p.getArrivalTravelBy());
 
             if (p.getMonasteryResidingAt() != null)
             {
                 monastery = p.getMonasteryResidingAt();
-                tfBuildingName.setText(monastery.getMonasteryName());
-                tfAddrNumber.setText(monastery.getAddrNumber());
-                tfAddrSoiRoad.setText(monastery.getAddrRoad());
-                tfAddrStateProvince.setText(monastery.getAddrJangwat());
-                tfAddrCityAmphur.setText(monastery.getAddrAmpher());
-                tfAddrDistrictTambon.setText(monastery.getAddrTambon());
+                tfBuildingName.setText(monastery.getMonasteryNameEnglish());
+                tfAddrNumber.setText(monastery.getAddrNumber90DayOnline());
+                tfAddrSoiRoad.setText(monastery.getAddrRoad90DayOnline());
+                tfAddrStateProvince.setText(monastery.getAddrJangwat90DayOnline());
+                tfAddrCityAmphur.setText(monastery.getAddrAmpher90DayOnline());
+                tfAddrDistrictTambon.setText(monastery.getAddrTambon90DayOnline());
             }
 
             for (TextField tf : alTextFields)
@@ -470,7 +461,6 @@ public class CtrPane90DayNotice extends AChildPaneControllerExportPDF implements
         if (cbVisaManager.getValue() != null)
         {
             pVisaManager = ctrGUIMain.getCtrMain().getCtrProfile().loadByNickName(cbVisaManager.getValue());
-            tfVisaManagerEmail.setText(pVisaManager.getEmail());
             if ((pVisaManager.getPhoneNumber1() != null) && 
                     (pVisaManager.getPhoneNumber1().length() >= 10))
             {

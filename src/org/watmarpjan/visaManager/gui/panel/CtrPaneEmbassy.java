@@ -9,11 +9,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.watmarpjan.visaManager.gui.intface.ICreateEditGUIForm;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
+import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.gui.util.GUIUtil;
 import org.watmarpjan.visaManager.model.hibernate.Embassy;
 
-public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditGUIForm
+public class CtrPaneEmbassy extends AChildPaneControllerCBSelectableEntity implements ICreateEditGUIForm
 {
 
     @FXML
@@ -314,19 +315,25 @@ public class CtrPaneEmbassy extends AChildPaneController implements ICreateEditG
         String nameSelectedEmbassy;
         Embassy e;
 
-        //check if there is unsaved changes before filling the data of the newly selected embassy
-        if (ctrGUIMain.checkUnsavedChanges() == 0)
+        nameSelectedEmbassy = cbEmbassy.getValue();
+        if (nameSelectedEmbassy != null)
         {
-            nameSelectedEmbassy = cbEmbassy.getValue();
-            if (nameSelectedEmbassy != null)
-            {
-                ctrGUIMain.getPaneEditSaveController().actionLock();
-                e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
-                currentSelectedEmbassy = e;
-                fillEmbassyData(e);
-            }    
-        }
-        
+            ctrGUIMain.getPaneEditSaveController().actionLock();
+            e = ctrGUIMain.getCtrMain().getCtrEmbassy().loadByName(nameSelectedEmbassy);
+            currentSelectedEmbassy = e;
+            fillEmbassyData(e);
+        }            
     }
-
+    
+    @Override
+    public void unlockCBSelectionEntity()
+    {
+        cbEmbassy.setDisable(false);
+    }
+    
+    @Override
+    public void lockCBSelectionEntity()
+    {
+        cbEmbassy.setDisable(true);
+    }    
 }

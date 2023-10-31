@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.PersistenceException;
+import javax.swing.text.html.HTML;
 import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.EntryPrintedDocStock;
@@ -23,6 +24,7 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class CtrMonasticProfile extends AbstractControllerDB
 {
+    private final String ERROR_UNIQUE_NICKNAME = "The monastic profile nickname you are trying to save already exists on database.";
 
     public CtrMonasticProfile(CtrDatabase ctrDatabase)
     {
@@ -54,14 +56,14 @@ public class CtrMonasticProfile extends AbstractControllerDB
         }
         catch (PersistenceException he)
         {
-            ctrDB.handleException(he, errorMessage);
+            ctrDB.handleException(he, errorMessage, ERROR_UNIQUE_NICKNAME);
             return null;
         }
     }
 
     public int update(MonasticProfile p)
     {
-        return ctrDB.updatePersistentObject(p, "Error when saving profile info.");
+        return ctrDB.updatePersistentObject(p, "Error when saving profile info.", ERROR_UNIQUE_NICKNAME);
     }
 
     public ArrayList<String> loadProfileVisaManager()

@@ -13,6 +13,7 @@ import java.time.Instant;
 import javax.persistence.EntityManager;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -84,7 +85,7 @@ public class CtrDatabase
         entityManager.close();
     }
 
-    public int updatePersistentObject(Serializable obj, String strErrorMessage)
+    public int updatePersistentObject(Serializable obj, String strErrorMessage, String strNotUniqueErrorMessage)
     {
         try
         {
@@ -92,20 +93,17 @@ public class CtrDatabase
             commitCurrentTransaction();
             return 0;
         }
-        catch (PersistenceException he)
+        catch (PersistenceException  he)
         {
-            rollbackCurrentTransaction();
-
-            if (he instanceof ConstraintViolationException)
-            {
-                CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) he, strErrorMessage + "\n\nDetails:");
-            }
-            else
-            {
-                CtrAlertDialog.exceptionDialog(he, strErrorMessage);
-            }
+            handleException(he, strErrorMessage, strNotUniqueErrorMessage);
             return -1;
         }
+        
+    }
+    
+    public void reloadEntity(Serializable obj)
+    {
+        entityManager.refresh(obj);
     }
 
     public void closeDBConnection()
@@ -127,18 +125,25 @@ public class CtrDatabase
     public Object loadEntityByUniqueProperty(String entityName, String propertyName, String value2Search)
     {
         String hql;
-
-        hql = "from " + entityName + " e where e." + propertyName + " = '" + value2Search + "'";
-        return getSession().createQuery(hql).getSingleResult();
+        
+        try
+        {
+            hql = "from " + entityName + " e where e." + propertyName + " = '" + value2Search + "'";
+            return getSession().createQuery(hql).getSingleResult();
+        }
+        catch (NoResultException nre)
+        {
+            return null;
+        }        
     }
     
-    public void handleException(PersistenceException pe, String errorMessage)
+    public void handleException(PersistenceException pe, String errorMessage, String strNotUniqueErrorMessage)
     {
         rollbackCurrentTransaction();
 
-        if (pe instanceof ConstraintViolationException)
+        if (pe.getCause().getCause() instanceof ConstraintViolationException)
         {
-            CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe, errorMessage);
+            CtrAlertDialog.databaseExceptionDialog((ConstraintViolationException) pe.getCause().getCause(), errorMessage, strNotUniqueErrorMessage);
         }
         else
         {

@@ -1,3 +1,33 @@
+v.1.12.0
+* Fixed bug unsaved modifications panel showing after hit save for Upajjhaya, Embassy and Monastery
+* Fixed bug monastery nickname not being possible to change to empty
+* TM 30: added validation to require at least one monastic to be selected
+* TM 30: filter out empty string nicknames to load on Residence Monastery combobox
+-----------------------------------------------------------------------------------------
+
+v.1.12-BETA2
+* Fixed bug 90 Day Form not working for Tourist Visas (field name on form filler was different than pdf)
+-----------------------------------------------------------------------------------------
+v.1.12-BETA1
+*90 Day Online
+    Address fields added to DB and editable via Monastery Panel
+    90 Day Online Tab filled using new fields. Unused fields removed
+
+*Added unique constraints to DB and appropriate error messages in case of violation
+    Monastic Profile: Nickname
+    Monastery: Monastery name (DB), monastery nickname (app level)
+    Embassy: Name English
+    Upajjhaya: Name
+    TM30: notif_date + aux
+    VisaExt: visa ext number
+
+Fixes
+    *Lock selection combobox for Embassy/Monastery/Upajjhaya when then are unsaved changes to prevent inconsistencies
+
+Minor code improvements:
+    *Merged archive with confirmation functionality for bysuddhi/passport/profile data on single function
+
+-----------------------------------------------------------------------------------------
 v.1.11.0
 * New Visa -> Register Visa, The field “Next 90 day:” should accept a blank value.
 * When filling out forms / letters for non-ordained persons: use the title “Mr” instead of “นาค”

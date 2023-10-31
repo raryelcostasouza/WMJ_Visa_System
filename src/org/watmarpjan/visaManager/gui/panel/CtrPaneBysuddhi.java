@@ -490,24 +490,18 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     {
         MonasticProfile p;
         String msg;
-        boolean confirmation;
-        int opStatusArchive;
+        int ret;
         File f2Archive;
 
         msg = "Are you sure that you want to archive this bysuddhi scan?";
-
-        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
-        if (confirmation)
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        f2Archive = AppFiles.getScanBysuddhi(p.getNickname(), scanNumber);
+        
+        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(),CtrFileOperation.SCAN_TYPE_BYSUDDHI);
+        if (ret == 0)
         {
-            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-            f2Archive = AppFiles.getScanBysuddhi(p.getNickname(), scanNumber);
-            opStatusArchive = CtrFileOperation.archiveBysuddhiScan(f2Archive, p.getNickname());
-            if (opStatusArchive == 0)
-            {
-                loadIMGPreviews(p);
-                CtrAlertDialog.infoDialog("Archived successfully", "The bysuddhi scan was archived successfully.");
-            }
+            loadIMGPreviews(p);
+            CtrAlertDialog.infoDialog("Archived successfully", "The bysuddhi scan was archived successfully.");
         }
     }
 

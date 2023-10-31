@@ -15,6 +15,7 @@ import org.watmarpjan.visaManager.model.hibernate.Embassy;
  */
 public class CtrEmbassy extends AbstractControllerDB
 {
+    private final String ERROR_UNIQUE_NAME_ENGLISH = "The embassy english name you are trying to save already exists on database.";
 
     public CtrEmbassy(CtrDatabase ctrDB)
     {
@@ -53,21 +54,21 @@ public class CtrEmbassy extends AbstractControllerDB
 
             generatedID = e.getIdEmbassy();
             e.setNameEn("New Embassy " + generatedID);
-
+           
             ctrDB.commitCurrentTransaction();
 
             return e.getNameEn();
 
         } catch (PersistenceException he)
         {
-            ctrDB.handleException(he, errorMessage);
+            ctrDB.handleException(he, errorMessage, ERROR_UNIQUE_NAME_ENGLISH);
             return null;
         }
     }
     
     public int update(Embassy e)
     {
-        return ctrDB.updatePersistentObject(e, "Error when saving embassy info.");
+        return ctrDB.updatePersistentObject(e, "Error when saving embassy info.", ERROR_UNIQUE_NAME_ENGLISH);
     }
 
 }

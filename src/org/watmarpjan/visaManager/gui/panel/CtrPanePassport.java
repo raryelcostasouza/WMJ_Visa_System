@@ -1097,25 +1097,19 @@ public class CtrPanePassport extends AChildPaneControllerExportPDF implements IF
     {
         MonasticProfile p;
         String msg;
-        boolean confirmation;
-        int opStatusArchive;
+        int ret;
         File f2Archive;
 
         msg = "Are you sure that you want to remove this E-Visa from system?\n"
                 + "(Note: The e-visa file will be archived)\n ";
-
-        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msg);
-        if (confirmation)
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        f2Archive = AppFiles.getEVisa(p.getNickname());
+        
+        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(),CtrFileOperation.SCAN_TYPE_PASSPORT);
+        if (ret == 0)
         {
-            p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-
-            f2Archive = AppFiles.getEVisa(p.getNickname());
-            opStatusArchive = CtrFileOperation.archiveScanFile(p.getNickname(),CtrFileOperation.SCAN_TYPE_PASSPORT,f2Archive);
-            if (opStatusArchive == 0)
-            {
-                fillEVisaDetails(p);
-                CtrAlertDialog.infoDialog("Archived successfully", "The E-Visa was archived successfully.");
-            }
+            fillEVisaDetails(p);
+            CtrAlertDialog.infoDialog("Archived successfully", "The E-Visa was archived successfully.");
         }
     }
 

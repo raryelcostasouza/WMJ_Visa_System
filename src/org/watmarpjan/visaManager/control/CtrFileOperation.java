@@ -94,20 +94,22 @@ public class CtrFileOperation
         //the path to the archive subfolder for the specified profile and scantype
         return archiveFile(f2Archive, AppPaths.getPathArchiveScan(profileNickName, scanType));
     }
+    
+    public static int archiveAfterConfirmation(File f2Archive, String msgConfirmation, String monasticNickname, String scanType)
+    {
+        boolean confirmation;
+
+        confirmation = CtrAlertDialog.confirmationDialog("Confirmation", msgConfirmation);
+        if (confirmation)
+        {
+            return CtrFileOperation.archiveScanFile(monasticNickname,scanType,f2Archive);
+        }
+        return -2;
+    }
 
     public static int archivePrintoutTM30(File fPrintoutTM30)
     {
         return archiveFile(fPrintoutTM30, AppPaths.getPathArchivePrintoutTM30());
-    }
-    
-    public static int archiveProfilePhotoOrCertificate(File f2Archive, String nickname)
-    {
-        return archiveFile(f2Archive, AppPaths.getPathArchiveProfilePhotoOrCertificates(nickname));
-    }
-    
-    public static int archiveBysuddhiScan(File fScan, String nickname)
-    {
-        return archiveFile(fScan, AppPaths.getPathArchiveBysuddhiScan(nickname));
     }
   
     private static int archiveFile(File f2Archive, Path pDestArchive)
