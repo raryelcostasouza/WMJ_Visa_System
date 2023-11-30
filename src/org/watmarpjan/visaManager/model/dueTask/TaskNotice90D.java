@@ -24,9 +24,9 @@ public class TaskNotice90D extends EntryDueTask
     private final SimpleStringProperty lastDayOnline;
     private final SimpleStringProperty lastDayOffice;
 
-    public TaskNotice90D(String profileNickname, Date dDueDate, Boolean isOnlineNoticeAccepted, String nicknameMonasteryResidingAt, String passportKeptAt)
+    public TaskNotice90D(String profileNickname, Date dDueDate, Boolean isOnlineNoticeAccepted, String nicknameMonasteryResidingAt, String passportKeptAt, String visaType)
     {
-        super(profileNickname, dDueDate, nicknameMonasteryResidingAt, passportKeptAt);
+        super(profileNickname, dDueDate, nicknameMonasteryResidingAt, passportKeptAt, visaType);
         LocalDate ldFirstDay, ldLastDayOnline, ldLastDayOffice;
 
         //adds the * mark indicating that the 90 day online is accepted

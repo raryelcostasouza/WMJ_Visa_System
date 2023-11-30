@@ -13,9 +13,9 @@ public class TaskExtendTouristGeneric extends EntryDueTask
 {
     protected SimpleStringProperty immigration;
 
-    public TaskExtendTouristGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendTouristGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt, String visaType)
     {
-        super(profileNickname, dDueDate, monasteryResidingAt.getMonasteryNickname(), passportKeptAt);
+        super(profileNickname, dDueDate, monasteryResidingAt.getMonasteryNickname(), passportKeptAt, visaType);
     }
 
     public String getImmigration()

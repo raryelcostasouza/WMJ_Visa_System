@@ -18,9 +18,9 @@ import org.watmarpjan.visaManager.util.Util;
 public class TaskExtendTouristVisaNotExtended extends TaskExtendTouristGeneric
 {
 
-    public TaskExtendTouristVisaNotExtended(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendTouristVisaNotExtended(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt, String visaType) 
     {
-        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt, visaType);
         LocalDate ldImmigration;
 
         ldImmigration = ldDueDate.minusMonths(1);

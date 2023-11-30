@@ -19,6 +19,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
 {
 
     private final SimpleStringProperty profileNickname;
+    private final SimpleStringProperty visaType;
     private final SimpleStringProperty nicknameMonasteryResidingAt;
     private final SimpleStringProperty passportKeptAt;
     private final SimpleStringProperty strDueDate;
@@ -27,7 +28,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
 
     protected LocalDate ldDueDate;
 
-    public EntryDueTask(String profileNickname, Date dueDate, String nicknameMonasteryResidingAt, String passportKeptAt)
+    public EntryDueTask(String profileNickname, Date dueDate, String nicknameMonasteryResidingAt, String passportKeptAt, String visaType)
     {
         Period pRemainingTime;
 
@@ -40,6 +41,7 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
 
         pRemainingTime = Period.between(LocalDate.now(), ldDueDate);
         this.remainingTime = new SimpleStringProperty(remainingTimeToString(pRemainingTime));
+        this.visaType = new SimpleStringProperty(visaType);
 
     }
 
@@ -76,6 +78,16 @@ public abstract class EntryDueTask implements Comparable<EntryDueTask>
     protected void setProfileNickname(String pNewNickname)
     {
         profileNickname.set(pNewNickname);
+    }
+    
+    public String getVisaType()
+    {
+        return visaType.get();
+    }
+    
+    public void setVisaType(String pVisaType)
+    {
+        visaType.set(pVisaType);
     }
 
     public String getDueDate()
