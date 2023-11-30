@@ -21,9 +21,15 @@ public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtende
     private SimpleStringProperty prawat;
     private SimpleStringProperty samnakput;
 
-    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendNonImmVisaGeneric(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt, String visaType)
     {
-        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt, visaType);
+        
+        if (visaType.contains("Privilege"))
+        {
+            setPrawat("N/A");
+            setSamnakput("Thai Elite");
+        }
     }
 
     public String getPrawat()
@@ -31,9 +37,9 @@ public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtende
         return prawat.get();
     }
 
-    protected void setPrawat(LocalDate ldPrawat)
+    protected void setPrawat(String strColumnPrawat)
     {
-        this.prawat = new SimpleStringProperty(ldPrawat.format(Util.DEFAULT_DATE_FORMAT));
+       this.prawat = new SimpleStringProperty(strColumnPrawat);
     }
 
     public String getSamnakput()
@@ -41,8 +47,8 @@ public class TaskExtendNonImmVisaGeneric extends TaskExtendTouristVisaNotExtende
         return samnakput.get();
     }
 
-    protected void setSamnakput(LocalDate ldSNP)
+    protected void setSamnakput(String strColumnSNP)
     {
-        this.samnakput = new SimpleStringProperty(ldSNP.format(Util.DEFAULT_DATE_FORMAT));
+        this.samnakput = new SimpleStringProperty(strColumnSNP);
     }
 }
