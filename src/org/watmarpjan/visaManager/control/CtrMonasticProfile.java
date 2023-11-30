@@ -393,7 +393,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskNotice90D(p.nickname, p.next90DayNotice, p.onlineNoticeAccepted, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p "
                 + " where p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + "and p.next90DayNotice is not null "
@@ -467,20 +467,28 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
         //for monastics whose NonImm visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisa(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt)"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
-                + " where p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " where (p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " and p.visaType <> 'ผ.15'"
+                + " and p.visaType <> 'ผ.30'"
+                + " and p.visaType <> 'ผผ.30'"
+                + " and p.visaType <> 'ผผ.90')"
                 + " and p.status = '" + currentLocation + "'"
                 + " and size(p.visaExtensionSet) > 0"
-                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt"
+                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt, p.visaType"
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
         //for monastics whose NonImm visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisa(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
-                + " where p.visaType <>'"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " where (p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " and p.visaType <> 'ผ.15'"
+                + " and p.visaType <> 'ผ.30'"
+                + " and p.visaType <> 'ผผ.30'"
+                + " and p.visaType <> 'ผผ.90')"
                 + " and p.status = '" + currentLocation + "'"
                 + " and p.visaExpiryDate is not null"
                 + " and size(p.visaExtensionSet) = 0"
@@ -502,20 +510,28 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
         //for monastics whose Tourist visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt)"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaExtended(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
-                + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " where (p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " or p.visaType = 'ผ.15'"
+                + " or p.visaType = 'ผ.30'"
+                + " or p.visaType = 'ผผ.30'"
+                + " or p.visaType = 'ผผ.90')"
                 + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + " and size(p.visaExtensionSet) > 0"
-                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt"
+                + " group by p.nickname, p.monasteryResidingAt, p.passportKeptAt, p.visaType"
                 + " order by max(vext.expiryDate)";
         listVisaExtended = queryDueTaskEntry(hql1);
 
         //for monastics whose Tourist visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendTouristVisaNotExtended(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
-                + " where p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " where (p.visaType = '"+AppConstants.VISA_TYPE_TOURIST+"'"
+                + " or p.visaType = 'ผ.15'"
+                + " or p.visaType = 'ผ.30'"
+                + " or p.visaType = 'ผผ.30'"
+                + " or p.visaType = 'ผผ.90')"
                 + " and p.status = '" +AppConstants.STATUS_THAILAND+ "'"
                 + " and p.visaExpiryDate is not null"
                 + " and size(p.visaExtensionSet) = 0"
@@ -535,7 +551,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
     {
         String hql;
 
-        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskRenewPassport(p.nickname, p.passportExpiryDate, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt)"
+        hql = "select new org.watmarpjan.visaManager.model.dueTask.TaskRenewPassport(p.nickname, p.passportExpiryDate, p.monasteryResidingAt.monasteryNickname, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p "
                 + " where p.status = '" + currentLocation + "' and"
                 + " p.passportExpiryDate is not null "
