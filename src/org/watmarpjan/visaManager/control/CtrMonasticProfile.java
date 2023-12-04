@@ -467,7 +467,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         ArrayList<EntryDueTask> listVisaNotExtended, listVisaExtended, listMerged;
 
         //for monastics whose NonImm visa has ALREADY been extended
-        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaOld(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
+        hql1 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisa(p.nickname, max(vext.expiryDate), p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
                 + " inner join p.visaExtensionSet vext"
                 + " where (p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
@@ -482,7 +482,7 @@ public class CtrMonasticProfile extends AbstractControllerDB
         listVisaExtended = queryDueTaskEntry(hql1);
 
         //for monastics whose NonImm visa has NOT BEEN extended
-        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisaNew(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
+        hql2 = "select new org.watmarpjan.visaManager.model.dueTask.TaskExtendNonImmVisa(p.nickname, p.visaExpiryDate, p.monasteryResidingAt, p.passportKeptAt, p.visaType)"
                 + " from MonasticProfile p"
                 + " where (p.visaType <> '"+AppConstants.VISA_TYPE_TOURIST+"'"
                 + " and p.visaType <> 'ผ.15'"
