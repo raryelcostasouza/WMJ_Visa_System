@@ -1,3 +1,7 @@
+v.1.13.1
+* Fixed bug filling TM7 field
+* Reverted back issue with due dates for SNP and Prawat to rules in v1.12
+-----------------------------------------------------------------------------------------
 v.1.13.0
 * Added support to visas Non-B, Privilege Entry
 * Added support to visa exemptions ผ.30, ผผ.30, ผผ.90
