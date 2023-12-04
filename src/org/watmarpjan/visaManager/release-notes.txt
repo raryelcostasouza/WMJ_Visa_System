@@ -1,3 +1,8 @@
+v.1.13.0
+* Added support to visas Non-B, Privilege Entry
+* Added support to visa exemptions ผ.30, ผผ.30, ผผ.90
+* Added column Visa Type on Due Tasks tables
+-----------------------------------------------------------------------------------------
 v.1.12.0
 * Fixed bug unsaved modifications panel showing after hit save for Upajjhaya, Embassy and Monastery
 * Fixed bug monastery nickname not being possible to change to empty
