@@ -5,7 +5,6 @@
  */
 package org.watmarpjan.visaManager.model.dueTask;
 
-import java.time.LocalDate;
 import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
@@ -21,16 +20,20 @@ public class TaskExtendNonImmVisa extends TaskExtendTouristVisaNotExtended
     private SimpleStringProperty prawat;
     private SimpleStringProperty samnakput;
 
-    public TaskExtendNonImmVisa(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendNonImmVisa(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt, String visaType)
     {
-        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
-        LocalDate ldPrawat, ldSamnakput;
-        
-        ldPrawat = ldDueDate.minusMonths(3);
-        ldSamnakput = ldDueDate.minusDays(45);
-        
-        setPrawat(ldPrawat);
-        setSamnakput(ldSamnakput);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt, visaType);
+     
+        if (visaType.equals("Privilege Entry"))
+        {
+            setPrawat("N/A");
+            setSamnakput("Thai Elite");
+        }
+        else
+        {
+            setPrawat(ldDueDate.minusMonths(3).format(Util.DEFAULT_DATE_FORMAT));
+            setSamnakput(ldDueDate.minusDays(45).format(Util.DEFAULT_DATE_FORMAT));
+        }
     }
 
     public String getPrawat()
@@ -38,9 +41,9 @@ public class TaskExtendNonImmVisa extends TaskExtendTouristVisaNotExtended
         return prawat.get();
     }
 
-    protected void setPrawat(LocalDate ldPrawat)
+    protected void setPrawat(String strColumnPrawat)
     {
-        this.prawat = new SimpleStringProperty(ldPrawat.format(Util.DEFAULT_DATE_FORMAT));
+       this.prawat = new SimpleStringProperty(strColumnPrawat);
     }
 
     public String getSamnakput()
@@ -48,8 +51,8 @@ public class TaskExtendNonImmVisa extends TaskExtendTouristVisaNotExtended
         return samnakput.get();
     }
 
-    protected void setSamnakput(LocalDate ldSNP)
+    protected void setSamnakput(String strColumnSNP)
     {
-        this.samnakput = new SimpleStringProperty(ldSNP.format(Util.DEFAULT_DATE_FORMAT));
+        this.samnakput = new SimpleStringProperty(strColumnSNP);
     }
 }
