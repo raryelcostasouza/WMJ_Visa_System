@@ -15,9 +15,9 @@ import org.watmarpjan.visaManager.model.hibernate.Monastery;
  */
 public class TaskExtendTouristVisaExtended extends TaskExtendTouristGeneric
 {
-    public TaskExtendTouristVisaExtended(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt)
+    public TaskExtendTouristVisaExtended(String profileNickname, Date dDueDate, Monastery monasteryResidingAt, String passportKeptAt, String visaType)
     {
-        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt);
+        super(profileNickname, dDueDate, monasteryResidingAt, passportKeptAt, visaType);
         immigration = new SimpleStringProperty("Already Extended");
     }
 }

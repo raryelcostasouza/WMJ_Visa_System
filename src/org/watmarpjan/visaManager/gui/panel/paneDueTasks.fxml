@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.watmarpjan.visaManager.gui.panel.CtrPaneDueTasks">
    <content>
       <BorderPane>
@@ -40,8 +39,9 @@
                                                               <columns>
                                                                   <TableColumn minWidth="-1.0" prefWidth="53.0" text="Info" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn minWidth="-1.0" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="50.0" text="WD" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
@@ -70,8 +70,9 @@
                                                               <columns>
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Info" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
@@ -88,7 +89,7 @@
                                                   </HBox>
                                               </content>
                                           </TitledPane>
-                              <TitledPane fx:id="tPAuxVisaExtTH1" alignment="TOP_LEFT" contentDisplay="CENTER" text="Tourist Visa Extension">
+                              <TitledPane fx:id="tPAuxVisaExtTH1" alignment="TOP_LEFT" contentDisplay="CENTER" text="30 Day Extension - Tourist Visa / Visa Exemption">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -99,8 +100,9 @@
                                              <columns>
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Info" />
                                                 <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                 <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                 <TableColumn minWidth="-Infinity" prefWidth="50.0" text="WD" />
                                                 <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
@@ -126,8 +128,9 @@
                                                               <columns>
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" text="Info" />
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                   <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="170.0" text="Remaining Time" />
@@ -159,8 +162,9 @@
                                                               <columns>
                                                                   <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Info" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="170.0" text="Remaining Time" />
@@ -188,8 +192,9 @@
                                                               <columns>
                                                                   <TableColumn minWidth="-Infinity" prefWidth="53.0" text="Info" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="140.0" text="Monastic" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.0" text="Visa Type" />
                                                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Residence" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" text="Where is the Passport?" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Passport At" />
                                                                   <TableColumn minWidth="-1.0" prefWidth="90.0" text="Due Date" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="62.0" text="WD" />
                                                                   <TableColumn minWidth="-Infinity" prefWidth="170.0" text="Remaining Time" />
