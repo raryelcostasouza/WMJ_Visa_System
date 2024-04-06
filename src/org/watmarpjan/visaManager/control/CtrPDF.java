@@ -199,7 +199,8 @@ public class CtrPDF
         alThaiFields.add((PDTextField) acroForm.getField("addrTambonWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrAmpherWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrJangwatWatResidingAtThai"));
-
+        alThaiFields.add((PDTextField) acroForm.getField("visaTypeThai"));
+        
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
@@ -238,7 +239,7 @@ public class CtrPDF
             acroForm.getField("passportExpiryDateYear").setValue(Util.convertYearToThai(ldPassportExp.getYear()) + "");
         }
 
-        acroForm.getField("visaType").setValue(p.getVisaType());
+        acroForm.getField("visaTypeThai").setValue(p.getVisaType());
         acroForm.getField("arrivalTravelBy").setValue(p.getArrivalTravelBy());
         acroForm.getField("arrivalTravelFrom").setValue(p.getArrivalTravelFrom());
         acroForm.getField("arrivalPortOfEntry").setValue(p.getArrivalPortOfEntry());
