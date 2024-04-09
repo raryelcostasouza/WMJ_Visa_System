@@ -44,7 +44,7 @@ public abstract class ODTLetterFiller
         }
     }
     
-    public abstract void fillLetter(MonasticProfile p) throws InvalidNavigationException;
+    public abstract void fillLetter(MonasticProfile p) throws InvalidNavigationException,NullPointerException;
     
     public void saveAndOpenODT(MonasticProfile p)
     {
