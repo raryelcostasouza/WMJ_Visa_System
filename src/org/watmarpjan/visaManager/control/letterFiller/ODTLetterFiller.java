@@ -4,6 +4,7 @@
  */
 package org.watmarpjan.visaManager.control.letterFiller;
 
+import org.watmarpjan.visaManager.control.Form2AppFieldMapper;
 import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -23,16 +24,19 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public abstract class ODTLetterFiller
 {
+
     protected TextDocument objTD;
     protected File fTemplate;
-    
+    protected MonasticProfile monastic;
+
     public ODTLetterFiller(File fTemplate, MonasticProfile p)
     {
         try
         {
+            this.monastic = p;
             this.fTemplate = fTemplate;
             this.objTD = TextDocument.loadDocument(this.fTemplate);
-            fillLetter(p);
+            fillLetter();
         }
         catch (InvalidNavigationException ex)
         {
@@ -43,17 +47,17 @@ public abstract class ODTLetterFiller
             CtrAlertDialog.exceptionDialog(ex, "Unable to generate letter.");
         }
     }
-    
-    public abstract void fillLetter(MonasticProfile p) throws InvalidNavigationException,NullPointerException;
-    
-    public void saveAndOpenODT(MonasticProfile p)
+
+    public abstract void fillLetter() throws InvalidNavigationException;
+
+    public void saveAndOpenODT()
     {
         Path pProfileLetterStorage;
         String fileNameGeneratedLetter;
         File fDestination;
 
-        fileNameGeneratedLetter = Util.getFileNameWithoutExtension(this.fTemplate) + generateLetterFileNameSuffix(p) + ".odt";
-        pProfileLetterStorage = AppPaths.getPathToProfileLetters(p.getNickname());
+        fileNameGeneratedLetter = Util.getFileNameWithoutExtension(this.fTemplate) + generateLetterFileNameSuffix(monastic) + ".odt";
+        pProfileLetterStorage = AppPaths.getPathToProfileLetters(monastic.getNickname());
         fDestination = pProfileLetterStorage.resolve(fileNameGeneratedLetter).toFile();
 
         try
@@ -70,29 +74,39 @@ public abstract class ODTLetterFiller
             CtrAlertDialog.exceptionDialog(ex, "Unable to save generated Letter.");
         }
     }
-    
-    protected void searchNReplace(TextDocument doc, String search, String replace) throws InvalidNavigationException
+
+    protected void fillField(String fieldName) throws InvalidNavigationException
     {
+        //Search for fieldName and replace with value from App
         TextNavigation search2 = null;
+        String replace;
 
-        if (replace != null)
+        try
         {
-            search2 = new TextNavigation(search, doc);
-
-            while (search2.hasNext())
+            replace = Form2AppFieldMapper.getProfileField(monastic, fieldName);
+            if (replace != null)
             {
-                TextSelection item = (TextSelection) search2.nextSelection();
+                search2 = new TextNavigation(fieldName, objTD);
 
-                item.replaceWith(replace);
+                while (search2.hasNext())
+                {
+                    TextSelection item = (TextSelection) search2.nextSelection();
+
+                    item.replaceWith(replace);
+                }
+            }
+            else
+            {
+                CtrAlertDialog.warningDialog("Field Data Missing on System for this Monastic: " + fieldName);
             }
         }
-        else
+        catch (NullPointerException npe)
         {
-            CtrAlertDialog.warningDialog("Field Missing: " + search);
+            CtrAlertDialog.warningDialog("Field Data Missing on System for this Monastic: " + fieldName);
         }
 
     }
-    
+
     private String generateLetterFileNameSuffix(MonasticProfile p)
     {
         return p.getMonasticName() + p.getLastName() + "-" + LocalDateTime.now().format(Util.TIMESTAMP_FILE_NAME);
