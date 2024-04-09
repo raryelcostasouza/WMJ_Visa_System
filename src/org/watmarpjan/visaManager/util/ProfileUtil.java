@@ -8,9 +8,8 @@ package org.watmarpjan.visaManager.util;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.chrono.ThaiBuddhistDate;
-import java.util.Collections;
 import java.util.Date;
-import org.watmarpjan.visaManager.control.CtrMain;
+import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
@@ -231,5 +230,20 @@ public class ProfileUtil
         }   
         
         return ldLatestExt;
+    }
+    
+    public static boolean isOrdainedInThailand(MonasticProfile p)
+    {
+        return p.getMonasteryOrdainedAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
+    }
+    
+    public static boolean hasVisaExemption(MonasticProfile p)
+    {
+        for (String visaTypeExemption : AppConstants.LIST_VISA_EXEMPTIONS)
+        {
+            if (p.getVisaType().equals(visaTypeExemption))  return true;
+        }
+        return false;
+        
     }
 }
