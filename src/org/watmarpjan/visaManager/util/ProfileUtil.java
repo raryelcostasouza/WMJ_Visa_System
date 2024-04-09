@@ -42,12 +42,12 @@ public class ProfileUtil
         {
             return "สามเณร";
         }
-        else    
+        else
         {
             return "Mr.";
         }
     }
-    
+
     public static String getTitleTH2(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
@@ -59,7 +59,7 @@ public class ProfileUtil
             return "สามเณร";
         }
     }
-    
+
     public static String getTitleEN(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
@@ -75,14 +75,14 @@ public class ProfileUtil
             return "Mr.";
         }
     }
-    
+
     public static String getTitleEN2(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
         {
             return "Bhikkhu";
         }
-        else 
+        else
         {
             return "Samanera";
         }
@@ -154,11 +154,11 @@ public class ProfileUtil
         tbd = ThaiBuddhistDate.from(ldOrdDate);
         return tbd.format(Util.DEFAULT_DATE_FORMAT);
     }
-    
+
     public static LocalDate getOrdinationDate(MonasticProfile p)
     {
         LocalDate ldOrdDate;
-        
+
         if (p.getBhikkhuOrdDate() != null)
         {
             ldOrdDate = Util.convertDateToLocalDate(p.getBhikkhuOrdDate());
@@ -171,15 +171,15 @@ public class ProfileUtil
         {
             ldOrdDate = null;
         }
-        
+
         return ldOrdDate;
     }
 
     public static String getStrAge(Date birthDate)
     {
-       return getAge(birthDate) + "";
+        return getAge(birthDate) + "";
     }
-    
+
     private static int getAge(Date birthDate)
     {
         LocalDate ldBirth, ldToday;
@@ -197,19 +197,18 @@ public class ProfileUtil
             return 0;
         }
     }
-    
+
     public static String getStrAgeThai(MonasticProfile p)
     {
         int age;
         age = getAge(p.getBirthDate());
         return Util.convertNumberToThaiDigits(age);
     }
-    
+
     public static LocalDate getVisaOrExtExpiryDate(MonasticProfile p)
     {
-        Date dVisaExpiry;
         LocalDate ldExtExpiry, ldLatestExt = null;
-        
+
         //if the visa has been extended
         if (p.getVisaExtensionSet() != null && !p.getVisaExtensionSet().isEmpty())
         {
@@ -219,7 +218,7 @@ public class ProfileUtil
                 ldExtExpiry = Util.convertDateToLocalDate(vext.getExpiryDate());
                 if (ldLatestExt == null || ldExtExpiry.getYear() > ldLatestExt.getYear())
                 {
-                    ldLatestExt = ldExtExpiry; 
+                    ldLatestExt = ldExtExpiry;
                 }
             }
         }
@@ -227,23 +226,26 @@ public class ProfileUtil
         else
         {
             ldLatestExt = Util.convertDateToLocalDate(p.getVisaExpiryDate());
-        }   
-        
+        }
+
         return ldLatestExt;
     }
-    
+
     public static boolean isOrdainedInThailand(MonasticProfile p)
     {
         return p.getMonasteryOrdainedAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
     }
-    
+
     public static boolean hasVisaExemption(MonasticProfile p)
     {
         for (String visaTypeExemption : AppConstants.LIST_VISA_EXEMPTIONS)
         {
-            if (p.getVisaType().equals(visaTypeExemption))  return true;
+            if (p.getVisaType().equals(visaTypeExemption))
+            {
+                return true;
+            }
         }
         return false;
-        
+
     }
 }
