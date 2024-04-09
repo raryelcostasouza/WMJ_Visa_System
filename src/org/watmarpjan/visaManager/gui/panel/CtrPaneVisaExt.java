@@ -6,7 +6,6 @@
 package org.watmarpjan.visaManager.gui.panel;
 
 import java.io.File;
-import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneController;
 import org.watmarpjan.visaManager.gui.intface.IFormMonasticProfile;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import java.time.LocalDate;
@@ -32,13 +31,10 @@ import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
-import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaExtFiller;
-import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterIMMVisaChangeFiller;
-import org.watmarpjan.visaManager.control.letterFiller.ResidenceGuaranteeLetterSNP;
+import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPVisaExtension;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 import org.watmarpjan.visaManager.util.Util;
 
@@ -378,11 +374,11 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
     void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
     {
         MonasticProfile p;
-        ResidenceGuaranteeLetterSNP objLetterFiller;
+        ResidenceGuaranteeLetterSNPVisaExtension objLetterFiller;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterSNP(p);
-        objLetterFiller.saveAndOpenODT(p);
+        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaExtension(p);
+        objLetterFiller.saveAndOpenODT();
     }
 
 //    @FXML
