@@ -289,17 +289,17 @@ public class AppFiles
                 .toFile();
     }
 
-    public static File getODTOrdinationGuaranteeLetter(MonasticProfile p)
+    public static File getODTOrdinationGuaranteeLetter(MonasticProfile p, String type)
     {
-        if (ProfileUtil.isOrdainedInThailand(p))
+        if ((p.getMonasteryOrdainedAt() == null) || (ProfileUtil.isOrdainedInThailand(p)))
         {
             return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
-                .resolve("OrdinationGuaranteeLetterOrdainedThailandSNP.odt")
+                .resolve("OrdinationGuaranteeLetterOrdainedThailandSNP-"+ type +".odt")
                 .toFile();    
         }
         
         return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
-                .resolve("OrdinationGuaranteeLetterOrdainedAbroadSNP.odt")
+                .resolve("OrdinationGuaranteeLetterOrdainedAbroadSNP-"+ type +".odt")
                 .toFile(); 
         
     }
@@ -346,10 +346,24 @@ public class AppFiles
                 .toFile();
     }
      
-     public static File getODTResidenceGuaranteeLetterSNP(Monastery mResidence)
+     public static File getODTResidenceGuaranteeLetterSNPVisaExtension(Monastery mResidence)
      {
          return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("ResidenceGuaranteeLetterSNP.odt")
+                .toFile();
+     }
+     
+     public static File getODTResidenceGuaranteeLetterSNPVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTResidenceGuaranteeLetterSNPNewVisa(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP-NewVisaThailand.odt")
                 .toFile();
      }
 
