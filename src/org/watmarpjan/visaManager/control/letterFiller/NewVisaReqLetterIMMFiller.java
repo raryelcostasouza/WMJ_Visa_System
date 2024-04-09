@@ -11,7 +11,7 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class NewVisaReqLetterIMMFiller extends VisaChangeOrNewReqLetterFiller
+public class NewVisaReqLetterIMMFiller extends ReqLetterIMMFilter
 {
     public NewVisaReqLetterIMMFiller(MonasticProfile p)
     {

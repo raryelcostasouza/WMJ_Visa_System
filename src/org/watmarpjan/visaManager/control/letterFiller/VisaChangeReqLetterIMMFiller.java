@@ -11,11 +11,13 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class VisaChangeReqLetterIMMFiller extends VisaChangeOrNewReqLetterFiller
+public class VisaChangeReqLetterIMMFiller extends ReqLetterIMMFilter
 {
 
     public VisaChangeReqLetterIMMFiller(MonasticProfile p)
     {
         super(AppFiles.getODTVisaChangeReqLetterIMM(p.getMonasteryResidingAt()), p);
     }    
+    
+    
 }
