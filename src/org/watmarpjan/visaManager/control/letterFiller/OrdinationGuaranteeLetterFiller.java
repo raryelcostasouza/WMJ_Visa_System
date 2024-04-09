@@ -20,7 +20,7 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
 
     public OrdinationGuaranteeLetterFiller(MonasticProfile p)
     {
-        super(AppFiles.getODTOrdinationGuaranteeLetter(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTOrdinationGuaranteeLetter(p), p);
     }
     
     @Override
@@ -71,7 +71,17 @@ public class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
 
         searchNReplace(objTD, "«WatOrdainedAtThai»", p.getMonasteryOrdainedAt().getMonasteryName());
         searchNReplace(objTD, "«WatResidingAtThai»", p.getMonasteryResidingAt().getMonasteryName());
-        searchNReplace(objTD, "«WatResidingAtThaiaddrTambon»", p.getMonasteryResidingAt().getAddrTambon());
+        
+        if (ProfileUtil.isOrdainedInThailand(p))
+        {
+            searchNReplace(objTD, "«WatResidingAtThaiaddrTambon»", p.getMonasteryResidingAt().getAddrTambon());
+        }
+        else
+        {
+            searchNReplace(objTD, "«WatResidingAtThaiaddrCountry»", p.getMonasteryResidingAt().getAddrCountry());
+        }
+        
+        
         searchNReplace(objTD, "«WatResidingAtThaiaddrAmpher»", p.getMonasteryResidingAt().getAddrAmpher());
         searchNReplace(objTD, "«WatResidingAtThaiaddrJangwat»", p.getMonasteryResidingAt().getAddrJangwat());
 
