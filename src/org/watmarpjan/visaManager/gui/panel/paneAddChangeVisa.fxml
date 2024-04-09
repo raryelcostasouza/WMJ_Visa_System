@@ -127,8 +127,8 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bVisaChangeOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetter" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="bVisaChangeOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetterVisaChange" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterSNPTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="Dhamma Practice Institute Guarantee Letter:" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -180,7 +180,7 @@
                                                    </GridPane.margin>
                                                 </Label>
                                                 <Button fx:id="bVisaChangeRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button layoutX="272.0" layoutY="51.0" mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterIMMTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Residence Guarantee Letter:" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -254,8 +254,8 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bNewVisaOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetter" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="bNewVisaOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetterNewVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterSNPVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="Dhamma Practice Institute Guarantee Letter:" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -307,7 +307,7 @@
                                                    </GridPane.margin>
                                                 </Label>
                                                 <Button fx:id="bNewVisaRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button layoutX="272.0" layoutY="51.0" mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bNewVisaResidenceGuaranteeLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterIMMVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Residence Guarantee Letter:" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
