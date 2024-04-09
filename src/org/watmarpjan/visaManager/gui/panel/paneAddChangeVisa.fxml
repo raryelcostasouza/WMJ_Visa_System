@@ -5,13 +5,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -90,43 +88,85 @@
          <content>
             <VBox>
                <children>
-                  <TitledPane collapsible="false" text="Visa Type">
-                     <content>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <RadioButton fx:id="rbTourist" mnemonicParsing="false" onAction="#actionSelectVisaType" selected="true" text="Tourist">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="tgVisaType" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton fx:id="rbVisaExemption" mnemonicParsing="false" onAction="#actionSelectVisaType" text="Visa Exemption" toggleGroup="$tgVisaType">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </RadioButton>
-                           </children>
-                        </HBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane collapsible="false" prefHeight="200.0" prefWidth="200.0" text="Specific Documents:">
-                     <content>
-                        <VBox fx:id="vbSpecificDocs">
-                           <children>
-                              <TitledPane fx:id="tpTouristDocs" collapsible="false" text="Tourist Visa to Non-Immigrant (Visa Change)">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <GridPane gridLinesVisible="true" VBox.vgrow="ALWAYS">
+                  <VBox fx:id="vbMainPane">
+                     <children>
+                        <TitledPane fx:id="tpTouristDocs" collapsible="false" text="Tourist Visa to Non-Immigrant (Visa Change)">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    
+                                    <TitledPane collapsible="false" text="SamnakPut" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <GridPane gridLinesVisible="true">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                                             </columnConstraints>
                                             <rowConstraints>
+                                                <RowConstraints vgrow="SOMETIMES" />
                                               <RowConstraints vgrow="SOMETIMES" />
                                               <RowConstraints vgrow="SOMETIMES" />
                                               <RowConstraints vgrow="SOMETIMES" />
                                                 <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Prawat:" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bVisaChangePrawat" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label layoutX="20.0" layoutY="26.0" text="Residence Guarantee Letter:" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label layoutX="20.0" layoutY="56.0" text="Ordination Guarantee Letter:" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bVisaChangeOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetter" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Dhamma Practice Institute Guarantee Letter:" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label layoutX="30.0" layoutY="106.0" text="Good Conduct Guarantee Letter:" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Visa Change Request Letter:">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bVisaChangeRequestLetterSNP" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterSNP" text="Preview" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane collapsible="false" layoutX="20.0" layoutY="20.0" text="Immigration">
+                                       <content>
+                                          <GridPane gridLinesVisible="true">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                             </rowConstraints>
                                              <children>
                                                 <Label text="TM86 - Visa Change:">
                                                    <GridPane.margin>
@@ -134,52 +174,121 @@
                                                    </GridPane.margin>
                                                 </Label>
                                                 <Button fx:id="bTM86" mnemonicParsing="false" onAction="#actionPreviewFormTM86VisaChange" text="Preview" GridPane.columnIndex="1" />
-                                                <Label layoutX="20.0" layoutY="26.0" text="Visa Change Request Letter - Immigration:" GridPane.rowIndex="2">
+                                                <Label layoutX="20.0" layoutY="26.0" text="Visa Change Request Letter:" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label layoutX="20.0" layoutY="56.0" text="Visa Change Request Letter - Samnakput:" GridPane.rowIndex="1">
+                                                <Button fx:id="bVisaChangeRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button layoutX="272.0" layoutY="51.0" mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Residence Guarantee Letter:" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bVisaChangeRequestLetterSNP" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button fx:id="bVisaChangeRequestLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Residence Guarantee Letter - Immigration:" GridPane.rowIndex="3">
+                                                <Button fx:id="bAckPenaltiesOverstay" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Acknowledgment Penalties Overstay:" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bVisaChangeResidenceGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bSTM2AckTermsAndConditions" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bTM30" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Monastery Map:" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bMonasteryMap" mnemonicParsing="false" onAction="#actionMonasteryMap" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                              </children>
                                           </GridPane>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane fx:id="tpVisaExemptionDocs" collapsible="false" text="Visa Exemption to Non-Immigrant (New Visa)">
-                                 <content>
-                                    <VBox>
-                                       <children>
-                                          <HBox alignment="CENTER">
+                                       </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                        <TitledPane fx:id="tpVisaExemptionDocs" collapsible="false" text="Visa Exemption to Non-Immigrant (New Visa)">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <TitledPane collapsible="false" text="SamnakPut">
+                                       <content>
+                                          <GridPane gridLinesVisible="true">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                             </rowConstraints>
                                              <children>
-                                                <RadioButton fx:id="rbpoh15" mnemonicParsing="false" text="ผ.15">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="tgVisaExemptionType" />
-                                                   </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="rbpoh30" mnemonicParsing="false" selected="true" text="ผ.30" toggleGroup="$tgVisaExemptionType" />
-                                                <RadioButton fx:id="rbpohpoh30" mnemonicParsing="false" text="ผผ.30" toggleGroup="$tgVisaExemptionType" />
-                                                <RadioButton fx:id="rbpohpoh90" mnemonicParsing="false" text="ผผ.90" toggleGroup="$tgVisaExemptionType" />
+                                                <Label text="Prawat:" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bNewVisaPrawat" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label layoutX="20.0" layoutY="26.0" text="Residence Guarantee Letter:" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label layoutX="20.0" layoutY="56.0" text="Ordination Guarantee Letter:" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bNewVisaOrdinationGuaranteeLetter" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetter" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Dhamma Practice Institute Guarantee Letter:" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label layoutX="30.0" layoutY="106.0" text="Good Conduct Guarantee Letter:" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="New Visa Request Letter:">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button fx:id="bNewVisaRequestLetterSNP" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterSNP" text="Preview" GridPane.columnIndex="1" />
                                              </children>
-                                          </HBox>
+                                          </GridPane>
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane collapsible="false" text="Immigration">
+                                       <content>
                                           <GridPane gridLinesVisible="true">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" />
                                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                                              </columnConstraints>
                                              <rowConstraints>
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
+                                                <RowConstraints vgrow="SOMETIMES" />
                                                 <RowConstraints vgrow="SOMETIMES" />
                                                 <RowConstraints vgrow="SOMETIMES" />
                                                 <RowConstraints vgrow="SOMETIMES" />
@@ -192,95 +301,52 @@
                                                    </GridPane.margin>
                                                 </Label>
                                                 <Button fx:id="bTM87" mnemonicParsing="false" onAction="#actionPreviewFormTM87NewVisa" text="Preview" GridPane.columnIndex="1" />
-                                                <Label layoutX="20.0" layoutY="26.0" text="New Visa Request Letter - Immigration:" GridPane.rowIndex="2">
+                                                <Label layoutX="20.0" layoutY="26.0" text="New Visa Request Letter:" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label layoutX="20.0" layoutY="56.0" text="New Visa Request Letter - Samnakput:" GridPane.rowIndex="1">
+                                                <Button fx:id="bNewVisaRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button layoutX="272.0" layoutY="51.0" mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Residence Guarantee Letter:" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bNewVisaRequestLetterSNP" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button fx:id="bNewVisaRequestLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewNewVisaLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="Residence Guarantee Letter - Immigration:" GridPane.rowIndex="3">
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="Acknowledgment Penalties Overstay:" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bNewVisaResidenceGuaranteeLetter" layoutX="305.0" layoutY="66.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterVisaExemption" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Label text="Monastery Map:" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                              </children>
                                           </GridPane>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </TitledPane>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                  <TitledPane collapsible="false" text="Common Documents">
-                     <content>
-                        <VBox>
-                           <children>
-                              <GridPane gridLinesVisible="true">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Ordination Guarantee Letter:" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label layoutX="20.0" layoutY="9.0" text="Monastery Map - Immigration:" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label layoutX="20.0" layoutY="9.0" text="Prawat:">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label text="Acknowledgment Penalties Overstay:" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="5">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Button fx:id="bPrawat" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1" />
-                                    <Button fx:id="bOrdinationGuaranteeLetter" layoutX="328.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionOrdinationGuaranteeLetter" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Button fx:id="bMonasteryMap" layoutX="328.0" layoutY="38.0" mnemonicParsing="false" onAction="#actionMonasteryMap" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Button fx:id="bTM30" layoutX="328.0" layoutY="66.0" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Button fx:id="bAckPenaltiesOverstay" layoutX="328.0" layoutY="95.0" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Button fx:id="bSTM2AckTermsAndConditions" layoutX="328.0" layoutY="125.0" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                       </content>
+                                    </TitledPane>
                                  </children>
-                              </GridPane>
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </content>
