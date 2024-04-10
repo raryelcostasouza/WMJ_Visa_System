@@ -5,14 +5,13 @@
 package org.watmarpjan.visaManager.control.letterFiller.goodConductLetter;
 
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  *
  * @author raryel
  */
-public class GoodConductLetterVisaChangeFiller extends ResidenceGuaranteeLetterSNPFiller
+public class GoodConductLetterVisaChangeFiller extends GoodConductLetterFiller
 {
     
     public GoodConductLetterVisaChangeFiller(MonasticProfile p)

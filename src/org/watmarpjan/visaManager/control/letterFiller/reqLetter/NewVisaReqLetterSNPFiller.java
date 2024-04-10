@@ -4,7 +4,7 @@
  */
 package org.watmarpjan.visaManager.control.letterFiller.reqLetter;
 
-import org.watmarpjan.visaManager.control.letterFiller.reqLetter.ReqLetterSNPFiller;
+import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -18,5 +18,11 @@ public class NewVisaReqLetterSNPFiller extends ReqLetterSNPFiller
     public NewVisaReqLetterSNPFiller(MonasticProfile p)
     {
         super(AppFiles.getODTNewVisaReqLetterSNP(p.getMonasteryResidingAt()), p);
+    }
+    
+    @Override
+    public void fillLetter() throws InvalidNavigationException
+    {
+        fillField( "«visaType»");
     }
 }
