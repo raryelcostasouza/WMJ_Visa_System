@@ -179,7 +179,7 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button fx:id="bVisaChangeRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button fx:id="bVisaChangeRequestLetterIMM" layoutX="272.0" layoutY="21.0" mnemonicParsing="false" onAction="#actionPreviewVisaChangeLetterImm" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Button fx:id="bVisaChangeResidenceGuaranteeLetterIMM" layoutX="272.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterIMMTouristVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Label text="Residence Guarantee Letter:" GridPane.rowIndex="2">
                                                    <GridPane.margin>
