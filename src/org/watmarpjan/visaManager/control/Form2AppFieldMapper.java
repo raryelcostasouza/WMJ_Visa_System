@@ -36,7 +36,7 @@ public class Form2AppFieldMapper
             case "«lastName»":
                 return p.getLastName();
             case "«paliNameThai»":
-                return (p.getPaliNameThai() == null) ? "" : "ฉายา" + p.getPaliNameThai();
+                return (p.getBhikkhuOrdDate() == null) ? "" : ProfileUtil.getPaliNameBhikkhuThai(p);
             case "«age»":
                 return ProfileUtil.getStrAge(p.getBirthDate());
             case "«ethnicity»":

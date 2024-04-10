@@ -248,4 +248,13 @@ public class ProfileUtil
         return false;
 
     }
+    
+    public static String getPaliNameBhikkhuThai(MonasticProfile p)
+    {
+        if (p.getBhikkhuOrdDate() != null)
+        {
+            return "ฉายา " + p.getPaliNameThai();
+        }
+        return null;
+    }
 }
