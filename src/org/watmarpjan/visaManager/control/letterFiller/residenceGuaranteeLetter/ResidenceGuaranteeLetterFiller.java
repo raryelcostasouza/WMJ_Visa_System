@@ -13,7 +13,7 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class ResidenceGuaranteeLetterFiller extends ODTLetterFiller
+public abstract class ResidenceGuaranteeLetterFiller extends ODTLetterFiller
 {
 
     public ResidenceGuaranteeLetterFiller(File fLetter, MonasticProfile p)

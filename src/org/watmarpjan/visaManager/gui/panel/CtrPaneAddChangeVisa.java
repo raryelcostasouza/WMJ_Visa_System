@@ -29,6 +29,10 @@ import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaChangeFiller;
 import org.watmarpjan.visaManager.control.formFiller.TM86Filler;
 import org.watmarpjan.visaManager.control.formFiller.TM87Filler;
+import org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteLetter.DhammaPracticeInsLettertVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteLetter.DhammaPracticeInstLetterNewVisaThaiFiller;
+import org.watmarpjan.visaManager.control.letterFiller.goodConductLetter.GoodConductLetterVisaChangeFiller;
+import org.watmarpjan.visaManager.control.letterFiller.goodConductLetter.GoodConductNewVisaThaiFiller;
 import org.watmarpjan.visaManager.control.letterFiller.reqLetter.NewVisaReqLetterIMMFiller;
 import org.watmarpjan.visaManager.control.letterFiller.reqLetter.NewVisaReqLetterSNPFiller;
 import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterFiller;
@@ -169,14 +173,27 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
     private Button bMonasteryMap;
 
     @FXML
+    private Button bMonasteryMap2;
+    
+    @FXML
     private Button bTM30;
+    
+    @FXML
+    private Button bTM30_2;
 
     @FXML
     private Button bAckPenaltiesOverstay;
+    
+    @FXML
+    private Button bAckPenaltiesOverstay2;
 
     @FXML
     private Button bSTM2AckTermsAndConditions;
 
+    @FXML
+    private Button bSTM2AckTermsAndConditions2;
+
+    
     @FXML
     private TitledPane tpTouristDocs;
 
@@ -185,6 +202,18 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
     @FXML
     private VBox vbMainPane;
+
+    @FXML
+    private Button bNewVisaGoodConductGuaranteeLetter;
+
+    @FXML
+    private Button bVisaChangeGoodConductGuaranteeLetter;
+
+    @FXML
+    private Button bNewVisaDhammaPracticeInstGuaranteeLetter;
+
+    @FXML
+    private Button bVisaChangeDhammaPracticeInstGuaranteeLetter;
 
     @Override
     public void init()
@@ -294,21 +323,31 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         bVisaChangeRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bVisaChangeResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bVisaChangeResidenceGuaranteeLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeDhammaPracticeInstGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bVisaChangeGoodConductGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
 
         bTM87.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bNewVisaRequestLetterSNP.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bNewVisaRequestLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bNewVisaResidenceGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bNewVisaResidenceGuaranteeLetterIMM.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaDhammaPracticeInstGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bNewVisaGoodConductGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
 
         bNewVisaPrawat.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bVisaChangePrawat.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bVisaChangeOrdinationGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bNewVisaOrdinationGuaranteeLetter.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bMonasteryMap.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bMonasteryMap2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        
         bTM30.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bTM30_2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bAckPenaltiesOverstay.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bAckPenaltiesOverstay2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+       
         bSTM2AckTermsAndConditions.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
+        bSTM2AckTermsAndConditions2.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
     }
 
     private void setViewVisaType(MonasticProfile p)
@@ -571,6 +610,54 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
         objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p);
+        objLetterFiller.saveAndOpenODT();
+    }
+    
+    @FXML
+    void actionPreviewGoodConductLetterVisaChange(ActionEvent ae)
+    {
+        MonasticProfile p;
+        GoodConductLetterVisaChangeFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new GoodConductLetterVisaChangeFiller(p);
+        objLetterFiller.saveAndOpenODT();
+    }
+    
+    @FXML
+    void actionPreviewGoodConductLetterNewVisa(ActionEvent ae)
+    {
+        MonasticProfile p;
+        GoodConductNewVisaThaiFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new GoodConductNewVisaThaiFiller(p);
+        objLetterFiller.saveAndOpenODT();
+    }
+    
+    @FXML
+    void actionPreviewDhammaPracticeInstLetterNewVisa(ActionEvent ae)
+    {
+        MonasticProfile p;
+        DhammaPracticeInstLetterNewVisaThaiFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new DhammaPracticeInstLetterNewVisaThaiFiller(p);
+        objLetterFiller.saveAndOpenODT();
+    }
+    
+    @FXML
+    void actionPreviewDhammaPracticeInstLetterVisaChange(ActionEvent ae)
+    {
+        MonasticProfile p;
+        DhammaPracticeInsLettertVisaChangeFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new DhammaPracticeInsLettertVisaChangeFiller(p);
         objLetterFiller.saveAndOpenODT();
     }
 

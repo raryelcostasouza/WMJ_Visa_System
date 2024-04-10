@@ -134,13 +134,13 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="bVisaChangeDhammaPracticeInstGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewDhammaPracticeInstLetterVisaChange" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label layoutX="30.0" layoutY="106.0" text="Good Conduct Guarantee Letter:" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Button fx:id="bVisaChangeGoodConductGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewGoodConductLetterVisaChange" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <Label text="Visa Change Request Letter:">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -261,13 +261,13 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="bNewVisaDhammaPracticeInstGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewDhammaPracticeInstLetterNewVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label layoutX="30.0" layoutY="106.0" text="Good Conduct Guarantee Letter:" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Button fx:id="bNewVisaGoodConductGuaranteeLetter" mnemonicParsing="false" onAction="#actionPreviewGoodConductLetterNewVisa" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <Label text="New Visa Request Letter:">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -313,7 +313,7 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="bAckPenaltiesOverstay2" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="Acknowledgment Penalties Overstay:" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
@@ -324,19 +324,19 @@
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Button fx:id="bSTM2AckTermsAndConditions2" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="5">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Button fx:id="bTM30_2" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <Label text="Monastery Map:" GridPane.rowIndex="6">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Button mnemonicParsing="false" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Button fx:id="bMonasteryMap2" mnemonicParsing="false" onAction="#actionMonasteryMap" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                              </children>
                                           </GridPane>
                                        </content>

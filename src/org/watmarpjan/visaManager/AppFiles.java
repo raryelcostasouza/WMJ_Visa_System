@@ -366,6 +366,34 @@ public class AppFiles
                 .resolve("ResidenceGuaranteeLetterSNP-NewVisaThailand.odt")
                 .toFile();
      }
+     
+     public static File getODTDhammaPracticeInstGuaranteeLetterVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTDhammaPracticeInstGuaranteeLetterNewVisaThailand(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-NewVisaThailand.odt")
+                .toFile();
+     }
+     
+     public static File getODTGoodConductGuaranteeLetterVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("GoodConductGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTGoodConductGuaranteeLetterNewVisaThailand(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("GoodConductGuaranteeLetterSNP-NewVisaThailand.odt")
+                .toFile();
+     }
 
     public static File getThaiFont()
     {
