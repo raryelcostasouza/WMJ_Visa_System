@@ -4,8 +4,8 @@
  */
 package org.watmarpjan.visaManager.control.letterFiller.goodConductLetter;
 
+import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
-import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -18,6 +18,13 @@ public class GoodConductNewVisaThaiFiller extends GoodConductLetterFiller
     public GoodConductNewVisaThaiFiller( MonasticProfile p)
     {
         super(AppFiles.getODTGoodConductGuaranteeLetterNewVisaThailand(p.getMonasteryResidingAt()), p);
+    }
+    
+    @Override
+    public void fillLetter() throws InvalidNavigationException
+    {
+        super.fillLetter();
+        fillField( "«visaType»");
     }
     
 }

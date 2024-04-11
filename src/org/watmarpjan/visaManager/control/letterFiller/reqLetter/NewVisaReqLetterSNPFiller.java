@@ -23,6 +23,7 @@ public class NewVisaReqLetterSNPFiller extends ReqLetterSNPFiller
     @Override
     public void fillLetter() throws InvalidNavigationException
     {
+        super.fillLetter();
         fillField( "«visaType»");
     }
 }
