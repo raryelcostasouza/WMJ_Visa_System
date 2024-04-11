@@ -1,3 +1,8 @@
+v.1.14-BETA
++ support to new letters
++ adjusted fields from older letters
+* redesigned UI of New Visa section
+-----------------------------------------------------------------------------------------
 v.1.13.1
 * Fixed bug filling TM7 field
 * Reverted back issue with due dates for SNP and Prawat to rules in v1.12

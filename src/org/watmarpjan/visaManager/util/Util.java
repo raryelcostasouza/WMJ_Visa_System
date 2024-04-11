@@ -154,12 +154,12 @@ public class Util
     
     public static String convertDayToThaiDigits(LocalDate ld)
     {
-        return numberFormatterThai.format(ld.getDayOfMonth());
+        return (ld == null) ? null : numberFormatterThai.format(ld.getDayOfMonth());
     }
     
     public static String convertMonthToThaiLang(LocalDate ld)
     {
-        return ld.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
+        return (ld == null) ? null : ld.getMonth().getDisplayName(TextStyle.FULL, new Locale("th"));
     }
     
     public static String convertYearToThaiDigits(LocalDate ld)
@@ -167,7 +167,7 @@ public class Util
         //removes the thousands separator char
         numberFormatterThai.setGroupingUsed(false);
         
-        return numberFormatterThai.format(convertYearToThai(ld.getYear()));
+        return (ld == null) ? null : numberFormatterThai.format(convertYearToThai(ld.getYear()));
     }
     
     public static String convertNumberToThaiDigits(long i)

@@ -18,7 +18,9 @@ import org.watmarpjan.visaManager.model.stampedPage.input.InfoFileScanStampedPag
 import org.watmarpjan.visaManager.model.stampedPage.output.InfoGenericScanStampedPage;
 import org.watmarpjan.visaManager.model.stampedPage.output.InfoMainScanStampedPage;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
+import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.PrintoutTm30;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -287,11 +289,19 @@ public class AppFiles
                 .toFile();
     }
 
-    public static File getODTOrdinationGuaranteeLetter(Monastery mResidence)
+    public static File getODTOrdinationGuaranteeLetter(MonasticProfile p, String type)
     {
-        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("OrdinationGuaranteeLetterSNP.odt")
-                .toFile();
+        if ((p.getMonasteryOrdainedAt() == null) || (ProfileUtil.isOrdainedInThailand(p)))
+        {
+            return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
+                .resolve("OrdinationGuaranteeLetterOrdainedThailandSNP-"+ type +".odt")
+                .toFile();    
+        }
+        
+        return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
+                .resolve("OrdinationGuaranteeLetterOrdainedAbroadSNP-"+ type +".odt")
+                .toFile(); 
+        
     }
     
     public static File getODTVisaChangeReqLetterSNP(Monastery mResidence)
@@ -336,10 +346,52 @@ public class AppFiles
                 .toFile();
     }
      
-     public static File getODTResidenceGuaranteeLetterSNP(Monastery mResidence)
+     public static File getODTResidenceGuaranteeLetterSNPVisaExtension(Monastery mResidence)
      {
          return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("ResidenceGuaranteeLetterSNP.odt")
+                .toFile();
+     }
+     
+     public static File getODTResidenceGuaranteeLetterSNPVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTResidenceGuaranteeLetterSNPNewVisa(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP-NewVisaThailand.odt")
+                .toFile();
+     }
+     
+     public static File getODTDhammaPracticeInstGuaranteeLetterVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTDhammaPracticeInstGuaranteeLetterNewVisaThailand(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-NewVisaThailand.odt")
+                .toFile();
+     }
+     
+     public static File getODTGoodConductGuaranteeLetterVisaChange(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("GoodConductGuaranteeLetterSNP-VisaChange.odt")
+                .toFile();
+     }
+     
+     public static File getODTGoodConductGuaranteeLetterNewVisaThailand(Monastery mResidence)
+     {
+         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("GoodConductGuaranteeLetterSNP-NewVisaThailand.odt")
                 .toFile();
      }
 
