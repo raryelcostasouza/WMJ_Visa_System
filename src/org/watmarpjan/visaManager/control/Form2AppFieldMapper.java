@@ -18,7 +18,7 @@ import org.watmarpjan.visaManager.util.Util;
 public class Form2AppFieldMapper
 {
 
-    public static String getProfileField(MonasticProfile p, String fieldName)
+    public static String getProfileField(MonasticProfile p, String fieldName, CtrConfigFiles objCtrConfigFiles)
     {
         switch (fieldName)
         {
@@ -110,7 +110,9 @@ public class Form2AppFieldMapper
 
             case "«preceptorName»":
                 return (p.getUpajjhaya() == null) ? null : p.getUpajjhaya().getUpajjhayaName();
-
+            case "«vassa»":
+                return ProfileUtil.getVassaCount(p,objCtrConfigFiles.getConfigVassaDates().getDictVassaDates());
+                
             //Monastery related fields
             case "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»":
                 Monastery m1 = p.getMonasteryResidingAt();
