@@ -195,6 +195,11 @@ public class AppFiles
     {
         return AppPaths.getPathToMonasteryMap(monasteryNickname).toFile();
     }
+    
+    public static File getVassaDatesCSV()
+    {
+        return AppPaths.getPathToConfigs().resolve("vassa-dates.csv").toFile();
+    }
 
     public static File getFormPrawat(String monasteryNickname)
     {

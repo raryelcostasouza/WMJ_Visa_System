@@ -25,10 +25,12 @@ public class CtrMain
     private final CtrVisa ctrVisa;
     private final CtrUpajjhaya ctrUpajjhaya;
     private final CtrPrintoutTM30 ctrPrintoutTM30;
+    private final CtrConfigFiles ctrConfig;
 
     public CtrMain(CtrGUIMain ctrGUI)
     {
         ctrDB = new CtrDatabase();
+        ctrConfig = new CtrConfigFiles();
         ctrProfile = new CtrMonasticProfile(ctrDB);
         ctrMonastery = new CtrMonastery(ctrDB);
         ctrUpajjhaya = new CtrUpajjhaya(ctrDB);
@@ -95,4 +97,8 @@ public class CtrMain
         return ctrUpajjhaya;
     }
 
+    public CtrConfigFiles getCtrConfig()
+    {
+        return ctrConfig;
+    }
 }
