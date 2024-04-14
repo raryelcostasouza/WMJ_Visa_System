@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.chrono.ThaiBuddhistDate;
 import java.util.Date;
+import java.util.HashMap;
 import org.watmarpjan.visaManager.AppConstants;
+import org.watmarpjan.visaManager.model.ParsedVassaDates;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
 
@@ -248,7 +250,7 @@ public class ProfileUtil
         return false;
 
     }
-    
+
     public static String getPaliNameBhikkhuThai(MonasticProfile p)
     {
         if (p.getBhikkhuOrdDate() != null)
@@ -257,4 +259,92 @@ public class ProfileUtil
         }
         return null;
     }
+
+    public static String getVassaCount(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    {
+        int currentYear, vassaCount, ordainedYear;
+        LocalDate ordDate;
+
+        ordDate = getOrdinationDate(p);
+        if (ordDate != null)
+        {
+            currentYear = LocalDate.now().getYear();
+            ordainedYear = ordDate.getYear();
+
+            vassaCount = currentYear - ordainedYear + 1;
+            
+            System.out.println("Initial Count: " + vassaCount);
+            if (hasOrdainedAfterVassaEnd(ordDate, dictVassaDates))
+            {
+                System.out.println("Has ordained After Vassa End");
+                vassaCount -= 1;
+            }
+
+            if (isCurrentDateBeforeVassaEnd(dictVassaDates))
+            {
+                System.out.println("Current Date Before Vassa End");
+                vassaCount -= 1;
+            }
+            return vassaCount + "";
+        }
+
+        return "0";
+
+    }
+
+    private static boolean hasOrdainedAfterVassaEnd(LocalDate ordDate, HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    {
+        LocalDate vassaEndDateOnOrdainedYear;
+
+        System.out.println(ordDate.toString());
+        System.out.println(dictVassaDates.get(ordDate.getYear()));
+        vassaEndDateOnOrdainedYear = dictVassaDates.get(ordDate.getYear()).getVassaEndDate();
+
+        return (ordDate.compareTo(vassaEndDateOnOrdainedYear) > 0);
+
+    }
+
+    private static boolean isCurrentDateBeforeVassaEnd(HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    {
+        LocalDate vassaStartCurrentYear, today;
+
+        today = LocalDate.now();
+        vassaStartCurrentYear = dictVassaDates.get(today.getYear()).getVassaEndDate();
+        return today.compareTo(vassaStartCurrentYear) < 0;
+    }
+    
+    //returns if for a given year we are before, during or after vassa
+    private static String getVassaStatus(LocalDate date2Check, HashMap<Integer, ParsedVassaDates> dictVassaDates )
+    {
+        ParsedVassaDates vassa;
+        
+        vassa = dictVassaDates.get(date2Check.getYear());
+        
+        //if date before vassa start on that year
+        if (date2Check.compareTo(vassa.getVassaStartDate()) < 0)
+        {
+            return "Before vassa";
+        }
+        else if (date2Check.compareTo(vassa.getVassaEndDate()) > 0)
+        {
+            return "After vassa";
+        }
+        return "During vassa";
+    }
+    
+    public static String getVassaStatusOrdainedYear(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    {
+        LocalDate ordDate = getOrdinationDate(p);
+        if (ordDate != null)
+        {
+            return getVassaStatus(ordDate, dictVassaDates);
+        }
+        return "";
+    }
+    
+    public static String getVassaStatusCurrentYear(HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    {
+        return getVassaStatus(LocalDate.now(), dictVassaDates);
+    }
+
 }
