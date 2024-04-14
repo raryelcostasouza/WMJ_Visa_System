@@ -5,6 +5,7 @@
 package org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteLetter;
 
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -14,9 +15,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class DhammaPracticeInsLettertVisaChangeFiller extends ResidenceGuaranteeLetterSNPFiller
 {
-    public DhammaPracticeInsLettertVisaChangeFiller(MonasticProfile p)
+    public DhammaPracticeInsLettertVisaChangeFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
     
 }

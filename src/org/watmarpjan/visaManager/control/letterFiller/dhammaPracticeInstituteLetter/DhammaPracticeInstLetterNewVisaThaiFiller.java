@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteL
 
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -15,9 +16,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class DhammaPracticeInstLetterNewVisaThaiFiller extends ResidenceGuaranteeLetterSNPFiller
 {
-    public DhammaPracticeInstLetterNewVisaThaiFiller(MonasticProfile p)
+    public DhammaPracticeInstLetterNewVisaThaiFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles )
     {
-        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterNewVisaThailand(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterNewVisaThailand(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
     
     @Override

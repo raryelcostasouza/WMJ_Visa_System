@@ -377,7 +377,7 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         ResidenceGuaranteeLetterSNPVisaExtension objLetterFiller;
         
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaExtension(p);
+        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaExtension(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 

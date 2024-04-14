@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.goodConductLetter;
 
 import java.io.File;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
@@ -16,9 +17,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public abstract class GoodConductLetterFiller extends ResidenceGuaranteeLetterSNPFiller
 {
     
-    public GoodConductLetterFiller(File fTemplate,MonasticProfile p)
+    public GoodConductLetterFiller(File fTemplate,MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(fTemplate, p);
+        super(fTemplate, p, objCtrConfigFiles);
     }
     
     @Override

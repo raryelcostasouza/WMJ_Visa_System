@@ -528,7 +528,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         VisaChangeReqLetterSNPFiller vcf;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        vcf = new VisaChangeReqLetterSNPFiller(p);
+        vcf = new VisaChangeReqLetterSNPFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         vcf.saveAndOpenODT();
     }
 
@@ -539,7 +539,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         VisaChangeReqLetterIMMFiller vcf;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        vcf = new VisaChangeReqLetterIMMFiller(p);
+        vcf = new VisaChangeReqLetterIMMFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         vcf.saveAndOpenODT();
     }
 
@@ -550,7 +550,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         ResidenceGuaranteeLetterIMMVisaChangeFiller objLetterFiller;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterIMMVisaChangeFiller(p);
+        objLetterFiller = new ResidenceGuaranteeLetterIMMVisaChangeFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 
@@ -561,7 +561,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         ResidenceGuaranteeLetterSNPFiller objLetterFiller;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaChangeFiller(p);
+        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaChangeFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 
@@ -572,7 +572,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
         ResidenceGuaranteeLetterSNPFiller objLetterFiller;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterSNPNewVisaFiller(p);
+        objLetterFiller = new ResidenceGuaranteeLetterSNPNewVisaFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 
@@ -584,7 +584,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        nvf = new NewVisaReqLetterSNPFiller(p);
+        nvf = new NewVisaReqLetterSNPFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         nvf.saveAndOpenODT();
     }
 
@@ -596,7 +596,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        nvf = new NewVisaReqLetterIMMFiller(p);
+        nvf = new NewVisaReqLetterIMMFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         nvf.saveAndOpenODT();
 
     }
@@ -609,7 +609,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p);
+        objLetterFiller = new ResidenceGuaranteeLetterIMMNewVisaFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
     
@@ -621,7 +621,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        objLetterFiller = new GoodConductLetterVisaChangeFiller(p);
+        objLetterFiller = new GoodConductLetterVisaChangeFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
     
@@ -633,7 +633,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        objLetterFiller = new GoodConductNewVisaThaiFiller(p);
+        objLetterFiller = new GoodConductNewVisaThaiFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
     
@@ -645,7 +645,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        objLetterFiller = new DhammaPracticeInstLetterNewVisaThaiFiller(p);
+        objLetterFiller = new DhammaPracticeInstLetterNewVisaThaiFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
     
@@ -657,7 +657,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 
-        objLetterFiller = new DhammaPracticeInsLettertVisaChangeFiller(p);
+        objLetterFiller = new DhammaPracticeInsLettertVisaChangeFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 
@@ -698,19 +698,19 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
             isOrdainedInThai = ProfileUtil.isOrdainedInThailand(p);
             if (isOrdainedInThai && !isNewVisa)
             {
-                oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedThailand(p);
+                oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedThailand(p, ctrGUIMain.getCtrMain().getCtrConfig());
             }
             else if (! !isOrdainedInThai && !isNewVisa)
             {
-                oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedAbroad(p);
+                oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedAbroad(p, ctrGUIMain.getCtrMain().getCtrConfig());
             }
             else if (isOrdainedInThai && isNewVisa)
             {
-                oLF = new OrdinationGuaranteeLetterNewVisaOrdainedThailand(p);
+                oLF = new OrdinationGuaranteeLetterNewVisaOrdainedThailand(p, ctrGUIMain.getCtrMain().getCtrConfig());
             }
             else
             {
-                oLF = new OrdinationGuaranteeLetterNewVisaOrdainedAbroad(p);
+                oLF = new OrdinationGuaranteeLetterNewVisaOrdainedAbroad(p, ctrGUIMain.getCtrMain().getCtrConfig());
 
             }
 

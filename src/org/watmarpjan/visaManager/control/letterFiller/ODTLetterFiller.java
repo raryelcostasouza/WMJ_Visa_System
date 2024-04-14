@@ -13,6 +13,7 @@ import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.odftoolkit.simple.common.navigation.TextNavigation;
 import org.odftoolkit.simple.common.navigation.TextSelection;
 import org.watmarpjan.visaManager.AppPaths;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.gui.util.CtrAlertDialog;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
@@ -28,11 +29,13 @@ public abstract class ODTLetterFiller
     protected TextDocument objTD;
     protected File fTemplate;
     protected MonasticProfile monastic;
+    protected CtrConfigFiles objCtrConfigFiles;
 
-    public ODTLetterFiller(File fTemplate, MonasticProfile p)
+    public ODTLetterFiller(File fTemplate, MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
         try
         {
+            this.objCtrConfigFiles = objCtrConfigFiles;
             this.monastic = p;
             this.fTemplate = fTemplate;
             this.objTD = TextDocument.loadDocument(this.fTemplate);
@@ -83,7 +86,7 @@ public abstract class ODTLetterFiller
 
         try
         {
-            replace = Form2AppFieldMapper.getProfileField(monastic, fieldName);
+            replace = Form2AppFieldMapper.getProfileField(monastic, fieldName, objCtrConfigFiles);
             if (replace != null)
             {
                 search2 = new TextNavigation(fieldName, objTD);

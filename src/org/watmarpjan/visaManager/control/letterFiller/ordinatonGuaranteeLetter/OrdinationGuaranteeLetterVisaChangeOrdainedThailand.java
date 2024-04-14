@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter
 
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -15,9 +16,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public class OrdinationGuaranteeLetterVisaChangeOrdainedThailand extends OrdinationGuaranteeLetterFiller
 {
 
-    public OrdinationGuaranteeLetterVisaChangeOrdainedThailand(MonasticProfile p)
+    public OrdinationGuaranteeLetterVisaChangeOrdainedThailand(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTOrdinationGuaranteeLetter(p, "VisaChange"), p);
+        super(AppFiles.getODTOrdinationGuaranteeLetter(p, "VisaChange"), p, objCtrConfigFiles);
     }
 
     @Override
