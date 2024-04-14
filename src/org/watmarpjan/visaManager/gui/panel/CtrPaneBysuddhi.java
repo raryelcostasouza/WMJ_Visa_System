@@ -14,22 +14,28 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javax.swing.SpinnerListModel;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrPDF;
+import org.watmarpjan.visaManager.model.ParsedVassaDates;
 import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.util.Util;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.Upajjhaya;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 
 /**
  *
@@ -47,6 +53,18 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     private DatePicker dpSamaneraOrd;
     @FXML
     private DatePicker dpBhikkhuOrd;
+    @FXML
+    private TextField tfVassaCount;
+    
+    @FXML
+    private TextField tfOrdainedYearVassaStatus;
+    
+    @FXML
+    private TextField tfCurrentYearVassaStatus;
+    
+    
+    @FXML
+    private Spinner spVassaAdjustOffset;
 
     @FXML
     private TextField tfPaliName;
@@ -99,7 +117,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
 
     @FXML
     private Button bPreview;
-    
+
     @FXML
     private CheckBox cbIncludeCover;
 
@@ -118,6 +136,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         initChangeListener();
         loadContentsCBWat();
         loadContentsCBUpajjhaya();
+        spVassaAdjustOffset.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 1, 0));
     }
 
     private void initChangeListener()
@@ -164,6 +183,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         b4Archive.setDisable(true);
         b5Archive.setDisable(true);
         bCoverArchive.setDisable(true);
+        spVassaAdjustOffset.setDisable(true);
     }
 
     @Override
@@ -179,6 +199,8 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
 
         cbOrdainedAt.setDisable(false);
         cbUpajjhaya.setDisable(false);
+
+        spVassaAdjustOffset.setDisable(false);
         reloadScanButtons();
     }
 
@@ -319,6 +341,11 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
             {
                 cbOrdainedAt.setValue(null);
             }
+            
+            HashMap<Integer,ParsedVassaDates> dictVassaDates = ctrGUIMain.getCtrMain().getCtrConfig().getConfigVassaDates().getDictVassaDates();
+            tfVassaCount.setText(ProfileUtil.getVassaCount(p, dictVassaDates));
+            tfOrdainedYearVassaStatus.setText(ProfileUtil.getVassaStatusOrdainedYear(p, dictVassaDates));
+            tfCurrentYearVassaStatus.setText(ProfileUtil.getVassaStatusCurrentYear(dictVassaDates));
         }
     }
 
@@ -474,12 +501,13 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
     {
         actionArchiveBysuddhiScanGeneric(4);
     }
-    
+
     @FXML
     void actionArchiveBysuddhiScan5(ActionEvent ae)
     {
         actionArchiveBysuddhiScanGeneric(5);
     }
+
     @FXML
     void actionArchiveBysuddhiScanCover(ActionEvent ae)
     {
@@ -496,8 +524,8 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         msg = "Are you sure that you want to archive this bysuddhi scan?";
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         f2Archive = AppFiles.getScanBysuddhi(p.getNickname(), scanNumber);
-        
-        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(),CtrFileOperation.SCAN_TYPE_BYSUDDHI);
+
+        ret = CtrFileOperation.archiveAfterConfirmation(f2Archive, msg, p.getNickname(), CtrFileOperation.SCAN_TYPE_BYSUDDHI);
         if (ret == 0)
         {
             loadIMGPreviews(p);
