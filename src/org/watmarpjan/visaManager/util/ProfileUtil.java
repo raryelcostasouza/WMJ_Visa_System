@@ -260,7 +260,7 @@ public class ProfileUtil
         return null;
     }
 
-    public static String getVassaCount(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
+    public static int getVassaCount(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
     {
         int currentYear, vassaCount, ordainedYear;
         LocalDate ordDate;
@@ -285,11 +285,23 @@ public class ProfileUtil
                 System.out.println("Current Date Before Vassa End");
                 vassaCount -= 1;
             }
-            return vassaCount + "";
+            return vassaCount;
         }
 
-        return "0";
+        return 0;
 
+    }
+    
+    public static int getVassaCountLetter(MonasticProfile p, HashMap<Integer,ParsedVassaDates> dictVassaDates)
+    {
+        int vassaCount;
+        
+        vassaCount = getVassaCount(p, dictVassaDates);
+        if (p.getVassaCountAdjust() != null)
+        {
+            return  vassaCount + p.getVassaCountAdjust();
+        }
+        return vassaCount;
     }
 
     private static boolean hasOrdainedAfterVassaEnd(LocalDate ordDate, HashMap<Integer, ParsedVassaDates> dictVassaDates)

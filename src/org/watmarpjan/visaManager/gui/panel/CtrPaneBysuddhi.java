@@ -26,7 +26,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javax.swing.SpinnerListModel;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrPDF;
@@ -152,6 +151,7 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         listFields.add(tfPaliNameThai);
         listFields.add(cbOrdainedAt);
         listFields.add(cbUpajjhaya);
+        listFields.add(spVassaAdjustOffset);
 
         ctrGUIMain.getCtrFieldChangeListener().registerChangeListener(listFields);
     }
@@ -212,7 +212,6 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
         Monastery wOrdainedAt;
         Upajjhaya u;
         int operationStatus;
-        Integer idSelectedProfile;
 
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         p.setPaliNameEnglish(tfPaliName.getText());
@@ -229,6 +228,8 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
 
         bkOrdDate = Util.convertLocalDateToDate(dpBhikkhuOrd.getValue());
         p.setBhikkhuOrdDate(bkOrdDate);
+        
+        p.setVassaCountAdjust((Integer) spVassaAdjustOffset.getValue());
 
         if (cbOrdainedAt.getValue() != null)
         {
@@ -342,8 +343,17 @@ public class CtrPaneBysuddhi extends AChildPaneControllerExportPDF implements IE
                 cbOrdainedAt.setValue(null);
             }
             
+            if (p.getVassaCountAdjust() != null)
+            {
+                spVassaAdjustOffset.getValueFactory().setValue(p.getVassaCountAdjust());
+            }
+            else
+            {
+                 spVassaAdjustOffset.getValueFactory().setValue(0);
+            }
+            
             HashMap<Integer,ParsedVassaDates> dictVassaDates = ctrGUIMain.getCtrMain().getCtrConfig().getConfigVassaDates().getDictVassaDates();
-            tfVassaCount.setText(ProfileUtil.getVassaCount(p, dictVassaDates));
+            tfVassaCount.setText(""+ProfileUtil.getVassaCount(p, dictVassaDates));
             tfOrdainedYearVassaStatus.setText(ProfileUtil.getVassaStatusOrdainedYear(p, dictVassaDates));
             tfCurrentYearVassaStatus.setText(ProfileUtil.getVassaStatusCurrentYear(dictVassaDates));
         }

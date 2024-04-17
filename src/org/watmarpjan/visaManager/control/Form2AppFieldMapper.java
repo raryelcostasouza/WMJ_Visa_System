@@ -111,7 +111,7 @@ public class Form2AppFieldMapper
             case "«preceptorName»":
                 return (p.getUpajjhaya() == null) ? null : p.getUpajjhaya().getUpajjhayaName();
             case "«vassa»":
-                return ProfileUtil.getVassaCount(p,objCtrConfigFiles.getConfigVassaDates().getDictVassaDates());
+                return ""+ProfileUtil.getVassaCountLetter(p,objCtrConfigFiles.getConfigVassaDates().getDictVassaDates());
                 
             //Monastery related fields
             case "«WatResidingAtThai_addrTambon_addrAmpher_addrJangwat»":

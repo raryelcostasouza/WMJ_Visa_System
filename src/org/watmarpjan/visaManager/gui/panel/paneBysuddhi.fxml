@@ -66,7 +66,7 @@
                               </Label>
                               <DatePicker fx:id="dpBhikkhuOrd" disable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField fx:id="tfVassaCount" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label text="Vassa Count Calculated:" GridPane.rowIndex="4">
+                              <Label text="Vassa Count:" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
