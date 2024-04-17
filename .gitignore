@@ -2,5 +2,5 @@
 /build/
 /lib/
 /icons/
-nbproject/*
+/nbproject/
 .DS_Store
