@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.watmarpjan.visaManager.model.hibernate;
 
@@ -29,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author adhipanyo
+ * @author raryel
  */
 @Entity
 @Table(name = "MONASTIC_PROFILE")
@@ -97,7 +96,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonasticProfile.findByWfExtLetterImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtLetterImm = :wfExtLetterImm"),
     @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesSnp", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesSnp = :wfExtPhotocopiesSnp"),
     @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesImm = :wfExtPhotocopiesImm"),
-    @NamedQuery(name = "MonasticProfile.findByPassportKeptAt", query = "SELECT m FROM MonasticProfile m WHERE m.passportKeptAt = :passportKeptAt")
+    @NamedQuery(name = "MonasticProfile.findByPassportKeptAt", query = "SELECT m FROM MonasticProfile m WHERE m.passportKeptAt = :passportKeptAt"),
+    @NamedQuery(name = "MonasticProfile.findByVassaCountAdjust", query = "SELECT m FROM MonasticProfile m WHERE m.vassaCountAdjust = :vassaCountAdjust")
 })
 public class MonasticProfile implements Serializable
 {
@@ -247,6 +247,8 @@ public class MonasticProfile implements Serializable
     private String wfExtPhotocopiesImm;
     @Column(name = "PASSPORT_KEPT_AT")
     private String passportKeptAt;
+    @Column(name = "VASSA_COUNT_ADJUST")
+    private Integer vassaCountAdjust;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryAdviserToCome;
@@ -909,6 +911,16 @@ public class MonasticProfile implements Serializable
     public void setPassportKeptAt(String passportKeptAt)
     {
         this.passportKeptAt = passportKeptAt;
+    }
+
+    public Integer getVassaCountAdjust()
+    {
+        return vassaCountAdjust;
+    }
+
+    public void setVassaCountAdjust(Integer vassaCountAdjust)
+    {
+        this.vassaCountAdjust = vassaCountAdjust;
     }
 
     public Monastery getMonasteryAdviserToCome()

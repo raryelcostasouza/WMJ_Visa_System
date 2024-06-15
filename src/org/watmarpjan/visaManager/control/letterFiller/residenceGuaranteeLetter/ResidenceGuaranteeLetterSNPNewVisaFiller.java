@@ -7,6 +7,7 @@ package org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter
 import java.io.File;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -16,9 +17,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public class ResidenceGuaranteeLetterSNPNewVisaFiller extends ResidenceGuaranteeLetterSNPFiller
 {
 
-    public ResidenceGuaranteeLetterSNPNewVisaFiller(MonasticProfile p)
+    public ResidenceGuaranteeLetterSNPNewVisaFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTResidenceGuaranteeLetterSNPNewVisa(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTResidenceGuaranteeLetterSNPNewVisa(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
 
     @Override

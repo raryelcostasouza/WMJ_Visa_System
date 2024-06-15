@@ -5,6 +5,7 @@
 package org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter;
 
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -13,8 +14,8 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class ResidenceGuaranteeLetterIMMVisaChangeFiller extends ResidenceGuaranteeLetterFiller
 {
-    public ResidenceGuaranteeLetterIMMVisaChangeFiller(MonasticProfile p)
+    public ResidenceGuaranteeLetterIMMVisaChangeFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTResidenceGuaranteeLetterIMMVisaChange(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTResidenceGuaranteeLetterIMMVisaChange(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
 }

@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.reqLetter;
 
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -15,9 +16,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public class NewVisaReqLetterSNPFiller extends ReqLetterSNPFiller
 {
 
-    public NewVisaReqLetterSNPFiller(MonasticProfile p)
+    public NewVisaReqLetterSNPFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTNewVisaReqLetterSNP(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTNewVisaReqLetterSNP(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
     
     @Override

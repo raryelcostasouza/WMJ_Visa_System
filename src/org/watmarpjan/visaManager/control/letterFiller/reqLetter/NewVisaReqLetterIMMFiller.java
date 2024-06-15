@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.reqLetter;
 
 import org.watmarpjan.visaManager.control.letterFiller.reqLetter.ReqLetterIMMFilter;
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -14,8 +15,8 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  */
 public class NewVisaReqLetterIMMFiller extends ReqLetterIMMFilter
 {
-    public NewVisaReqLetterIMMFiller(MonasticProfile p)
+    public NewVisaReqLetterIMMFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTNewVisaReqLetterIMM(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTNewVisaReqLetterIMM(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
 }

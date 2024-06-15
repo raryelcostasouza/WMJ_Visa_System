@@ -6,6 +6,7 @@ package org.watmarpjan.visaManager.control.letterFiller.reqLetter;
 
 import java.io.File;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -15,9 +16,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public abstract class ReqLetterIMMFilter extends ReqLetterFiller
 {
 
-    public ReqLetterIMMFilter(File fLetter, MonasticProfile p)
+    public ReqLetterIMMFilter(File fLetter, MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(fLetter, p);
+        super(fLetter, p, objCtrConfigFiles);
     }
 
     @Override

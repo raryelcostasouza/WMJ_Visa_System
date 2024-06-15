@@ -5,6 +5,7 @@
 package org.watmarpjan.visaManager.control.letterFiller.goodConductLetter;
 
 import org.watmarpjan.visaManager.AppFiles;
+import org.watmarpjan.visaManager.control.CtrConfigFiles;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
@@ -14,9 +15,9 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 public class GoodConductLetterVisaChangeFiller extends GoodConductLetterFiller
 {
     
-    public GoodConductLetterVisaChangeFiller(MonasticProfile p)
+    public GoodConductLetterVisaChangeFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTGoodConductGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p);
+        super(AppFiles.getODTGoodConductGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
     }
     
 }
