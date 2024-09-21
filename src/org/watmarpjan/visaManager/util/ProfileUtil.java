@@ -237,6 +237,11 @@ public class ProfileUtil
     {
         return p.getMonasteryOrdainedAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
     }
+    
+    public static boolean isResidingInThailand(MonasticProfile p)
+    {
+        return p.getMonasteryResidingAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
+    }
 
     public static boolean hasVisaExemption(MonasticProfile p)
     {

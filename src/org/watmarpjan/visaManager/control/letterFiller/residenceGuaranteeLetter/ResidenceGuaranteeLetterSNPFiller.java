@@ -41,7 +41,7 @@ public abstract class ResidenceGuaranteeLetterSNPFiller extends ODTLetterFiller
         
         fillField( "«WatResidingAtThai»");
         
-        if (ProfileUtil.isOrdainedInThailand(monastic))
+        if (ProfileUtil.isResidingInThailand(monastic))
         {
             fillField( "«WatResidingAtThaiaddrTambon»");
         }
