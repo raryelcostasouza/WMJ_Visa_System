@@ -1,3 +1,5 @@
+Visa Types and exemptions on separate table
+
 Static CtrDB 
 Migracao formulários pdf e cartas para herança
 Layout font too big - detect hidpi screeen
