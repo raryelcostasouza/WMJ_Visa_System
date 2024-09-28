@@ -1,3 +1,11 @@
+v1.16-BETA
++ support for name order on chinese names
++ added support for ผ.60 visa exemption
+* fix bug for duplicate monastery name on monastics ordained abroad
+-----------------------------------------------------------------------------------------
+v1.15 
++ vassa count
+-----------------------------------------------------------------------------------------
 v.1.14-BETA
 + support to new letters
 + adjusted fields from older letters
