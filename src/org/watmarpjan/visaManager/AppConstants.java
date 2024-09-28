@@ -50,6 +50,13 @@ public class AppConstants
     {
         "Air", "Land", "Sea"
     };
+    
+    public static final String[] LIST_NAME_ORDER = new String[]
+    {
+        "Default (First-Middle-Last)", "Chinese (Last-First-Middle)"  
+    };
+    
+    public static final String NAME_ORDER_DEFAULT = "Default (First-Middle-Last)";
 
     public static final String STUDIES_REGULAR = "Regular";
     public static final String STUDIES_NAKTAM_TRI = "Naktam Tri";

@@ -48,34 +48,41 @@
                      <content>
                         <HBox spacing="20.0">
                            <children>
-                              <GridPane>
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
+                              <VBox>
                                  <children>
-                                            <Label text="Nickname: " />
-                                            <TextField fx:id="tfNickname" editable="false" GridPane.columnIndex="1" />
-                                            <Label text="Name: " GridPane.columnIndex="3" />
-                                            <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" />
-                                            <Label text="Middle Name: " GridPane.rowIndex="1" />
-                                            <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                            <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                            <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                            <Label text="Mother: " GridPane.rowIndex="2" />
-                                            <TextField fx:id="tfMother" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                            <Label text="Father: " GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                            <TextField fx:id="tfFather" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                                  <Label text="Nickname: " />
+                                                  <TextField fx:id="tfNickname" editable="false" GridPane.columnIndex="1" />
+                                                  <Label text="Name: " GridPane.columnIndex="3" />
+                                                  <TextField fx:id="tfName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" />
+                                                  <Label text="Middle Name: " GridPane.rowIndex="1" />
+                                                  <TextField fx:id="tfMiddleName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                  <Label text="Last Name: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                  <TextField fx:id="tfLastName" editable="false" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                                  <Label text="Mother: " GridPane.rowIndex="3" />
+                                                  <TextField fx:id="tfMother" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                  <Label text="Father: " GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                  <TextField fx:id="tfFather" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <Label text="Name Order: " GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="cbNameOrder" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
                                  </children>
-                              </GridPane>
+                              </VBox>
                            </children>
                         </HBox>
                      </content>

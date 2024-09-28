@@ -33,6 +33,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import org.watmarpjan.visaManager.util.ProfileUtil;
 import static java.lang.Integer.parseInt;
+import java.util.Arrays;
 import javafx.scene.input.MouseEvent;
 import org.watmarpjan.visaManager.AppPaths;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerCBSelectableEntity;
@@ -207,6 +208,9 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
     
     @FXML
     private ComboBox<String> cbPassportKeptAt;
+    
+    @FXML
+    private ComboBox<String> cbNameOrder;
 
     File fPDFSelectedNaktamTri;
     File fPDFSelectedNaktamToh;
@@ -252,6 +256,7 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
         listFields.add(tfPhoneNumber2);
         listFields.add(taRemark);
         listFields.add(cbPassportKeptAt);
+        listFields.add(cbNameOrder);
 
         bCurrentCertificateNaktamTri.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bCurrentCertificateNaktamToh.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
@@ -352,6 +357,8 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
         
         GUIUtil.loadContentComboboxGeneric(cbResidingAt, listWat);
         GUIUtil.loadContentComboboxGeneric(cbAdvisorWat, listWat);
+        
+        GUIUtil.loadContentComboboxGeneric(cbNameOrder, new ArrayList<>(Arrays.asList(AppConstants.LIST_NAME_ORDER)));
 
         if (p != null)
         {
@@ -381,6 +388,14 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
             cbCertificate.setValue(p.getCertificateEnglish());
             cbCertificateThai.setValue(p.getCertificateThai());
             cbPassportKeptAt.setValue(p.getPassportKeptAt());
+            if (p.getNameOrder() != null)
+            {
+                cbNameOrder.setValue(p.getNameOrder());
+            }
+            else
+            {
+                cbNameOrder.setValue(AppConstants.NAME_ORDER_DEFAULT);
+            }
             if (p.getCertificateDuration() != null)
             {
                 tfDuration.setText(p.getCertificateDuration() + "");
@@ -811,6 +826,7 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
         bRemoveCertificateNaktamTri.setDisable(true);
         bRemoveCertificateNaktamToh.setDisable(true);
         bRemoveCertificateNaktamEk.setDisable(true);
+        cbNameOrder.setDisable(true);
         
         reloadButtonsProfilePhoto();
     }
@@ -882,6 +898,7 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
         bRemoveCertificateNaktamTri.setDisable(false);
         bRemoveCertificateNaktamToh.setDisable(false);
         bRemoveCertificateNaktamEk.setDisable(false);
+        cbNameOrder.setDisable(false);
         
         reloadButtonsProfilePhoto();
     }
@@ -1057,6 +1074,7 @@ public class CtrPaneMonasticProfile extends AChildPaneControllerCBSelectableEnti
         newStatus = p.getStatus();
 
         p.setRemark(taRemark.getText());
+        p.setNameOrder(cbNameOrder.getValue());
 
         //if no field caused errors
         if (!error)

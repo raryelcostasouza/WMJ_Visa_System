@@ -97,7 +97,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesSnp", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesSnp = :wfExtPhotocopiesSnp"),
     @NamedQuery(name = "MonasticProfile.findByWfExtPhotocopiesImm", query = "SELECT m FROM MonasticProfile m WHERE m.wfExtPhotocopiesImm = :wfExtPhotocopiesImm"),
     @NamedQuery(name = "MonasticProfile.findByPassportKeptAt", query = "SELECT m FROM MonasticProfile m WHERE m.passportKeptAt = :passportKeptAt"),
-    @NamedQuery(name = "MonasticProfile.findByVassaCountAdjust", query = "SELECT m FROM MonasticProfile m WHERE m.vassaCountAdjust = :vassaCountAdjust")
+    @NamedQuery(name = "MonasticProfile.findByVassaCountAdjust", query = "SELECT m FROM MonasticProfile m WHERE m.vassaCountAdjust = :vassaCountAdjust"),
+    @NamedQuery(name = "MonasticProfile.findByNameOrder", query = "SELECT m FROM MonasticProfile m WHERE m.nameOrder = :nameOrder")
 })
 public class MonasticProfile implements Serializable
 {
@@ -249,6 +250,8 @@ public class MonasticProfile implements Serializable
     private String passportKeptAt;
     @Column(name = "VASSA_COUNT_ADJUST")
     private Integer vassaCountAdjust;
+    @Column(name = "NAME_ORDER")
+    private String nameOrder;
     @JoinColumn(name = "MONASTERY_ADVISER_TO_COME", referencedColumnName = "ID_MONASTERY")
     @ManyToOne
     private Monastery monasteryAdviserToCome;
@@ -921,6 +924,16 @@ public class MonasticProfile implements Serializable
     public void setVassaCountAdjust(Integer vassaCountAdjust)
     {
         this.vassaCountAdjust = vassaCountAdjust;
+    }
+
+    public String getNameOrder()
+    {
+        return nameOrder;
+    }
+
+    public void setNameOrder(String nameOrder)
+    {
+        this.nameOrder = nameOrder;
     }
 
     public Monastery getMonasteryAdviserToCome()

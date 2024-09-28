@@ -90,7 +90,7 @@ public class ProfileUtil
         }
     }
 
-    public static String getFullName(MonasticProfile p)
+    private static String getFullNameDefault(MonasticProfile p)
     {
         String strFullName;
 
@@ -103,6 +103,36 @@ public class ProfileUtil
         strFullName += " " + p.getLastName();
 
         return strFullName;
+    }
+
+    private static String getFullNameChinese(MonasticProfile p)
+    {
+        String strFullName;
+
+        strFullName = p.getLastName();
+        strFullName += " " + p.getMonasticName();
+
+        if (p.getMiddleName() != null)
+        {
+            strFullName += " " + p.getMiddleName();
+        }
+
+        return strFullName;
+    }
+
+    public static String getFullName(MonasticProfile p)
+    {
+        String strFullName;
+
+        if ((p.getNameOrder() == null) || p.getNameOrder().equals(AppConstants.NAME_ORDER_DEFAULT))
+        {
+            return ProfileUtil.getFullNameDefault(p);
+        }
+        //Chinese full name order (Last Name + First Name + Middle Name)
+        else
+        {
+            return ProfileUtil.getFullNameChinese(p);
+        }
     }
 
     public static String getOrdinationType(MonasticProfile p)
@@ -237,7 +267,7 @@ public class ProfileUtil
     {
         return p.getMonasteryOrdainedAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
     }
-    
+
     public static boolean isResidingInThailand(MonasticProfile p)
     {
         return p.getMonasteryResidingAt().getAddrCountry().equals(AppConstants.COUNTRY_THAILAND);
@@ -277,7 +307,7 @@ public class ProfileUtil
             ordainedYear = ordDate.getYear();
 
             vassaCount = currentYear - ordainedYear + 1;
-            
+
             System.out.println("Initial Count: " + vassaCount);
             if (hasOrdainedAfterVassaEnd(ordDate, dictVassaDates))
             {
@@ -296,15 +326,15 @@ public class ProfileUtil
         return 0;
 
     }
-    
-    public static int getVassaCountLetter(MonasticProfile p, HashMap<Integer,ParsedVassaDates> dictVassaDates)
+
+    public static int getVassaCountLetter(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
     {
         int vassaCount;
-        
+
         vassaCount = getVassaCount(p, dictVassaDates);
         if (p.getVassaCountAdjust() != null)
         {
-            return  vassaCount + p.getVassaCountAdjust();
+            return vassaCount + p.getVassaCountAdjust();
         }
         return vassaCount;
     }
@@ -329,14 +359,14 @@ public class ProfileUtil
         vassaStartCurrentYear = dictVassaDates.get(today.getYear()).getVassaEndDate();
         return today.compareTo(vassaStartCurrentYear) < 0;
     }
-    
+
     //returns if for a given year we are before, during or after vassa
-    private static String getVassaStatus(LocalDate date2Check, HashMap<Integer, ParsedVassaDates> dictVassaDates )
+    private static String getVassaStatus(LocalDate date2Check, HashMap<Integer, ParsedVassaDates> dictVassaDates)
     {
         ParsedVassaDates vassa;
-        
+
         vassa = dictVassaDates.get(date2Check.getYear());
-        
+
         //if date before vassa start on that year
         if (date2Check.compareTo(vassa.getVassaStartDate()) < 0)
         {
@@ -348,7 +378,7 @@ public class ProfileUtil
         }
         return "During vassa";
     }
-    
+
     public static String getVassaStatusOrdainedYear(MonasticProfile p, HashMap<Integer, ParsedVassaDates> dictVassaDates)
     {
         LocalDate ordDate = getOrdinationDate(p);
@@ -358,7 +388,7 @@ public class ProfileUtil
         }
         return "";
     }
-    
+
     public static String getVassaStatusCurrentYear(HashMap<Integer, ParsedVassaDates> dictVassaDates)
     {
         return getVassaStatus(LocalDate.now(), dictVassaDates);
