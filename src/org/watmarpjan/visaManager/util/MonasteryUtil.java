@@ -34,7 +34,7 @@ public class MonasteryUtil
                 sAddr += " " +m.getAddrTambon();
             }
             
-            sAddr += m.getMonasteryName() + " " + m.getAddrAmpher() + " " + m.getAddrJangwat();
+            sAddr += " " + m.getAddrAmpher() + " " + m.getAddrJangwat();
             
             if (includeCountry)
             {

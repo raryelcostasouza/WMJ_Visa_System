@@ -38,18 +38,25 @@ public class AppConstants
     
     public static final String[] LIST_VISA_TYPES = new String[]
     {
-        "Privilege Entry", "ผ.15","ผ.30","ผผ.30","ผผ.90","Non-B","Non-O", "Non-RE", "Non-ED", VISA_TYPE_TOURIST
+        "Privilege Entry", "ผ.15","ผ.30","ผผ.30","ผ.60","ผผ.90","Non-B","Non-O", "Non-RE", "Non-ED", VISA_TYPE_TOURIST
     };
     
     public static final String[] LIST_VISA_EXEMPTIONS= new String[]
     {
-       "Privilege Entry","ผ.15","ผ.30","ผผ.30","ผผ.90"
+       "Privilege Entry","ผ.15","ผ.30","ผ.60","ผผ.30","ผผ.90"
     };
 
     public static final String[] LIST_TRAVEL_BY = new String[]
     {
         "Air", "Land", "Sea"
     };
+    
+    public static final String[] LIST_NAME_ORDER = new String[]
+    {
+        "Default (First-Middle-Last)", "Chinese (Last-First-Middle)"  
+    };
+    
+    public static final String NAME_ORDER_DEFAULT = "Default (First-Middle-Last)";
 
     public static final String STUDIES_REGULAR = "Regular";
     public static final String STUDIES_NAKTAM_TRI = "Naktam Tri";

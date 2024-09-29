@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.watmarpjan.visaManager.model.hibernate;
 
@@ -22,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author adhipanyo
+ * @author raryel
  */
 @Entity
 @Table(name = "MONASTERY")
@@ -42,12 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Monastery.findByPhoneNumber", query = "SELECT m FROM Monastery m WHERE m.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Monastery.findByAbbotName", query = "SELECT m FROM Monastery m WHERE m.abbotName = :abbotName"),
     @NamedQuery(name = "Monastery.findByMonasteryNickname", query = "SELECT m FROM Monastery m WHERE m.monasteryNickname = :monasteryNickname"),
-    @NamedQuery(name = "Monastery.findByMonasteryNameEnglish", query = "SELECT m FROM Monastery m WHERE m.monasteryNameEnglish = :monasteryNameEnglish"),
     @NamedQuery(name = "Monastery.findByAddrAmpher90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrAmpher90DayOnline = :addrAmpher90DayOnline"),
-    @NamedQuery(name = "Monastery.findByAddrRoad90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrRoad90DayOnline = :addrRoad90DayOnline"),
     @NamedQuery(name = "Monastery.findByAddrTambon90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrTambon90DayOnline = :addrTambon90DayOnline"),
+    @NamedQuery(name = "Monastery.findByAddrRoad90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrRoad90DayOnline = :addrRoad90DayOnline"),
     @NamedQuery(name = "Monastery.findByAddrNumber90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrNumber90DayOnline = :addrNumber90DayOnline"),
-    @NamedQuery(name = "Monastery.findByAddrJangwat90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrJangwat90DayOnline = :addrJangwat90DayOnline")
+    @NamedQuery(name = "Monastery.findByAddrJangwat90DayOnline", query = "SELECT m FROM Monastery m WHERE m.addrJangwat90DayOnline = :addrJangwat90DayOnline"),
+    @NamedQuery(name = "Monastery.findByMonasteryNameEnglish", query = "SELECT m FROM Monastery m WHERE m.monasteryNameEnglish = :monasteryNameEnglish")
 })
 public class Monastery implements Serializable
 {
@@ -81,18 +80,18 @@ public class Monastery implements Serializable
     private String abbotName;
     @Column(name = "MONASTERY_NICKNAME")
     private String monasteryNickname;
-    @Column(name = "MONASTERY_NAME_ENGLISH")
-    private String monasteryNameEnglish;
     @Column(name = "ADDR_AMPHER_90_DAY_ONLINE")
     private String addrAmpher90DayOnline;
-    @Column(name = "ADDR_ROAD_90_DAY_ONLINE")
-    private String addrRoad90DayOnline;
     @Column(name = "ADDR_TAMBON_90_DAY_ONLINE")
     private String addrTambon90DayOnline;
+    @Column(name = "ADDR_ROAD_90_DAY_ONLINE")
+    private String addrRoad90DayOnline;
     @Column(name = "ADDR_NUMBER_90_DAY_ONLINE")
     private String addrNumber90DayOnline;
     @Column(name = "ADDR_JANGWAT_90_DAY_ONLINE")
     private String addrJangwat90DayOnline;
+    @Column(name = "MONASTERY_NAME_ENGLISH")
+    private String monasteryNameEnglish;
     @OneToMany(mappedBy = "monastery")
     private Set<Upajjhaya> upajjhayaSet;
     @OneToMany(mappedBy = "monasteryResidence")
@@ -239,16 +238,6 @@ public class Monastery implements Serializable
         this.monasteryNickname = monasteryNickname;
     }
 
-    public String getMonasteryNameEnglish()
-    {
-        return monasteryNameEnglish;
-    }
-
-    public void setMonasteryNameEnglish(String monasteryNameEnglish)
-    {
-        this.monasteryNameEnglish = monasteryNameEnglish;
-    }
-
     public String getAddrAmpher90DayOnline()
     {
         return addrAmpher90DayOnline;
@@ -259,16 +248,6 @@ public class Monastery implements Serializable
         this.addrAmpher90DayOnline = addrAmpher90DayOnline;
     }
 
-    public String getAddrRoad90DayOnline()
-    {
-        return addrRoad90DayOnline;
-    }
-
-    public void setAddrRoad90DayOnline(String addrRoad90DayOnline)
-    {
-        this.addrRoad90DayOnline = addrRoad90DayOnline;
-    }
-
     public String getAddrTambon90DayOnline()
     {
         return addrTambon90DayOnline;
@@ -277,6 +256,16 @@ public class Monastery implements Serializable
     public void setAddrTambon90DayOnline(String addrTambon90DayOnline)
     {
         this.addrTambon90DayOnline = addrTambon90DayOnline;
+    }
+
+    public String getAddrRoad90DayOnline()
+    {
+        return addrRoad90DayOnline;
+    }
+
+    public void setAddrRoad90DayOnline(String addrRoad90DayOnline)
+    {
+        this.addrRoad90DayOnline = addrRoad90DayOnline;
     }
 
     public String getAddrNumber90DayOnline()
@@ -297,6 +286,16 @@ public class Monastery implements Serializable
     public void setAddrJangwat90DayOnline(String addrJangwat90DayOnline)
     {
         this.addrJangwat90DayOnline = addrJangwat90DayOnline;
+    }
+
+    public String getMonasteryNameEnglish()
+    {
+        return monasteryNameEnglish;
+    }
+
+    public void setMonasteryNameEnglish(String monasteryNameEnglish)
+    {
+        this.monasteryNameEnglish = monasteryNameEnglish;
     }
 
     @XmlTransient
