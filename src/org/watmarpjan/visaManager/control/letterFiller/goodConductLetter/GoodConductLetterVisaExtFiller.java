@@ -13,12 +13,12 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class GoodConductNewVisaThaiFiller extends GoodConductLetterFiller
+public class GoodConductLetterVisaExtFiller extends GoodConductLetterFiller
 {
     
-    public GoodConductNewVisaThaiFiller( MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
+    public GoodConductLetterVisaExtFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTGoodConductGuaranteeLetter(p.getMonasteryResidingAt(),"NewVisaThailand"), p, objCtrConfigFiles);
+        super(AppFiles.getODTGoodConductGuaranteeLetter(p.getMonasteryResidingAt(),"VisaExtension"), p, objCtrConfigFiles);
     }
     
     @Override
@@ -27,5 +27,6 @@ public class GoodConductNewVisaThaiFiller extends GoodConductLetterFiller
         super.fillLetter();
         fillField( "«visaType»");
     }
+    
     
 }
