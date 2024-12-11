@@ -17,7 +17,7 @@ public class DhammaPracticeInsLettertVisaChangeFiller extends ResidenceGuarantee
 {
     public DhammaPracticeInsLettertVisaChangeFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
+        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterSNP(p.getMonasteryResidingAt(),"VisaChange"), p, objCtrConfigFiles);
     }
     
 }
