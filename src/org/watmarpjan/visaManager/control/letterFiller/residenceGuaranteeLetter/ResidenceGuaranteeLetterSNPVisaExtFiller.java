@@ -13,21 +13,19 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class ResidenceGuaranteeLetterSNPNewVisaFiller extends ResidenceGuaranteeLetterSNPFiller
+public class ResidenceGuaranteeLetterSNPVisaExtFiller extends ResidenceGuaranteeLetterSNPFiller
 {
-
-    public ResidenceGuaranteeLetterSNPNewVisaFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
+    
+    public ResidenceGuaranteeLetterSNPVisaExtFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTResidenceGuaranteeLetterSNP(p.getMonasteryResidingAt(),"NewVisaThailand"), p, objCtrConfigFiles);
+        super(AppFiles.getODTResidenceGuaranteeLetterSNP(p.getMonasteryResidingAt(), "VisaExtension"), p, objCtrConfigFiles);
     }
-
+    
     @Override
     public void fillLetter() throws InvalidNavigationException, NullPointerException
     {
         super.fillLetter();
         
-        fillField("«visaType»");
-        
+        fillField("«visaType»");   
     }
-
 }
