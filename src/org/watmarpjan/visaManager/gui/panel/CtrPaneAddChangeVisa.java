@@ -700,7 +700,7 @@ public class CtrPaneAddChangeVisa extends AChildPaneControllerVisaForm implement
             {
                 oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedThailand(p, ctrGUIMain.getCtrMain().getCtrConfig());
             }
-            else if (! !isOrdainedInThai && !isNewVisa)
+            else if (!isOrdainedInThai && !isNewVisa)
             {
                 oLF = new OrdinationGuaranteeLetterVisaChangeOrdainedAbroad(p, ctrGUIMain.getCtrMain().getCtrConfig());
             }
