@@ -1,3 +1,10 @@
+v1.17-BETA
++ added support for Visa Extension letters for SNP
+* Redesigned Visa Extension panel
+* fixed logic bug Ordination Letter Ordained in Thailand for Visa Change
+
+----------------------------------------------------------------------------------------
+
 v1.16-BETA
 + support for name order on chinese names
 + added support for ผ.60 visa exemption
