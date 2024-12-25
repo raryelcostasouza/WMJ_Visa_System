@@ -18,7 +18,7 @@ public class GoodConductNewVisaThaiFiller extends GoodConductLetterFiller
     
     public GoodConductNewVisaThaiFiller( MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTGoodConductGuaranteeLetterNewVisaThailand(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
+        super(AppFiles.getODTGoodConductGuaranteeLetter(p.getMonasteryResidingAt(),"NewVisaThailand"), p, objCtrConfigFiles);
     }
     
     @Override

@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-import org.watmarpjan.visaManager.AppConstants;
 import org.watmarpjan.visaManager.AppFileNames;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.AppPaths;
@@ -32,10 +31,18 @@ import org.watmarpjan.visaManager.control.CtrFileOperation;
 import org.watmarpjan.visaManager.control.CtrLetterODF;
 import org.watmarpjan.visaManager.control.CtrPDF;
 import org.watmarpjan.visaManager.control.formFiller.PrawatVisaExtFiller;
-import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPVisaExtension;
+import org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteLetter.DhammaPracticeInsLettertVisaExtFiller;
+import org.watmarpjan.visaManager.control.letterFiller.goodConductLetter.GoodConductLetterVisaExtFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterFiller;
+import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterVisaChangeOrdainedAbroad;
+import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterVisaChangeOrdainedThailand;
+import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterVisaExtOrdainedAbroad;
+import org.watmarpjan.visaManager.control.letterFiller.ordinatonGuaranteeLetter.OrdinationGuaranteeLetterVisaExtOrdainedThailand;
+import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPVisaExtFiller;
 import org.watmarpjan.visaManager.gui.panel.abs.AChildPaneControllerVisaForm;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 import org.watmarpjan.visaManager.model.hibernate.VisaExtension;
+import org.watmarpjan.visaManager.util.ProfileUtil;
 import org.watmarpjan.visaManager.util.Util;
 
 /**
@@ -75,7 +82,16 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
     private Button bPreview7;
     @FXML
     private Button bPreview8;
-    
+
+    @FXML
+    private Button bPreview9;
+
+    @FXML
+    private Button bPreview10;
+
+    @FXML
+    private Button bPreview11;
+
     @FXML
     private Button bPreviewNaktamCertificate;
 
@@ -93,7 +109,6 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
 //    private Button bPrint6;
 //    @FXML
 //    private Button bPrint7;
-
     @Override
     public void init()
     {
@@ -107,7 +122,10 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         bPreview6.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview7.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
         bPreview8.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
-        
+        bPreview9.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bPreview10.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+        bPreview11.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
+
         bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
 //        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
@@ -117,7 +135,6 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
 //        bPrint5.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 //        bPrint6.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 //        bPrint7.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
-
         ctrGUIMain.getCtrDatePicker().registerDatePicker(dpExpiryDate);
 
         //code for inserting a remove button on the last column
@@ -177,8 +194,8 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         LocalDate ldExpVisa, ldExpLastExtension;
         Date dLastExt;
         VisaExtension lastExt;
-        String levelDhammaStudies;
-        
+        //String levelDhammaStudies;
+
         if (p != null)
         {
             if (p.getVisaNumber() != null)
@@ -224,19 +241,20 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
             {
                 dpExpiryDate.setValue(null);
             }
-            
+
             //only enable certificate button if file exists and dhamma studies is set to something else than 
             //REGULAR
-            levelDhammaStudies = p.getDhammaStudies();
-            if ((levelDhammaStudies.compareTo(AppConstants.STUDIES_REGULAR) == 0) ||
-                    (!AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies).exists()))
-            {                
+            //removed at v1.17
+            /*levelDhammaStudies = p.getDhammaStudies();
+            if ((levelDhammaStudies.compareTo(AppConstants.STUDIES_REGULAR) == 0)
+                    || (!AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies).exists()))
+            {
                 bPreviewNaktamCertificate.setDisable(true);
             }
             else
             {
                 bPreviewNaktamCertificate.setDisable(false);
-            }
+            }*/
         }
 
     }
@@ -304,30 +322,29 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         return (!tfExtNumber.getText().isEmpty())
                 && (dpExpiryDate.getValue() != null);
     }
-    
-    
+
     @FXML
     void actionPreviewPrawat(ActionEvent ae)
     {
         PrawatVisaExtFiller pVextFiller;
         MonasticProfile p;
-        
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        
+
         pVextFiller = new PrawatVisaExtFiller(ctrGUIMain.getCtrMain(), p);
         pVextFiller.saveAndOpenPDF();
     }
-    
+
     @FXML
     void actionPreviewNaktamCertificate(ActionEvent ae)
     {
         MonasticProfile p;
         String levelDhammaStudies;
-        
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        
+
         levelDhammaStudies = p.getDhammaStudies();
-        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies));                
+        CtrFileOperation.openFileOnDefaultProgram(AppFiles.getNaktamCertificate(p.getNickname(), levelDhammaStudies));
     }
 
     @FXML
@@ -337,7 +354,7 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         //MonasticProfile p;
         //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterSNP(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-        
+
         actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_SNP);
     }
 
@@ -348,16 +365,16 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         //MonasticProfile p;
         //p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
         //ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getExtReqLetterIMM(), p, CtrPDF.OPTION_PREVIEW_FORM, false);
-        
+
         actionPreviewLetterODTGeneric(AppFileNames.ODT_LETTER_EXT_IMM);
     }
-    
+
     private void actionPreviewLetterODTGeneric(String letterFilename)
     {
         File fLetter;
         MonasticProfile p;
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        
+
         fLetter = AppFiles.getODTVisaExtLetterGeneric(p.getMonasteryResidingAt(), letterFilename);
         CtrLetterODF.generateLetterGeneric(fLetter, p, null, ctrGUIMain.getCtrMain().getCtrVisa());
     }
@@ -374,10 +391,62 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
     void actionPreviewResidenceGuaranteeLetterSNP(ActionEvent ae)
     {
         MonasticProfile p;
-        ResidenceGuaranteeLetterSNPVisaExtension objLetterFiller;
-        
+        ResidenceGuaranteeLetterSNPVisaExtFiller objLetterFiller;
+
         p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
-        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaExtension(p, ctrGUIMain.getCtrMain().getCtrConfig());
+        objLetterFiller = new ResidenceGuaranteeLetterSNPVisaExtFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
+        objLetterFiller.saveAndOpenODT();
+    }
+
+    @FXML
+    void actionPreviewOrdinationGuaranteeLetterSNP(ActionEvent ae)
+    {
+        OrdinationGuaranteeLetterFiller oLF;
+        MonasticProfile p;
+        boolean isOrdainedInThai;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+        if (p.getMonasteryOrdainedAt() != null)
+        {
+            isOrdainedInThai = ProfileUtil.isOrdainedInThailand(p);
+            if (isOrdainedInThai)
+            {
+                oLF = new OrdinationGuaranteeLetterVisaExtOrdainedThailand(p, ctrGUIMain.getCtrMain().getCtrConfig());
+            }
+            else
+            {
+                oLF = new OrdinationGuaranteeLetterVisaExtOrdainedAbroad(p, ctrGUIMain.getCtrMain().getCtrConfig());
+            }
+
+            oLF.saveAndOpenODT();
+        }
+        else
+        {
+            CtrAlertDialog.errorDialog("Unordained person (empty value for Monastery Ordained at). Unable to generate letter");
+        }
+    }
+
+    @FXML
+    void actionPreviewDhammaPracticeInstituteGuaranteeLetterSNP(ActionEvent ae)
+    {
+        MonasticProfile p;
+        DhammaPracticeInsLettertVisaExtFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new DhammaPracticeInsLettertVisaExtFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
+        objLetterFiller.saveAndOpenODT();
+    }
+
+    @FXML
+    void actionPreviewGoodConductGuaranteeLetterSNP(ActionEvent ae)
+    {
+        MonasticProfile p;
+        GoodConductLetterVisaExtFiller objLetterFiller;
+
+        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
+
+        objLetterFiller = new GoodConductLetterVisaExtFiller(p, ctrGUIMain.getCtrMain().getCtrConfig());
         objLetterFiller.saveAndOpenODT();
     }
 
@@ -450,5 +519,4 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
 //        p = ctrGUIMain.getCtrPaneSelection().getSelectedProfile();
 //        ctrGUIMain.getCtrMain().getCtrPDF().fillForm(AppFiles.getFormSTM2AckConditions(), p, CtrPDF.OPTION_PRINT_FORM, false);
 //    }
-
 }

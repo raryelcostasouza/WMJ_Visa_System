@@ -17,7 +17,7 @@ public class GoodConductLetterVisaChangeFiller extends GoodConductLetterFiller
     
     public GoodConductLetterVisaChangeFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTGoodConductGuaranteeLetterVisaChange(p.getMonasteryResidingAt()), p, objCtrConfigFiles);
+        super(AppFiles.getODTGoodConductGuaranteeLetter(p.getMonasteryResidingAt(),"VisaChange"), p, objCtrConfigFiles);
     }
     
 }

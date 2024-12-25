@@ -2,23 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.watmarpjan.visaManager.control.letterFiller.dhammaPracticeInstituteLetter;
+package org.watmarpjan.visaManager.control.letterFiller.goodConductLetter;
 
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.AppFiles;
 import org.watmarpjan.visaManager.control.CtrConfigFiles;
-import org.watmarpjan.visaManager.control.letterFiller.residenceGuaranteeLetter.ResidenceGuaranteeLetterSNPFiller;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
 
 /**
  *
  * @author raryel
  */
-public class DhammaPracticeInstLetterNewVisaThaiFiller extends ResidenceGuaranteeLetterSNPFiller
+public class GoodConductLetterVisaExtFiller extends GoodConductLetterFiller
 {
-    public DhammaPracticeInstLetterNewVisaThaiFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles )
+    
+    public GoodConductLetterVisaExtFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterSNP(p.getMonasteryResidingAt(),"NewVisaThailand"), p, objCtrConfigFiles);
+        super(AppFiles.getODTGoodConductGuaranteeLetter(p.getMonasteryResidingAt(),"VisaExtension"), p, objCtrConfigFiles);
     }
     
     @Override
@@ -27,5 +27,6 @@ public class DhammaPracticeInstLetterNewVisaThaiFiller extends ResidenceGuarante
         super.fillLetter();
         fillField( "«visaType»");
     }
+    
     
 }

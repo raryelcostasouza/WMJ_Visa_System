@@ -14,11 +14,11 @@ import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
  *
  * @author raryel
  */
-public class DhammaPracticeInstLetterNewVisaThaiFiller extends ResidenceGuaranteeLetterSNPFiller
+public class DhammaPracticeInsLettertVisaExtFiller extends ResidenceGuaranteeLetterSNPFiller
 {
-    public DhammaPracticeInstLetterNewVisaThaiFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles )
+    public DhammaPracticeInsLettertVisaExtFiller(MonasticProfile p, CtrConfigFiles objCtrConfigFiles)
     {
-        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterSNP(p.getMonasteryResidingAt(),"NewVisaThailand"), p, objCtrConfigFiles);
+        super(AppFiles.getODTDhammaPracticeInstGuaranteeLetterSNP(p.getMonasteryResidingAt(),"VisaExtension"), p, objCtrConfigFiles);
     }
     
     @Override

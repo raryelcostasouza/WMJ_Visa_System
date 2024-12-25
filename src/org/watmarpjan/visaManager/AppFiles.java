@@ -40,7 +40,7 @@ public class AppFiles
 
         return new File(pSubfolder.resolve(strFileName).toUri());
     }
-    
+
     public static File getEVisa(String nickName)
     {
         Path pSubfolder;
@@ -195,7 +195,7 @@ public class AppFiles
     {
         return AppPaths.getPathToMonasteryMap(monasteryNickname).toFile();
     }
-    
+
     public static File getVassaDatesCSV()
     {
         return AppPaths.getPathToConfigs().resolve("vassa-dates.csv").toFile();
@@ -258,7 +258,7 @@ public class AppFiles
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("TM86-VisaChange.pdf").toFile();
     }
-    
+
     public static File getFormTM87NewVisa(String monasteryNickname)
     {
         return AppPaths.getPathToForms(monasteryNickname).resolve("TM87-VisaApplication.pdf").toFile();
@@ -299,23 +299,23 @@ public class AppFiles
         if ((p.getMonasteryOrdainedAt() == null) || (ProfileUtil.isOrdainedInThailand(p)))
         {
             return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
-                .resolve("OrdinationGuaranteeLetterOrdainedThailandSNP-"+ type +".odt")
-                .toFile();    
+                    .resolve("OrdinationGuaranteeLetterOrdainedThailandSNP-" + type + ".odt")
+                    .toFile();
         }
-        
+
         return AppPaths.getPathToLetterTemplate(p.getMonasteryResidingAt().getMonasteryNickname())
-                .resolve("OrdinationGuaranteeLetterOrdainedAbroadSNP-"+ type +".odt")
-                .toFile(); 
-        
+                .resolve("OrdinationGuaranteeLetterOrdainedAbroadSNP-" + type + ".odt")
+                .toFile();
+
     }
-    
+
     public static File getODTVisaChangeReqLetterSNP(Monastery mResidence)
     {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("VisaChangeReqLetterSNP.odt")
                 .toFile();
     }
-    
+
     public static File getODTVisaChangeReqLetterIMM(Monastery mResidence)
     {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
@@ -328,77 +328,50 @@ public class AppFiles
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("NewVisaThailandReqLetterIMM.odt")
                 .toFile();
-    }  
-    
+    }
+
     public static File getODTNewVisaReqLetterSNP(Monastery mResidence)
     {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("NewVisaThailandReqLetterSNP.odt")
                 .toFile();
-    }  
-    
+    }
+
     public static File getODTResidenceGuaranteeLetterIMMNewVisa(Monastery mResidence)
     {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("ResidenceGuaranteeLetterIMM-NewVisaThailand.odt")
                 .toFile();
     }
-    
-     public static File getODTResidenceGuaranteeLetterIMMVisaChange(Monastery mResidence)
+
+    public static File getODTResidenceGuaranteeLetterIMMVisaChange(Monastery mResidence)
     {
         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
                 .resolve("ResidenceGuaranteeLetterIMM-VisaChange.odt")
                 .toFile();
     }
-     
-     public static File getODTResidenceGuaranteeLetterSNPVisaExtension(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("ResidenceGuaranteeLetterSNP.odt")
+
+    public static File getODTResidenceGuaranteeLetterSNP(Monastery mResidence, String letterType)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("ResidenceGuaranteeLetterSNP-" + letterType + ".odt")
                 .toFile();
-     }
-     
-     public static File getODTResidenceGuaranteeLetterSNPVisaChange(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("ResidenceGuaranteeLetterSNP-VisaChange.odt")
+    }
+
+
+    public static File getODTDhammaPracticeInstGuaranteeLetterSNP(Monastery mResidence, String visaType)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-" + visaType + ".odt")
                 .toFile();
-     }
-     
-     public static File getODTResidenceGuaranteeLetterSNPNewVisa(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("ResidenceGuaranteeLetterSNP-NewVisaThailand.odt")
+    }
+
+    public static File getODTGoodConductGuaranteeLetter(Monastery mResidence, String visaType)
+    {
+        return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
+                .resolve("GoodConductGuaranteeLetterSNP-" + visaType + ".odt")
                 .toFile();
-     }
-     
-     public static File getODTDhammaPracticeInstGuaranteeLetterVisaChange(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-VisaChange.odt")
-                .toFile();
-     }
-     
-     public static File getODTDhammaPracticeInstGuaranteeLetterNewVisaThailand(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("DhammaPracticeInstituteGuaranteeLetterSNP-NewVisaThailand.odt")
-                .toFile();
-     }
-     
-     public static File getODTGoodConductGuaranteeLetterVisaChange(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("GoodConductGuaranteeLetterSNP-VisaChange.odt")
-                .toFile();
-     }
-     
-     public static File getODTGoodConductGuaranteeLetterNewVisaThailand(Monastery mResidence)
-     {
-         return AppPaths.getPathToLetterTemplate(mResidence.getMonasteryNickname())
-                .resolve("GoodConductGuaranteeLetterSNP-NewVisaThailand.odt")
-                .toFile();
-     }
+    }
 
     public static File getThaiFont()
     {
