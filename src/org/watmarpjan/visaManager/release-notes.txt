@@ -1,3 +1,8 @@
+v1.17.1 - 
++ Adjust prawat profile picture plot to dynamically adjust to any image size
+
+----------------------------------------------------------------------------------------
+
 v1.17-BETA
 + added support for Visa Extension letters for SNP
 * Redesigned Visa Extension panel
