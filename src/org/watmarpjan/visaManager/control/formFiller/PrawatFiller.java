@@ -11,7 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
@@ -32,14 +34,15 @@ import org.watmarpjan.visaManager.util.Util;
  */
 public abstract class PrawatFiller extends PDFFormFiller
 {
+
     protected LocalDate ldVisaExpiry;
 
     public PrawatFiller(CtrMain ctrMain, MonasticProfile p)
     {
         super(ctrMain);
         File sourceFormFile;
-        
-        if ((p.getPatimokkhaChanter()== null) || (!p.getPatimokkhaChanter()))
+
+        if ((p.getPatimokkhaChanter() == null) || (!p.getPatimokkhaChanter()))
         {
             sourceFormFile = AppFiles.getFormPrawat(p.getMonasteryResidingAt().getMonasteryNickname());
         }
@@ -47,25 +50,26 @@ public abstract class PrawatFiller extends PDFFormFiller
         {
             sourceFormFile = AppFiles.getFormPrawatPatimokkhaChanter(p.getMonasteryResidingAt().getMonasteryNickname());
         }
-        
+
         super.init(sourceFormFile);
-        
+
         try
         {
             fillFormData(p);
         }
-        catch(IOException ex)
+        catch (IOException ex)
         {
             CtrAlertDialog.exceptionDialog(ex, "Error while filling Prawat form!");
         }
-        
+
     }
-    
+
     private void addProfilePhotoPrawat(PDDocument pdfDoc, MonasticProfile p) throws IOException
     {
         File fPhoto;
         PDImageXObject pdImage;
         PDPageContentStream contentStream;
+        double plotInitX, plotInitY;
 
         fPhoto = AppFiles.getProfilePhoto(p.getNickname());
         if (fPhoto.exists())
@@ -73,9 +77,15 @@ public abstract class PrawatFiller extends PDFFormFiller
             pdImage = PDImageXObject.createFromFile(fPhoto.toString(), pdfDoc);
             contentStream = new PDPageContentStream(pdfDoc, pdfDoc.getPage(0), PDPageContentStream.AppendMode.APPEND, true);
 
+            //original image size was 472 x 709 pixels and ideal start position for plot X, Y in that scenario was (418,645)
+            //convertion to move the start point to adapt to any future image size
+            plotInitX = 418 - (pdImage.getWidth()-472) * 0.24;
+            plotInitY = 645- (pdImage.getHeight()-709) * 0.24;
+           
             //translation, rotation and scale for the image
-            AffineTransform at = new AffineTransform(pdImage.getWidth() * 0.24, 0, 0, pdImage.getHeight() * 0.24, 418, 645);
-
+            AffineTransform at = new AffineTransform(pdImage.getWidth() * 0.24, 0, 0, pdImage.getHeight() * 0.24, plotInitX, plotInitY);
+            
+            
             //rotates the image overlay 90 degree because the document is landscape
             Matrix tMatrix = new Matrix(at);
 
@@ -91,7 +101,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         Monastery mOrdainedAt, mUpajjhaya, mAdviserToCome, mResidingAt, mJaoKanaAmpher, mJaoKanaJangwat, mResidence;
         Upajjhaya u;
         Date dVisaExpiry;
-        
+
         String str_jangwat_country;
         String abbotName;
 
@@ -139,7 +149,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension09Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaExtension10Thai"));
         alThaiFields.add((PDTextField) acroForm.getField("visaTypeThai"));
-        
+
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF2"));
 //        alThaiFields.add((PDTextField) acroForm.getField("dhammaStudiesThaiPDF3"));
         adjustFontThaiField(alThaiFields);
@@ -209,8 +219,6 @@ public abstract class PrawatFiller extends PDFFormFiller
         this.ldVisaExpiry = ProfileUtil.getVisaOrExtExpiryDate(p);
         acroForm.getField("visaExpiryDate").setValue(Util.toStringThaiDateFormat(ldVisaExpiry));
 
-        
-
         mResidingAt = p.getMonasteryResidingAt();
         if (mResidingAt != null)
         {
@@ -245,15 +253,15 @@ public abstract class PrawatFiller extends PDFFormFiller
             }
 
         }
-        
+
         mResidence = p.getMonasteryResidingAt();
         abbotName = mResidence.getAbbotName();
-        
+
         if (abbotName != null)
         {
             acroForm.getField("nameAbbotWatResidingAtThai").setValue(abbotName);
         }
-        
+
         mJaoKanaAmpher = ctrMain.getCtrMonastery().loadMonasteryJaoKanaAmpher(mResidence);
         if (mJaoKanaAmpher != null)
         {
@@ -268,7 +276,7 @@ public abstract class PrawatFiller extends PDFFormFiller
             acroForm.getField("watJaoKanaJangwatThai").setValue(mJaoKanaJangwat.getMonasteryName());
         }
     }
-    
+
     protected void fillVisaExpiryDateDesired(LocalDate ldDesiredDate) throws IOException
     {
         acroForm.getField("visaExpiryDateDesired").setValue(Util.toStringThaiDateFormat(ldDesiredDate));
