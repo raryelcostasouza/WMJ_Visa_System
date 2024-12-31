@@ -92,8 +92,6 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
     @FXML
     private Button bPreview11;
 
-    @FXML
-    private Button bPreviewNaktamCertificate;
 
 //    @FXML
 //    private Button bPrint1;
@@ -125,8 +123,6 @@ public class CtrPaneVisaExt extends AChildPaneControllerVisaForm implements IFor
         bPreview9.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bPreview10.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
         bPreview11.setGraphic(new ImageView(AppPaths.getPathIconODT().toUri().toString()));
-
-        bPreviewNaktamCertificate.setGraphic(new ImageView(AppPaths.getPathIconPDF().toUri().toString()));
 
 //        bPrint1.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
 //        bPrint2.setGraphic(new ImageView(AppPaths.getPathIconPrint().toUri().toString()));
