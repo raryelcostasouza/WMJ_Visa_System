@@ -41,30 +41,30 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Button fx:id="bPreview1" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1">
+                              <Button fx:id="bPreview1" mnemonicParsing="false" onAction="#actionPreviewPrawat" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Label text="Prawat:">
+                              <Label text="Prawat:" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label text="Extension Request Letter:" GridPane.rowIndex="1">
+                              <Label text="Extension Request Letter:">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Button fx:id="bPreview2" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Button fx:id="bPreview2" layoutX="266.0" layoutY="13.0" mnemonicParsing="false" onAction="#actionPreviewLetterSamnakput" text="Preview" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Label layoutX="10.0" layoutY="227.0" text="Residence Guarantee Letter:" GridPane.rowIndex="2">
+                              <Label layoutX="10.0" layoutY="227.0" text="Residence Guarantee Letter:" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Button fx:id="bPreview8" layoutX="304.0" layoutY="222.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Ordination Guarantee Letter:" GridPane.rowIndex="3">
+                              <Button fx:id="bPreview8" layoutX="304.0" layoutY="222.0" mnemonicParsing="false" onAction="#actionPreviewResidenceGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="Ordination Guarantee Letter:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
@@ -76,7 +76,7 @@
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Button fx:id="bPreview9" mnemonicParsing="false" onAction="#actionPreviewOrdinationGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Button fx:id="bPreview9" mnemonicParsing="false" onAction="#actionPreviewOrdinationGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Button fx:id="bPreview10" mnemonicParsing="false" onAction="#actionPreviewDhammaPracticeInstituteGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Button fx:id="bPreview11" mnemonicParsing="false" onAction="#actionPreviewGoodConductGuaranteeLetterSNP" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
@@ -98,43 +98,43 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Extension Request Letter:">
+                              <Label text="Extension Request Letter:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding></Label>
-                              <Label text="TM 7 - Application for Extension:" GridPane.rowIndex="1">
+                              <Label text="TM 7 - Application for Extension:">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding></Label>
-                              <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="2">
+                              <Label text="TM 30 - Notification of Residence:" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label text="Acknowledgments Penalties Overstay:" GridPane.rowIndex="3">
+                              <Label text="Acknowledgments Penalties Overstay:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="4">
+                              <Label text="STM2 - Acknowledgment of Terms and Conditions:" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Label>
-                              <Button fx:id="bPreview4" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Button fx:id="bPreview4" mnemonicParsing="false" onAction="#actionPreviewTM7ExtRequest" text="Preview" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="bPreview5" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button fx:id="bPreview5" mnemonicParsing="false" onAction="#actionPreviewTM30NotifResidence" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="bPreview6" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <Button fx:id="bPreview6" mnemonicParsing="false" onAction="#actionPreviewAckOverstayPenalties" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="bPreview7" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Button fx:id="bPreview3" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1">
+                              <Button fx:id="bPreview7" mnemonicParsing="false" onAction="#actionPreviewSTM2AckConditions" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Button fx:id="bPreview3" mnemonicParsing="false" onAction="#actionPreviewLetterImmigration" text="Preview" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" />
                                  </GridPane.margin>
