@@ -28,6 +28,7 @@ public class OrdinationGuaranteeLetterVisaExtOrdainedThailand extends Ordination
         
         //from VisaChangeOrdainedThailand
         fillField("«WatOrdainedAtThaiaddrTambon»");
+        fillField("«visaType»");
     }
     
 }
