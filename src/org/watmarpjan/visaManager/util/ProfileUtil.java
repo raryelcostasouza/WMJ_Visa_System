@@ -54,7 +54,7 @@ public class ProfileUtil
     {
         if (p.getBhikkhuOrdDate() != null)
         {
-            return "พระ";
+            return "พระภิกษุ";
         }
         else
         {
