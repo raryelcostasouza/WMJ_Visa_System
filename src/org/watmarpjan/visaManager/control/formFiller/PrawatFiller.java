@@ -108,6 +108,8 @@ public abstract class PrawatFiller extends PDFFormFiller
         addProfilePhotoPrawat(this.pdfDocument, p);
 
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
+        alThaiFields.add((PDTextField) acroForm.getField("titleThai2"));
+
         alThaiFields.add((PDTextField) acroForm.getField("paliNameThai"));
         alThaiFields.add((PDTextField) acroForm.getField("occupationThai"));
         alThaiFields.add((PDTextField) acroForm.getField("ordinationDateThai"));
@@ -155,6 +157,7 @@ public abstract class PrawatFiller extends PDFFormFiller
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
+        acroForm.getField("titleThai2").setValue(ProfileUtil.getTitleTH2(p));
         acroForm.getField("fullName").setValue(ProfileUtil.getFullName(p));
         acroForm.getField("paliNameThai").setValue(p.getPaliNameThai());
         acroForm.getField("age").setValue(ProfileUtil.getStrAge(p.getBirthDate()));
