@@ -38,7 +38,7 @@ public class ProfileUtil
     {
         if (p.getBhikkhuOrdDate() != null)
         {
-            return "พระภิกษุ";
+            return "พระ";
         }
         else if (p.getSamaneraOrdDate() != null)
         {
