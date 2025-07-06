@@ -260,7 +260,7 @@ public class CtrLetterODF
         LocalDate ldVisaExpiry, ldVisaExpiryDateDesired, ordinationDate;
         int extensionsCount;
 
-        strTitle = ProfileUtil.getTitleTH2(p);
+        strTitle = ProfileUtil.getTitleTH(p);
         strFullName = ProfileUtil.getFullName(p);
         mOrdainedAt = p.getMonasteryOrdainedAt();
         mResidingAt = p.getMonasteryResidingAt();
