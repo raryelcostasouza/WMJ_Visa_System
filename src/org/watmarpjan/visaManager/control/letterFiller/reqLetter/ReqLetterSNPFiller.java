@@ -5,12 +5,9 @@
 package org.watmarpjan.visaManager.control.letterFiller.reqLetter;
 
 import java.io.File;
-import java.time.LocalDate;
 import org.odftoolkit.simple.common.navigation.InvalidNavigationException;
 import org.watmarpjan.visaManager.control.CtrConfigFiles;
-import org.watmarpjan.visaManager.model.hibernate.Monastery;
 import org.watmarpjan.visaManager.model.hibernate.MonasticProfile;
-import org.watmarpjan.visaManager.util.Util;
 
 /**
  *
@@ -29,6 +26,7 @@ public abstract class ReqLetterSNPFiller extends ReqLetterFiller
     {
         super.fillLetter();
        
+        fillField( "«titleTH»");
         fillField("«name»");
         fillField("«middleName»");
         fillField("«lastName»");
