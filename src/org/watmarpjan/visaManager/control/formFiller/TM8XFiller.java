@@ -50,7 +50,6 @@ public class TM8XFiller extends PDFFormFiller
         alThaiFields = new ArrayList<>();
         alThaiFields.add((PDTextField) acroForm.getField("immigrationOfficeThai"));
         alThaiFields.add((PDTextField) acroForm.getField("titleThai"));
-        alThaiFields.add((PDTextField) acroForm.getField("titleThai2"));
         alThaiFields.add((PDTextField) acroForm.getField("watResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrNumberWatResidingAtThai"));
         alThaiFields.add((PDTextField) acroForm.getField("addrRoadWatResidingAtThai"));
