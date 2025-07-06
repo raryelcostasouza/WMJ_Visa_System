@@ -60,8 +60,6 @@ public class TM8XFiller extends PDFFormFiller
         adjustFontThaiField(alThaiFields);
 
         acroForm.getField("titleThai").setValue(ProfileUtil.getTitleTH(p));
-        acroForm.getField("titleThai2").setValue(ProfileUtil.getTitleTH2(p));
-
         acroForm.getField("lastName").setValue(p.getLastName());
         acroForm.getField("name").setValue(p.getMonasticName());
         acroForm.getField("middleName").setValue(p.getMiddleName());
