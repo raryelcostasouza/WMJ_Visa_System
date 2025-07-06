@@ -172,6 +172,7 @@ public class CtrLetterODF
         generateLetterCommonEmbassyFields(objTD, objLetterInput);
         generateLetterMonasticAbroadEmbassy(objTD, objLetterInput);
         searchNReplace(objTD, "«nameEmbassyThai»", e.getNameTh());
+        searchNReplace(objTD, "«titleTH»", ProfileUtil.getTitleTH(p));
         searchNReplace(objTD, "«contactEmail»", p.getEmail());
         searchNReplace(objTD, "«contactPhone»", objLetterInput.getPhoneAbroad());
         searchNReplace(objTD, "«addressLine1»", objLetterInput.getAddrMonasticLine1());
@@ -264,7 +265,7 @@ public class CtrLetterODF
         mOrdainedAt = p.getMonasteryOrdainedAt();
         mResidingAt = p.getMonasteryResidingAt();
 
-        searchNReplace(objTD, "«titleTH2»", strTitle);
+        searchNReplace(objTD, "«titleTH»", strTitle);
         
         searchNReplace(objTD, "«fullName»", strFullName);
         searchNReplace(objTD, "«nationality»", p.getNationality());
