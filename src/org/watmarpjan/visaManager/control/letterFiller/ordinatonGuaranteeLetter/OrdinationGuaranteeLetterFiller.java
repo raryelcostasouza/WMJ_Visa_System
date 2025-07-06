@@ -25,7 +25,7 @@ public abstract class OrdinationGuaranteeLetterFiller extends ODTLetterFiller
     public void fillLetter() throws InvalidNavigationException
     {
         //need to use thai numbers
-        fillField("«titleTH2»");
+        fillField("«titleTH»");
         fillField("«name»");
 
         fillField("«middleName»");
