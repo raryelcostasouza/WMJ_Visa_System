@@ -26,7 +26,7 @@ public abstract class ResidenceGuaranteeLetterFiller extends ODTLetterFiller
     @Override
     public void fillLetter() throws InvalidNavigationException
     {
-        fillField( "«titleTH2»");
+        fillField( "«titleTH»");
         fillField( "«fullName»");
         fillField( "«nationality»");
         fillField( "«age»");

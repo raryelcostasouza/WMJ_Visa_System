@@ -25,7 +25,7 @@ public abstract class ResidenceGuaranteeLetterSNPFiller extends ODTLetterFiller
     @Override
     public void fillLetter() throws InvalidNavigationException, NullPointerException
     {
-        fillField( "«titleTH2»");
+        fillField( "«titleTH»");
         
         fillField( "«name»");
         fillField( "«middleName»");
